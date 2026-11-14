@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bách Khoa Toàn Thư Naruto & Gia Tộc Ōtsutsuki — Phả Hệ, Luân Hồi & Lịch Sử Thao Túng</title>
+<style>
+  :root {
+    --bg-deep: #070913;
+    --bg-card: #0f1426;
+    --bg-card-hover: #161d36;
+    --bg-panel: #0b0f1e;
+    --border-subtle: rgba(148, 163, 184, 0.16);
+    --border-glow: rgba(245, 158, 11, 0.45);
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --gold: #f59e0b;
+    --gold-light: #fcd34d;
+    --crimson: #ef4444;
+    --crimson-dark: #991b1b;
+    --chakra-blue: #38bdf8;
+    --chakra-cyan: #22d3ee;
+    --purple-rinne: #a855f7;
+    --emerald-senju: #10b981;
+    --moon-silver: #e2e8f0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-deep);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(168, 85, 247, 0.12), transparent 35%),
+      radial-gradient(circle at 85% 20%, rgba(56, 189, 248, 0.10), transparent 35%),
+      radial-gradient(circle at 50% 80%, rgba(239, 68, 68, 0.08), transparent 40%);
+    color: var(--text-primary);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* Navigation Bar */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(7, 9, 19, 0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.75rem 1.5rem;
+  }
+
+  .nav-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    color: #fff;
+    background: rgba(245, 158, 11, 0.14);
+    border-color: rgba(245, 158, 11, 0.35);
+  }
+
+  /* Hero Section */
+  header.hero {
+    position: relative;
+    padding: 4.5rem 1.5rem 3.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-subtle);
+    background: radial-gradient(ellipse at top, rgba(245, 158, 11, 0.12), transparent 65%);
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(168, 85, 247, 0.16);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    color: #e9d5ff;
+    padding: 0.35rem 1rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.25rem;
+  }
+
+  header.hero h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffffff 10%, #fcd34d 55%, #38bdf8 95%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  header.hero p {
+    max-width: 820px;
+    margin: 0 auto 2rem;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+  }
+
+  .dojutsu-strip {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .dojutsu-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(15, 20, 38, 0.9);
+    border: 1px solid var(--border-subtle);
+    padding: 0.45rem 0.9rem;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+
+  /* Main Container */
+  main {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  section.chapter {
+    margin-bottom: 4.5rem;
+    scroll-margin-top: 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .section-num {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(239, 68, 68, 0.2));
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    color: var(--gold-light);
+  }
+
+  .section-header h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .section-header p {
+    color: var(--text-muted);
+    font-size: 0.96rem;
+  }
+
+  /* Cards & Grids */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.35rem;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(245, 158, 11, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .card-accent-gold { border-top: 3px solid var(--gold); }
+  .card-accent-crimson { border-top: 3px solid var(--crimson); }
+  .card-accent-blue { border-top: 3px solid var(--chakra-blue); }
+  .card-accent-purple { border-top: 3px solid var(--purple-rinne); }
+  .card-accent-emerald { border-top: 3px solid var(--emerald-senju); }
+  .card-accent-silver { border-top: 3px solid var(--moon-silver); }
+
+  .char-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .avatar-box {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.4);
+  }
+
+  .char-title h3 {
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: #fff;
+  }
+
+  .char-sub {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.15rem;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+  }
+
+  .tag {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+  }
+
+  .tag.crimson { background: rgba(239, 68, 68, 0.14); border-color: rgba(239, 68, 68, 0.35); color: #fecaca; }
+  .tag.blue { background: rgba(56, 189, 248, 0.14); border-color: rgba(56, 189, 248, 0.35); color: #bae6fd; }
+  .tag.emerald { background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.35); color: #a7f3d0; }
+  .tag.purple { background: rgba(168, 85, 247, 0.14); border-color: rgba(168, 85, 247, 0.35); color: #e9d5ff; }
+  .tag.gold { background: rgba(245, 158, 11, 0.14); border-color: rgba(245, 158, 11, 0.35); color: #fde68a; }
+
+  /* Visual Tree / Map Container */
+  .diagram-wrapper {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.55);
+  }
+
+  .diagram-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gold-light);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Interactive Flow Timeline */
+  .flow-pipeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    position: relative;
+  }
+
+  .flow-step {
+    background: linear-gradient(180deg, rgba(22, 29, 54, 0.95), rgba(11, 15, 30, 0.98));
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 1.4rem;
+    position: relative;
+  }
+
+  .step-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+  }
+
+  .flow-step h4 {
+    font-size: 1.08rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+
+  .flow-step ul {
+    padding-left: 1.15rem;
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+  }
+
+  .flow-step li {
+    margin-bottom: 0.45rem;
+  }
+
+  .result-box {
+    margin-top: 0.85rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: 10px;
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 3px solid var(--gold);
+    font-size: 0.86rem;
+    color: #fde68a;
+  }
+
+  /* Reincarnation Duel Flow (Visual Comparison without Tables) */
+  .era-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 18px;
+    padding: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .era-banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px dashed rgba(148, 163, 184, 0.25);
+  }
+
+  .era-banner h3 {
+    font-size: 1.25rem;
+    color: var(--gold-light);
+  }
+
+  .duel-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+
+  @media (max-width: 860px) {
+    .duel-grid {
+      grid-template-columns: 1fr;
+    }
+    .vs-divider {
+      flex-direction: row !important;
+      padding: 0.5rem 0;
+    }
+  }
+
+  .fighter-panel {
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+
+  .fighter-indra {
+    background: linear-gradient(135deg, rgba(153, 27, 27, 0.22), rgba(88, 28, 135, 0.22));
+    border: 1px solid rgba(239, 68, 68, 0.35);
+  }
+
+  .fighter-asura {
+    background: linear-gradient(135deg, rgba(14, 116, 144, 0.22), rgba(217, 119, 6, 0.2));
+    border: 1px solid rgba(56, 189, 248, 0.35);
+  }
+
+  .vs-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .vs-circle {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f59e0b, #b45309);
+    color: #fff;
+    font-weight: 900;
+    font-size: 0.9rem;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.45);
+  }
+
+  .era-outcome {
+    margin-top: 1.25rem;
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.94rem;
+    color: var(--text-secondary);
+  }
+
+  /* Detailed List Styling */
+  .detail-list {
+    list-style: none;
+    margin-top: 0.75rem;
+  }
+
+  .detail-list li {
+    position: relative;
+    padding-left: 1.35rem;
+    margin-bottom: 0.6rem;
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+  }
+
+  .detail-list li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.85rem;
+  }
+
+  .callout-box {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.14), rgba(56, 189, 248, 0.1));
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 16px;
+    padding: 1.4rem 1.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .callout-box h4 {
+    color: #e9d5ff;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    background: var(--bg-panel);
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG Icon & Emblem Definitions -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Sharingan Emblem -->
+    <g id="icon-sharingan">
+      <circle cx="32" cy="32" r="28" fill="#dc2626" stroke="#111" stroke-width="3"/>
+      <circle cx="32" cy="32" r="17" fill="none" stroke="#111" stroke-width="2"/>
+      <circle cx="32" cy="32" r="6" fill="#111"/>
+      <circle cx="32" cy="15" r="3.5" fill="#111"/>
+      <circle cx="46.7" cy="40.5" r="3.5" fill="#111"/>
+      <circle cx="17.3" cy="40.5" r="3.5" fill="#111"/>
+    </g>
+    <!-- Rinnegan Emblem -->
+    <g id="icon-rinnegan">
+      <circle cx="32" cy="32" r="28" fill="#a855f7" stroke="#3b0764" stroke-width="3"/>
+      <circle cx="32" cy="32" r="22" fill="none" stroke="#3b0764" stroke-width="1.8"/>
+      <circle cx="32" cy="32" r="16" fill="none" stroke="#3b0764" stroke-width="1.8"/>
+      <circle cx="32" cy="32" r="10" fill="none" stroke="#3b0764" stroke-width="1.8"/>
+      <circle cx="32" cy="32" r="4" fill="#3b0764"/>
+    </g>
+    <!-- Byakugan Emblem -->
+    <g id="icon-byakugan">
+      <circle cx="32" cy="32" r="28" fill="#e2e8f0" stroke="#94a3b8" stroke-width="3"/>
+      <circle cx="32" cy="32" r="18" fill="#cbd5e1" stroke="#64748b" stroke-width="1.5"/>
+      <circle cx="32" cy="32" r="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
+    </g>
+    <!-- Jougan Emblem -->
+    <g id="icon-jougan">
+      <circle cx="32" cy="32" r="28" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+      <circle cx="32" cy="32" r="16" fill="#bae6fd" stroke="#0284c7" stroke-width="2"/>
+      <circle cx="32" cy="32" r="6" fill="#e0f2fe"/>
+    </g>
+    <!-- Uzumaki Spiral -->
+    <g id="icon-uzumaki">
+      <circle cx="32" cy="32" r="28" fill="#f97316" stroke="#7c2d12" stroke-width="3"/>
+      <path d="M32 32 m0 -3 a3 3 0 1 1 -3 3 a6 6 0 1 1 6 6 a10 10 0 1 1 -10 -10 a14 14 0 1 1 14 14 a18 18 0 1 1 -18 -18" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <!-- Senju Crest -->
+    <g id="icon-senju">
+      <circle cx="32" cy="32" r="28" fill="#059669" stroke="#064e3b" stroke-width="3"/>
+      <path d="M32 12 L32 52 M22 20 L32 30 L42 20 M20 34 L32 44 L44 34" stroke="#ecfdf5" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    </g>
+    <!-- Zetsu Yin-Yang -->
+    <g id="icon-zetsu">
+      <circle cx="32" cy="32" r="28" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+      <path d="M32 4 A28 28 0 0 1 32 60 A14 14 0 0 1 32 32 A14 14 0 0 0 32 4 Z" fill="#090d16"/>
+      <circle cx="32" cy="18" r="4" fill="#090d16"/>
+      <circle cx="32" cy="46" r="4" fill="#f8fafc"/>
+    </g>
+  </defs>
+</svg>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-brand">
+      <svg width="26" height="26" viewBox="0 0 64 64"><use href="#icon-rinnegan"/></svg>
+      <span>NARUTO & ŌTSUTSUKI ARCHIVE</span>
+    </a>
+    <div class="nav-links">
+      <a href="#sec-genealogy">1. Cây Gia Phả</a>
+      <a href="#sec-reincarnation">2. Luân Hồi Indra–Asura</a>
+      <a href="#sec-black-zetsu">3. Mưu Đồ Hắc Zetsu</a>
+      <a href="#sec-white-zetsu">4. Bí Mật Bạch Zetsu</a>
+      <a href="#sec-otsutsuki">5. Gia Tộc Ngoài Vũ Trụ</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-badge">Biên Niên Sử Vũ Trụ Nhẫn Giả & Thần Tộc</div>
+  <h1>Cội Nguồn Chakra, Phả Hệ Ōtsutsuki & Bàn Cờ Lịch Sử Nhẫn Giả</h1>
+  <p>Tổng hợp toàn diện hệ thống huyết thống khởi nguồn từ Thủy tổ Kaguya Ōtsutsuki, vòng lặp định mệnh giữa Indra và Asura, kịch bản thao túng ngàn năm của Hắc Zetsu, nguồn gốc Bạch Zetsu và tham vọng nuốt chửng hành tinh của tộc Ōtsutsuki ngoài không gian.</p>
+  <div class="dojutsu-strip">
+    <div class="dojutsu-pill"><svg width="22" height="22" viewBox="0 0 64 64"><use href="#icon-rinnegan"/></svg> Rinnegan / Lục Đạo</div>
+    <div class="dojutsu-pill"><svg width="22" height="22" viewBox="0 0 64 64"><use href="#icon-sharingan"/></svg> Sharingan / Uchiha</div>
+    <div class="dojutsu-pill"><svg width="22" height="22" viewBox="0 0 64 64"><use href="#icon-senju"/></svg> Mộc Độn / Senju</div>
+    <div class="dojutsu-pill"><svg width="22" height="22" viewBox="0 0 64 64"><use href="#icon-uzumaki"/></svg> Phong Ấn / Uzumaki</div>
+    <div class="dojutsu-pill"><svg width="22" height="22" viewBox="0 0 64 64"><use href="#icon-byakugan"/></svg> Byakugan / Hyūga</div>
+    <div class="dojutsu-pill"><svg width="22" height="22" viewBox="0 0 64 64"><use href="#icon-jougan"/></svg> Jougan / Thế Hệ Mới</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- SECTION 1: FAMILY TREE -->
+  <section class="chapter" id="sec-genealogy">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <h2>Cây Gia Phả Các Nhân Vật & Gia Tộc Từ Kaguya Ōtsutsuki</h2>
+        <p>Toàn bộ hệ thống nhẫn giả, nhẫn thuật và huyết kế giới hạn trên Trái Đất đều phân nhánh từ một thủy tổ duy nhất.</p>
+      </div>
+    </div>
+
+    <!-- Visual Interactive SVG Family Tree Map -->
+    <div class="diagram-wrapper">
+      <div class="diagram-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v6m0 0l-6 6m6-6l6 6M6 15v6m12-6v6"/></svg>
+        Sơ Đồ Phả Hệ Trực Quan Từ Thủy Tổ Kaguya Đến Thế Hệ Boruto
+      </div>
+      <svg viewBox="0 0 1160 660" width="100%" style="min-width: 920px; height: auto; display: block; margin: 0 auto;">
+        <defs>
+          <linearGradient id="grad-kaguya" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#581c87"/>
+            <stop offset="100%" stop-color="#be185d"/>
+          </linearGradient>
+          <linearGradient id="grad-hagoromo" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#b45309"/>
+            <stop offset="100%" stop-color="#7c2d12"/>
+          </linearGradient>
+          <linearGradient id="grad-hamura" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#334155"/>
+            <stop offset="100%" stop-color="#1e293b"/>
+          </linearGradient>
+          <marker id="arrow-gold" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#f59e0b"/>
+          </marker>
+          <marker id="arrow-cyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#38bdf8"/>
+          </marker>
+        </defs>
+
+        <!-- Connecting Lines -->
+        <!-- Kaguya to Hagoromo, Hamura, Black Zetsu -->
+        <path d="M580 95 L580 130 L360 130 L360 160" stroke="#f59e0b" stroke-width="2.5" fill="none" marker-end="url(#arrow-gold)"/>
+        <path d="M580 130 L920 130 L920 160" stroke="#94a3b8" stroke-width="2.5" fill="none"/>
+        <path d="M580 95 L580 160" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,4" fill="none"/>
+
+        <!-- Hagoromo to Indra & Asura -->
+        <path d="M360 235 L360 265 L170 265 L170 295" stroke="#ef4444" stroke-width="2.5" fill="none"/>
+        <path d="M360 265 L560 265 L560 295" stroke="#38bdf8" stroke-width="2.5" fill="none"/>
+
+        <!-- Indra to Uchiha -->
+        <path d="M170 370 L170 405" stroke="#ef4444" stroke-width="2.5" fill="none"/>
+
+        <!-- Asura to Senju & Uzumaki -->
+        <path d="M560 370 L560 388 L430 388 L430 405" stroke="#10b981" stroke-width="2.5" fill="none"/>
+        <path d="M560 388 L690 388 L690 405" stroke="#f97316" stroke-width="2.5" fill="none"/>
+
+        <!-- Hamura to Hyuga & Moon Otsutsuki -->
+        <path d="M920 235 L920 265 L860 265 L860 295" stroke="#cbd5e1" stroke-width="2.5" fill="none"/>
+        <path d="M920 265 L1050 265 L1050 295" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+        <path d="M860 370 L860 405" stroke="#cbd5e1" stroke-width="2.5" fill="none"/>
+
+        <!-- Union Line: Naruto (Uzumaki) + Hinata (Hyuga) -> Boruto & Himawari -->
+        <path d="M690 545 L690 572 L860 572 L860 545" stroke="#38bdf8" stroke-width="2.5" fill="none"/>
+        <path d="M775 572 L775 592" stroke="#38bdf8" stroke-width="2.5" fill="none" marker-end="url(#arrow-cyan)"/>
+
+        <!-- ROOT: KAGUYA -->
+        <g transform="translate(410, 15)">
+          <rect width="340" height="80" rx="14" fill="url(#grad-kaguya)" stroke="#f472b6" stroke-width="2"/>
+          <circle cx="42" cy="40" r="24" fill="#1e1b4b" stroke="#f472b6" stroke-width="2"/>
+          <text x="42" y="45" text-anchor="middle" fill="#fbcfe8" font-size="18" font-weight="bold">神</text>
+          <text x="80" y="34" fill="#fff" font-size="16" font-weight="800">KAGUYA ŌTSUTSUKI</text>
+          <text x="80" y="54" fill="#fbcfe8" font-size="12">Thủy tổ Chakra • Ăn Trái Thần Mộc</text>
+          <text x="80" y="70" fill="#f9a8d4" font-size="11">Byakugan • Rinne-Sharingan</text>
+        </g>
+
+        <!-- BLACK ZETSU (WILL) -->
+        <g transform="translate(505, 160)">
+          <rect width="150" height="65" rx="10" fill="#090d16" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="75" y="26" text-anchor="middle" fill="#fca5a5" font-size="13" font-weight="800">HẮC ZETSU</text>
+          <text x="75" y="43" text-anchor="middle" fill="#94a3b8" font-size="11">Ý chí thứ 3 của Kaguya</text>
+          <text x="75" y="57" text-anchor="middle" fill="#f87171" font-size="10">Thao túng 1.000 năm lịch sử</text>
+        </g>
+
+        <!-- HAGOROMO -->
+        <g transform="translate(225, 160)">
+          <rect width="270" height="75" rx="12" fill="url(#grad-hagoromo)" stroke="#f59e0b" stroke-width="2"/>
+          <text x="135" y="28" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">HAGOROMO ŌTSUTSUKI</text>
+          <text x="135" y="47" text-anchor="middle" fill="#fde68a" font-size="12">Lục Đạo Tiên Nhân • Sáng lập Nhẫn Tông</text>
+          <text x="135" y="64" text-anchor="middle" fill="#fcd34d" font-size="11">Ở lại Trái Đất • Sở hữu Rinnegan</text>
+        </g>
+
+        <!-- HAMURA -->
+        <g transform="translate(785, 160)">
+          <rect width="270" height="75" rx="12" fill="url(#grad-hamura)" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="135" y="28" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">HAMURA ŌTSUTSUKI</text>
+          <text x="135" y="47" text-anchor="middle" fill="#e2e8f0" font-size="12">Người Canh Giữ Mặt Trăng</text>
+          <text x="135" y="64" text-anchor="middle" fill="#94a3b8" font-size="11">Byakugan • Tenseigan</text>
+        </g>
+
+        <!-- INDRA -->
+        <g transform="translate(55, 295)">
+          <rect width="230" height="75" rx="12" fill="#450a0a" stroke="#ef4444" stroke-width="2"/>
+          <text x="115" y="27" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">INDRA ŌTSUTSUKI (Con trưởng)</text>
+          <text x="115" y="46" text-anchor="middle" fill="#fecaca" font-size="11.5">Thiên tài • Nhãn lực & Tâm linh</text>
+          <text x="115" y="63" text-anchor="middle" fill="#f87171" font-size="11">Tái sinh: Madara → Sasuke</text>
+        </g>
+
+        <!-- ASURA -->
+        <g transform="translate(445, 295)">
+          <rect width="230" height="75" rx="12" fill="#083344" stroke="#38bdf8" stroke-width="2"/>
+          <text x="115" y="27" text-anchor="middle" fill="#fff" font-size="14" font-weight="800">ASURA ŌTSUTSUKI (Con út)</text>
+          <text x="115" y="46" text-anchor="middle" fill="#bae6fd" font-size="11.5">Sinh lực thể chất & Ý chí kết nối</text>
+          <text x="115" y="63" text-anchor="middle" fill="#7dd3fc" font-size="11">Tái sinh: Hashirama → Naruto</text>
+        </g>
+
+        <!-- HYUGA BRANCH -->
+        <g transform="translate(765, 295)">
+          <rect width="190" height="75" rx="12" fill="#1e293b" stroke="#cbd5e1" stroke-width="1.8"/>
+          <text x="95" y="27" text-anchor="middle" fill="#fff" font-size="13.5" font-weight="800">NHÁNH TRÁI ĐẤT</text>
+          <text x="95" y="46" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Hậu duệ ở lại địa cầu</text>
+          <text x="95" y="63" text-anchor="middle" fill="#94a3b8" font-size="11">Kế thừa huyết thống Byakugan</text>
+        </g>
+
+        <!-- MOON OTSUTSUKI -->
+        <g transform="translate(970, 295)">
+          <rect width="165" height="75" rx="12" fill="#0f172a" stroke="#64748b" stroke-width="1.5"/>
+          <text x="82" y="27" text-anchor="middle" fill="#cbd5e1" font-size="13" font-weight="800">NHÁNH MẶT TRĂNG</text>
+          <text x="82" y="46" text-anchor="middle" fill="#94a3b8" font-size="11">Canh giữ vỏ Thập Vĩ</text>
+          <text x="82" y="63" text-anchor="middle" fill="#64748b" font-size="10.5">(Toneri Ōtsutsuki)</text>
+        </g>
+
+        <!-- CLAN 1: UCHIHA -->
+        <g transform="translate(45, 405)">
+          <rect width="250" height="140" rx="12" fill="#180c14" stroke="#ef4444" stroke-width="1.8"/>
+          <text x="125" y="25" text-anchor="middle" fill="#f87171" font-size="14" font-weight="800">GIA TỘC UCHIHA</text>
+          <text x="125" y="43" text-anchor="middle" fill="#fca5a5" font-size="11">Huyết kế giới hạn: Sharingan</text>
+          <line x1="20" y1="52" x2="230" y2="52" stroke="#7f1d1d"/>
+          <text x="125" y="72" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Madara Uchiha & Izuna Uchiha</text>
+          <text x="125" y="90" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Fugaku Uchiha (Tộc trưởng)</text>
+          <text x="125" y="108" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Itachi Uchiha & Sasuke Uchiha</text>
+          <text x="125" y="126" text-anchor="middle" fill="#fda4af" font-size="11.5">• Sarada Uchiha (Con gái Sasuke)</text>
+        </g>
+
+        <!-- CLAN 2: SENJU -->
+        <g transform="translate(315, 405)">
+          <rect width="230" height="140" rx="12" fill="#071e1a" stroke="#10b981" stroke-width="1.8"/>
+          <text x="115" y="25" text-anchor="middle" fill="#34d399" font-size="14" font-weight="800">GIA TỘC SENJU</text>
+          <text x="115" y="43" text-anchor="middle" fill="#6ee7b7" font-size="11">Sinh lực dồi dào & Thể chất</text>
+          <line x1="20" y1="52" x2="210" y2="52" stroke="#065f46"/>
+          <text x="115" y="74" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Hashirama Senju (Hokage I)</text>
+          <text x="115" y="94" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Tobirama Senju (Hokage II)</text>
+          <text x="115" y="114" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Tsunade (Hokage V - Cháu gái)</text>
+        </g>
+
+        <!-- CLAN 3: UZUMAKI -->
+        <g transform="translate(565, 405)">
+          <rect width="240" height="140" rx="12" fill="#231208" stroke="#f97316" stroke-width="1.8"/>
+          <text x="120" y="25" text-anchor="middle" fill="#fb923c" font-size="14" font-weight="800">GIA TỘC UZUMAKI</text>
+          <text x="120" y="43" text-anchor="middle" fill="#fdba74" font-size="11">Phong ấn thuật • Chakra khổng lồ</text>
+          <line x1="20" y1="52" x2="220" y2="52" stroke="#7c2d12"/>
+          <text x="120" y="72" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Mito Uzumaki (Vợ Hashirama)</text>
+          <text x="120" y="90" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Kushina Uzumaki (Mẹ Naruto)</text>
+          <text x="120" y="108" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Nagato (Pain) & Karin Uzumaki</text>
+          <text x="120" y="126" text-anchor="middle" fill="#fde047" font-size="11.5" font-weight="700">• Naruto Uzumaki (Hokage VII)</text>
+        </g>
+
+        <!-- CLAN 4: HYUGA -->
+        <g transform="translate(825, 405)">
+          <rect width="240" height="140" rx="12" fill="#111827" stroke="#cbd5e1" stroke-width="1.8"/>
+          <text x="120" y="25" text-anchor="middle" fill="#f1f5f9" font-size="14" font-weight="800">GIA TỘC HYŪGA</text>
+          <text x="120" y="43" text-anchor="middle" fill="#cbd5e1" font-size="11">Bạch Nhãn (Byakugan) • Nhu Quyền</text>
+          <line x1="20" y1="52" x2="220" y2="52" stroke="#475569"/>
+          <text x="120" y="72" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Hiashi & Hizashi (Tông - Phân gia)</text>
+          <text x="120" y="90" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Neji Hyūga</text>
+          <text x="120" y="108" text-anchor="middle" fill="#fde047" font-size="11.5" font-weight="700">• Hinata Hyūga (Vợ Naruto)</text>
+          <text x="120" y="126" text-anchor="middle" fill="#e2e8f0" font-size="11.5">• Hanabi Hyūga</text>
+        </g>
+
+        <!-- NEXT GEN CONVERGENCE -->
+        <g transform="translate(565, 592)">
+          <rect width="420" height="58" rx="12" fill="#0c192c" stroke="#38bdf8" stroke-width="2"/>
+          <text x="210" y="24" text-anchor="middle" fill="#7dd3fc" font-size="13.5" font-weight="800">GIAO THOA HUYẾT THỐNG: NARUTO + HINATA</text>
+          <text x="210" y="44" text-anchor="middle" fill="#e0f2fe" font-size="12">Boruto Uzumaki (Thức tỉnh mắt Jougan) & Himawari Uzumaki</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Detailed Cards for Section 1 -->
+    <div class="grid-2">
+      <div class="card card-accent-purple">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-rinnegan"/></svg></div>
+          <div class="char-title">
+            <h3>Gốc Rễ: Kaguya Ōtsutsuki</h3>
+            <div class="char-sub" style="color:#e9d5ff;">Thủy Tổ Chakra • Thực Thể Ngoài Hành Tinh</div>
+          </div>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.94rem;">Vị thần/ngoài hành tinh đáp xuống Trái Đất, ăn <strong>Trái Thần Mộc (God Tree)</strong> và trở thành sinh vật đầu tiên trên hành tinh sở hữu chakra. Bà sinh ra hai người con trai song sinh thừa hưởng dòng máu chakra đặc biệt:</p>
+        <ul class="detail-list">
+          <li><strong>Hagoromo Ōtsutsuki (Lục Đạo Tiên Nhân):</strong> Ở lại Trái Đất, truyền bá Nhẫn tông (Ninshū) và khai sinh hai nhánh huyết thống lớn nhất làng Lá thông qua hai người con trai Indra và Asura.</li>
+          <li><strong>Hamura Ōtsutsuki:</strong> Sau khi cùng anh trai phong ấn Kaguya, Hamura dẫn một phần gia tộc lên Mặt Trăng canh giữ vỏ bọc Thập Vĩ, trong khi nhánh hậu duệ ở lại Trái Đất trở thành <strong>Gia tộc Hyūga</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="card card-accent-crimson">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-sharingan"/></svg></div>
+          <div class="char-title">
+            <h3>Nhánh Indra → Gia Tộc Uchiha</h3>
+            <div class="char-sub" style="color:#fca5a5;">Con Trưởng Hagoromo • Sức Mạnh Tâm Linh & Nhãn Lực</div>
+          </div>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.94rem;">Thừa hưởng đôi mắt Sharingan và sức mạnh tinh thần từ cha. Do bất đồng tư tưởng về cách duy trì hòa bình, ông trở thành đối thủ truyền kiếp của em trai Asura.</p>
+        <ul class="detail-list">
+          <li><strong>Chuyển kiếp linh hồn:</strong> Liên tục luân hồi qua các thế hệ, nổi bật nhất là <strong>Madara Uchiha</strong> và cuối cùng là <strong>Sasuke Uchiha</strong>.</li>
+          <li><strong>Nhân vật tiêu biểu:</strong> Madara Uchiha, Izuna Uchiha, Fugaku Uchiha (Tộc trưởng), Itachi Uchiha, Sasuke Uchiha và thế hệ tiếp theo là <strong>Sarada Uchiha</strong> (con gái Sasuke và Sakura).</li>
+        </ul>
+      </div>
+
+      <div class="card card-accent-emerald">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-senju"/></svg></div>
+          <div class="char-title">
+            <h3>Nhánh Asura → Gia Tộc Senju & Uzumaki</h3>
+            <div class="char-sub" style="color:#6ee7b7;">Con Út Hagoromo • Sinh Lực Thể Chất & Ý Chí Kết Nối</div>
+          </div>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.94rem;">Ban đầu kém cỏi hơn anh trai nhưng đã thức tỉnh sức mạnh thể chất, sinh lực dồi dào nhờ tinh thần đoàn kết. Linh hồn luân hồi qua <strong>Hashirama Senju</strong> và <strong>Naruto Uzumaki</strong>.</p>
+        <ul class="detail-list">
+          <li><strong>Gia tộc Senju:</strong> Chuyên về thể chất và sinh lực. Tiêu biểu: <em>Hashirama Senju</em> (Hokage Đệ Nhất), <em>Tobirama Senju</em> (Hokage Đệ Nhì), <em>Tsunade</em> (Hokage Đệ Ngũ, cháu gái Hashirama).</li>
+          <li><strong>Gia tộc Uzumaki:</strong> Nổi tiếng với phong ấn thuật, chakra khổng lồ và tuổi thọ cao. Tiêu biểu: <em>Mito Uzumaki</em> (vợ Hashirama, Jinchūriki Cửu Vĩ đầu tiên), <em>Kushina Uzumaki</em> (mẹ Naruto, Jinchūriki thứ hai), <em>Nagato (Pain)</em>, <em>Karin Uzumaki</em> và <strong>Naruto Uzumaki</strong> (Hokage Đệ Thất).</li>
+        </ul>
+      </div>
+
+      <div class="card card-accent-silver">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-byakugan"/></svg></div>
+          <div class="char-title">
+            <h3>Nhánh Hamura → Gia Tộc Hyūga & Sự Giao Thoa</h3>
+            <div class="char-sub" style="color:#e2e8f0;">Huyết Kế Byakugan & Tái Hợp Thế Hệ Mới</div>
+          </div>
+        </div>
+        <p style="color:var(--text-secondary); font-size:0.94rem;">Hậu duệ ở lại Trái Đất của Hamura hình thành <strong>Gia tộc Hyūga</strong> tại làng Lá với huyết kế giới hạn Byakugan và cấu trúc Tông gia – Phân gia nghiêm ngặt.</p>
+        <ul class="detail-list">
+          <li><strong>Nhân vật tiêu biểu:</strong> Song sinh <em>Hiashi Hyūga</em> & <em>Hizashi Hyūga</em>, thiên tài phân gia <em>Neji Hyūga</em>, <em>Hinata Hyūga</em> và em gái <em>Hanabi Hyūga</em>.</li>
+          <li><strong>Tái hợp huyết thống Lục Đạo:</strong> Cuộc hôn nhân giữa <strong>Naruto Uzumaki</strong> (dòng máu Asura/Uzumaki) và <strong>Hinata Hyūga</strong> (dòng máu Hamura/Hyūga) đã hợp nhất hai nhánh lớn nhất từ thời Kaguya, sinh ra <strong>Boruto Uzumaki</strong> (sở hữu con mắt Jougan) và <strong>Himawari Uzumaki</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: REINCARNATION CYCLE -->
+  <section class="chapter" id="sec-reincarnation">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <h2>Vòng Lặp Luân Hồi Giữa Indra Và Asura Qua Các Thời Đại</h2>
+        <p>Không phải tái sinh thể xác hay ký ức, mà là sự chuyển kiếp của lượng chakra đặc thù bám lấy các hậu duệ phù hợp dưới lời nguyền thù hận và bàn tay giật dây của Hắc Zetsu.</p>
+      </div>
+    </div>
+
+    <div class="callout-box" style="margin-top:0; margin-bottom:1.75rem;">
+      <h4>Nguồn Gốc Xung Đột: Hai Triết Lý Hòa Bình Đối Lập</h4>
+      <p style="color:var(--text-secondary); font-size:0.94rem;">Trước khi qua đời, Hagoromo chọn người kế thừa <strong>Nhẫn tông (Ninshū)</strong>: <strong>Indra</strong> (thiên tài bẩm sinh) tin rằng <em>sức mạnh cá nhân và trật tự tuyệt đối</em> mới duy trì được hòa bình; còn <strong>Asura</strong> (kẻ nỗ lực) tin vào <em>tình yêu thương, sự hợp tác và niềm tin</em> giữa người với người. Bị tước quyền kế vị, Indra ôm hận thề sẽ chiến đấu với Asura qua mọi kiếp.</p>
+    </div>
+
+    <!-- Era 1 -->
+    <div class="era-block">
+      <div class="era-banner">
+        <h3>Giai Đoạn 1: Thế Hệ Nguyên Thủy (Thời Kỳ Hậu Lục Đạo)</h3>
+        <span class="tag gold">Khởi Nguồn Lời Nguyền</span>
+      </div>
+      <div class="duel-grid">
+        <div class="fighter-panel fighter-indra">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.6rem;">
+            <svg width="32" height="32" viewBox="0 0 64 64"><use href="#icon-sharingan"/></svg>
+            <div>
+              <strong style="color:#fca5a5; font-size:1.05rem;">Indra Ōtsutsuki</strong>
+              <div style="font-size:0.8rem; color:#f87171;">Anh trai ruột • Thiên tài Nhẫn thuật</div>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">Bị Hắc Zetsu kích động lòng đố kỵ và kiêu hãnh, Indra tấn công lễ kế vị của em trai, tin rằng thế giới chỉ có thể ổn định bằng sự thống trị của kẻ mạnh.</p>
+        </div>
+        <div class="vs-divider">
+          <div class="vs-circle">VS</div>
+        </div>
+        <div class="fighter-panel fighter-asura">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.6rem;">
+            <svg width="32" height="32" viewBox="0 0 64 64"><use href="#icon-senju"/></svg>
+            <div>
+              <strong style="color:#bae6fd; font-size:1.05rem;">Asura Ōtsutsuki</strong>
+              <div style="font-size:0.8rem; color:#7dd3fc;">Em trai ruột • Người kế thừa Nhẫn tông</div>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">Nhận được sự ủng hộ và truyền sức mạnh từ cộng đồng cùng cha mình, Asura thức tỉnh sức mạnh thể chất ngang ngửa Indra để bảo vệ lý tưởng kết nối.</p>
+        </div>
+      </div>
+      <div class="era-outcome">
+        <strong>Kết cục:</strong> Trận chiến tàn phá vùng đất xung quanh và bất phân thắng bại. Trước khi chết, Indra tuyên bố linh hồn của cả hai sẽ mãi mãi đối đầu nhau qua các thế hệ.
+      </div>
+    </div>
+
+    <!-- Era 2 -->
+    <div class="era-block">
+      <div class="era-banner">
+        <h3>Giai Đoạn 2: Thế Hệ Chiến Quốc & Lập Làng (Madara & Hashirama)</h3>
+        <span class="tag crimson">Bi Kịch Thung Lũng Tận Cùng</span>
+      </div>
+      <div class="duel-grid">
+        <div class="fighter-panel fighter-indra">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.6rem;">
+            <svg width="32" height="32" viewBox="0 0 64 64"><use href="#icon-rinnegan"/></svg>
+            <div>
+              <strong style="color:#fca5a5; font-size:1.05rem;">Madara Uchiha (Chuyển kiếp Indra)</strong>
+              <div style="font-size:0.8rem; color:#f87171;">Bạn thân thuở nhỏ → Kẻ phản bội làng Lá</div>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">Cái chết của em trai Izuna, sự nghi kỵ chính trị tại làng Lá và nội dung bị Hắc Zetsu sửa đổi trên tấm bia đá Uchiha khiến Madara tin rằng <strong>Nguyệt Nhãn Vô Hạn</strong> (ảo mộng hoàn hảo) là lối thoát duy nhất.</p>
+        </div>
+        <div class="vs-divider">
+          <div class="vs-circle">VS</div>
+        </div>
+        <div class="fighter-panel fighter-asura">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.6rem;">
+            <svg width="32" height="32" viewBox="0 0 64 64"><use href="#icon-senju"/></svg>
+            <div>
+              <strong style="color:#bae6fd; font-size:1.05rem;">Hashirama Senju (Chuyển kiếp Asura)</strong>
+              <div style="font-size:0.8rem; color:#7dd3fc;">Hokage Đệ Nhất • Người bảo vệ Làng Lá</div>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">Cùng Madara mơ ước xây dựng ngôi làng để trẻ em không phải ra chiến trường, nhưng khi Madara đe dọa nền hòa bình mới lập, Hashirama buộc phải đặt lợi ích của làng lên trên tình bạn.</p>
+        </div>
+      </div>
+      <div class="era-outcome">
+        <strong>Kết cục:</strong> Tại Thung Lũng Tận Cùng, Hashirama đâm sau lưng kết liễu Madara (nhưng Madara dùng Izanagi để giả chết và cấy tế bào Hashirama). Cái chết giả này khiến chakra luân hồi của cả hai tạm thời đóng băng suốt nhiều thập kỷ cho tới khi Madara thực sự qua đời.
+      </div>
+    </div>
+
+    <!-- Era 3 -->
+    <div class="era-block">
+      <div class="era-banner">
+        <h3>Giai Đoạn 3: Thế Hệ Hiện Đại & Sự Giải Thoát (Sasuke & Naruto)</h3>
+        <span class="tag blue">Chấm Dứt Vòng Lặp Ngàn Năm</span>
+      </div>
+      <div class="duel-grid">
+        <div class="fighter-panel fighter-indra">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.6rem;">
+            <svg width="32" height="32" viewBox="0 0 64 64"><use href="#icon-rinnegan"/></svg>
+            <div>
+              <strong style="color:#fca5a5; font-size:1.05rem;">Sasuke Uchiha (Chuyển kiếp Indra)</strong>
+              <div style="font-size:0.8rem; color:#f87171;">Đồng đội Đội 7 • Ấn Mặt Trăng Lục Đạo</div>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">Bị cuốn vào vòng xoáy thù hận (Itachi và làng Lá). Sau khi phong ấn Kaguya, Sasuke muốn thực hiện cuộc "Cách mạng": giết các Kage, tiêu diệt Vĩ Thú và trở thành kẻ thù chung duy nhất gánh chịu mọi thù hận trong bóng tối.</p>
+        </div>
+        <div class="vs-divider">
+          <div class="vs-circle">VS</div>
+        </div>
+        <div class="fighter-panel fighter-asura">
+          <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.6rem;">
+            <svg width="32" height="32" viewBox="0 0 64 64"><use href="#icon-uzumaki"/></svg>
+            <div>
+              <strong style="color:#bae6fd; font-size:1.05rem;">Naruto Uzumaki (Chuyển kiếp Asura)</strong>
+              <div style="font-size:0.8rem; color:#7dd3fc;">Đồng đội Đội 7 • Ấn Mặt Trời Lục Đạo</div>
+            </div>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-secondary);">Khác với Hashirama, Naruto nhất quyết <strong>không giết Sasuke</strong>, chấp nhận chết cùng bạn nếu không thể kéo bạn ra khỏi cô độc. Sự kiên định của Naruto đánh thức ký ức và sự đồng cảm sâu thẳm trong Sasuke.</p>
+        </div>
+      </div>
+      <div class="era-outcome">
+        <strong>Ý nghĩa phá vỡ vòng lặp:</strong> (1) Hắc Zetsu bị phong ấn cùng Kaguya, loại bỏ bàn tay vô hình kích động thù hận; (2) Sau trận chiến kiệt sức khiến mỗi người mất một cánh tay, Sasuke lần đầu thừa nhận thất bại về lý tưởng và chấp nhận tình bạn của Naruto. Chakra của Indra và Asura tìm thấy bình yên và ngừng chuyển kiếp.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: BLACK ZETSU MANIPULATION -->
+  <section class="chapter" id="sec-black-zetsu">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div>
+        <h2>Kế Hoạch Thao Túng Lịch Sử Ngàn Năm Của Hắc Zetsu</h2>
+        <p>Sinh ra từ ý chí cuối cùng của Kaguya ngay trước khi bà bị phong ấn, Hắc Zetsu không mạnh về giao tranh trực diện nhưng là bậc thầy thao túng tâm lý vĩ đại nhất lịch sử nhẫn giả.</p>
+      </div>
+    </div>
+
+    <!-- Visual Timeline Flow -->
+    <div class="flow-pipeline">
+      <div class="flow-step">
+        <span class="step-badge" style="background:rgba(239,68,68,0.2); color:#fca5a5;">Giai Đoạn 1 • Thời Cổ Đại</span>
+        <h4>Gieo Rắc Lời Nguyền Lên Gia Tộc Uchiha</h4>
+        <ul>
+          <li><strong>Đối tượng:</strong> Indra và các môn đồ Nhẫn tông đời đầu.</li>
+          <li><strong>Thủ đoạn:</strong> Thì thầm kích động sự đố kỵ, lòng kiêu hãnh của Indra sau khi bị tước quyền kế vị, châm ngòi cuộc chiến truyền kiếp với Asura.</li>
+          <li><strong>Tác phẩm để đời:</strong> Lẻn vào đền thờ Uchiha, <strong>sửa đổi nội dung tấm bia đá</strong> do Hagoromo để lại, biến thông điệp hòa hợp thành công thức kích hoạt <em>Nguyệt Nhãn Vô Hạn</em> bằng Rinnegan.</li>
+        </ul>
+        <div class="result-box"><strong>Kết quả:</strong> Khai sinh vòng lặp thù hận kéo dài hàng nghìn năm giữa hai dòng dõi chuyển kiếp.</div>
+      </div>
+
+      <div class="flow-step">
+        <span class="step-badge" style="background:rgba(245,158,11,0.2); color:#fde68a;">Giai Đoạn 2 • Thời Lập Làng</span>
+        <h4>Biến Madara Uchiha Thành "Quân Cờ Chủ Lực"</h4>
+        <ul>
+          <li><strong>Đối tượng:</strong> Madara Uchiha — thiên tài đầu tiên đủ năng lực thức tỉnh Rinnegan.</li>
+          <li><strong>Thủ đoạn:</strong> Sau khi Madara giả chết tại Thung Lũng Tận Cùng và cấy tế bào Hashirama để mở Rinnegan, Hắc Zetsu xuất hiện và tự nhận là <em>"ý chí sinh ra từ chính Rinnegan của Madara"</em>.</li>
+          <li><strong>Hành động ngầm:</strong> Âm thầm hỗ trợ Madara nuôi dưỡng Ngoại Đạo Ma Tượng (Gedo Mazo) và duy trì sự sống trong hang ngầm.</li>
+        </ul>
+        <div class="result-box"><strong>Kết quả:</strong> Chiếm trọn lòng tin tuyệt đối của Madara; biến Madara thành kẻ tin mình đang cứu rỗi nhân loại.</div>
+      </div>
+
+      <div class="flow-step">
+        <span class="step-badge" style="background:rgba(168,85,247,0.2); color:#e9d5ff;">Giai Đoạn 3 • Thời Trung Gian</span>
+        <h4>Giật Dây Obito Uchiha & Tổ Chức Akatsuki</h4>
+        <ul>
+          <li><strong>Đối tượng:</strong> Obito Uchiha — kẻ thay thế trẻ trung, đầy tổn thương khi Madara đã già yếu.</li>
+          <li><strong>Thủ đoạn:</strong> Phối hợp dàn dựng cái chết của Rin Nohara dưới tay Kakashi, đẩy Obito vào tuyệt vọng tột cùng để chấp nhận lý tưởng "thế giới thực là địa ngục".</li>
+          <li><strong>Giám sát trực tiếp:</strong> Hòa nhập cơ thể với Obito (như lớp áo giáp Bạch/Hắc Zetsu) để hỗ trợ năng lực không-thời gian và kiểm soát mọi bước đi của Akatsuki.</li>
+        </ul>
+        <div class="result-box"><strong>Kết quả:</strong> Thu thập đủ Vĩ Thú và châm ngòi Đại chiến Nhẫn giả lần thứ 4.</div>
+      </div>
+
+      <div class="flow-step">
+        <span class="step-badge" style="background:rgba(56,189,248,0.2); color:#bae6fd;">Giai Đoạn 4 • Đại Chiến IV</span>
+        <h4>Cú Lừa Thế Kỷ & Hồi Sinh Kaguya</h4>
+        <ul>
+          <li><strong>Bối cảnh:</strong> Madara trở thành Jinchūriki Thập Vĩ hoàn hảo và phóng ấn Tsukuyomi Vô Hạn lên Mặt Trăng, ngỡ mình là cứu thế chủ.</li>
+          <li><strong>Cú đâm chí mạng:</strong> Hắc Zetsu bất ngờ đâm xuyên ngực Madara từ phía sau, tuyên bố mình là <strong>con trai và ý chí của Kaguya</strong>.</li>
+          <li><strong>Hoàn tất kịch bản:</strong> Toàn bộ lịch sử nhẫn giả chỉ là bàn đạp để biến cơ thể Madara thành vật chứa trục xuất linh hồn Kaguya trở lại trần gian.</li>
+        </ul>
+        <div class="result-box"><strong>Kết quả:</strong> Hồi sinh thành công Kaguya Ōtsutsuki (trước khi bị Naruto và Sasuke phong ấn vĩnh viễn).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: WHITE ZETSU ORIGIN -->
+  <section class="chapter" id="sec-white-zetsu">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div>
+        <h2>Nguồn Gốc Thực Sự Của Bạch Zetsu & Mối Liên Hệ Với Thần Mộc</h2>
+        <p>Bạch Zetsu không phải nhân bản vô tính được tạo ra từ tế bào Hashirama như Madara lầm tưởng — chúng chính là những con người cổ đại bị hiến tế ngàn năm trước.</p>
+      </div>
+    </div>
+
+    <!-- Visual Transformation Flow SVG -->
+    <div class="diagram-wrapper">
+      <div class="diagram-title">
+        <svg width="18" height="18" viewBox="0 0 64 64"><use href="#icon-zetsu"/></svg>
+        Quy Trình Biến Đổi Sinh Học Từ Con Người Cổ Đại Thành Đạo Quân Bạch Zetsu
+      </div>
+      <svg viewBox="0 0 1120 230" width="100%" style="min-width: 850px; height: auto; display: block; margin: 0 auto;">
+        <!-- Step 1 -->
+        <g transform="translate(15, 25)">
+          <rect width="240" height="175" rx="14" fill="#1e1b4b" stroke="#a855f7" stroke-width="2"/>
+          <text x="120" y="30" text-anchor="middle" fill="#e9d5ff" font-size="13" font-weight="800">1. TSUKUYOMI VÔ HẠN</text>
+          <text x="120" y="52" text-anchor="middle" fill="#cbd5e1" font-size="11.5">Thời trị vì của Kaguya</text>
+          <line x1="20" y1="64" x2="220" y2="64" stroke="#581c87"/>
+          <text x="120" y="88" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Sợ tộc Ōtsutsuki truy sát,</text>
+          <text x="120" y="106" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Kaguya trói toàn bộ nhân loại</text>
+          <text x="120" y="124" text-anchor="middle" fill="#e2e8f0" font-size="11.5">cổ đại vào rễ cây Thần Mộc</text>
+          <text x="120" y="148" text-anchor="middle" fill="#f472b6" font-size="11" font-weight="700">Mục đích: Tạo quân đội phòng thủ</text>
+        </g>
+        <path d="M262 112 L292 112" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrow-gold)"/>
+
+        <!-- Step 2 -->
+        <g transform="translate(300, 25)">
+          <rect width="240" height="175" rx="14" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+          <text x="120" y="30" text-anchor="middle" fill="#a7f3d0" font-size="13" font-weight="800">2. ĐỒNG HÓA THỰC VẬT</text>
+          <text x="120" y="52" text-anchor="middle" fill="#6ee7b7" font-size="11.5">Qua hàng thiên niên kỷ</text>
+          <line x1="20" y1="64" x2="220" y2="64" stroke="#047857"/>
+          <text x="120" y="88" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Nạn nhân bị hút cạn chakra,</text>
+          <text x="120" y="106" text-anchor="middle" fill="#e2e8f0" font-size="11.5">mất lý trí, nhân tính và biến đổi</text>
+          <text x="120" y="124" text-anchor="middle" fill="#e2e8f0" font-size="11.5">thành sinh vật màu trắng vô hồn</text>
+          <text x="120" y="148" text-anchor="middle" fill="#34d399" font-size="11" font-weight="700">Bản chất thực vật của Thần Mộc</text>
+        </g>
+        <path d="M547 112 L577 112" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrow-gold)"/>
+
+        <!-- Step 3 -->
+        <g transform="translate(585, 25)">
+          <rect width="245" height="175" rx="14" fill="#27160c" stroke="#f59e0b" stroke-width="2"/>
+          <text x="122" y="30" text-anchor="middle" fill="#fde68a" font-size="13" font-weight="800">3. CÚ LỪA CỦA HẮC ZETSU</text>
+          <text x="122" y="52" text-anchor="middle" fill="#fcd34d" font-size="11.5">Đánh lừa Madara Uchiha</text>
+          <line x1="20" y1="64" x2="225" y2="64" stroke="#78350f"/>
+          <text x="122" y="88" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Hắc Zetsu lén giải phóng Bạch</text>
+          <text x="122" y="106" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Zetsu cổ đại từ Ngoại Đạo Ma</text>
+          <text x="122" y="124" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Tượng khi Madara truyền tế bào</text>
+          <text x="122" y="148" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="700">Madara tưởng mình tự tạo ra chúng</text>
+        </g>
+        <path d="M837 112 L867 112" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrow-gold)"/>
+
+        <!-- Step 4 -->
+        <g transform="translate(875, 25)">
+          <rect width="230" height="175" rx="14" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+          <text x="115" y="30" text-anchor="middle" fill="#bae6fd" font-size="13" font-weight="800">4. ĐẠI CHIẾN IV & BORUTO</text>
+          <text x="115" y="52" text-anchor="middle" fill="#7dd3fc" font-size="11.5">Hơn 100.000 cá thể thức tỉnh</text>
+          <line x1="20" y1="64" x2="210" y2="64" stroke="#334155"/>
+          <text x="115" y="88" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Tế bào Hashirama/Yamato giúp</text>
+          <text x="115" y="106" text-anchor="middle" fill="#e2e8f0" font-size="11.5">nhân bản và tăng sức mạnh.</text>
+          <text x="115" y="124" text-anchor="middle" fill="#e2e8f0" font-size="11.5">Tan rã khi giải trừ Tsukuyomi;</text>
+          <text x="115" y="148" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">Vài cá thể đột biến sót ở Boruto</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="grid-3">
+      <div class="card card-accent-purple">
+        <h3 style="color:#e9d5ff; margin-bottom:0.5rem;">Thần Mộc (Shinju)</h3>
+        <p style="font-size:0.92rem; color:var(--text-secondary);">Thực thể ngoài hành tinh hấp thụ năng lượng tự nhiên và chakra của hành tinh để kết trái. Đóng vai trò như "tử cung" biến đổi con người bị trói buộc thành Bạch Zetsu mang bản chất thực vật.</p>
+      </div>
+      <div class="card card-accent-emerald">
+        <h3 style="color:#6ee7b7; margin-bottom:0.5rem;">Tế Bào Hashirama</h3>
+        <p style="font-size:0.92rem; color:var(--text-secondary);">Mang dương độn và sinh lực thuần khiết nhất của hậu duệ Asura cùng huyết kế <strong>Mộc Độn</strong> (bản sao thu nhỏ của Thần Mộc). Vì cùng nguồn gốc thực vật, tế bào Hashirama (và Yamato) đóng vai trò chất xúc tác đánh thức và nhân bản Bạch Zetsu.</p>
+      </div>
+      <div class="card card-accent-silver">
+        <h3 style="color:#f1f5f9; margin-bottom:0.5rem;">Đặc Tính Sinh Học Bạch Zetsu</h3>
+        <p style="font-size:0.92rem; color:var(--text-secondary);">Không cần ăn uống hay bài tiết, sức sống thực vật mãnh liệt, di chuyển xuyên qua lòng đất/cây cối, hấp thụ chakra và sao chép hoàn hảo cả diện mạo lẫn ký ức của mục tiêu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: OUTER SPACE OTSUTSUKI CLAN -->
+  <section class="chapter" id="sec-otsutsuki">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div>
+        <h2>Gia Tộc Ōtsutsuki Ngoài Vũ Trụ: Nguồn Gốc, Quy Luật & Các Thành Viên</h2>
+        <p>Chủng tộc du mục vũ trụ đi khắp các thiên hà để gieo trồng Thần Mộc, hút cạn sinh khí hành tinh và tiến hóa thành những thực thể bất tử tối cao.</p>
+      </div>
+    </div>
+
+    <!-- Cosmic Cycle Diagram -->
+    <div class="diagram-wrapper">
+      <div class="diagram-title">
+        <svg width="18" height="18" viewBox="0 0 64 64"><use href="#icon-jougan"/></svg>
+        Quy Trình "Kế Hoạch Thần Mộc" & Cấu Trúc Cặp Đôi Của Gia Tộc Ōtsutsuki
+      </div>
+      <svg viewBox="0 0 1120 260" width="100%" style="min-width: 860px; height: auto; display: block; margin: 0 auto;">
+        <!-- Pair Structure Box -->
+        <g transform="translate(15, 20)">
+          <rect width="330" height="215" rx="14" fill="#131933" stroke="#f59e0b" stroke-width="2"/>
+          <text x="165" y="30" text-anchor="middle" fill="#fcd34d" font-size="13.5" font-weight="800">QUY LUẬT CẶP ĐÔI ŌTSUTSUKI</text>
+          <line x1="20" y1="42" x2="310" y2="42" stroke="#475569"/>
+          <rect x="20" y="55" width="290" height="65" rx="8" fill="rgba(245,158,11,0.14)" stroke="rgba(245,158,11,0.4)"/>
+          <text x="32" y="77" fill="#fde68a" font-size="12" font-weight="800">1. Bề Trên (Master):</text>
+          <text x="32" y="96" fill="#e2e8f0" font-size="11">Nắm quyền định đoạt, ăn Trái Thần Mộc,</text>
+          <text x="32" y="111" fill="#e2e8f0" font-size="11">sở hữu sức mạnh áp đảo (Isshiki, Momoshiki).</text>
+
+          <rect x="20" y="132" width="290" height="68" rx="8" fill="rgba(239,68,68,0.14)" stroke="rgba(239,68,68,0.4)"/>
+          <text x="32" y="153" fill="#fca5a5" font-size="12" font-weight="800">2. Kẻ Dưới (Subordinate / Vật Tế):</text>
+          <text x="32" y="172" fill="#e2e8f0" font-size="11">Hỗ trợ trồng cây, phải hiến dâng cơ thể hoặc bị</text>
+          <text x="32" y="187" fill="#e2e8f0" font-size="11">ăn thịt để Bề trên tiến hóa (Kaguya, Kinshiki).</text>
+        </g>
+
+        <!-- 4 Cosmic Steps -->
+        <g transform="translate(375, 20)">
+          <rect width="730" height="215" rx="14" fill="#0b1224" stroke="#38bdf8" stroke-width="1.8"/>
+          <text x="365" y="30" text-anchor="middle" fill="#7dd3fc" font-size="13.5" font-weight="800">CHU TRÌNH NUỐT CHỬNG HÀNH TINH NGOÀI KHÔNG GIAN</text>
+          <line x1="20" y1="42" x2="710" y2="42" stroke="#1e293b"/>
+
+          <!-- Step A -->
+          <rect x="20" y="60" width="152" height="135" rx="10" fill="#172554" stroke="#3b82f6"/>
+          <text x="96" y="84" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="800">BƯỚC 1: GIEO TRỒNG</text>
+          <text x="96" y="108" text-anchor="middle" fill="#e2e8f0" font-size="11">Gieo hạt giống Thần</text>
+          <text x="96" y="125" text-anchor="middle" fill="#e2e8f0" font-size="11">Mộc (Thập Vĩ) xuống</text>
+          <text x="96" y="142" text-anchor="middle" fill="#e2e8f0" font-size="11">hành tinh có sự sống</text>
+          <text x="96" y="162" text-anchor="middle" fill="#93c5fd" font-size="10.5">Hiến tế Kẻ Dưới</text>
+
+          <path d="M176 128 L194 128" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+
+          <!-- Step B -->
+          <rect x="198" y="60" width="152" height="135" rx="10" fill="#1e1b4b" stroke="#8b5cf6"/>
+          <text x="274" y="84" text-anchor="middle" fill="#c4b5fd" font-size="12" font-weight="800">BƯỚC 2: HÚT SINH KHÍ</text>
+          <text x="274" y="108" text-anchor="middle" fill="#e2e8f0" font-size="11">Rễ cây lan khắp địa</text>
+          <text x="274" y="125" text-anchor="middle" fill="#e2e8f0" font-size="11">cầu, hút toàn bộ chakra,</text>
+          <text x="274" y="142" text-anchor="middle" fill="#e2e8f0" font-size="11">nước và dữ liệu di truyền</text>
+          <text x="274" y="162" text-anchor="middle" fill="#c4b5fd" font-size="10.5">Kết thành Trái Chakra</text>
+
+          <path d="M354 128 L372 128" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+
+          <!-- Step C -->
+          <rect x="376" y="60" width="152" height="135" rx="10" fill="#3b0764" stroke="#d946ef"/>
+          <text x="452" y="84" text-anchor="middle" fill="#f0abfc" font-size="12" font-weight="800">BƯỚC 3: TIẾN HÓA</text>
+          <text x="452" y="108" text-anchor="middle" fill="#e2e8f0" font-size="11">Ăn Trái Thần Mộc để</text>
+          <text x="452" y="125" text-anchor="middle" fill="#e2e8f0" font-size="11">hấp thụ tinh hoa hành</text>
+          <text x="452" y="142" text-anchor="middle" fill="#e2e8f0" font-size="11">tinh, lột xác thành thực</text>
+          <text x="452" y="162" text-anchor="middle" fill="#f0abfc" font-size="10.5">thể thần thánh bất tử</text>
+
+          <path d="M532 128 L550 128" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-cyan)"/>
+
+          <!-- Step D -->
+          <rect x="554" y="60" width="156" height="135" rx="10" fill="#450a0a" stroke="#ef4444"/>
+          <text x="632" y="84" text-anchor="middle" fill="#fca5a5" font-size="12" font-weight="800">BƯỚC 4: HỦY DIỆT</text>
+          <text x="632" y="108" text-anchor="middle" fill="#e2e8f0" font-size="11">Hành tinh khô cằn biến</text>
+          <text x="632" y="125" text-anchor="middle" fill="#e2e8f0" font-size="11">thành hoang mạc chết;</text>
+          <text x="632" y="142" text-anchor="middle" fill="#e2e8f0" font-size="11">tộc Ōtsutsuki rời đi tìm</text>
+          <text x="632" y="162" text-anchor="middle" fill="#fca5a5" font-size="10.5">thiên hà mục tiêu mới</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Outer Space Members Cards -->
+    <div class="grid-2">
+      <!-- Kaguya -->
+      <div class="card card-accent-purple">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-rinnegan"/></svg></div>
+          <div class="char-title">
+            <h3>Kaguya Ōtsutsuki (Kẻ Phản Bội Gia Tộc)</h3>
+            <div class="char-sub" style="color:#e9d5ff;">Cặp Đôi Với Isshiki • Vai Trò Vật Tế (Subordinate)</div>
+          </div>
+        </div>
+        <ul class="detail-list">
+          <li><strong>Hành động phản bội:</strong> Đến Trái Đất cùng Isshiki ngàn năm trước với tư cách kẻ dưới bị hiến tế cho Thập Vĩ, nhưng Kaguya đã đánh lén làm Isshiki trọng thương suýt chết và tự ý độc chiếm Trái Thần Mộc.</li>
+          <li><strong>Phòng thủ trước đồng tộc:</strong> Lo sợ các thành viên cấp cao như Momoshiki và Kinshiki đến truy sát, bà dùng Tsukuyomi Vô Hạn tạo đội quân Bạch Zetsu.</li>
+          <li><strong>Năng lực:</strong> Byakugan, Rinne-Sharingan trên trán và thuật dịch chuyển không-thời gian tối thượng (Amenominaka).</li>
+        </ul>
+      </div>
+
+      <!-- Isshiki -->
+      <div class="card card-accent-crimson">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-byakugan"/></svg></div>
+          <div class="char-title">
+            <h3>Isshiki Ōtsutsuki (Chủ Mưu Tổ Chức Kara)</h3>
+            <div class="char-sub" style="color:#fca5a5;">Cặp Đôi Bề Trên Của Kaguya • Vật Chủ Jigen & Kawaki</div>
+          </div>
+        </div>
+        <ul class="detail-list">
+          <li><strong>Sinh tồn trong bóng tối:</strong> Bị Kaguya hủy hoại nửa thân dưới, Isshiki dùng thuật thu nhỏ chui vào tai nhà sư <strong>Jigen</strong>, ký sinh và điều khiển ông ta suốt hàng trăm năm.</li>
+          <li><strong>Mục tiêu:</strong> Thành lập tổ chức <strong>Kara</strong>, nuôi dưỡng một Thập Vĩ non và tìm vật chủ hoàn hảo (<strong>Kawaki</strong>) để tái sinh thông qua ấn chú <strong>Karmà</strong>.</li>
+          <li><strong>Nhãn thuật độc tôn:</strong> <em>Sukunahikona</em> (thu nhỏ bản thân hoặc vật thể vô tri trong tích tắc) và <em>Daikokuten</em> (lưu trữ vật thể vào không gian ngưng đọng thời gian rồi phóng ra với kích thước khổng lồ). Thể thuật áp đảo hoàn toàn Naruto và Sasuke.</li>
+        </ul>
+      </div>
+
+      <!-- Momoshiki & Kinshiki -->
+      <div class="card card-accent-gold">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-rinnegan"/></svg></div>
+          <div class="char-title">
+            <h3>Momoshiki & Kinshiki Ōtsutsuki</h3>
+            <div class="char-sub" style="color:#fde68a;">Bộ Đôi Truy Sát Từ Không Gian</div>
+          </div>
+        </div>
+        <ul class="detail-list">
+          <li><strong>Momoshiki (Bề trên):</strong> Ngạo mạn, coi chakra của con người là tài nguyên thấp kém. Có khả năng hấp thụ mọi nhẫn thuật bằng Rinnegan lòng bàn tay và phóng trả lại gấp bội, hoặc biến kẻ khác thành đan dược chakra.</li>
+          <li><strong>Kinshiki (Kẻ dưới / Cha nuôi):</strong> Trung thành tuyệt đối, tạo ra vô số vũ khí chakra đỏ sắc bén. Đã tự nguyện biến thành Trái Chakra để Momoshiki hấp thụ và tiến hóa hình thái mới.</li>
+          <li><strong>Kết cục:</strong> Đến Trái Đất thu hồi chakra của Kaguya và bị Naruto, Sasuke cùng Boruto đánh bại trong kỳ thi Chūnin; Momoshiki kịp khắc ấn <strong>Karmà</strong> lên tay Boruto trước khi tan biến.</li>
+        </ul>
+      </div>
+
+      <!-- Urashiki & Code -->
+      <div class="card card-accent-blue">
+        <div class="char-header">
+          <div class="avatar-box"><svg width="42" height="42" viewBox="0 0 64 64"><use href="#icon-jougan"/></svg></div>
+          <div class="char-title">
+            <h3>Urashiki Ōtsutsuki & Code (Kẻ Thừa Kế Ý Chí)</h3>
+            <div class="char-sub" style="color:#bae6fd;">Trinh Sát Thời Gian & Hậu Duệ Karmà Trắng</div>
+          </div>
+        </div>
+        <ul class="detail-list">
+          <li><strong>Urashiki Ōtsutsuki:</strong> Trinh sát viên tinh ranh chuyên dùng cần câu chakra để đánh cắp năng lượng đối thủ. Sở hữu Byakugan chuyển hóa thành Rinnegan sáu màu có khả năng <strong>thao túng thời gian</strong> ngắn hạn để né đòn hoặc nhìn trước tương lai.</li>
+          <li><strong>Code (Tổ chức Kara):</strong> Tuy không phải Ōtsutsuki thuần chủng, Code là con người mang ấn <strong>Karmà màu trắng</strong> (không dùng làm vật chứa tái sinh nhưng giữ nguyên toàn bộ sức mạnh chiến đấu thuần túy của Ōtsutsuki). Sau cái chết của Isshiki, Code kế thừa ý chí "nuốt chửng các hành tinh" trong <em>Boruto: Two Blue Vortex</em>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Tổng hợp toàn diện từ phiên thảo luận về Vũ trụ Naruto & Boruto • Thiết kế sơ đồ phả hệ & dòng chảy lịch sử trực quan.</p>
+</footer>
+
+</body>
+</html>
