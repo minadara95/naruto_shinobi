@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Naruto – Mindmap phả hệ từ Kaguya</title>
+<style>
+:root{--bg:#f6f4ee;--fg:#1d1d1b;--ln:#aeaa9c;--s:78%;--l:90%;--bd:50%;--glow:hsl(40 90% 80% / .55);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101117;--fg:#ecebe6;--ln:#4d4e57;--s:38%;--l:19%;--bd:62%;--glow:hsl(260 60% 30% / .5)}}
+:root[data-theme="dark"]{--bg:#101117;--fg:#ecebe6;--ln:#4d4e57;--s:38%;--l:19%;--bd:62%;--glow:hsl(260 60% 30% / .5)}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font:13px/1.2 "Be Vietnam Pro","Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column}
+#bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--ln)}
+#bar h1{font-size:17px;margin:0 8px 0 0}
+#bar input,#bar button{font:inherit;color:inherit;background:transparent;border:1px solid var(--ln);border-radius:8px;padding:6px 10px}
+#bar button{cursor:pointer}#bar span{opacity:.65;font-size:12px}
+#w{flex:1;position:relative;overflow:hidden;cursor:grab;touch-action:none;background:radial-gradient(circle at 50% 50%,var(--glow),transparent 55%)}
+#st{position:absolute;left:0;top:0;transform-origin:0 0}
+#sv{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible}
+.l{position:absolute;white-space:nowrap;cursor:pointer;padding:4px 10px;border-radius:999px;border:1.5px solid hsl(var(--h) 55% var(--bd));background:hsl(var(--h) var(--s) var(--l));display:flex;gap:5px;align-items:center;transform:translate(-50%,-50%) rotate(var(--r));user-select:none}
+.l .i{font-size:1.35em}.k{font-size:11px;opacity:.65}
+.d1{font-size:15px;font-weight:600}.d0{font-size:22px;font-weight:700;padding:10px 20px;border-width:3px;box-shadow:0 0 40px hsl(40 95% 60% / .6)}
+.hit{outline:3px solid #f5b400}
+</style></head><body>
+<div id="bar"><h1>Naruto – Mindmap phả hệ từ Kaguya</h1>
+<input id="q" type="search" placeholder="Tìm nhân vật…">
+<button id="a">Mở tất cả</button><button id="b">Thu gọn</button><button id="f">Vừa khung</button><button id="zi">＋</button><button id="zo">－</button>
+<span id="n"></span></div>
+<div id="w"><div id="st"><svg id="sv"></svg></div></div>
+<script>
+const T=["👑 Kaguya Ōtsutsuki",
+["🌙 Hagoromo Ōtsutsuki (Lục Đạo Tiên Nhân)",
+["👁️ Indra Ōtsutsuki",
+["🔥 Tộc Uchiha",
+["⚔️ Uchiha Tajima","🔴 Uchiha Madara","🌀 Uchiha Izuna"],
+["🔥 Uchiha Fugaku ⚭ 🌸 Uchiha Mikoto","🐦‍⬛ Uchiha Itachi",["⚡ Uchiha Sasuke ⚭ 🌸 Haruno Sakura","📓 Uchiha Sarada"]],
+["👮 Uchiha Hikaku","🧢 Uchiha Inabi","🧢 Uchiha Teyaki"],
+"🎭 Uchiha Obito (Tobi)","🌫️ Uchiha Shisui","🕊️ Uchiha Izumi","🏮 Uchiha Kagami","🕶️ Uchiha Yashiro","🌑 Uchiha Setsuna"]],
+["🌿 Ashura Ōtsutsuki",
+["🌳 Tộc Senju",
+["🛡️ Senju Butsuma",
+["🌳 Senju Hashirama ⚭ 🌀 Mito Uzumaki","💉 Senju Tsunade (cháu)","⚔️ Senju Nawaki (cháu)"],
+"💧 Senju Tobirama","🪵 Senju Itama","🪵 Senju Kawarama"]],
+["🌀 Tộc Uzumaki",
+["🧡 Uzumaki Kushina ⚭ ⚡ Namikaze Minato (Hokage 4)",
+["🍥 Uzumaki Naruto ⚭ 🌙 Hyūga Hinata","🦊 Uzumaki Boruto","🌸 Uzumaki Himawari"]],
+"🍥 Uzumaki Mito","🟠 Uzumaki Nagato (Pain)","🔴 Uzumaki Karin"]]],
+["🌕 Hamura Ōtsutsuki",
+"🌖 Ōtsutsuki Toneri",
+["⚪ Tộc Hyūga (Byakugan)",
+["⚪ Hyūga Hiashi","🌙 Hyūga Hinata","🌸 Hyūga Hanabi"],
+["🛡️ Hyūga Hizashi (em sinh đôi)","🌪️ Hyūga Neji"],"⚪ Hyūga Kō"]],
+["🖤 Black Zetsu (ý chí Kaguya)","🤍 White Zetsu"],
+["🐙 Thập Vĩ (Jūbi)","🎭 Jinchūriki: Obito","🔴 Jinchūriki: Madara"],
+["👽 Họ hàng Ōtsutsuki (ngoài hành tinh)","🌌 Isshiki Ōtsutsuki","💀 Momoshiki Ōtsutsuki","⚔️ Kinshiki Ōtsutsuki","🔮 Urashiki Ōtsutsuki","🌑 Jigen (Kashin Koji)","🧬 Code","👁️ Eida","🌠 Delta"],
+["🦊 Vĩ Thú (Bijū)","1️⃣ Shukaku","2️⃣ Matatabi","3️⃣ Isobu","4️⃣ Son Gokū","5️⃣ Kokuō","6️⃣ Saiken","7️⃣ Chōmei","8️⃣ Gyūki","9️⃣ Kurama"],
+["🌐 Ngoài huyết thống Ōtsutsuki",
+["🍃 Konoha",
+["🐒 Sarutobi Hiruzen ⚭ 👵 Biwako",["🚬 Sarutobi Asuma ⚭ 🌹 Yūhi Kurenai","🎀 Sarutobi Mirai"],"🔰 Sarutobi Konohamaru (cháu)"],
+["🐺 Hatake Sakumo","⚡ Hatake Kakashi"],
+["🦌 Nara Shikaku ⚭ 🔪 Nara Yoshino",["♟️ Nara Shikamaru ⚭ 🌬️ Temari","🦌 Nara Shikadai"]],
+["🍖 Akimichi Chōza",["🍙 Akimichi Chōji ⚭ ⚡ Karui","🥨 Akimichi Chōchō"]],
+["🧠 Yamanaka Inoichi",["🌺 Yamanaka Ino ⚭ 🎨 Sai","🖌️ Yamanaka Inojin"]],
+["🐕 Inuzuka Tsume","🐶 Inuzuka Kiba","🐺 Inuzuka Hana","🐕 Akamaru","🐕 Haimaru"],
+["🪲 Aburame Shibi","🕶️ Aburame Shino"],
+["🌸 Haruno Kizashi ⚭ 🌸 Haruno Mebuki","🌸 Haruno Sakura"],
+["💪 Maito Gai",["🥋 Rock Lee","🤖 Metal Lee"],"🎯 Tenten"],
+["🐍 Sannin",["🐸 Jiraiya"],["💉 Tsunade","🩺 Shizune","🐷 Tonton"],["🐍 Orochimaru","🧪 Kabuto Yakushi","🐍 Mitsuki"]],
+["👴 Hội đồng & Root","🧣 Shimura Danzō","👓 Mitokado Homura","👵 Utatane Koharu","🌫️ Yamato","🌑 Torune","🕳️ Fū (Root)"],
+["🏫 Shinobi Konoha khác","🎓 Umino Iruka","🧊 Ebisu","🔪 Morino Ibiki","🍡 Mitarashi Anko","🥢 Shiranui Genma","🗡️ Namiashi Raidō","🔨 Hagane Kotetsu","🧿 Kamizuki Izumo","🗡️ Gekkō Hayate","🐱 Uzuki Yūgao","👁️ Yamashiro Aoba","🔰 Moegi","🔰 Udon","💧 Nohara Rin","🏪 Teuchi","🍜 Ayame"],
+["🌱 Thế hệ Boruto","🥷 Kawaki","🌸 Sumire Kakei","🪂 Iwabee Yuino","⚡ Denki Kaminarimon","🍣 Wasabi Izuno","💧 Namida Suzumeno","🔰 Tento"]],
+["🏜️ Sunagakure",
+["🏜️ Rasa ⚭ 🌙 Karura",["🌬️ Temari","🎎 Kankurō","🧧 Gaara"]],
+"🧓 Chiyo",["🎭 Akasuna Sasori"],"👴 Ebizō","🔰 Baki","🌸 Matsuri","🪆 Pakura","🕯️ Yashamaru"],
+["⛈️ Kumogakure",["⚡ A (Raikage 4)","🎤 Killer B"],"🌩️ Darui","🍡 Omoi","⚡ Karui","❄️ Samui","📜 Mabui","🔥 Nii Yugito","🌩️ Raikage 3","🐻 Shii","🗡️ Cee"],
+["🪨 Iwagakure",["🗿 Ōnoki",["🧱 Kitsuchi",["💣 Kurotsuchi"]]],"💥 Deidara","🪵 Akatsuchi","🔥 Roshi","🦍 Han","🧓 Mū"],
+["🌊 Kirigakure","🌊 Terumi Mei","🗡️ Momochi Zabuza","❄️ Haku","🦈 Hoshigaki Kisame","💧 Hōzuki Suigetsu","💧 Hōzuki Mangetsu","👁️ Ao","⚡ Chōjūrō","🫧 Utakata","🐢 Yagura","🗡️ Ameyuri Ringo","⚡ Kushimaru Kuriarare","🗡️ Jinin Akebino","🐟 Fuguki Suikazan","🐙 Jinpachi Munashi"],
+["🌧️ Amegakure","👴 Hanzō","🟠 Yahiko","📄 Konan","🌧️ Nagato (Pain)"],
+["🌊 Takigakure","🐛 Fū","🌿 Shibuki","💀 Kakuzu"],
+["🎶 Otogakure","🧬 Kaguya Kimimaro","🪈 Tayuya","👥 Sakon & Ukon","🏹 Kidōmaru","🪨 Jirōbō","💥 Dosu","🔊 Zaku","🎹 Kin","🦍 Jūgo","🔴 Karin","💧 Suigetsu"],
+["🔥 Akatsuki","🟠 Pain / Yahiko","📄 Konan","🐦‍⬛ Itachi","🦈 Kisame","💥 Deidara","🎭 Sasori","✝️ Hidan","💀 Kakuzu","🌱 Zetsu","🎭 Obito (Tobi)"],
+["🌊 Xứ Sóng & khác","🏗️ Tazuna","👦 Inari","👩 Tsunami","💰 Gatō","🛡️ Mifune","⚔️ Danzō (Root)","🎍 Fū Yamanaka"]]];
+
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+let H=0,ID=0;const all=[];
+function mk(a,d,h,p){const arr=Array.isArray(a),n={s:arr?a[0]:a,d,p,id:ID++,kids:[],open:d<=2};
+if(d<=2)h=(H++*53+8)%360;n.h=h;all.push(n);(arr?a.slice(1):[]).forEach(k=>n.kids.push(mk(k,d+1,h,n)));return n}
+const root=mk(T,0,40,null);
+const Rn=i=>{const x=Math.sin(i*12.9898)*43758.5453;return x-Math.floor(x)};
+const lv=n=>n.open&&n.kids.length?n.kids.reduce((s,k)=>s+lv(k),0):1;
+const vis=(n,f)=>{f(n);if(n.open)n.kids.forEach(k=>vis(k,f))};
+const w=document.getElementById('w'),st=document.getElementById('st'),sv=document.getElementById('sv');
+let P={x:0,y:0,k:1},R=[0];
+function asg(n,a0,a1){const r=R[n.d],a=(a0+a1)/2+(Rn(n.id+99)-.5)*.03,rr=n.d?r+(Rn(n.id)-.5)*36:0;
+n.x=rr*Math.cos(a);n.y=rr*Math.sin(a);
+if(n.open&&n.kids.length){const t=lv(n);let c=a0;n.kids.forEach(k=>{const sp=(a1-a0)*lv(k)/t;asg(k,c,c+sp);c+=sp})}}
+function layout(){const c=[];vis(root,n=>c[n.d]=(c[n.d]||0)+1);R=[0];
+for(let d=1;d<c.length;d++)R[d]=Math.max(R[d-1]+(d==1?200:170),c[d]*74/6.283);
+asg(root,0,6.283)}
+function draw(){let e='',cnt=0;st.querySelectorAll('.l').forEach(x=>x.remove());
+vis(root,n=>{cnt++;
+if(n.p){const mx=(n.p.x+n.x)/2,my=(n.p.y+n.y)/2,dx=n.x-n.p.x,dy=n.y-n.p.y,L=Math.hypot(dx,dy)||1,b=((n.id%5)-2)*14+(n.id%2?10:-10);
+e+='<path d="M'+n.p.x+' '+n.p.y+'Q'+(mx-dy/L*b)+' '+(my+dx/L*b)+' '+n.x+' '+n.y+'" fill="none" stroke="hsl('+n.h+' 55% 55%)" stroke-width="'+Math.max(1.5,6.5-n.d*1.2)+'" stroke-linecap="round" opacity=".75"/>'}});
+sv.innerHTML=e;
+vis(root,n=>{const l=document.createElement('div'),i=n.s.indexOf(' ');
+l.className='l d'+Math.min(n.d,2)+(n.hit?' hit':'');l.style.cssText='left:'+n.x+'px;top:'+n.y+'px;--h:'+n.h+';--r:'+((Rn(n.id+7)-.5)*5).toFixed(1)+'deg;z-index:'+(9-Math.min(n.d,8));
+const m=n.kids.length&&!n.open?'<span class="k">+'+n.kids.length+'</span>':'';
+l.innerHTML='<span class="i">'+esc(n.s.slice(0,i))+'</span><span>'+esc(n.s.slice(i+1))+'</span>'+m;
+if(n.kids.length)l.onclick=()=>{const ox=n.x*P.k+P.x,oy=n.y*P.k+P.y;n.open=!n.open;layout();draw();P.x=ox-n.x*P.k;P.y=oy-n.y*P.k;ap()};
+st.append(l)});
+document.getElementById('n').textContent=cnt+'/'+all.length+' nút đang hiện'}
+function ap(){st.style.transform='translate('+P.x+'px,'+P.y+'px) scale('+P.k+')'}
+function fit(){let a=1e9,b=-1e9,c=1e9,d=-1e9;vis(root,n=>{a=Math.min(a,n.x);b=Math.max(b,n.x);c=Math.min(c,n.y);d=Math.max(d,n.y)});
+const W=w.clientWidth,Hh=w.clientHeight,k=Math.min(W/(b-a+260),Hh/(d-c+140),1.2);P.k=k;P.x=W/2-(a+b)/2*k;P.y=Hh/2-(c+d)/2*k;ap()}
+function zm(f,cx,cy){P.x=cx-(cx-P.x)*f;P.y=cy-(cy-P.y)*f;P.k*=f;ap()}
+function re(){layout();draw();fit()}
+a.onclick=()=>{all.forEach(n=>n.open=true);re()};
+b.onclick=()=>{all.forEach(n=>{n.open=n.d<=1;n.hit=0});re()};
+f.onclick=fit;zi.onclick=()=>zm(1.2,w.clientWidth/2,w.clientHeight/2);zo.onclick=()=>zm(1/1.2,w.clientWidth/2,w.clientHeight/2);
+w.addEventListener('wheel',e=>{e.preventDefault();const r=w.getBoundingClientRect();zm(e.deltaY<0?1.1:1/1.1,e.clientX-r.left,e.clientY-r.top)},{passive:false});
+let dn,x0,y0,px,py;
+w.onpointerdown=e=>{if(e.target.closest('.l'))return;dn=1;x0=e.clientX;y0=e.clientY;px=P.x;py=P.y;w.setPointerCapture(e.pointerId)};
+w.onpointermove=e=>{if(dn){P.x=px+e.clientX-x0;P.y=py+e.clientY-y0;ap()}};
+w.onpointerup=()=>dn=0;
+q.oninput=()=>{all.forEach(n=>n.hit=0);const v=q.value.trim().toLowerCase();if(!v){layout();draw();return}let fn;
+all.forEach(n=>{if(n.s.toLowerCase().includes(v)){n.hit=1;let p=n.p;while(p){p.open=true;p=p.p}fn=fn||n}});
+layout();draw();if(fn){P.k=Math.max(P.k,.9);P.x=w.clientWidth/2-fn.x*P.k;P.y=w.clientHeight/2-fn.y*P.k;ap()}};
+re();
+</script></body></html>

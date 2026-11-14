@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Naruto – Cây phả hệ từ Kaguya</title>
+<style>
+:root{--bg:#f6f4ee;--fg:#1d1d1b;--ln:#aeaa9c;--s:75%;--l:91%;--bd:50%;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14151a;--fg:#ecebe6;--ln:#4d4e57;--s:35%;--l:19%;--bd:62%}}
+:root[data-theme="dark"]{--bg:#14151a;--fg:#ecebe6;--ln:#4d4e57;--s:35%;--l:19%;--bd:62%}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font:14px/1.3 "Be Vietnam Pro","Segoe UI",system-ui,sans-serif;display:flex;flex-direction:column}
+#bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--ln)}
+#bar h1{font-size:17px;margin:0 8px 0 0;font-weight:700}
+#bar input,#bar button{font:inherit;color:inherit;background:transparent;border:1px solid var(--ln);border-radius:8px;padding:6px 10px}
+#bar button{cursor:pointer}#bar span{opacity:.65;font-size:12px}
+#w{flex:1;overflow:auto;padding:24px;cursor:grab}
+#t{margin:0;padding:0;display:inline-flex}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;justify-content:center;position:relative}
+#t ul{margin-left:16px}
+#t ul::before{content:"";position:absolute;left:-16px;top:50%;width:16px;border-top:1.5px solid var(--ln)}
+li{position:relative;display:flex;align-items:center;padding:3px 0 3px 26px}
+li::before{content:"";position:absolute;left:0;top:50%;width:26px;border-top:1.5px solid var(--ln)}
+li::after{content:"";position:absolute;left:0;top:0;bottom:0;border-left:1.5px solid var(--ln)}
+li:first-child::after{top:50%}li:last-child::after{bottom:50%}li:only-child::after{display:none}
+#t>li{padding-left:0}#t>li::before,#t>li::after{display:none}
+.l{white-space:nowrap;cursor:pointer;padding:5px 11px;border-radius:999px;border:1.5px solid hsl(var(--h) 55% var(--bd));background:hsl(var(--h) var(--s) var(--l));display:flex;gap:6px;align-items:center}
+.i{font-size:18px}.k{font-size:11px;opacity:.65}
+li.c>ul{display:none}
+li.hit>.l{outline:3px solid #f5b400}
+</style></head><body>
+<div id="bar"><h1>Naruto – Cây phả hệ từ Kaguya</h1>
+<input id="q" type="search" placeholder="Tìm nhân vật…">
+<button id="a">Mở tất cả</button><button id="b">Thu gọn</button><button id="zi">＋</button><button id="zo">－</button>
+<span id="n"></span></div>
+<div id="w"><ul id="t"></ul></div>
+<script>
+const T=["👑 Kaguya Ōtsutsuki (Công chúa thỏ)",
+["🌙 Hagoromo Ōtsutsuki (Lục Đạo Tiên Nhân)",
+["👁️ Indra Ōtsutsuki",
+["🔥 Tộc Uchiha",
+["⚔️ Uchiha Tajima","🔴 Uchiha Madara","🌀 Uchiha Izuna"],
+["🔥 Uchiha Fugaku ⚭ 🌸 Uchiha Mikoto","🐦‍⬛ Uchiha Itachi",["⚡ Uchiha Sasuke ⚭ 🌸 Haruno Sakura","📓 Uchiha Sarada"]],
+["👮 Uchiha Hikaku","🧢 Uchiha Inabi","🧢 Uchiha Teyaki"],
+"🎭 Uchiha Obito (Tobi)","🌫️ Uchiha Shisui","🕊️ Uchiha Izumi","🏮 Uchiha Kagami","🕶️ Uchiha Yashiro","🌑 Uchiha Setsuna"]],
+["🌿 Ashura Ōtsutsuki",
+["🌳 Tộc Senju",
+["🛡️ Senju Butsuma",
+["🌳 Senju Hashirama ⚭ 🌀 Mito Uzumaki","💉 Senju Tsunade (cháu)","⚔️ Senju Nawaki (cháu)"],
+"💧 Senju Tobirama","🪵 Senju Itama","🪵 Senju Kawarama"]],
+["🌀 Tộc Uzumaki",
+["🧡 Uzumaki Kushina ⚭ ⚡ Namikaze Minato (Hokage 4)",
+["🍥 Uzumaki Naruto ⚭ 🌙 Hyūga Hinata","🦊 Uzumaki Boruto","🌸 Uzumaki Himawari"]],
+"🍥 Uzumaki Mito","🟠 Uzumaki Nagato (Pain)","🔴 Uzumaki Karin"]]],
+["🌕 Hamura Ōtsutsuki",
+"🌖 Ōtsutsuki Toneri",
+["⚪ Tộc Hyūga (Byakugan)",
+["⚪ Hyūga Hiashi","🌙 Hyūga Hinata","🌸 Hyūga Hanabi"],
+["🛡️ Hyūga Hizashi (em sinh đôi)","🌪️ Hyūga Neji"],"⚪ Hyūga Kō"]],
+["🖤 Black Zetsu (ý chí Kaguya)","🤍 White Zetsu"],
+["🐙 Thập Vĩ (Jūbi)","🎭 Jinchūriki: Obito","🔴 Jinchūriki: Madara"],
+["👽 Họ hàng Ōtsutsuki (ngoài hành tinh)","🌌 Isshiki Ōtsutsuki","💀 Momoshiki Ōtsutsuki","⚔️ Kinshiki Ōtsutsuki","🔮 Urashiki Ōtsutsuki","🌑 Jigen (Kashin Koji)","🧬 Code","👁️ Eida","🌠 Delta"],
+["🦊 Vĩ Thú (Bijū)","1️⃣ Shukaku","2️⃣ Matatabi","3️⃣ Isobu","4️⃣ Son Gokū","5️⃣ Kokuō","6️⃣ Saiken","7️⃣ Chōmei","8️⃣ Gyūki","9️⃣ Kurama"],
+["🌐 Ngoài huyết thống Ōtsutsuki",
+["🍃 Konoha",
+["🐒 Sarutobi Hiruzen ⚭ 👵 Biwako",["🚬 Sarutobi Asuma ⚭ 🌹 Yūhi Kurenai","🎀 Sarutobi Mirai"],"🔰 Sarutobi Konohamaru (cháu)"],
+["🐺 Hatake Sakumo","⚡ Hatake Kakashi"],
+["🦌 Nara Shikaku ⚭ 🔪 Nara Yoshino",["♟️ Nara Shikamaru ⚭ 🌬️ Temari","🦌 Nara Shikadai"]],
+["🍖 Akimichi Chōza",["🍙 Akimichi Chōji ⚭ ⚡ Karui","🥨 Akimichi Chōchō"]],
+["🧠 Yamanaka Inoichi",["🌺 Yamanaka Ino ⚭ 🎨 Sai","🖌️ Yamanaka Inojin"]],
+["🐕 Inuzuka Tsume","🐶 Inuzuka Kiba","🐺 Inuzuka Hana","🐕 Akamaru","🐕 Haimaru"],
+["🪲 Aburame Shibi","🕶️ Aburame Shino"],
+["🌸 Haruno Kizashi ⚭ 🌸 Haruno Mebuki","🌸 Haruno Sakura"],
+["💪 Maito Gai",["🥋 Rock Lee","🤖 Metal Lee"],"🎯 Tenten"],
+["🐍 Sannin",["🐸 Jiraiya"],["💉 Tsunade","🩺 Shizune","🐷 Tonton"],["🐍 Orochimaru","🧪 Kabuto Yakushi","🐍 Mitsuki"]],
+["👴 Hội đồng & Root","🧣 Shimura Danzō","👓 Mitokado Homura","👵 Utatane Koharu","🌫️ Yamato","🌑 Torune","🕳️ Fū (Root)"],
+["🏫 Shinobi Konoha khác","🎓 Umino Iruka","🧊 Ebisu","🔪 Morino Ibiki","🍡 Mitarashi Anko","🥢 Shiranui Genma","🗡️ Namiashi Raidō","🔨 Hagane Kotetsu","🧿 Kamizuki Izumo","🗡️ Gekkō Hayate","🐱 Uzuki Yūgao","👁️ Yamashiro Aoba","🔰 Moegi","🔰 Udon","💧 Nohara Rin","🏪 Teuchi","🍜 Ayame"],
+["🌱 Thế hệ Boruto","🥷 Kawaki","🌸 Sumire Kakei","🪂 Iwabee Yuino","⚡ Denki Kaminarimon","🍣 Wasabi Izuno","💧 Namida Suzumeno","🔰 Tento"]],
+["🏜️ Sunagakure",
+["🏜️ Rasa ⚭ 🌙 Karura",["🌬️ Temari","🎎 Kankurō","🧧 Gaara"]],
+"🧓 Chiyo",["🎭 Akasuna Sasori"],"👴 Ebizō","🔰 Baki","🌸 Matsuri","🪆 Pakura","🕯️ Yashamaru"],
+["⛈️ Kumogakure",["⚡ A (Raikage 4)","🎤 Killer B"],"🌩️ Darui","🍡 Omoi","⚡ Karui","❄️ Samui","📜 Mabui","🔥 Nii Yugito","🌩️ Raikage 3","🐻 Shii","🗡️ Cee"],
+["🪨 Iwagakure",["🗿 Ōnoki",["🧱 Kitsuchi",["💣 Kurotsuchi"]]],"💥 Deidara","🪵 Akatsuchi","🔥 Roshi","🦍 Han","🧓 Mū"],
+["🌊 Kirigakure","🌊 Terumi Mei","🗡️ Momochi Zabuza","❄️ Haku","🦈 Hoshigaki Kisame","💧 Hōzuki Suigetsu","💧 Hōzuki Mangetsu","👁️ Ao","⚡ Chōjūrō","🫧 Utakata","🐢 Yagura","🗡️ Ameyuri Ringo","⚡ Kushimaru Kuriarare","🗡️ Jinin Akebino","🐟 Fuguki Suikazan","🐙 Jinpachi Munashi"],
+["🌧️ Amegakure","👴 Hanzō","🟠 Yahiko","📄 Konan","🌧️ Nagato (Pain)"],
+["🌊 Takigakure","🐛 Fū","🌿 Shibuki","💀 Kakuzu"],
+["🎶 Otogakure","🧬 Kaguya Kimimaro","🪈 Tayuya","👥 Sakon & Ukon","🏹 Kidōmaru","🪨 Jirōbō","💥 Dosu","🔊 Zaku","🎹 Kin","🦍 Jūgo","🔴 Karin","💧 Suigetsu"],
+["🔥 Akatsuki","🟠 Pain / Yahiko","📄 Konan","🐦‍⬛ Itachi","🦈 Kisame","💥 Deidara","🎭 Sasori","✝️ Hidan","💀 Kakuzu","🌱 Zetsu","🎭 Obito (Tobi)"],
+["🌊 Xứ Sóng & khác","🏗️ Tazuna","👦 Inari","👩 Tsunami","💰 Gatō","🛡️ Mifune","⚔️ Danzō (Root)","🎍 Fū Yamanaka"]]];
+const t=document.getElementById('t');let H=0,N=0;
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+function mk(a,d,h){N++;const arr=Array.isArray(a),s=arr?a[0]:a,kids=arr?a.slice(1):[];
+if(d<=2)h=(H++*53+8)%360;
+const li=document.createElement('li'),i=s.indexOf(' '),l=document.createElement('div');
+li.dataset.s=s.toLowerCase();li.dataset.d=d;l.className='l';l.style.setProperty('--h',h);
+l.innerHTML='<span class="i">'+esc(s.slice(0,i))+'</span><span>'+esc(s.slice(i+1))+'</span>';li.append(l);let c=0;
+if(kids.length){const ul=document.createElement('ul');
+kids.forEach(k=>{const r=mk(k,d+1,h);ul.append(r[0]);c+=1+r[1]});
+li.append(ul);const b=document.createElement('span');b.className='k';b.textContent='+'+c;l.append(b);
+l.onclick=()=>li.classList.toggle('c')}
+return[li,c]}
+t.append(mk(T,0,40)[0]);
+document.getElementById('n').textContent=N+' nhánh/nhân vật';
+const show=n=>document.querySelectorAll('#t li').forEach(li=>li.classList.toggle('c',+li.dataset.d>=n&&!!li.querySelector(':scope>ul')));
+show(4);a.onclick=()=>show(99);b.onclick=()=>show(3);
+let z=1;zi.onclick=()=>{z=Math.min(2,z+.15);t.style.zoom=z};zo.onclick=()=>{z=Math.max(.4,z-.15);t.style.zoom=z};
+q.oninput=()=>{document.querySelectorAll('.hit').forEach(e=>e.classList.remove('hit'));const v=q.value.trim().toLowerCase();if(!v)return;let f;
+document.querySelectorAll('#t li').forEach(li=>{if(li.dataset.s.includes(v)){li.classList.add('hit');let p=li.parentElement.closest('li');while(p){p.classList.remove('c');p=p.parentElement.closest('li')}f=f||li}});
+if(f)f.scrollIntoView({block:'center',inline:'center'})};
+let dn,x,y,sl,st;w.onmousedown=e=>{if(e.target.closest('.l'))return;dn=1;x=e.clientX;y=e.clientY;sl=w.scrollLeft;st=w.scrollTop};
+addEventListener('mouseup',()=>dn=0);w.onmousemove=e=>{if(dn){w.scrollLeft=sl-(e.clientX-x);w.scrollTop=st-(e.clientY-y)}};
+</script></body></html>

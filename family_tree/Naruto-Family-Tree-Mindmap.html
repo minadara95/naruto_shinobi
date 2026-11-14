@@ -1,0 +1,2837 @@
+<!DOCTYPE html>
+<html lang="en" class="dark"><head><script data-bard-client-injected="true">(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjExNjRiNzdiNDMzZDdhMDAyMWI4NjE4YjhjYTU3ZTMyZGI5MWUxMTMiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIwMjk4NTUyMDA0Mzc1NTA3NTE1NCIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjX2E0YWM3MDI5YmY4ZTc5NTJfbmFydXRvLWZhbWlseS10cmVlLW1pbmRtYXAuaHRtbC01NDAifSwiZXhwIjoxNzk0NjU1MDY0LCJpYXQiOjE3OTQ2NTE0NjQsImFsZyI6IlJTMjU2In0.Qz32eXIS0M-7sZw5Y38BVIrc4syfscevHzQzdTN-haMQzO1D8EFdqUxIZ1L0m-aCvfYIgt9QQOaVirBfLW5OwFyJRVL7wOPT7lDoI-tAg-MMEVfhiOaXXIBf1XzAZbPmvQUM7fCkCrbgnT27gqiuKMgOLDSD-0ALm9RN3T1hHUtsAp9JYrwvWAmBFKB0gdUcsT9Xw34ukEXFiBsCsIUwreqgnbI5gZURi8retY9iRZb5bl0zCSPKr5_N_Cvn_-uHxXVZj0kWfavKgnFufN0-33ZA6RBsdH5-oay-BqxOyVRutiNYxGFKbIHV7t2VF9kwXMgV5SErNyrH--G0KoYbEw","c_a4ac7029bf8e7952_naruto-family-tree-mindmap.html-540")</script><script data-bard-client-injected="true">
+  document.addEventListener('input', (event) => {
+    if (event.target && (event.target.isContentEditable || event.target.hasAttribute('contenteditable'))) {
+      const clonedDoc = document.cloneNode(true);
+      const injectedScripts = clonedDoc.querySelectorAll('[data-bard-client-injected="true"]');
+      injectedScripts.forEach(el => el.remove());
+      window.parent.postMessage({
+        type: 'inlineEdit',
+        html: '<!DOCTYPE html>\n' + clonedDoc.documentElement.outerHTML
+      }, '*');
+    }
+  });
+</script><script data-bard-client-injected="true">(function(){'use strict';window.addEventListener("message",a=>{a.data&&a.data.type==="SUPPLEMENTAL_DATA_UPDATE"&&window.dispatchEvent(new CustomEvent("supplementaldataupdate",{detail:a.data.data}))});}).call(this);
+</script><script data-bard-client-injected="true">(function() {
+  const SCROLL_KEYS = new Set([
+    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+    ' ', 'Spacebar', 'PageUp', 'PageDown', 'Home', 'End',
+  ]);
+  const HORIZONTAL_KEYS = new Set(['ArrowLeft', 'ArrowRight']);
+
+  function isTextEntryTarget(target) {
+    if (!target) return false;
+    const tagName = target.tagName;
+    return tagName === 'INPUT' || tagName === 'TEXTAREA' ||
+        tagName === 'SELECT' || target.isContentEditable === true;
+  }
+
+  // An element absorbs the key only if it both overflows on the axis being
+  // scrolled and is configured to scroll on that axis. The cheap dimension
+  // test runs first because getComputedStyle forces a style recalc, and this
+  // runs on every keypress. Each axis is read from its own longhand: the
+  // 'overflow' shorthand serializes as two values when the axes differ, which
+  // is the common 'overflow-x: hidden; overflow-y: auto' pane.
+  function canScroll(node, horizontal) {
+    const overflows = horizontal ? node.scrollWidth > node.clientWidth
+                                 : node.scrollHeight > node.clientHeight;
+    if (!overflows) return false;
+    const style = window.getComputedStyle(node);
+    const overflow = horizontal ? style.overflowX : style.overflowY;
+    return overflow === 'auto' || overflow === 'scroll';
+  }
+
+  // Walks up from the event target so nested scrollers keep their behavior.
+  // <body> is included because pages that pin the root height make it the
+  // scroll container.
+  function hasScrollableAncestor(target, horizontal) {
+    let node = target;
+    while (node && node !== document.documentElement) {
+      if (canScroll(node, horizontal)) return true;
+      node = node.parentElement;
+    }
+    return false;
+  }
+
+  function rootCanScroll(horizontal) {
+    const scroller = document.scrollingElement || document.documentElement;
+    if (!scroller) return false;
+    // Tolerate a pixel of rounding so subpixel layouts do not look scrollable.
+    return horizontal ? scroller.scrollWidth > window.innerWidth + 1
+                      : scroller.scrollHeight > window.innerHeight + 1;
+  }
+
+  window.addEventListener('keydown', function(event) {
+    if (!SCROLL_KEYS.has(event.key)) return;
+    if (event.defaultPrevented) return;
+    // Alt and Meta turn arrows into browser history navigation, and Ctrl is
+    // reserved for shortcuts, so none of them are scroll intent.
+    if (event.altKey || event.metaKey || event.ctrlKey) return;
+
+    const target = event.target;
+    if (isTextEntryTarget(target)) return;
+
+    // Anything that can still absorb the scroll gets to keep it.
+    const horizontal = HORIZONTAL_KEYS.has(event.key);
+    if (rootCanScroll(horizontal)) return;
+    if (hasScrollableAncestor(target, horizontal)) return;
+
+    event.preventDefault();
+  }, {capture: true, passive: false});
+})();</script><script data-bard-client-injected="true">(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script data-bard-client-injected="true">
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script ws-interception-config="{&quot;parentOrigin&quot;:&quot;https://gemini.google.com&quot;,&quot;proxiedDomains&quot;:[]}" data-bard-client-injected="true">(function(){'use strict';var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,d,e){if(b==Array.prototype||b==Object.prototype)return b;b[d]=e.value;return b};function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var d=0;d<b.length;++d){var e=b[d];if(e&&e.Math==Math)return e}throw Error("Cannot find global object");}var w=v(this);
+function y(b,d){if(d)a:{var e=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var k=b[h];if(!(k in e))break a;e=e[k]}b=b[b.length-1];h=e[b];d=d(h);d!=h&&d!=null&&u(e,b,{configurable:!0,writable:!0,value:d})}}function z(b){function d(h){return b.next(h)}function e(h){return b.throw(h)}return new Promise(function(h,k){function m(n){n.done?h(n.value):Promise.resolve(n.value).then(d,e).then(m,k)}m(b.next())})}y("globalThis",function(b){return b||w});/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function A(b,d){function e(){}e.prototype=d.prototype;b.j=d.prototype;b.prototype=new e;b.prototype.constructor=b;b.h=function(h,k,m){for(var n=Array(arguments.length-2),p=2;p<arguments.length;p++)n[p-2]=arguments[p];return d.prototype[k].apply(h,n)}};function B(b,d,e="*"){function h(a){if(typeof a==="string")return F.encode(a).buffer;if(a instanceof ArrayBuffer)return a.slice(0);if(ArrayBuffer.isView(a))return a.buffer.slice(a.byteOffset,a.byteOffset+a.byteLength);throw Error("Invalid data type");}function k(a){a=h(a);var f={type:"send",data:new Uint8Array(a)},g;(g=r)==null||g.postMessage(f,[a])}function m(){if(!r)throw Error("Data port not captured yet.");r.onmessage=a=>{if(a.data.type==="message"){a=new MessageEvent("message",{data:G.decode(a.data.data)});
+let f;(f=c.onmessage)==null||f.call(c,a);c.dispatchEvent(a)}}}function n(){if(!t)throw Error("Control port not captured yet.");t.onmessage=a=>{switch(a.data.type){case "open":l=1;var f=new Event("open"),g;(g=c.onopen)==null||g.call(c,f);c.dispatchEvent(f);q.forEach(H=>{k(H)});q=[];break;case "close":g=a.data;l=3;g=new CloseEvent("close",{code:g.code,reason:g.reason,wasClean:g.wasClean});(f=c.onclose)==null||f.call(c,g);c.dispatchEvent(g);break;case "error":l=3;f=new Event("error");let x;(x=c.onerror)==
+null||x.call(c,f);c.dispatchEvent(f)}}}function p(a){return z(function*(){var f=new MessageChannel;t=f.port1;var g=new MessageChannel;r=g.port1;n();m();window.parent.postMessage({type:"websocket_open",portOrdering:["control","data"],url:b,protocols:a||[],connectionId:I},e,[f.port2,g.port2])}())}var c=Reflect.construct(EventTarget,[],new.target);c.CONNECTING=0;c.OPEN=1;c.CLOSING=2;c.CLOSED=3;c.url=b;c.binaryType="arraybuffer";c.protocol="";c.i="";var l=0,t=null,r=null,q=[],F=new TextEncoder,G=new TextDecoder;
+c.onopen=null;c.onmessage=null;c.onclose=null;c.onerror=null;Object.defineProperty(c,"readyState",{get:()=>l,enumerable:!0,configurable:!0});Object.defineProperty(c,"bufferedAmount",{get:()=>{var a=0;q.forEach(f=>{a+=typeof f==="string"?f.length:f.byteLength});return a},enumerable:!0,configurable:!0});var I=function(){var a;return((a=globalThis.crypto)==null?0:a.randomUUID)?globalThis.crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,f=>{var g=Math.random()*16|0;return(f===
+"x"?g:g&3|8).toString(16)})}();c.send=a=>{if(l===1)a instanceof Blob?a.arrayBuffer().then(f=>{k(f)}):k(a);else if(l===0)if(typeof a==="string")q.push(a);else if(a instanceof ArrayBuffer||ArrayBuffer.isView(a))q.push(h(a));else throw Error("Sending Blob is not supported before the connection is open.");else console.debug("WebSocket send called in CLOSING or CLOSED state; ignored.")};c.close=(a=1E3,f="")=>{if(l!==2&&l!==3){l=2;a={type:"close",code:a,reason:f,wasClean:a===1E3};var g;(g=t)==null||g.postMessage(a)}};
+Promise.resolve().then(()=>p(d));return c}A(B,EventTarget);var C=document.currentScript,D=C==null?void 0:C.getAttribute("ws-interception-config");if(!D)throw Error("WebSocket Interceptor: Missing ws-interception-config attribute in the script tag.");var E=JSON.parse(D);if(!E.parentOrigin||typeof E.parentOrigin!=="string")throw Error("WebSocket Interceptor: Invalid parentOrigin in ws-interception-config");
+(function(b){var d=Object.getOwnPropertyDescriptor(window,"WebSocket");if(!d||d.writable||d.configurable)d=Object.assign(function(e,h){try{let k=(new URL(e)).hostname;if(b.proxiedDomains.some(m=>k===m||k.endsWith(`.${m}`)))return new B(e,h,b.parentOrigin)}catch(k){throw window.parent.postMessage({type:"websocket_blocked",url:e,reason:"blocked_invalid_url"},b.parentOrigin),new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");}window.parent.postMessage({type:"websocket_blocked",
+url:e,reason:"blocked_domain_not_allowlisted"},b.parentOrigin);throw new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");},{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3}),Object.defineProperty(window,"WebSocket",{value:d,writable:!1,configurable:!1})})({proxiedDomains:E.proxiedDomains||[],parentOrigin:E.parentOrigin});}).call(this);
+</script><script data-bard-client-injected="true">((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedGenerateImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedImageTransformModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-3.1-flash-image","imageTransformModelName":"gemini-3-pro-image","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"],"deprecatedGenerateImageModelNames":["gemini-2.5-flash-image-preview","gemini-2.5-flash-image","gemini-3.1-flash-image-preview"],"deprecatedImageTransformModelNames":["gemini-3-pro-image-preview-11-2025"]})</script><script data-bard-client-injected="true">(function() {
+  function normalizeSlug(str) {
+    try {
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[^p{L}p{N}s_-]/gu, '')
+        .replace(/s+/g, '-');
+    } catch (e) {
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9s_-]/g, '')
+        .replace(/s+/g, '-');
+    }
+  }
+
+  function findTargetElement(hash) {
+    if (!hash || hash === '#') {
+      return null;
+    }
+    const rawId = hash.startsWith('#') ? hash.slice(1) : hash;
+    let decodedId = rawId;
+    try {
+      decodedId = decodeURIComponent(rawId);
+    } catch (e) {
+      // Ignore URI malformed errors.
+    }
+
+    // 1. Direct ID match (raw and decoded).
+    let target = document.getElementById(rawId) || document.getElementById(decodedId);
+    if (target) {
+      return target;
+    }
+
+    // 2. Name attribute match (<a name="...">).
+    try {
+      if (typeof CSS !== 'undefined' && CSS.escape) {
+        target =
+          document.querySelector('[name="' + CSS.escape(rawId) + '"]') ||
+          document.querySelector('[name="' + CSS.escape(decodedId) + '"]');
+      } else {
+        const namedElements = document.getElementsByName(rawId);
+        if (namedElements && namedElements.length > 0) {
+          return namedElements[0];
+        }
+      }
+    } catch (e) {
+      // Ignore querySelector syntax errors.
+    }
+    if (target) {
+      return target;
+    }
+
+    // 3. Match heading text by slug (for Markdown TOCs where headings lack explicit IDs).
+    const targetSlug = normalizeSlug(decodedId);
+    if (targetSlug) {
+      for (const heading of document.querySelectorAll('h1, h2, h3, h4, h5, h6')) {
+        if (normalizeSlug(heading.textContent || '') === targetSlug) {
+          return heading;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  document.addEventListener('click', function(event) {
+    const target = event.target;
+    const anchor = target && typeof target.closest === 'function' ? target.closest('a') : null;
+    if (!anchor) {
+      return;
+    }
+
+    const href = anchor.getAttribute('href');
+    if (
+      !href ||
+      href.trim().toLowerCase().startsWith('javascript:') ||
+      anchor.hasAttribute('download')
+    ) {
+      return;
+    }
+
+    // Check if the link is an in-page hash / anchor link.
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      const targetElement = findTargetElement(href);
+      if (targetElement) {
+        targetElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+      return;
+    }
+
+    // Check if the URL has the same origin/pathname but with a hash.
+    try {
+      const url = new URL(anchor.href, window.location.href);
+      if (
+        url.hash &&
+        url.origin === window.location.origin &&
+        url.pathname === window.location.pathname
+      ) {
+        event.preventDefault();
+        const targetElement = findTargetElement(url.hash);
+        if (targetElement) {
+          targetElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+        return;
+      }
+    } catch (e) {
+      // Fall through if URL parsing fails.
+    }
+
+    // For all external or full navigation links, prevent iframe-level navigation
+    // (which breaks in AGSA WebView or sandboxed iframes) and ensure they open
+    // safely in a new tab/window.
+    if (anchor.target !== '_blank') {
+      event.preventDefault();
+      window.open(anchor.href, '_blank', 'noopener,noreferrer');
+    }
+  }, {capture: true});
+})();</script><script data-bard-client-injected="true">(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script data-bard-client-injected="true">(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Naruto Family Tree &amp; Clans - Interactive Mindmap</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- D3.js v7 cho sơ đồ cây tương tác mượt mà -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Google Fonts: Be Vietnam Pro & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Cinzel:wght@700;900&amp;display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', 'sans-serif'],
+                        display: ['"Cinzel"', 'serif'],
+                    },
+                    colors: {
+                        ninja: {
+                            dark: '#090b10',
+                            panel: '#111622',
+                            border: '#1e293b',
+                            accent: '#f97316',
+                            crimson: '#ef4444',
+                            chakra: '#38bdf8'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #090b10;
+            color: #f8fafc;
+        }
+
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Styling cho khung tương tác Mindmap thống nhất */
+        #mindmap-viewport {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+            touch-action: none;
+        }
+
+        #mindmap-viewport:active {
+            cursor: grabbing;
+        }
+
+        /* Một lớp thế giới duy nhất chứa cả dây nối SVG và thẻ nhân vật HTML */
+        #world {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: 0 0;
+            will-change: transform;
+        }
+
+        svg#links-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: visible;
+            pointer-events: none;
+        }
+
+        #nodes-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .link-path {
+            fill: none;
+            stroke-opacity: 0.6;
+            transition: stroke-opacity 0.2s, stroke-width 0.2s;
+        }
+
+        .node-item {
+            position: absolute;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px 6px 8px;
+            border-radius: 12px;
+            border-width: 1.6px;
+            border-style: solid;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+            transition: filter 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .node-item.is-root {
+            padding: 9px 18px 9px 10px;
+            border-radius: 15px;
+            border-width: 2.5px;
+        }
+
+        .node-item:hover {
+            filter: brightness(1.22);
+            box-shadow: 0 0 14px var(--glow-color, rgba(249, 115, 22, 0.65));
+            z-index: 10;
+        }
+
+        /* Hiệu ứng nhấp nháy khi tìm kiếm thấy nhân vật */
+        @keyframes pulseHighlight {
+            0%, 100% {
+                box-shadow: 0 0 10px #facc15, 0 0 22px #f97316;
+                border-color: #fde047;
+            }
+            50% {
+                box-shadow: 0 0 20px #fef08a, 0 0 36px #ef4444;
+                border-color: #ffffff;
+            }
+        }
+
+        .node-highlighted {
+            animation: pulseHighlight 1.3s infinite ease-in-out !important;
+            z-index: 20 !important;
+        }
+
+        /* Thanh cuộn ngang mượt cho thanh Quick Jump */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Toast notification */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        .toast-anim {
+            animation: slideUp 0.3s ease forwards;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:"Be Vietnam Pro", sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.bottom-16{bottom:4rem}.bottom-4{bottom:1rem}.left-0{left:0px}.left-1\/2{left:50%}.left-3{left:0.75rem}.left-4{left:1rem}.right-0{right:0px}.right-2\.5{right:0.625rem}.right-4{right:1rem}.top-0{top:0px}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.order-2{order:2}.order-3{order:3}.mx-auto{margin-left:auto;margin-right:auto}.mr-1{margin-right:0.25rem}.mt-1\.5{margin-top:0.375rem}.ml-1{margin-left:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.hidden{display:none}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-9{height:2.25rem}.h-full{height:100%}.max-h-60{max-height:15rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-48{width:12rem}.w-5{width:1.25rem}.w-9{width:2.25rem}.w-full{width:100%}.max-w-full{max-width:100%}.max-w-xs{max-width:20rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-800\/70 > :not([hidden]) ~ :not([hidden]){border-color:rgb(30 41 59 / 0.7)}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-700\/60{border-color:rgb(180 83 9 / 0.6)}.border-emerald-700\/60{border-color:rgb(4 120 87 / 0.6)}.border-indigo-700\/60{border-color:rgb(67 56 202 / 0.6)}.border-lime-700\/60{border-color:rgb(77 124 15 / 0.6)}.border-orange-400\/30{border-color:rgb(251 146 60 / 0.3)}.border-orange-500\/50{border-color:rgb(249 115 22 / 0.5)}.border-orange-700\/60{border-color:rgb(194 65 12 / 0.6)}.border-purple-700\/60{border-color:rgb(126 34 206 / 0.6)}.border-red-700\/60{border-color:rgb(185 28 28 / 0.6)}.border-rose-700\/60{border-color:rgb(190 18 60 / 0.6)}.border-sky-700\/60{border-color:rgb(3 105 161 / 0.6)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-700\/80{border-color:rgb(51 65 85 / 0.8)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/70{border-color:rgb(30 41 59 / 0.7)}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.border-slate-800\/90{border-color:rgb(30 41 59 / 0.9)}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-950\/80{background-color:rgb(69 26 3 / 0.8)}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-950\/80{background-color:rgb(2 44 34 / 0.8)}.bg-indigo-400{--tw-bg-opacity:1;background-color:rgb(129 140 248 / var(--tw-bg-opacity, 1))}.bg-indigo-950\/80{background-color:rgb(30 27 75 / 0.8)}.bg-lime-950\/80{background-color:rgb(26 46 5 / 0.8)}.bg-orange-400{--tw-bg-opacity:1;background-color:rgb(251 146 60 / var(--tw-bg-opacity, 1))}.bg-orange-500{--tw-bg-opacity:1;background-color:rgb(249 115 22 / var(--tw-bg-opacity, 1))}.bg-orange-950\/80{background-color:rgb(67 20 7 / 0.8)}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-purple-950\/80{background-color:rgb(59 7 100 / 0.8)}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-red-950\/80{background-color:rgb(69 10 10 / 0.8)}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72 / var(--tw-bg-opacity, 1))}.bg-rose-950\/80{background-color:rgb(76 5 25 / 0.8)}.bg-sky-950\/80{background-color:rgb(8 47 73 / 0.8)}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/90{background-color:rgb(30 41 59 / 0.9)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/75{background-color:rgb(15 23 42 / 0.75)}.bg-slate-900\/85{background-color:rgb(15 23 42 / 0.85)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-900\/95{background-color:rgb(15 23 42 / 0.95)}.bg-slate-950\/85{background-color:rgb(2 6 23 / 0.85)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-orange-400{--tw-gradient-from:#fb923c var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 146 60 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-500{--tw-gradient-from:#f97316 var(--tw-gradient-from-position);--tw-gradient-to:rgb(249 115 22 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-600{--tw-gradient-from:#ea580c var(--tw-gradient-from-position);--tw-gradient-to:rgb(234 88 12 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-amber-200{--tw-gradient-to:rgb(253 230 138 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fde68a var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-red-600{--tw-gradient-to:rgb(220 38 38 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #dc2626 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-purple-800{--tw-gradient-to:#6b21a8 var(--tw-gradient-to-position)}.to-red-400{--tw-gradient-to:#f87171 var(--tw-gradient-to-position)}.to-red-600{--tw-gradient-to:#dc2626 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.pl-9{padding-left:2.25rem}.pr-8{padding-right:2rem}.pt-\[92px\]{padding-top:92px}.text-left{text-align:left}.text-center{text-align:center}.font-sans{font-family:"Be Vietnam Pro", sans-serif}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[12\.5px\]{font-size:12.5px}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-tight{line-height:1.25}.leading-none{line-height:1}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-emerald-200{--tw-text-opacity:1;color:rgb(167 243 208 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-lime-200{--tw-text-opacity:1;color:rgb(217 249 157 / var(--tw-text-opacity, 1))}.text-orange-200{--tw-text-opacity:1;color:rgb(254 215 170 / var(--tw-text-opacity, 1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255 / var(--tw-text-opacity, 1))}.text-red-200{--tw-text-opacity:1;color:rgb(254 202 202 / var(--tw-text-opacity, 1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211 / var(--tw-text-opacity, 1))}.text-sky-200{--tw-text-opacity:1;color:rgb(186 230 253 / var(--tw-text-opacity, 1))}.text-sky-400{--tw-text-opacity:1;color:rgb(56 189 248 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-orange-500\/20{--tw-shadow-color:rgb(249 115 22 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-orange-600\/20{--tw-shadow-color:rgb(234 88 12 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.backdrop-blur-lg{--tw-backdrop-blur:blur(16px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.placeholder\:text-slate-500::placeholder{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.hover\:bg-amber-800\/70:hover{background-color:rgb(146 64 14 / 0.7)}.hover\:bg-emerald-800\/70:hover{background-color:rgb(6 95 70 / 0.7)}.hover\:bg-indigo-800\/70:hover{background-color:rgb(55 48 163 / 0.7)}.hover\:bg-lime-800\/70:hover{background-color:rgb(63 98 18 / 0.7)}.hover\:bg-orange-800\/70:hover{background-color:rgb(154 52 18 / 0.7)}.hover\:bg-purple-800\/70:hover{background-color:rgb(107 33 168 / 0.7)}.hover\:bg-red-800\/70:hover{background-color:rgb(153 27 27 / 0.7)}.hover\:bg-rose-800\/70:hover{background-color:rgb(159 18 57 / 0.7)}.hover\:bg-sky-800\/70:hover{background-color:rgb(7 89 133 / 0.7)}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:from-orange-500:hover{--tw-gradient-from:#f97316 var(--tw-gradient-from-position);--tw-gradient-to:rgb(249 115 22 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-red-500:hover{--tw-gradient-to:#ef4444 var(--tw-gradient-to-position)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:border-orange-500:focus{--tw-border-opacity:1;border-color:rgb(249 115 22 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-orange-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(249 115 22 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:order-2{order:2}.sm\:order-3{order:3}.sm\:block{display:block}.sm\:w-auto{width:auto}.sm\:max-w-sm{max-width:24rem}.sm\:px-5{padding-left:1.25rem;padding-right:1.25rem}.sm\:pt-\[84px\]{padding-top:84px}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:inline{display:inline}.md\:flex{display:flex}}</style></head>
+<body class="bg-ninja-canvas bg-grid-pattern font-sans antialiased">
+
+    <!-- HEADER & TOOLBAR ĐIỀU KHIỂN -->
+    <header class="fixed top-0 left-0 right-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 shadow-xl">
+        <div class="max-w-full mx-auto px-3 sm:px-5 py-2.5 flex flex-wrap items-center justify-between gap-2.5">
+            
+            <!-- Logo & Tiêu đề -->
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 via-red-600 to-purple-800 flex items-center justify-center shadow-lg shadow-orange-500/20 border border-orange-400/30 shrink-0">
+                    <!-- Biểu tượng Xoáy Ốc Konoha / Uzumaki -->
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M12 12c0-1.5 1.2-2.5 2.5-2.5 2 0 3.5 1.8 3.5 4 0 3-2.5 5.5-5.5 5.5-4.2 0-7.5-3.5-7.5-7.8C5 6 9.2 2 14.5 2c4.5 0 8 3 8.5 7" stroke-linecap="round"></path>
+                        <path d="M4 19l4-4" stroke-linecap="round"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-sm sm:text-base font-bold tracking-wide bg-gradient-to-r from-orange-400 via-amber-200 to-red-400 bg-clip-text text-transparent leading-tight">
+                        NARUTO SHINOBI FAMILY TREE
+                    </h1>
+                    <p class="text-[11px] text-slate-400 hidden sm:block">Originating from Kaguya Otsutsuki • Click any node to expand/collapse</p>
+                </div>
+            </div>
+
+            <!-- Thanh Tìm Kiếm Nhân Vật -->
+            <div class="relative flex-1 max-w-xs sm:max-w-sm order-3 sm:order-2 w-full sm:w-auto">
+                <div class="relative flex items-center">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Search character or clan (e.g., Itachi, Minato, Gaara)..." class="w-full bg-slate-900/90 text-slate-100 text-xs sm:text-sm rounded-xl pl-9 pr-8 py-2 border border-slate-700/80 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition placeholder:text-slate-500" autocomplete="off">
+                    <button id="clear-search" class="hidden absolute right-2.5 text-slate-400 hover:text-white p-1" title="Clear search">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <!-- Gợi ý kết quả tìm kiếm -->
+                <div id="search-results" class="hidden absolute left-0 right-0 mt-1.5 bg-slate-900/95 backdrop-blur-lg border border-slate-700 rounded-xl shadow-2xl max-h-60 overflow-y-auto z-50 divide-y divide-slate-800/70"></div>
+            </div>
+
+            <!-- Các Nút Chức Năng Chính -->
+            <div class="flex items-center gap-1.5 order-2 sm:order-3">
+                <button id="btn-expand-all" class="px-2.5 py-1.5 bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Expand entire family tree">
+                    <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                    <span class="hidden md:inline">Expand All</span>
+                </button>
+                <button id="btn-collapse-all" class="px-2.5 py-1.5 bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Collapse to main branches">
+                    <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25"></path></svg>
+                    <span class="hidden md:inline">Collapse</span>
+                </button>
+                <button id="btn-reset-view" class="px-2.5 py-1.5 bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Center view">
+                    <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l-4 4l6 6l4-16l-18 7l4 2l2 6l3-4"></path></svg>
+                    <span class="hidden md:inline">Center</span>
+                </button>
+                
+                <!-- Dropdown Xuất File -->
+                <div class="relative">
+                    <button id="btn-export-menu" class="px-2.5 py-1.5 bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 text-white text-xs font-semibold rounded-lg shadow-md shadow-orange-600/20 transition flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>Export</span>
+                    </button>
+                    <div id="export-dropdown" class="absolute right-0 mt-1.5 w-48 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl py-1 z-50 hidden">
+                        <button id="btn-export-png" class="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Export High-Res PNG
+                        </button>
+                        <button id="btn-export-html" class="w-full text-left px-3.5 py-2 text-xs text-slate-200 hover:bg-slate-800 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-orange-400"></span> Save Standalone HTML
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THANH LỌC NHANH THEO GIA TỘC / LÀNG (QUICK JUMP) -->
+        <div class="bg-slate-900/75 border-t border-slate-800/70 px-3 sm:px-5 py-1.5 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1 shrink-0">Jump to:</span>
+            <button data-jump="Kaguya Otsutsuki" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-purple-950/80 text-purple-200 border border-purple-700/60 hover:bg-purple-800/70 transition">👑 Otsutsuki</button>
+            <button data-jump="Uchiha Clan" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-red-950/80 text-red-200 border border-red-700/60 hover:bg-red-800/70 transition">🌀 Uchiha Clan</button>
+            <button data-jump="Senju Clan" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-950/80 text-emerald-200 border border-emerald-700/60 hover:bg-emerald-800/70 transition">🌲 Senju Clan</button>
+            <button data-jump="Uzumaki Clan" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-950/80 text-orange-200 border border-orange-700/60 hover:bg-orange-800/70 transition">🍥 Uzumaki Clan</button>
+            <button data-jump="Hyuga Clan" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-indigo-950/80 text-indigo-200 border border-indigo-700/60 hover:bg-indigo-800/70 transition">👁️ Hyuga Clan</button>
+            <button data-jump="Konoha Clans &amp; Key Shinobi" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-lime-950/80 text-lime-200 border border-lime-700/60 hover:bg-lime-800/70 transition">🍃 Hidden Leaf (Konoha)</button>
+            <button data-jump="Other Great Shinobi Villages" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-sky-950/80 text-sky-200 border border-sky-700/60 hover:bg-sky-800/70 transition">🌍 Great Villages</button>
+            <button data-jump="Akatsuki Organization &amp; Allies" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-950/80 text-rose-200 border border-rose-700/60 hover:bg-rose-800/70 transition">☁️ Akatsuki</button>
+            <button data-jump="Nine Tailed Beasts (Juubi)" class="jump-btn shrink-0 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-950/80 text-amber-200 border border-amber-700/60 hover:bg-amber-800/70 transition">🦊 Tailed Beasts</button>
+        </div>
+    </header>
+
+    <!-- VÙNG CANVAS MINDMAP CHÍNH (CHỈ DÙNG 1 VIEWPORT & 1 WORLD DUY NHẤT) -->
+    <main id="canvas-container" class="w-full h-full pt-[92px] sm:pt-[84px] relative">
+        <div id="mindmap-viewport">
+            <div id="world" style="transition: none; transform: translate(-325px, -790.35px) scale(0.85);">
+                <svg id="links-layer" width="4000" height="4000"><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 228 1301 C 284 1301, 284 404, 340 404"></path><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 228 1301 C 284 1301, 284 638, 340 638"></path><path class="link-path" stroke="#6366f1" stroke-width="2" d="M 228 1301 C 284 1301, 284 794, 340 794"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 228 1301 C 284 1301, 284 1132, 340 1132"></path><path class="link-path" stroke="#f59e0b" stroke-width="2" d="M 228 1301 C 284 1301, 284 1522, 340 1522"></path><path class="link-path" stroke="#e11d48" stroke-width="2" d="M 228 1301 C 284 1301, 284 1782, 340 1782"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 228 1301 C 284 1301, 284 2198, 340 2198"></path><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 608 404 C 624 404, 624 300, 640 300"></path><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 608 404 C 624 404, 624 352, 640 352"></path><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 608 404 C 624 404, 624 404, 640 404"></path><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 608 404 C 624 404, 624 456, 640 456"></path><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 608 404 C 624 404, 624 508, 640 508"></path><path class="link-path" stroke="#ef4444" stroke-width="2" d="M 677 638 C 658.5 638, 658.5 612, 640 612"></path><path class="link-path" stroke="#10b981" stroke-width="2" d="M 677 638 C 658.5 638, 658.5 664, 640 664"></path><path class="link-path" stroke="#6366f1" stroke-width="2" d="M 535 794 C 587.5 794, 587.5 768, 640 768"></path><path class="link-path" stroke="#a855f7" stroke-width="2" d="M 535 794 C 587.5 794, 587.5 820, 640 820"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 924, 640 924"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 976, 640 976"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 1028, 640 1028"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 1080, 640 1080"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 1132, 640 1132"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 1184, 640 1184"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 1236, 640 1236"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 1288, 640 1288"></path><path class="link-path" stroke="#22c55e" stroke-width="2" d="M 598 1132 C 619 1132, 619 1340, 640 1340"></path><path class="link-path" stroke="#f59e0b" stroke-width="2" d="M 602 1522 C 621 1522, 621 1444, 640 1444"></path><path class="link-path" stroke="#0ea5e9" stroke-width="2" d="M 602 1522 C 621 1522, 621 1496, 640 1496"></path><path class="link-path" stroke="#06b6d4" stroke-width="2" d="M 602 1522 C 621 1522, 621 1548, 640 1548"></path><path class="link-path" stroke="#78716c" stroke-width="2" d="M 602 1522 C 621 1522, 621 1600, 640 1600"></path><path class="link-path" stroke="#e11d48" stroke-width="2" d="M 614 1782 C 627 1782, 627 1704, 640 1704"></path><path class="link-path" stroke="#e11d48" stroke-width="2" d="M 614 1782 C 627 1782, 627 1756, 640 1756"></path><path class="link-path" stroke="#e11d48" stroke-width="2" d="M 614 1782 C 627 1782, 627 1808, 640 1808"></path><path class="link-path" stroke="#e11d48" stroke-width="2" d="M 614 1782 C 627 1782, 627 1860, 640 1860"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 1964, 640 1964"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2016, 640 2016"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2068, 640 2068"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2120, 640 2120"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2172, 640 2172"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2224, 640 2224"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2276, 640 2276"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2328, 640 2328"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2380, 640 2380"></path><path class="link-path" stroke="#eab308" stroke-width="2" d="M 586 2198 C 613 2198, 613 2432, 640 2432"></path></svg>
+                <div id="nodes-layer"><div class="node-item is-root " style="left: 40px; top: 1301px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:26px; height:26px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9" fill="#a855f7" fill-opacity="0.25" stroke="#e879f9" stroke-width="1.8"></circle><circle cx="12" cy="12" r="4" fill="#f0abfc"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#e879f9" stroke-width="1.8" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-sm font-bold">
+                        Kaguya Otsutsuki
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #c084fc; color:#f3e8ff;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 340px; top: 404px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3L4 9l8 12 8-12-8-6z" fill="#9333ea" fill-opacity="0.3" stroke="#c084fc" stroke-width="1.8"></path><circle cx="12" cy="10" r="2.5" fill="#f3e8ff"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Otsutsuki Clan (Main Branch)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #c084fc; color:#f3e8ff;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 340px; top: 638px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9.5" fill="#7e22ce" stroke="#d8b4fe" stroke-width="1.5"></circle><circle cx="12" cy="12" r="6.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="3.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="1.3" fill="#1e1b4b"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hagoromo Otsutsuki (Sage of Six Paths)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #c084fc; color:#f3e8ff;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 340px; top: 794px; background-color: rgb(30, 27, 75); border-color: rgb(129, 140, 248); color: rgb(224, 231, 255); --glow-color: rgba(129, 140, 248, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #818cf8;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <ellipse cx="12" cy="12" rx="9.5" ry="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.8"></ellipse><circle cx="12" cy="12" r="3.5" fill="none" stroke="#6366f1" stroke-width="1.4"></circle><circle cx="12" cy="12" r="1.2" fill="#4f46e5"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hamura Otsutsuki
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #818cf8; color:#e0e7ff;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 340px; top: 1132px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 12c0-1.5 1.3-2.6 2.8-2.6 2.2 0 3.8 1.9 3.8 4.2 0 3.1-2.6 5.6-5.8 5.6-4.1 0-7.4-3.4-7.4-7.6 0-4.8 4-8.6 8.8-8.6" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"></path><path d="M4.5 18.5l3.5-3.5M18 5l2.5-1.5" stroke="#4ade80" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Konoha Clans &amp; Key Shinobi
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 340px; top: 1522px; background-color: rgb(69, 26, 3); border-color: rgb(251, 191, 36); color: rgb(254, 243, 199); --glow-color: rgba(251, 191, 36, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #fbbf24;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 17h16l-2-9-4 3-2-5-2 5-4-3-2 9z" fill="#f59e0b" fill-opacity="0.3" stroke="#fbbf24" stroke-width="1.8" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Other Great Shinobi Villages
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #fbbf24; color:#fef3c7;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 340px; top: 1782px; background-color: rgb(76, 5, 25); border-color: rgb(251, 113, 133); color: rgb(255, 228, 230); --glow-color: rgba(251, 113, 133, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #fb7185;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.5 16.5c-2.2 0-3.5-1.5-3.5-3.3 0-1.7 1.2-3 2.8-3.2.5-2.6 2.8-4.5 5.5-4.5 2.4 0 4.5 1.5 5.2 3.7 2.2.2 4 2 4 4.2 0 2.3-1.9 3.1-4.2 3.1H6.5z" fill="#dc2626" stroke="#fecaca" stroke-width="1.4"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Akatsuki Organization &amp; Allies
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #fb7185; color:#ffe4e6;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 340px; top: 2198px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Nine Tailed Beasts (Juubi)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #facc15; color:#fef9c3;">
+                            −
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 300px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9.5" fill="#7e22ce" stroke="#d8b4fe" stroke-width="1.5"></circle><circle cx="12" cy="12" r="6.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="3.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="1.3" fill="#1e1b4b"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        Isshiki Otsutsuki
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 352px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9.5" fill="#7e22ce" stroke="#d8b4fe" stroke-width="1.5"></circle><circle cx="12" cy="12" r="6.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="3.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="1.3" fill="#1e1b4b"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        Momoshiki Otsutsuki
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 404px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3L4 9l8 12 8-12-8-6z" fill="#9333ea" fill-opacity="0.3" stroke="#c084fc" stroke-width="1.8"></path><circle cx="12" cy="10" r="2.5" fill="#f3e8ff"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        Kinshiki Otsutsuki
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 456px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9.5" fill="#7e22ce" stroke="#d8b4fe" stroke-width="1.5"></circle><circle cx="12" cy="12" r="6.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="3.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="1.3" fill="#1e1b4b"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        Urashiki Otsutsuki
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 508px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9" fill="#a855f7" fill-opacity="0.25" stroke="#e879f9" stroke-width="1.8"></circle><circle cx="12" cy="12" r="4" fill="#f0abfc"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#e879f9" stroke-width="1.8" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        Shibai Otsutsuki
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 612px; background-color: rgb(69, 10, 10); border-color: rgb(248, 113, 113); color: rgb(254, 226, 226); --glow-color: rgba(248, 113, 113, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #f87171;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9.5" fill="#dc2626" stroke="#fca5a5" stroke-width="1.5"></circle><circle cx="12" cy="12" r="5.2" fill="none" stroke="#450a0a" stroke-width="1.1"></circle><circle cx="12" cy="12" r="2" fill="#09090b"></circle><circle cx="12" cy="6.8" r="1.2" fill="#09090b"></circle><circle cx="16.5" cy="14.6" r="1.2" fill="#09090b"></circle><circle cx="7.5" cy="14.6" r="1.2" fill="#09090b"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Indra Otsutsuki
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #f87171; color:#fee2e2;">
+                            +1
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 664px; background-color: rgb(6, 78, 59); border-color: rgb(52, 211, 153); color: rgb(209, 250, 229); --glow-color: rgba(52, 211, 153, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #34d399;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3v18M8 7l4-4 4 4M7 12l5-4 5 4M8 17l4-3 4 3" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Asura Otsutsuki
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #34d399; color:#d1fae5;">
+                            +2
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 768px; background-color: rgb(30, 27, 75); border-color: rgb(129, 140, 248); color: rgb(224, 231, 255); --glow-color: rgba(129, 140, 248, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #818cf8;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <ellipse cx="12" cy="12" rx="9.5" ry="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.8"></ellipse><circle cx="12" cy="12" r="3.5" fill="none" stroke="#6366f1" stroke-width="1.4"></circle><circle cx="12" cy="12" r="1.2" fill="#4f46e5"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hyuga Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #818cf8; color:#e0e7ff;">
+                            +7
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 820px; background-color: rgb(46, 16, 101); border-color: rgb(192, 132, 252); color: rgb(243, 232, 255); --glow-color: rgba(192, 132, 252, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #c084fc;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3L4 9l8 12 8-12-8-6z" fill="#9333ea" fill-opacity="0.3" stroke="#c084fc" stroke-width="1.8"></path><circle cx="12" cy="10" r="2.5" fill="#f3e8ff"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Moon Branch
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #c084fc; color:#f3e8ff;">
+                            +1
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 924px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 4v5l5 3 5-3V4M12 12v8M8 7H5M16 7h3" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Nara Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +2
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 976px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="3" fill="#f472b6"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.2 2.2M16.2 16.2l2.2 2.2M18.4 5.6l-2.2 2.2M7.8 16.2l-2.2 2.2" stroke="#f472b6" stroke-width="1.8" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Yamanaka Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +2
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1028px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="8.5" fill="#fb923c" fill-opacity="0.2" stroke="#fdba74" stroke-width="1.8"></circle><path d="M8 9h8M7 12h10M8 15h8" stroke="#fdba74" stroke-width="1.5" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Akimichi Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +2
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1080px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2v12M9 6h6M8 14l4 8 4-8H8z" fill="#94a3b8" fill-opacity="0.3" stroke="#e2e8f0" stroke-width="1.7" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hatake Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +1
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1132px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3c2.5 3.5 6 5.5 6 10a6 6 0 0 1-12 0c0-2.5 1.5-4.5 3-6-.2 2 1 3 2 3 0-3 1-5 1-7z" fill="#ef4444" fill-opacity="0.35" stroke="#f87171" stroke-width="1.7"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Sarutobi Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +1
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1184px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4l-3 5H5l3 4-1 6 5-3 5 3-1-6 3-4h-4l-3-5z" fill="#f97316" fill-opacity="0.25" stroke="#fdba74" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Inuzuka Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +1
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1236px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <ellipse cx="12" cy="13" rx="5" ry="6" fill="#64748b" fill-opacity="0.35" stroke="#cbd5e1" stroke-width="1.7"></ellipse><path d="M9 7l-2-3M15 7l2-3M7 11H4M20 11h-3M7 15H4M20 15h-3" stroke="#cbd5e1" stroke-width="1.6" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Aburame Clan
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +2
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1288px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 14c0-3 2-5 5-5s5 2 5 5v4H7v-4z" fill="#22c55e" fill-opacity="0.3" stroke="#4ade80" stroke-width="1.8"></path><path d="M9 9V6h6v3" stroke="#4ade80" stroke-width="1.8"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Might &amp; Lee Lineage
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +2
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1340px; background-color: rgb(20, 83, 45); border-color: rgb(74, 222, 128); color: rgb(220, 252, 231); --glow-color: rgba(74, 222, 128, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #4ade80;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 4c4 0 7 2.5 7 6 0 2.5-2 4-4 4H9c-2 0-4-1.5-4-4 0-3.5 3-6 7-6zM8 14v5M16 14v5" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Legendary Sannin &amp; Key Figures
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #4ade80; color:#dcfce7;">
+                            +11
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1444px; background-color: rgb(69, 26, 3); border-color: rgb(251, 191, 36); color: rgb(254, 243, 199); --glow-color: rgba(251, 191, 36, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #fbbf24;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M8 4h8l-1.5 5.5c1.8 1.2 2.5 3 2.5 5 0 3-2.2 5.5-5 5.5s-5-2.5-5-5.5c0-2 .7-3.8 2.5-5L8 4z" fill="#d97706" fill-opacity="0.35" stroke="#fbbf24" stroke-width="1.7"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hidden Sand (Sunagakure)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #fbbf24; color:#fef3c7;">
+                            +4
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1496px; background-color: rgb(12, 74, 110); border-color: rgb(56, 189, 248); color: rgb(224, 242, 254); --glow-color: rgba(56, 189, 248, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #38bdf8;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="#38bdf8" fill-opacity="0.3" stroke="#7dd3fc" stroke-width="1.7" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hidden Cloud (Kumogakure)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #38bdf8; color:#e0f2fe;">
+                            +6
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1548px; background-color: rgb(22, 78, 99); border-color: rgb(34, 211, 238); color: rgb(207, 250, 254); --glow-color: rgba(34, 211, 238, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #22d3ee;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M3 9c3-2 6 2 9 0s6 2 9 0M3 15c3-2 6 2 9 0s6 2 9 0" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hidden Mist (Kirigakure)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #22d3ee; color:#cffafe;">
+                            +5
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1600px; background-color: rgb(41, 37, 36); border-color: rgb(168, 162, 158); color: rgb(245, 245, 244); --glow-color: rgba(168, 162, 158, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #a8a29e;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <polygon points="12,3 20,9 17,20 7,20 4,9" fill="#a8a29e" fill-opacity="0.3" stroke="#d6d3d1" stroke-width="1.7"></polygon>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Hidden Stone (Iwagakure)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #a8a29e; color:#f5f5f4;">
+                            +5
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1704px; background-color: rgb(76, 5, 25); border-color: rgb(251, 113, 133); color: rgb(255, 228, 230); --glow-color: rgba(251, 113, 133, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #fb7185;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.5 16.5c-2.2 0-3.5-1.5-3.5-3.3 0-1.7 1.2-3 2.8-3.2.5-2.6 2.8-4.5 5.5-4.5 2.4 0 4.5 1.5 5.2 3.7 2.2.2 4 2 4 4.2 0 2.3-1.9 3.1-4.2 3.1H6.5z" fill="#dc2626" stroke="#fecaca" stroke-width="1.4"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Founding Trio (Amegakure)
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #fb7185; color:#ffe4e6;">
+                            +3
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1756px; background-color: rgb(76, 5, 25); border-color: rgb(251, 113, 133); color: rgb(255, 228, 230); --glow-color: rgba(251, 113, 133, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #fb7185;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.5 16.5c-2.2 0-3.5-1.5-3.5-3.3 0-1.7 1.2-3 2.8-3.2.5-2.6 2.8-4.5 5.5-4.5 2.4 0 4.5 1.5 5.2 3.7 2.2.2 4 2 4 4.2 0 2.3-1.9 3.1-4.2 3.1H6.5z" fill="#dc2626" stroke="#fecaca" stroke-width="1.4"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Shadow Leaders
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #fb7185; color:#ffe4e6;">
+                            +2
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1808px; background-color: rgb(76, 5, 25); border-color: rgb(251, 113, 133); color: rgb(255, 228, 230); --glow-color: rgba(251, 113, 133, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #fb7185;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.5 16.5c-2.2 0-3.5-1.5-3.5-3.3 0-1.7 1.2-3 2.8-3.2.5-2.6 2.8-4.5 5.5-4.5 2.4 0 4.5 1.5 5.2 3.7 2.2.2 4 2 4 4.2 0 2.3-1.9 3.1-4.2 3.1H6.5z" fill="#dc2626" stroke="#fecaca" stroke-width="1.4"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Two-Man Cells
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #fb7185; color:#ffe4e6;">
+                            +4
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1860px; background-color: rgb(76, 5, 25); border-color: rgb(251, 113, 133); color: rgb(255, 228, 230); --glow-color: rgba(251, 113, 133, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #fb7185;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M6.5 16.5c-2.2 0-3.5-1.5-3.5-3.3 0-1.7 1.2-3 2.8-3.2.5-2.6 2.8-4.5 5.5-4.5 2.4 0 4.5 1.5 5.2 3.7 2.2.2 4 2 4 4.2 0 2.3-1.9 3.1-4.2 3.1H6.5z" fill="#dc2626" stroke="#fecaca" stroke-width="1.4"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-bold">
+                        Taka / Hebi &amp; Associates
+                    </span>
+                    
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" style="background:#0f172a; border:1px solid #fb7185; color:#ffe4e6;">
+                            +4
+                        </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 1964px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        1-Tail: Shukaku (Ichibi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2016px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        2-Tails: Matatabi (Nibi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2068px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        3-Tails: Isobu (Sanbi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2120px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        4-Tails: Son Goku (Yonbi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2172px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        5-Tails: Kokuo (Gobi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2224px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        6-Tails: Saiken (Rokubi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2276px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        7-Tails: Chomei (Nanabi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2328px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        8-Tails: Gyuki (Hachibi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2380px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        9-Tails: Kurama (Kyubi)
+                    </span>
+                    
+                </div><div class="node-item  " style="left: 640px; top: 2432px; background-color: rgb(66, 32, 6); border-color: rgb(250, 204, 21); color: rgb(254, 249, 195); --glow-color: rgba(250, 204, 21, 0.65);">
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" style="width:22px; height:22px; background:rgba(15,23,42,0.8); border:1px solid #facc15;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="9.5" fill="#7e22ce" stroke="#d8b4fe" stroke-width="1.5"></circle><circle cx="12" cy="12" r="6.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="3.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"></circle><circle cx="12" cy="12" r="1.3" fill="#1e1b4b"></circle>
+                        </svg>
+                    </span>
+                    <span class="text-[12.5px] font-medium">
+                        10-Tails: Shinju / Juubi
+                    </span>
+                    
+                </div></div>
+            </div>
+        </div>
+
+        <!-- BỘ ĐIỀU KHIỂN ZOOM GÓC DƯỚI PHẢI -->
+        <div class="fixed bottom-4 right-4 z-20 flex flex-col gap-1.5 bg-slate-900/90 backdrop-blur-md p-1.5 rounded-2xl border border-slate-800 shadow-2xl">
+            <button id="zoom-in" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition font-bold text-lg" title="Zoom in (+)">+</button>
+            <div id="zoom-level" class="text-[10px] text-center font-mono text-slate-400 py-0.5">85%</div>
+            <button id="zoom-out" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition font-bold text-lg" title="Zoom out (-)">−</button>
+        </div>
+
+        <!-- CHÚ THÍCH MÀU SẮC & BIỂU TƯỢNG GÓC DƯỚI TRÁI -->
+        <div class="fixed bottom-4 left-4 z-20 hidden md:flex items-center gap-3 bg-slate-900/85 backdrop-blur-md px-3.5 py-2 rounded-2xl border border-slate-800/90 text-[11px] text-slate-300 shadow-xl">
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>Otsutsuki</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>Uchiha</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>Senju</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>Uzumaki</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>Hyuga</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span>Akatsuki</span>
+            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>Tailed Beasts</span>
+        </div>
+    </main>
+
+    <!-- THÔNG BÁO TOAST -->
+    <div id="toast-box" class="hidden fixed bottom-16 left-1/2 -translate-x-1/2 z-50 bg-slate-900/95 text-slate-100 border border-orange-500/50 px-4 py-2 rounded-full shadow-2xl text-xs font-medium toast-anim"></div>
+
+    <script>
+        /**
+         * 1. HỆ THỐNG BIỂU TƯỢNG SVG TÙY CHỈNH CHO TỪNG GIA TỘC & NHÂN VẬT
+         * Mỗi icon được thiết kế tối giản, sắc nét (viewBox 0 0 24 24) để render trực tiếp trong SVG Mindmap
+         */
+        const ICONS = {
+            kaguya: `<circle cx="12" cy="12" r="9" fill="#a855f7" fill-opacity="0.25" stroke="#e879f9" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="#f0abfc"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="#e879f9" stroke-width="1.8" stroke-linecap="round"/>`,
+            otsutsuki: `<path d="M12 3L4 9l8 12 8-12-8-6z" fill="#9333ea" fill-opacity="0.3" stroke="#c084fc" stroke-width="1.8"/><circle cx="12" cy="10" r="2.5" fill="#f3e8ff"/>`,
+            rinnegan: `<circle cx="12" cy="12" r="9.5" fill="#7e22ce" stroke="#d8b4fe" stroke-width="1.5"/><circle cx="12" cy="12" r="6.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="#e9d5ff" stroke-width="1.1"/><circle cx="12" cy="12" r="1.3" fill="#1e1b4b"/>`,
+            sharingan: `<circle cx="12" cy="12" r="9.5" fill="#dc2626" stroke="#fca5a5" stroke-width="1.5"/><circle cx="12" cy="12" r="5.2" fill="none" stroke="#450a0a" stroke-width="1.1"/><circle cx="12" cy="12" r="2" fill="#09090b"/><circle cx="12" cy="6.8" r="1.2" fill="#09090b"/><circle cx="16.5" cy="14.6" r="1.2" fill="#09090b"/><circle cx="7.5" cy="14.6" r="1.2" fill="#09090b"/>`,
+            uchiha: `<path d="M12 3a7 7 0 0 0-7 7c0 3.5 2.5 6.4 5.8 6.9V21h2.4v-4.1C16.5 16.4 19 13.5 19 10a7 7 0 0 0-7-7z" fill="#ef4444" stroke="#fecaca" stroke-width="1.3"/><path d="M5.2 11h13.6" stroke="#f8fafc" stroke-width="1.8"/>`,
+            senju: `<path d="M12 3v18M8 7l4-4 4 4M7 12l5-4 5 4M8 17l4-3 4 3" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
+            uzumaki: `<path d="M12 12c0-1.3 1-2.2 2.2-2.2 1.8 0 3.2 1.6 3.2 3.5 0 2.6-2.2 4.8-4.8 4.8-3.6 0-6.6-3-6.6-6.8C6 6.8 9.6 3.2 14.2 3.2c3.8 0 6.8 2.6 7.3 6" fill="none" stroke="#fb923c" stroke-width="2.2" stroke-linecap="round"/>`,
+            hyuga: `<ellipse cx="12" cy="12" rx="9.5" ry="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1.8"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="#6366f1" stroke-width="1.4"/><circle cx="12" cy="12" r="1.2" fill="#4f46e5"/>`,
+            konoha: `<path d="M12 12c0-1.5 1.3-2.6 2.8-2.6 2.2 0 3.8 1.9 3.8 4.2 0 3.1-2.6 5.6-5.8 5.6-4.1 0-7.4-3.4-7.4-7.6 0-4.8 4-8.6 8.8-8.6" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/><path d="M4.5 18.5l3.5-3.5M18 5l2.5-1.5" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>`,
+            kage: `<path d="M4 17h16l-2-9-4 3-2-5-2 5-4-3-2 9z" fill="#f59e0b" fill-opacity="0.3" stroke="#fbbf24" stroke-width="1.8" stroke-linejoin="round"/>`,
+            akatsuki: `<path d="M6.5 16.5c-2.2 0-3.5-1.5-3.5-3.3 0-1.7 1.2-3 2.8-3.2.5-2.6 2.8-4.5 5.5-4.5 2.4 0 4.5 1.5 5.2 3.7 2.2.2 4 2 4 4.2 0 2.3-1.9 3.1-4.2 3.1H6.5z" fill="#dc2626" stroke="#fecaca" stroke-width="1.4"/>`,
+            beast: `<path d="M12 3l2.5 5.5L20 9.5l-4 4.2 1 5.8-5-2.8-5 2.8 1-5.8-4-4.2 5.5-1L12 3z" fill="#f59e0b" fill-opacity="0.35" stroke="#fcd34d" stroke-width="1.6" stroke-linejoin="round"/>`,
+            suna: `<path d="M8 4h8l-1.5 5.5c1.8 1.2 2.5 3 2.5 5 0 3-2.2 5.5-5 5.5s-5-2.5-5-5.5c0-2 .7-3.8 2.5-5L8 4z" fill="#d97706" fill-opacity="0.35" stroke="#fbbf24" stroke-width="1.7"/>`,
+            kumo: `<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" fill="#38bdf8" fill-opacity="0.3" stroke="#7dd3fc" stroke-width="1.7" stroke-linejoin="round"/>`,
+            kiri: `<path d="M3 9c3-2 6 2 9 0s6 2 9 0M3 15c3-2 6 2 9 0s6 2 9 0" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>`,
+            iwa: `<polygon points="12,3 20,9 17,20 7,20 4,9" fill="#a8a29e" fill-opacity="0.3" stroke="#d6d3d1" stroke-width="1.7"/>`,
+            nara: `<path d="M7 4v5l5 3 5-3V4M12 12v8M8 7H5M16 7h3" stroke="#a3e635" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`,
+            yamanaka: `<circle cx="12" cy="12" r="3" fill="#f472b6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.2 2.2M16.2 16.2l2.2 2.2M18.4 5.6l-2.2 2.2M7.8 16.2l-2.2 2.2" stroke="#f472b6" stroke-width="1.8" stroke-linecap="round"/>`,
+            akimichi: `<circle cx="12" cy="12" r="8.5" fill="#fb923c" fill-opacity="0.2" stroke="#fdba74" stroke-width="1.8"/><path d="M8 9h8M7 12h10M8 15h8" stroke="#fdba74" stroke-width="1.5" stroke-linecap="round"/>`,
+            hatake: `<path d="M12 2v12M9 6h6M8 14l4 8 4-8H8z" fill="#94a3b8" fill-opacity="0.3" stroke="#e2e8f0" stroke-width="1.7" stroke-linejoin="round"/>`,
+            sarutobi: `<path d="M12 3c2.5 3.5 6 5.5 6 10a6 6 0 0 1-12 0c0-2.5 1.5-4.5 3-6-.2 2 1 3 2 3 0-3 1-5 1-7z" fill="#ef4444" fill-opacity="0.35" stroke="#f87171" stroke-width="1.7"/>`,
+            inuzuka: `<path d="M12 4l-3 5H5l3 4-1 6 5-3 5 3-1-6 3-4h-4l-3-5z" fill="#f97316" fill-opacity="0.25" stroke="#fdba74" stroke-width="1.6" stroke-linejoin="round"/>`,
+            aburame: `<ellipse cx="12" cy="13" rx="5" ry="6" fill="#64748b" fill-opacity="0.35" stroke="#cbd5e1" stroke-width="1.7"/><path d="M9 7l-2-3M15 7l2-3M7 11H4M20 11h-3M7 15H4M20 15h-3" stroke="#cbd5e1" stroke-width="1.6" stroke-linecap="round"/>`,
+            taijutsu: `<path d="M7 14c0-3 2-5 5-5s5 2 5 5v4H7v-4z" fill="#22c55e" fill-opacity="0.3" stroke="#4ade80" stroke-width="1.8"/><path d="M9 9V6h6v3" stroke="#4ade80" stroke-width="1.8"/>`,
+            sannin: `<path d="M12 4c4 0 7 2.5 7 6 0 2.5-2 4-4 4H9c-2 0-4-1.5-4-4 0-3.5 3-6 7-6zM8 14v5M16 14v5" fill="none" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>`,
+            sword: `<path d="M19 5L5 19M15 4l5 5M4 15l5 5" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>`
+        };
+
+        /**
+         * 2. BẢNG MÀU THEO TỪNG GIA TỘC / NHÁNH
+         */
+        const THEME_COLORS = {
+            otsutsuki: { bg: '#2e1065', border: '#c084fc', text: '#f3e8ff', link: '#a855f7', glow: 'rgba(192, 132, 252, 0.65)' },
+            uchiha:    { bg: '#450a0a', border: '#f87171', text: '#fee2e2', link: '#ef4444', glow: 'rgba(248, 113, 113, 0.65)' },
+            senju:     { bg: '#064e3b', border: '#34d399', text: '#d1fae5', link: '#10b981', glow: 'rgba(52, 211, 153, 0.65)' },
+            uzumaki:   { bg: '#431407', border: '#fb923c', text: '#ffedd5', link: '#f97316', glow: 'rgba(251, 146, 60, 0.65)' },
+            hyuga:     { bg: '#1e1b4b', border: '#818cf8', text: '#e0e7ff', link: '#6366f1', glow: 'rgba(129, 140, 248, 0.65)' },
+            konoha:    { bg: '#14532d', border: '#4ade80', text: '#dcfce7', link: '#22c55e', glow: 'rgba(74, 222, 128, 0.65)' },
+            suna:      { bg: '#451a03', border: '#fbbf24', text: '#fef3c7', link: '#f59e0b', glow: 'rgba(251, 191, 36, 0.65)' },
+            kumo:      { bg: '#0c4a6e', border: '#38bdf8', text: '#e0f2fe', link: '#0ea5e9', glow: 'rgba(56, 189, 248, 0.65)' },
+            kiri:      { bg: '#164e63', border: '#22d3ee', text: '#cffafe', link: '#06b6d4', glow: 'rgba(34, 211, 238, 0.65)' },
+            iwa:       { bg: '#292524', border: '#a8a29e', text: '#f5f5f4', link: '#78716c', glow: 'rgba(168, 162, 158, 0.65)' },
+            akatsuki:  { bg: '#4c0519', border: '#fb7185', text: '#ffe4e6', link: '#e11d48', glow: 'rgba(251, 113, 133, 0.65)' },
+            beast:     { bg: '#422006', border: '#facc15', text: '#fef9c3', link: '#eab308', glow: 'rgba(250, 204, 21, 0.65)' }
+        };
+
+        /**
+         * 3. FULL NARUTO FAMILY TREE & CLANS DATA (ENGLISH)
+         */
+        const NARUTO_TREE_DATA = {
+            name: "Kaguya Otsutsuki",
+            icon: "kaguya",
+            theme: "otsutsuki",
+            isRoot: true,
+            children: [
+                {
+                    name: "Otsutsuki Clan (Main Branch)",
+                    icon: "otsutsuki",
+                    theme: "otsutsuki",
+                    children: [
+                        { name: "Isshiki Otsutsuki", icon: "rinnegan", theme: "otsutsuki" },
+                        { name: "Momoshiki Otsutsuki", icon: "rinnegan", theme: "otsutsuki" },
+                        { name: "Kinshiki Otsutsuki", icon: "otsutsuki", theme: "otsutsuki" },
+                        { name: "Urashiki Otsutsuki", icon: "rinnegan", theme: "otsutsuki" },
+                        { name: "Shibai Otsutsuki", icon: "kaguya", theme: "otsutsuki" }
+                    ]
+                },
+                {
+                    name: "Hagoromo Otsutsuki (Sage of Six Paths)",
+                    icon: "rinnegan",
+                    theme: "otsutsuki",
+                    children: [
+                        {
+                            name: "Indra Otsutsuki",
+                            icon: "sharingan",
+                            theme: "uchiha",
+                            children: [
+                                {
+                                    name: "Uchiha Clan",
+                                    icon: "uchiha",
+                                    theme: "uchiha",
+                                    children: [
+                                        {
+                                            name: "Tajima Uchiha",
+                                            icon: "uchiha",
+                                            theme: "uchiha",
+                                            children: [
+                                                { name: "Madara Uchiha", icon: "rinnegan", theme: "uchiha" },
+                                                { name: "Izuna Uchiha", icon: "sharingan", theme: "uchiha" }
+                                            ]
+                                        },
+                                        {
+                                            name: "Kagami Uchiha",
+                                            icon: "sharingan",
+                                            theme: "uchiha",
+                                            children: [
+                                                { name: "Shisui Uchiha", icon: "sharingan", theme: "uchiha" }
+                                            ]
+                                        },
+                                        {
+                                            name: "Fugaku & Mikoto Uchiha",
+                                            icon: "uchiha",
+                                            theme: "uchiha",
+                                            children: [
+                                                { name: "Itachi Uchiha", icon: "sharingan", theme: "uchiha" },
+                                                {
+                                                    name: "Sasuke Uchiha & Sakura",
+                                                    icon: "rinnegan",
+                                                    theme: "uchiha",
+                                                    children: [
+                                                        { name: "Sarada Uchiha", icon: "sharingan", theme: "uchiha" }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            name: "Obito Uchiha",
+                                            icon: "sharingan",
+                                            theme: "uchiha",
+                                            children: [
+                                                { name: "Rin Nohara (Bond)", icon: "konoha", theme: "uchiha" }
+                                            ]
+                                        },
+                                        { name: "Hikaku Uchiha", icon: "uchiha", theme: "uchiha" },
+                                        { name: "Setsuna Uchiha", icon: "uchiha", theme: "uchiha" },
+                                        { name: "Baru / Naka / Naori Uchiha", icon: "sharingan", theme: "uchiha" },
+                                        { name: "Shin Uchiha (Clone)", icon: "sharingan", theme: "uchiha" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "Asura Otsutsuki",
+                            icon: "senju",
+                            theme: "senju",
+                            children: [
+                                {
+                                    name: "Senju Clan",
+                                    icon: "senju",
+                                    theme: "senju",
+                                    children: [
+                                        {
+                                            name: "Butsuma Senju",
+                                            icon: "senju",
+                                            theme: "senju",
+                                            children: [
+                                                {
+                                                    name: "Hashirama Senju & Mito",
+                                                    icon: "kage",
+                                                    theme: "senju",
+                                                    children: [
+                                                        { name: "Tsunade Senju", icon: "kage", theme: "senju" },
+                                                        { name: "Nawaki Senju", icon: "senju", theme: "senju" }
+                                                    ]
+                                                },
+                                                { name: "Tobirama Senju", icon: "kage", theme: "senju" },
+                                                { name: "Kawarama Senju", icon: "senju", theme: "senju" },
+                                                { name: "Itama Senju", icon: "senju", theme: "senju" }
+                                            ]
+                                        },
+                                        { name: "Touka Senju", icon: "senju", theme: "senju" }
+                                    ]
+                                },
+                                {
+                                    name: "Uzumaki Clan",
+                                    icon: "uzumaki",
+                                    theme: "uzumaki",
+                                    children: [
+                                        { name: "Ashina Uzumaki", icon: "uzumaki", theme: "uzumaki" },
+                                        { name: "Mito Uzumaki", icon: "uzumaki", theme: "uzumaki" },
+                                        {
+                                            name: "Kushina Uzumaki & Minato",
+                                            icon: "uzumaki",
+                                            theme: "uzumaki",
+                                            children: [
+                                                {
+                                                    name: "Naruto Uzumaki & Hinata",
+                                                    icon: "kage",
+                                                    theme: "uzumaki",
+                                                    children: [
+                                                        { name: "Boruto Uzumaki", icon: "uzumaki", theme: "uzumaki" },
+                                                        { name: "Himawari Uzumaki", icon: "hyuga", theme: "uzumaki" },
+                                                        { name: "Kawaki (Adopted)", icon: "otsutsuki", theme: "uzumaki" }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            name: "Fuso & Ise (Amegakure Branch)",
+                                            icon: "uzumaki",
+                                            theme: "uzumaki",
+                                            children: [
+                                                { name: "Nagato Uzumaki", icon: "rinnegan", theme: "uzumaki" }
+                                            ]
+                                        },
+                                        { name: "Karin Uzumaki", icon: "uzumaki", theme: "uzumaki" },
+                                        { name: "Honoka Uzumaki", icon: "uzumaki", theme: "uzumaki" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Hamura Otsutsuki",
+                    icon: "hyuga",
+                    theme: "hyuga",
+                    children: [
+                        {
+                            name: "Hyuga Clan",
+                            icon: "hyuga",
+                            theme: "hyuga",
+                            children: [
+                                {
+                                    name: "Hiashi Hyuga (Main House)",
+                                    icon: "hyuga",
+                                    theme: "hyuga",
+                                    children: [
+                                        { name: "Hinata Hyuga", icon: "hyuga", theme: "hyuga" },
+                                        { name: "Hanabi Hyuga", icon: "hyuga", theme: "hyuga" }
+                                    ]
+                                },
+                                {
+                                    name: "Hizashi Hyuga (Branch House)",
+                                    icon: "hyuga",
+                                    theme: "hyuga",
+                                    children: [
+                                        { name: "Neji Hyuga", icon: "hyuga", theme: "hyuga" }
+                                    ]
+                                },
+                                { name: "Ko Hyuga", icon: "hyuga", theme: "hyuga" },
+                                { name: "Natsu Hyuga", icon: "hyuga", theme: "hyuga" },
+                                { name: "Tokuma Hyuga", icon: "hyuga", theme: "hyuga" },
+                                { name: "Hoheto Hyuga", icon: "hyuga", theme: "hyuga" },
+                                { name: "Mukai Hyuga", icon: "hyuga", theme: "hyuga" }
+                            ]
+                        },
+                        {
+                            name: "Moon Branch",
+                            icon: "otsutsuki",
+                            theme: "otsutsuki",
+                            children: [
+                                { name: "Toneri Otsutsuki", icon: "hyuga", theme: "otsutsuki" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Konoha Clans & Key Shinobi",
+                    icon: "konoha",
+                    theme: "konoha",
+                    children: [
+                        {
+                            name: "Nara Clan",
+                            icon: "nara",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Shikaku & Yoshino Nara",
+                                    icon: "nara",
+                                    theme: "konoha",
+                                    children: [
+                                        {
+                                            name: "Shikamaru Nara & Temari",
+                                            icon: "nara",
+                                            theme: "konoha",
+                                            children: [
+                                                { name: "Shikadai Nara", icon: "nara", theme: "konoha" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                { name: "Ensui / Suzaku Nara", icon: "nara", theme: "konoha" }
+                            ]
+                        },
+                        {
+                            name: "Yamanaka Clan",
+                            icon: "yamanaka",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Inoichi Yamanaka",
+                                    icon: "yamanaka",
+                                    theme: "konoha",
+                                    children: [
+                                        {
+                                            name: "Ino Yamanaka & Sai",
+                                            icon: "yamanaka",
+                                            theme: "konoha",
+                                            children: [
+                                                { name: "Inojin Yamanaka", icon: "yamanaka", theme: "konoha" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                { name: "Fu / Santa Yamanaka", icon: "yamanaka", theme: "konoha" }
+                            ]
+                        },
+                        {
+                            name: "Akimichi Clan",
+                            icon: "akimichi",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Choza Akimichi",
+                                    icon: "akimichi",
+                                    theme: "konoha",
+                                    children: [
+                                        {
+                                            name: "Choji Akimichi & Karui",
+                                            icon: "akimichi",
+                                            theme: "konoha",
+                                            children: [
+                                                { name: "Chocho Akimichi", icon: "akimichi", theme: "konoha" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                { name: "Torifu Akimichi", icon: "akimichi", theme: "konoha" }
+                            ]
+                        },
+                        {
+                            name: "Hatake Clan",
+                            icon: "hatake",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Sakumo Hatake (White Fang)",
+                                    icon: "hatake",
+                                    theme: "konoha",
+                                    children: [
+                                        { name: "Kakashi Hatake", icon: "kage", theme: "konoha" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "Sarutobi Clan",
+                            icon: "sarutobi",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Sasuke Sarutobi",
+                                    icon: "sarutobi",
+                                    theme: "konoha",
+                                    children: [
+                                        {
+                                            name: "Hiruzen & Biwako Sarutobi",
+                                            icon: "kage",
+                                            theme: "konoha",
+                                            children: [
+                                                {
+                                                    name: "Asuma Sarutobi & Kurenai",
+                                                    icon: "sarutobi",
+                                                    theme: "konoha",
+                                                    children: [
+                                                        { name: "Mirai Sarutobi", icon: "sarutobi", theme: "konoha" }
+                                                    ]
+                                                },
+                                                {
+                                                    name: "Konohamaru's Parents (Anbu)",
+                                                    icon: "sarutobi",
+                                                    theme: "konoha",
+                                                    children: [
+                                                        { name: "Konohamaru Sarutobi", icon: "sarutobi", theme: "konoha" }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "Inuzuka Clan",
+                            icon: "inuzuka",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Tsume Inuzuka",
+                                    icon: "inuzuka",
+                                    theme: "konoha",
+                                    children: [
+                                        { name: "Hana Inuzuka", icon: "inuzuka", theme: "konoha" },
+                                        { name: "Kiba Inuzuka & Akamaru", icon: "inuzuka", theme: "konoha" },
+                                        { name: "Tamaki (Kiba's Wife)", icon: "inuzuka", theme: "konoha" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "Aburame Clan",
+                            icon: "aburame",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Shibi Aburame",
+                                    icon: "aburame",
+                                    theme: "konoha",
+                                    children: [
+                                        { name: "Shino Aburame", icon: "aburame", theme: "konoha" },
+                                        { name: "Torune Aburame", icon: "aburame", theme: "konoha" }
+                                    ]
+                                },
+                                { name: "Muta / Shikuro Aburame", icon: "aburame", theme: "konoha" }
+                            ]
+                        },
+                        {
+                            name: "Might & Lee Lineage",
+                            icon: "taijutsu",
+                            theme: "konoha",
+                            children: [
+                                {
+                                    name: "Might Duy",
+                                    icon: "taijutsu",
+                                    theme: "konoha",
+                                    children: [
+                                        { name: "Might Guy", icon: "taijutsu", theme: "konoha" }
+                                    ]
+                                },
+                                {
+                                    name: "Rock Lee",
+                                    icon: "taijutsu",
+                                    theme: "konoha",
+                                    children: [
+                                        { name: "Metal Lee", icon: "taijutsu", theme: "konoha" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "Legendary Sannin & Key Figures",
+                            icon: "sannin",
+                            theme: "konoha",
+                            children: [
+                                { name: "Jiraiya (Toad Sage)", icon: "sannin", theme: "konoha" },
+                                {
+                                    name: "Orochimaru",
+                                    icon: "sannin",
+                                    theme: "konoha",
+                                    children: [
+                                        { name: "Mitsuki", icon: "sannin", theme: "konoha" },
+                                        { name: "Log", icon: "sannin", theme: "konoha" }
+                                    ]
+                                },
+                                { name: "Danzo Shimura", icon: "sharingan", theme: "konoha" },
+                                { name: "Yamato (Tenzo)", icon: "senju", theme: "konoha" },
+                                { name: "Iruka Umino", icon: "konoha", theme: "konoha" },
+                                { name: "Anko Mitarashi", icon: "konoha", theme: "konoha" },
+                                { name: "Shizune", icon: "konoha", theme: "konoha" },
+                                { name: "Tenten", icon: "konoha", theme: "konoha" },
+                                { name: "Ebisu / Ibiki / Hayate / Genma", icon: "konoha", theme: "konoha" },
+                                { name: "Kizashi & Mebuki Haruno", icon: "konoha", theme: "konoha" },
+                                { name: "Hayate Gekko & Yugao Uzuki", icon: "konoha", theme: "konoha" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Other Great Shinobi Villages",
+                    icon: "kage",
+                    theme: "suna",
+                    children: [
+                        {
+                            name: "Hidden Sand (Sunagakure)",
+                            icon: "suna",
+                            theme: "suna",
+                            children: [
+                                {
+                                    name: "Kazekage Clan (Rasa & Karura)",
+                                    icon: "kage",
+                                    theme: "suna",
+                                    children: [
+                                        {
+                                            name: "Gaara (Fifth Kazekage)",
+                                            icon: "kage",
+                                            theme: "suna",
+                                            children: [
+                                                { name: "Shinki (Adopted Son)", icon: "suna", theme: "suna" }
+                                            ]
+                                        },
+                                        { name: "Kankuro", icon: "suna", theme: "suna" },
+                                        { name: "Temari", icon: "suna", theme: "suna" }
+                                    ]
+                                },
+                                {
+                                    name: "Chiyo & Ebizo",
+                                    icon: "suna",
+                                    theme: "suna",
+                                    children: [
+                                        { name: "Sasori (Grandson)", icon: "suna", theme: "suna" }
+                                    ]
+                                },
+                                { name: "Baki / Pakura / Maki / Yashamaru", icon: "suna", theme: "suna" },
+                                { name: "Reto (1st) / Shamon (2nd)", icon: "kage", theme: "suna" }
+                            ]
+                        },
+                        {
+                            name: "Hidden Cloud (Kumogakure)",
+                            icon: "kumo",
+                            theme: "kumo",
+                            children: [
+                                {
+                                    name: "A (Third Raikage)",
+                                    icon: "kage",
+                                    theme: "kumo",
+                                    children: [
+                                        { name: "A (Fourth Raikage)", icon: "kage", theme: "kumo" },
+                                        { name: "Killer Bee (Sworn Brother)", icon: "kumo", theme: "kumo" }
+                                    ]
+                                },
+                                { name: "Darui (Fifth Raikage)", icon: "kage", theme: "kumo" },
+                                { name: "Yugito Nii (Two-Tails)", icon: "kumo", theme: "kumo" },
+                                { name: "Omoi / Karui / Samui / Atsui", icon: "kumo", theme: "kumo" },
+                                { name: "C (Shee) / Mabui / Dodai", icon: "kumo", theme: "kumo" },
+                                { name: "Kinkaku & Ginkaku", icon: "kumo", theme: "kumo" }
+                            ]
+                        },
+                        {
+                            name: "Hidden Mist (Kirigakure)",
+                            icon: "kiri",
+                            theme: "kiri",
+                            children: [
+                                { name: "Mei Terumi (Fifth Mizukage)", icon: "kage", theme: "kiri" },
+                                { name: "Chojuro (Sixth Mizukage)", icon: "kage", theme: "kiri" },
+                                { name: "Yagura Karatachi (Fourth)", icon: "kage", theme: "kiri" },
+                                {
+                                    name: "Hozuki Clan",
+                                    icon: "kiri",
+                                    theme: "kiri",
+                                    children: [
+                                        { name: "Gengetsu Hozuki (Second)", icon: "kage", theme: "kiri" },
+                                        { name: "Mangetsu Hozuki", icon: "sword", theme: "kiri" },
+                                        { name: "Suigetsu Hozuki", icon: "sword", theme: "kiri" }
+                                    ]
+                                },
+                                {
+                                    name: "Seven Swordsmen & Kekkei Genkai",
+                                    icon: "sword",
+                                    theme: "kiri",
+                                    children: [
+                                        { name: "Zabuza Momochi", icon: "sword", theme: "kiri" },
+                                        { name: "Haku (Yuki Clan)", icon: "kiri", theme: "kiri" },
+                                        { name: "Kisame Hoshigaki", icon: "sword", theme: "kiri" },
+                                        { name: "Utakata (Six-Tails)", icon: "kiri", theme: "kiri" },
+                                        { name: "Ao / Kagura Karatachi", icon: "kiri", theme: "kiri" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "Hidden Stone (Iwagakure)",
+                            icon: "iwa",
+                            theme: "iwa",
+                            children: [
+                                { name: "Mu (Second Tsuchikage)", icon: "kage", theme: "iwa" },
+                                {
+                                    name: "Onoki (Third Tsuchikage)",
+                                    icon: "kage",
+                                    theme: "iwa",
+                                    children: [
+                                        {
+                                            name: "Kitsuchi",
+                                            icon: "iwa",
+                                            theme: "iwa",
+                                            children: [
+                                                { name: "Kurotsuchi (Fourth)", icon: "kage", theme: "iwa" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                { name: "Akatsuchi", icon: "iwa", theme: "iwa" },
+                                { name: "Deidara", icon: "iwa", theme: "iwa" },
+                                { name: "Roshi (Four-Tails) & Han (Five-Tails)", icon: "iwa", theme: "iwa" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Akatsuki Organization & Allies",
+                    icon: "akatsuki",
+                    theme: "akatsuki",
+                    children: [
+                        {
+                            name: "Founding Trio (Amegakure)",
+                            icon: "akatsuki",
+                            theme: "akatsuki",
+                            children: [
+                                { name: "Yahiko (Deva Path Pain)", icon: "akatsuki", theme: "akatsuki" },
+                                { name: "Nagato (Six Paths of Pain)", icon: "rinnegan", theme: "akatsuki" },
+                                { name: "Konan (Angel)", icon: "akatsuki", theme: "akatsuki" }
+                            ]
+                        },
+                        {
+                            name: "Shadow Leaders",
+                            icon: "akatsuki",
+                            theme: "akatsuki",
+                            children: [
+                                { name: "Obito Uchiha (Tobi / Madara)", icon: "sharingan", theme: "akatsuki" },
+                                { name: "Black Zetsu & White Zetsu", icon: "kaguya", theme: "akatsuki" }
+                            ]
+                        },
+                        {
+                            name: "Two-Man Cells",
+                            icon: "akatsuki",
+                            theme: "akatsuki",
+                            children: [
+                                { name: "Itachi Uchiha & Kisame Hoshigaki", icon: "akatsuki", theme: "akatsuki" },
+                                { name: "Sasori & Deidara", icon: "akatsuki", theme: "akatsuki" },
+                                { name: "Hidan & Kakuzu", icon: "akatsuki", theme: "akatsuki" },
+                                { name: "Orochimaru & Juzo Biwa", icon: "akatsuki", theme: "akatsuki" }
+                            ]
+                        },
+                        {
+                            name: "Taka / Hebi & Associates",
+                            icon: "akatsuki",
+                            theme: "akatsuki",
+                            children: [
+                                { name: "Kabuto Yakushi", icon: "sannin", theme: "akatsuki" },
+                                { name: "Jugo", icon: "akatsuki", theme: "akatsuki" },
+                                { name: "Suigetsu Hozuki", icon: "sword", theme: "akatsuki" },
+                                { name: "Karin Uzumaki", icon: "uzumaki", theme: "akatsuki" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Nine Tailed Beasts (Juubi)",
+                    icon: "beast",
+                    theme: "beast",
+                    children: [
+                        { name: "1-Tail: Shukaku (Ichibi)", icon: "beast", theme: "beast" },
+                        { name: "2-Tails: Matatabi (Nibi)", icon: "beast", theme: "beast" },
+                        { name: "3-Tails: Isobu (Sanbi)", icon: "beast", theme: "beast" },
+                        { name: "4-Tails: Son Goku (Yonbi)", icon: "beast", theme: "beast" },
+                        { name: "5-Tails: Kokuo (Gobi)", icon: "beast", theme: "beast" },
+                        { name: "6-Tails: Saiken (Rokubi)", icon: "beast", theme: "beast" },
+                        { name: "7-Tails: Chomei (Nanabi)", icon: "beast", theme: "beast" },
+                        { name: "8-Tails: Gyuki (Hachibi)", icon: "beast", theme: "beast" },
+                        { name: "9-Tails: Kurama (Kyubi)", icon: "beast", theme: "beast" },
+                        { name: "10-Tails: Shinju / Juubi", icon: "rinnegan", theme: "beast" }
+                    ]
+                }
+            ]
+        };
+
+        /**
+         * 4. KHỞI TẠO & VẼ SƠ ĐỒ THỐNG NHẤT (KHÔNG TRÙNG LẶP LAYER)
+         */
+        const container = document.getElementById("canvas-container");
+        const viewport = document.getElementById("mindmap-viewport");
+        const world = document.getElementById("world");
+        const linksLayer = document.getElementById("links-layer");
+        const nodesLayer = document.getElementById("nodes-layer");
+
+        // Trạng thái Camera (Pan & Zoom) duy nhất
+        let panX = 60;
+        let panY = container.clientHeight / 2;
+        let zoomScale = 0.85;
+
+        function applyCameraTransform(smooth = false) {
+            world.style.transition = smooth ? "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)" : "none";
+            world.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomScale})`;
+            document.getElementById("zoom-level").textContent = `${Math.round(zoomScale * 100)}%`;
+        }
+
+        // Chuyển đổi dữ liệu thành cấu trúc Hierarchy của D3
+        let root = d3.hierarchy(NARUTO_TREE_DATA, d => d.children);
+
+        // Mặc định mở đến cấp độ 2 để tổng quan đẹp mắt
+        function collapseAtDepth(d, targetDepth) {
+            if (d.children) {
+                if (d.depth >= targetDepth) {
+                    d._children = d.children;
+                    d._children.forEach(c => collapseAtDepth(c, targetDepth));
+                    d.children = null;
+                } else {
+                    d.children.forEach(c => collapseAtDepth(c, targetDepth));
+                }
+            }
+        }
+        collapseAtDepth(root, 2);
+
+        const HORIZONTAL_SPACING = 300;
+        const VERTICAL_SPACING = 52;
+        const treeLayout = d3.tree().nodeSize([VERTICAL_SPACING, HORIZONTAL_SPACING]);
+
+        let highlightedNodeName = null;
+
+        // Đường cong Bezier ngang mượt mà
+        function diagonal(sx, sy, tx, ty) {
+            const midX = (sx + tx) / 2;
+            return `M ${sx} ${sy} C ${midX} ${sy}, ${midX} ${ty}, ${tx} ${ty}`;
+        }
+
+        /**
+         * Hàm render() làm sạch hoàn toàn DOM/SVG cũ trước khi vẽ lại,
+         * đảm bảo 100% không bao giờ xuất hiện cây trùng lặp hay bóng ma.
+         */
+        function render() {
+            const treeData = treeLayout(root);
+            const nodes = treeData.descendants();
+            const links = treeData.links();
+
+            // Tính toán tọa độ biên để đặt offset dương cho SVG & HTML
+            let minX = Infinity, maxX = -Infinity, maxY = -Infinity;
+            nodes.forEach(d => {
+                d.posX = d.depth * HORIZONTAL_SPACING;
+                d.posY = d.x;
+                if (d.posY < minX) minX = d.posY;
+                if (d.posY > maxX) maxX = d.posY;
+                if (d.posX > maxY) maxY = d.posX;
+            });
+
+            // Dịch toàn bộ tọa độ Y sao cho giá trị nhỏ nhất >= 200px (tránh tọa độ âm bị cắt SVG)
+            const offsetY = Math.abs(Math.min(0, minX)) + 300;
+            const totalWidth = Math.max(4000, maxY + 800);
+            const totalHeight = Math.max(4000, (maxX - minX) + 800);
+
+            linksLayer.setAttribute("width", totalWidth);
+            linksLayer.setAttribute("height", totalHeight);
+
+            // XÓA SẠCH LỚP CŨ TRƯỚC KHI VẼ MỚI
+            linksLayer.innerHTML = "";
+            nodesLayer.innerHTML = "";
+
+            const nodeWidthMap = new Map();
+
+            // 1. Vẽ các thẻ Node HTML trước để đo chính xác chiều rộng thực tế
+            const fragment = document.createDocumentFragment();
+            nodes.forEach(d => {
+                const theme = THEME_COLORS[d.data.theme] || THEME_COLORS.konoha;
+                const renderX = d.posX + 40;
+                const renderY = d.posY + offsetY;
+                d._renderX = renderX;
+                d._renderY = renderY;
+
+                const el = document.createElement("div");
+                el.className = `node-item ${d.data.isRoot ? "is-root" : ""} ${highlightedNodeName === d.data.name ? "node-highlighted" : ""}`;
+                el.style.left = `${renderX}px`;
+                el.style.top = `${renderY}px`;
+                el.style.backgroundColor = theme.bg;
+                el.style.borderColor = theme.border;
+                el.style.color = theme.text;
+                el.style.setProperty("--glow-color", theme.glow);
+
+                const iconSize = d.data.isRoot ? 26 : 22;
+                const hasKids = Boolean(d.children || d._children);
+                const badgeText = d._children ? `+${d._children.length}` : "−";
+
+                el.innerHTML = `
+                    <span class="inline-flex items-center justify-center rounded-full shrink-0" 
+                          style="width:${iconSize}px; height:${iconSize}px; background:rgba(15,23,42,0.8); border:1px solid ${theme.border};">
+                        <svg width="${iconSize - 6}" height="${iconSize - 6}" viewBox="0 0 24 24" fill="none">
+                            ${ICONS[d.data.icon] || ICONS.konoha}
+                        </svg>
+                    </span>
+                    <span class="${d.data.isRoot ? 'text-sm font-bold' : hasKids ? 'text-[12.5px] font-bold' : 'text-[12.5px] font-medium'}">
+                        ${d.data.name}
+                    </span>
+                    ${hasKids ? `
+                        <span class="ml-1 px-1.5 py-0.5 text-[10px] font-bold rounded-full leading-none" 
+                              style="background:#0f172a; border:1px solid ${theme.border}; color:${theme.text};">
+                            ${badgeText}
+                        </span>
+                    ` : ""}
+                `;
+
+                el.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    toggleNode(d);
+                });
+
+                fragment.appendChild(el);
+                d._domEl = el;
+            });
+
+            nodesLayer.appendChild(fragment);
+
+            // Đo chiều rộng thực tế sau khi gắn vào DOM để nối dây chuẩn xác tới mép phải của thẻ
+            nodes.forEach(d => {
+                nodeWidthMap.set(d, d._domEl.offsetWidth || 160);
+            });
+
+            // 2. Vẽ các đường nối SVG Bezier
+            const svgNS = "http://www.w3.org/2000/svg";
+            const linkFrag = document.createDocumentFragment();
+            links.forEach(l => {
+                const theme = THEME_COLORS[l.target.data.theme] || THEME_COLORS.konoha;
+                const sourceW = nodeWidthMap.get(l.source) || 160;
+                const sx = l.source._renderX + sourceW;
+                const sy = l.source._renderY;
+                const tx = l.target._renderX;
+                const ty = l.target._renderY;
+
+                const path = document.createElementNS(svgNS, "path");
+                path.setAttribute("class", "link-path");
+                path.setAttribute("stroke", theme.link);
+                path.setAttribute("stroke-width", "2");
+                path.setAttribute("d", diagonal(sx, sy, tx, ty));
+                linkFrag.appendChild(path);
+            });
+
+            linksLayer.appendChild(linkFrag);
+            root._offsetY = offsetY;
+        }
+
+        // Đóng / mở nhánh khi click vào Node
+        function toggleNode(d) {
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+            } else if (d._children) {
+                d.children = d._children;
+                d._children = null;
+            }
+            render();
+        }
+
+        // Mở toàn bộ cây
+        function expandAll(d) {
+            if (d._children) {
+                d.children = d._children;
+                d._children = null;
+            }
+            if (d.children) {
+                d.children.forEach(expandAll);
+            }
+        }
+
+        // Thu gọn toàn bộ cây về cấp 1
+        function collapseAll(d) {
+            if (d.children) {
+                d.children.forEach(collapseAll);
+                if (d.depth >= 1) {
+                    d._children = d.children;
+                    d.children = null;
+                }
+            }
+        }
+
+        // Căn giữa góc nhìn vào gốc Kaguya
+        function centerView(scale = 0.85) {
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            zoomScale = scale;
+            panX = w < 640 ? 16 : 60;
+            panY = h / 2 - (root._renderY || 300) * zoomScale;
+            applyCameraTransform(true);
+        }
+
+        // Bay tới và phóng to vào một Node cụ thể
+        function focusOnNode(targetNode) {
+            let curr = targetNode.parent;
+            while (curr) {
+                if (curr._children) {
+                    curr.children = curr._children;
+                    curr._children = null;
+                }
+                curr = curr.parent;
+            }
+
+            highlightedNodeName = targetNode.data.name;
+            render();
+
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            zoomScale = w < 640 ? 0.85 : 1.05;
+            const nodeW = targetNode._domEl ? targetNode._domEl.offsetWidth : 180;
+
+            panX = w / 2 - (targetNode._renderX + nodeW / 2) * zoomScale;
+            panY = h / 2 - targetNode._renderY * zoomScale;
+            applyCameraTransform(true);
+        }
+
+        /**
+         * XỬ LÝ KÉO THẢ (PAN) & CUỘN CHUỘT / CHẠM ĐA ĐIỂM (ZOOM) TRÊN 1 VIEWPORT DUY NHẤT
+         */
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        viewport.addEventListener("mousedown", (e) => {
+            if (e.target.closest(".node-item")) return;
+            isDragging = true;
+            dragStartX = e.clientX - panX;
+            dragStartY = e.clientY - panY;
+        });
+
+        window.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+            panX = e.clientX - dragStartX;
+            panY = e.clientY - dragStartY;
+            applyCameraTransform(false);
+        });
+
+        window.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+
+        // Thu phóng mượt theo vị trí con trỏ chuột
+        viewport.addEventListener("wheel", (e) => {
+            e.preventDefault();
+            const rect = viewport.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
+            const newScale = Math.min(2.5, Math.max(0.18, zoomScale * zoomFactor));
+
+            panX = mouseX - ((mouseX - panX) / zoomScale) * newScale;
+            panY = mouseY - ((mouseY - panY) / zoomScale) * newScale;
+            zoomScale = newScale;
+            applyCameraTransform(false);
+        }, { passive: false });
+
+        // Hỗ trợ cảm ứng (Touch Pan & Pinch Zoom trên điện thoại/máy tính bảng)
+        let lastTouchDist = null;
+        viewport.addEventListener("touchstart", (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                dragStartX = e.touches[0].clientX - panX;
+                dragStartY = e.touches[0].clientY - panY;
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                lastTouchDist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+            }
+        }, { passive: true });
+
+        viewport.addEventListener("touchmove", (e) => {
+            if (e.touches.length === 1 && isDragging) {
+                panX = e.touches[0].clientX - dragStartX;
+                panY = e.touches[0].clientY - dragStartY;
+                applyCameraTransform(false);
+            } else if (e.touches.length === 2 && lastTouchDist) {
+                e.preventDefault();
+                const dist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - viewport.getBoundingClientRect().top;
+
+                const factor = dist / lastTouchDist;
+                const newScale = Math.min(2.5, Math.max(0.18, zoomScale * factor));
+                panX = centerX - ((centerX - panX) / zoomScale) * newScale;
+                panY = centerY - ((centerY - panY) / zoomScale) * newScale;
+                zoomScale = newScale;
+                lastTouchDist = dist;
+                applyCameraTransform(false);
+            }
+        }, { passive: false });
+
+        viewport.addEventListener("touchend", () => {
+            isDragging = false;
+            lastTouchDist = null;
+        });
+
+        // Hiển thị thông báo Toast nhỏ
+        function showToast(msg) {
+            const box = document.getElementById("toast-box");
+            box.textContent = msg;
+            box.classList.remove("hidden");
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                box.classList.add("hidden");
+            }, 2800);
+        }
+
+        /**
+         * 5. TÍNH NĂNG TÌM KIẾM & GỢI Ý NHANH
+         */
+        function getAllNodesList() {
+            const list = [];
+            function traverse(node) {
+                list.push(node);
+                const kids = node.children || node._children;
+                if (kids) kids.forEach(traverse);
+            }
+            traverse(root);
+            return list;
+        }
+
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+        const clearSearchBtn = document.getElementById("clear-search");
+
+        // Loại bỏ dấu tiếng Việt để tìm kiếm linh hoạt
+        function removeAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
+        searchInput.addEventListener("input", (e) => {
+            const q = e.target.value.trim();
+            clearSearchBtn.classList.toggle("hidden", !q);
+
+            if (!q) {
+                searchResults.classList.add("hidden");
+                highlightedNodeName = null;
+                render();
+                return;
+            }
+
+            const normQ = removeAccents(q);
+            const allNodes = getAllNodesList();
+            const matches = allNodes.filter(n => removeAccents(n.data.name).includes(normQ)).slice(0, 15);
+
+            searchResults.innerHTML = "";
+            if (matches.length === 0) {
+                searchResults.innerHTML = `<div class="px-3.5 py-2.5 text-xs text-slate-400">No character found for "${q}"</div>`;
+            } else {
+                matches.forEach(m => {
+                    const theme = THEME_COLORS[m.data.theme] || THEME_COLORS.konoha;
+                    const parentName = m.parent ? m.parent.data.name : "Root Lineage";
+                    const item = document.createElement("button");
+                    item.className = "w-full text-left px-3.5 py-2 hover:bg-slate-800/90 flex items-center justify-between gap-2 transition";
+                    item.innerHTML = `
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${theme.border}"></span>
+                            <span class="text-xs font-semibold text-slate-100 truncate">${m.data.name}</span>
+                        </div>
+                        <span class="text-[10px] text-slate-400 truncate max-w-[120px]">${parentName}</span>
+                    `;
+                    item.addEventListener("click", () => {
+                        searchInput.value = m.data.name;
+                        searchResults.classList.add("hidden");
+                        focusOnNode(m);
+                        showToast(`Located: ${m.data.name}`);
+                    });
+                    searchResults.appendChild(item);
+                });
+            }
+            searchResults.classList.remove("hidden");
+        });
+
+        clearSearchBtn.addEventListener("click", () => {
+            searchInput.value = "";
+            clearSearchBtn.classList.add("hidden");
+            searchResults.classList.add("hidden");
+            highlightedNodeName = null;
+            render();
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!e.target.closest("#search-input") && !e.target.closest("#search-results")) {
+                searchResults.classList.add("hidden");
+            }
+            if (!e.target.closest("#btn-export-menu") && !e.target.closest("#export-dropdown")) {
+                document.getElementById("export-dropdown").classList.add("hidden");
+            }
+        });
+
+        /**
+         * 6. SỰ KIỆN CÁC NÚT ĐIỀU KHIỂN & QUICK JUMP
+         */
+        document.getElementById("btn-expand-all").addEventListener("click", () => {
+            expandAll(root);
+            render();
+            showToast("Expanded all 150+ characters & clans!");
+        });
+
+        document.getElementById("btn-collapse-all").addEventListener("click", () => {
+            highlightedNodeName = null;
+            collapseAll(root);
+            render();
+            centerView(0.85);
+            showToast("Collapsed to main branches");
+        });
+
+        document.getElementById("btn-collapse-all").addEventListener("click", () => {
+            highlightedNodeName = null;
+            collapseAll(root);
+            render();
+            centerView(0.85);
+            showToast("Đã thu gọn về các nhánh chính");
+        });
+
+        document.getElementById("btn-reset-view").addEventListener("click", () => {
+            highlightedNodeName = null;
+            render();
+            centerView(0.85);
+        });
+
+        function zoomAroundCenter(factor) {
+            const w = viewport.clientWidth;
+            const h = viewport.clientHeight;
+            const cx = w / 2;
+            const cy = h / 2;
+            const newScale = Math.min(2.5, Math.max(0.18, zoomScale * factor));
+            panX = cx - ((cx - panX) / zoomScale) * newScale;
+            panY = cy - ((cy - panY) / zoomScale) * newScale;
+            zoomScale = newScale;
+            applyCameraTransform(true);
+        }
+
+        document.getElementById("zoom-in").addEventListener("click", () => {
+            zoomAroundCenter(1.25);
+        });
+
+        document.getElementById("zoom-out").addEventListener("click", () => {
+            zoomAroundCenter(0.8);
+        });
+
+        // Các nút nhảy nhanh (Quick Jump)
+        document.querySelectorAll(".jump-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const targetName = btn.getAttribute("data-jump");
+                const allNodes = getAllNodesList();
+                const found = allNodes.find(n => n.data.name === targetName);
+                if (found) {
+                    if (found._children) {
+                        found.children = found._children;
+                        found._children = null;
+                    }
+                    focusOnNode(found);
+                    showToast(`Branch: ${targetName}`);
+                }
+            });
+        });
+
+        // Toggle menu tải về
+        document.getElementById("btn-export-menu").addEventListener("click", (e) => {
+            e.stopPropagation();
+            document.getElementById("export-dropdown").classList.toggle("hidden");
+        });
+
+        // Xuất ra ảnh PNG chất lượng cao từ trạng thái hiện tại
+        document.getElementById("btn-export-png").addEventListener("click", () => {
+            document.getElementById("export-dropdown").classList.add("hidden");
+            showToast("Generating high-res PNG image...");
+
+            try {
+                const svgNS = "http://www.w3.org/2000/svg";
+                const exportSvg = document.createElementNS(svgNS, "svg");
+
+                // Tính khung bao của toàn bộ các node đang hiển thị
+                let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+                const nodeEls = nodesLayer.querySelectorAll(".node-item");
+                nodeEls.forEach(el => {
+                    const x = parseFloat(el.style.left);
+                    const y = parseFloat(el.style.top) - el.offsetHeight / 2;
+                    const w = el.offsetWidth;
+                    const h = el.offsetHeight;
+                    if (x < minX) minX = x;
+                    if (y < minY) minY = y;
+                    if (x + w > maxX) maxX = x + w;
+                    if (y + h > maxY) maxY = y + h;
+                });
+
+                const pad = 60;
+                const exportW = Math.max(1200, (maxX - minX) + pad * 2);
+                const exportH = Math.max(800, (maxY - minY) + pad * 2);
+
+                exportSvg.setAttribute("xmlns", svgNS);
+                exportSvg.setAttribute("width", exportW);
+                exportSvg.setAttribute("height", exportH);
+                exportSvg.setAttribute("viewBox", `${minX - pad} ${minY - pad} ${exportW} ${exportH}`);
+
+                // Nền tối
+                const bg = document.createElementNS(svgNS, "rect");
+                bg.setAttribute("x", minX - pad);
+                bg.setAttribute("y", minY - pad);
+                bg.setAttribute("width", exportW);
+                bg.setAttribute("height", exportH);
+                bg.setAttribute("fill", "#090b10");
+                exportSvg.appendChild(bg);
+
+                // Sao chép toàn bộ đường nối
+                linksLayer.querySelectorAll("path").forEach(p => {
+                    const cp = p.cloneNode(true);
+                    cp.setAttribute("fill", "none");
+                    cp.setAttribute("stroke-opacity", "0.65");
+                    exportSvg.appendChild(cp);
+                });
+
+                // Chuyển đổi từng thẻ HTML node sang thẻ SVG rect + text + icon chuẩn xác
+                nodeEls.forEach(el => {
+                    const x = parseFloat(el.style.left);
+                    const cy = parseFloat(el.style.top);
+                    const w = el.offsetWidth;
+                    const h = el.offsetHeight;
+                    const g = document.createElementNS(svgNS, "g");
+                    g.setAttribute("transform", `translate(${x}, ${cy - h / 2})`);
+
+                    const rect = document.createElementNS(svgNS, "rect");
+                    rect.setAttribute("width", w);
+                    rect.setAttribute("height", h);
+                    rect.setAttribute("rx", "12");
+                    rect.setAttribute("fill", el.style.backgroundColor);
+                    rect.setAttribute("stroke", el.style.borderColor);
+                    rect.setAttribute("stroke-width", "1.8");
+                    g.appendChild(rect);
+
+                    const innerSvg = el.querySelector("svg");
+                    if (innerSvg) {
+                        const iconG = document.createElementNS(svgNS, "g");
+                        iconG.setAttribute("transform", `translate(10, ${(h - 18) / 2}) scale(0.75)`);
+                        iconG.innerHTML = innerSvg.innerHTML;
+                        g.appendChild(iconG);
+                    }
+
+                    const labelSpan = el.querySelectorAll("span")[1];
+                    if (labelSpan) {
+                        const txt = document.createElementNS(svgNS, "text");
+                        txt.setAttribute("x", "34");
+                        txt.setAttribute("y", h / 2 + 4);
+                        txt.setAttribute("fill", el.style.color);
+                        txt.setAttribute("font-family", "sans-serif");
+                        txt.setAttribute("font-size", "12.5px");
+                        txt.setAttribute("font-weight", "600");
+                        txt.textContent = labelSpan.textContent.trim();
+                        g.appendChild(txt);
+                    }
+
+                    exportSvg.appendChild(g);
+                });
+
+                const serializer = new XMLSerializer();
+                const svgString = serializer.serializeToString(exportSvg);
+                const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+                const url = URL.createObjectURL(svgBlob);
+
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    const scaleFactor = 2;
+                    canvas.width = exportW * scaleFactor;
+                    canvas.height = exportH * scaleFactor;
+                    const ctx = canvas.getContext("2d");
+                    ctx.scale(scaleFactor, scaleFactor);
+                    ctx.drawImage(img, 0, 0);
+                    URL.revokeObjectURL(url);
+
+                    const pngUrl = canvas.toDataURL("image/png");
+                    const link = document.createElement("a");
+                    link.download = "Naruto-Family-Tree-Mindmap.png";
+                    link.href = pngUrl;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    showToast("PNG image downloaded successfully!");
+                };
+                img.src = url;
+            } catch (err) {
+                console.error(err);
+                showToast("Unable to export PNG in this browser, try saving HTML.");
+            }
+        });
+
+        // Tải file HTML độc lập
+        document.getElementById("btn-export-html").addEventListener("click", () => {
+            document.getElementById("export-dropdown").classList.add("hidden");
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "Naruto-Family-Tree-Mindmap.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("HTML file downloaded!");
+        });
+
+        // Khởi chạy sơ đồ ban đầu
+        render();
+        centerView(window.innerWidth < 640 ? 0.65 : 0.85);
+    </script>
+
+</body></html>
