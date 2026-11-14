@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gia Tộc Uzumaki - Biên Niên Sử Sức Mạnh & Phong Ấn Thuật</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Cinzel/Chakra Petch for thematic feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Chakra Petch', 'sans-serif'],
+                    },
+                    colors: {
+                        uzumaki: {
+                            red: '#C81D25',
+                            crimson: '#8B0000',
+                            orange: '#FF6B00',
+                            gold: '#FFB703',
+                            dark: '#0B090A',
+                            card: '#161A1D',
+                            border: '#2B2D42'
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 16s linear infinite',
+                        'spin-reverse-slow': 'spin-reverse 20s linear infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'spin-reverse': {
+                            '0%': { transform: 'rotate(360deg)' },
+                            '100%': { transform: 'rotate(0deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.8, filter: 'drop-shadow(0 0 8px rgba(255, 107, 0, 0.6))' },
+                            '50%': { opacity: 1, filter: 'drop-shadow(0 0 18px rgba(200, 29, 37, 0.9))' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-6px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B090A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B0000;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF6B00;
+        }
+
+        /* Background Pattern */
+        .uzumaki-bg-pattern {
+            background-color: #0B090A;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(200, 29, 37, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(255, 107, 0, 0.1) 0%, transparent 45%),
+                linear-gradient(to bottom, rgba(11, 9, 10, 0.92), rgba(11, 9, 10, 0.98));
+        }
+
+        /* Custom Animations for Jutsu Visuals */
+        @keyframes chainSlither {
+            0% { stroke-dashoffset: 240; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .animate-chain {
+            stroke-dasharray: 24 12;
+            animation: chainSlither 3s linear infinite;
+        }
+
+        @keyframes rasenganCore {
+            0% { transform: scale(0.95) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(180deg); }
+            100% { transform: scale(0.95) rotate(360deg); }
+        }
+        .animate-rasengan {
+            transform-origin: center;
+            animation: rasenganCore 2s linear infinite;
+        }
+
+        @keyframes rinneganPulse {
+            0%, 100% { stroke-width: 1.5; opacity: 0.7; }
+            50% { stroke-width: 2.5; opacity: 1; }
+        }
+        .animate-rinnegan {
+            animation: rinneganPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes karmaSpread {
+            0%, 100% { stroke-dashoffset: 100; opacity: 0.6; }
+            50% { stroke-dashoffset: 0; opacity: 1; }
+        }
+        .animate-karma {
+            stroke-dasharray: 100;
+            animation: karmaSpread 4s ease-in-out infinite;
+        }
+
+        @keyframes chakraWave {
+            0% { transform: scale(0.8); opacity: 0.9; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+        .animate-wave {
+            transform-origin: center;
+            animation: chakraWave 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+
+        @keyframes orbitSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-orbit {
+            transform-origin: center;
+            animation: orbitSpin 5s linear infinite;
+        }
+
+        /* Timeline Connector Line */
+        .timeline-line {
+            background: linear-gradient(180deg, #C81D25 0%, #FF6B00 50%, #3B82F6 100%);
+        }
+    </style>
+</head>
+<body class="uzumaki-bg-pattern text-gray-100 min-h-screen font-sans antialiased selection:bg-uzumaki-red selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-[#0B090A]/90 backdrop-blur-md border-b border-red-900/40 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <!-- Uzumaki Crest SVG -->
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-uzumaki-red to-uzumaki-crimson flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(200,29,37,0.6)]">
+                    <svg viewBox="0 0 100 100" class="w-full h-full text-white animate-spin-slow">
+                        <path fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"
+                            d="M50,50 m0,-4 a4,4 0 1,1 0,8 a8,8 0 1,1 0,-16 a14,14 0 1,1 0,28 a22,22 0 1,1 0,-44 a32,32 0 1,1 0,64 a42,42 0 1,1 0,-84" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-display font-bold text-lg sm:text-xl tracking-wider uppercase bg-gradient-to-r from-white via-orange-200 to-uzumaki-orange bg-clip-text text-transparent">
+                        UZUMAKI ARCHIVES
+                    </span>
+                    <span class="hidden sm:inline-block text-xs text-red-400 font-medium ml-2 px-2 py-0.5 rounded-full bg-red-950/60 border border-red-800/50">
+                        Uzushiogakure Legacy
+                    </span>
+                </div>
+            </div>
+
+            <!-- Stats Quick Badge -->
+            <div class="flex items-center space-x-4 text-xs sm:text-sm text-gray-400">
+                <div class="hidden md:flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-uzumaki-red animate-ping"></span>
+                    <span>9 Huyết Thống</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-uzumaki-orange"></span>
+                    <span>38+ Nhẫn Thuật & Huyết Kế</span>
+                </div>
+                <button onclick="scrollToEncyclopedia()" class="px-3 py-1.5 rounded-lg bg-uzumaki-red hover:bg-red-700 text-white font-medium transition shadow-md shadow-red-900/40 text-xs sm:text-sm">
+                    Khám Phá Ngay
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-10 pb-14 sm:pt-16 sm:pb-20 border-b border-red-900/30">
+        <!-- Decorative Background Spiral -->
+        <div class="absolute -right-24 -top-24 w-96 h-96 opacity-10 pointer-events-none">
+            <svg viewBox="0 0 200 200" class="w-full h-full text-uzumaki-red animate-spin-slow">
+                <path fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"
+                    d="M100,100 m0,-8 a8,8 0 1,1 0,16 a18,18 0 1,1 0,-36 a30,30 0 1,1 0,60 a45,45 0 1,1 0,-90 a62,62 0 1,1 0,124 a82,82 0 1,1 0,-164" />
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-red-950/70 border border-red-700/50 text-red-300 text-xs font-semibold uppercase tracking-widest mb-4">
+                    <i class="fa-solid fa-fire-flame-curved text-uzumaki-orange"></i>
+                    <span>Hậu Duệ Trực Hệ Của Asura Ōtsutsuki</span>
+                </div>
+                <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-5 leading-tight">
+                    Biên Niên Sử Sức Mạnh <br class="hidden sm:block" />
+                    <span class="bg-gradient-to-r from-uzumaki-red via-uzumaki-orange to-uzumaki-gold bg-clip-text text-transparent">
+                        Gia Tộc Uzumaki
+                    </span>
+                </h1>
+                <p class="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed mb-8 max-w-3xl mx-auto">
+                    Từ những bậc thầy Phong Ấn Thuật huyền thoại của <strong>Làng Xoáy Nước (Uzushiogakure)</strong> đến kỷ nguyên thần thánh của <strong>Two Blue Vortex</strong>. Khám phá trọn vẹn nguồn sinh lực bất diệt, xích Chakra Kim Cang, sức mạnh Vĩ Thú và những nhãn thuật tối thượng.
+                </p>
+
+                <!-- Clan Core Traits Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-left mt-6">
+                    <div class="bg-uzumaki-card/90 border border-red-900/40 rounded-xl p-4 hover:border-uzumaki-orange/60 transition">
+                        <div class="w-8 h-8 rounded-lg bg-red-950/80 text-uzumaki-red flex items-center justify-center mb-2.5">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-white text-sm sm:text-base">Sinh Lực Siêu Phàm</h3>
+                        <p class="text-xs text-gray-400 mt-1">Tuổi thọ cực cao, khả năng hồi phục thần tốc và chịu đựng việc bị rút Vĩ Thú mà không tử vong ngay lập tức.</p>
+                    </div>
+                    <div class="bg-uzumaki-card/90 border border-red-900/40 rounded-xl p-4 hover:border-uzumaki-orange/60 transition">
+                        <div class="w-8 h-8 rounded-lg bg-orange-950/80 text-uzumaki-orange flex items-center justify-center mb-2.5">
+                            <i class="fa-solid fa-hurricane"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-white text-sm sm:text-base">Đỉnh Cao Fūinjutsu</h3>
+                        <p class="text-xs text-gray-400 mt-1">Sáng tạo các thuật phong ấn cấp S như Thi Quỷ Phong Tận, Bát Quái Phong Ấn khiến cả thế giới nhẫn giả khiếp sợ.</p>
+                    </div>
+                    <div class="bg-uzumaki-card/90 border border-red-900/40 rounded-xl p-4 hover:border-uzumaki-orange/60 transition">
+                        <div class="w-8 h-8 rounded-lg bg-amber-950/80 text-uzumaki-gold flex items-center justify-center mb-2.5">
+                            <i class="fa-solid fa-link"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-white text-sm sm:text-base">Kim Cang Phong Tỏa</h3>
+                        <p class="text-xs text-gray-400 mt-1">Huyết kế đặc trưng tạo ra những sợi xích Chakra vàng ròng có khả năng trấn áp hoàn toàn cả Cửu Vĩ.</p>
+                    </div>
+                    <div class="bg-uzumaki-card/90 border border-red-900/40 rounded-xl p-4 hover:border-uzumaki-orange/60 transition">
+                        <div class="w-8 h-8 rounded-lg bg-blue-950/80 text-blue-400 flex items-center justify-center mb-2.5">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-white text-sm sm:text-base">Tương Thích Vĩ Thú & Thần Nhãn</h3>
+                        <p class="text-xs text-gray-400 mt-1">Vật chứa hoàn hảo cho Cửu Vĩ Kurama, Rinnegan và là nền tảng tiến hóa của Jōgan cùng Karma.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Filter & Search Controls -->
+    <section id="encyclopedia-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 sticky top-16 z-30 bg-[#0B090A]/95 backdrop-blur-md border-b border-gray-800/80">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <!-- Era Filter Pills -->
+            <div class="flex items-center space-x-2 overflow-x-auto pb-2 lg:pb-0 no-scrollbar" id="era-filters">
+                <button data-era="all" class="era-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-uzumaki-red text-white shadow-md shadow-red-900/50">
+                    Tất Cả Thời Đại (9)
+                </button>
+                <button data-era="genesis" class="era-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-uzumaki-card text-gray-300 hover:bg-red-950/60 border border-gray-800">
+                    1. Khai Sinh & Uzushio
+                </button>
+                <button data-era="konoha-akatsuki" class="era-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-uzumaki-card text-gray-300 hover:bg-red-950/60 border border-gray-800">
+                    2. Làng Lá & Akatsuki
+                </button>
+                <button data-era="naruto-era" class="era-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-uzumaki-card text-gray-300 hover:bg-red-950/60 border border-gray-800">
+                    3. Thời Đại Naruto
+                </button>
+                <button data-era="boruto-tbv" class="era-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition bg-uzumaki-card text-gray-300 hover:bg-blue-950/60 border border-gray-800">
+                    4. Boruto: Two Blue Vortex
+                </button>
+            </div>
+
+            <!-- Search Box -->
+            <div class="relative w-full lg:w-80">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                <input type="text" id="search-input" placeholder="Tìm tên nhân vật, nhẫn thuật (vd: Rinnegan, Xích)..." 
+                    class="w-full pl-10 pr-9 py-2 bg-uzumaki-card border border-gray-700 focus:border-uzumaki-orange rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none transition">
+                <button id="clear-search" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Timeline Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-20 bg-uzumaki-card/50 rounded-2xl border border-gray-800">
+            <div class="w-16 h-16 mx-auto rounded-full bg-red-950/60 text-uzumaki-red flex items-center justify-center text-2xl mb-4">
+                <i class="fa-solid fa-scroll"></i>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white mb-2">Không tìm thấy bí thuật phù hợp</h3>
+            <p class="text-gray-400 text-sm mb-4">Thử tìm kiếm với từ khóa khác hoặc đặt lại bộ lọc thời đại.</p>
+            <button onclick="resetFilters()" class="px-4 py-2 bg-uzumaki-red hover:bg-red-700 text-white rounded-xl text-sm font-semibold transition">
+                Hiển thị tất cả
+            </button>
+        </div>
+
+        <!-- Timeline Container -->
+        <div id="timeline-container" class="relative space-y-12">
+            <!-- Vertical Timeline Line (Desktop) -->
+            <div class="hidden lg:block absolute left-8 top-6 bottom-6 w-1 timeline-line rounded-full opacity-40"></div>
+            
+            <!-- Cards injected via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Jutsu Detail Modal -->
+    <div id="jutsu-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity">
+        <div class="bg-[#14171A] border border-red-800/60 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-[0_0_40px_rgba(200,29,37,0.4)] transform transition-all" id="modal-box">
+            <!-- Modal Header -->
+            <div class="sticky top-0 z-10 bg-[#14171A]/95 backdrop-blur-md px-6 py-4 border-b border-gray-800 flex items-center justify-between">
+                <div class="flex items-center space-x-2.5">
+                    <span id="modal-rank-badge" class="px-2.5 py-0.5 rounded-md text-xs font-bold uppercase tracking-wider bg-uzumaki-red text-white">
+                        Cấp S
+                    </span>
+                    <span id="modal-owner" class="text-xs font-medium text-uzumaki-orange">
+                        Ashina Uzumaki
+                    </span>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-lg bg-gray-800 hover:bg-red-900/70 text-gray-300 hover:text-white flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 space-y-6">
+                <!-- Large Animated Visual Box -->
+                <div class="w-full h-56 sm:h-64 rounded-xl bg-[#0B090A] border border-gray-800 flex items-center justify-center relative overflow-hidden p-4">
+                    <div id="modal-visual" class="w-full h-full flex items-center justify-center">
+                        <!-- Dynamic SVG/Canvas visual injected here -->
+                    </div>
+                    <div class="absolute bottom-2 right-3 text-[10px] text-gray-500 font-mono uppercase tracking-widest">
+                        Mô phỏng dòng chảy Chakra
+                    </div>
+                </div>
+
+                <div>
+                    <h2 id="modal-title" class="font-display text-2xl sm:text-3xl font-bold text-white mb-1">
+                        Tên Nhẫn Thuật
+                    </h2>
+                    <p id="modal-japanese" class="text-sm text-uzumaki-gold font-medium italic">
+                        Tên tiếng Nhật / Romaji
+                    </p>
+                </div>
+
+                <!-- Stats Bars -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-black/40 p-4 rounded-xl border border-gray-800/80">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-gray-400">Uy lực / Sát thương</span>
+                            <span id="modal-power-val" class="text-uzumaki-red font-bold">95%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                            <div id="modal-power-bar" class="h-full bg-gradient-to-r from-uzumaki-crimson to-uzumaki-red rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-gray-400">Tiêu hao Chakra</span>
+                            <span id="modal-chakra-val" class="text-uzumaki-orange font-bold">90%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                            <div id="modal-chakra-bar" class="h-full bg-gradient-to-r from-orange-600 to-uzumaki-orange rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-gray-400">Độ khó / Độ hiếm</span>
+                            <span id="modal-rarity-val" class="text-uzumaki-gold font-bold">100%</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                            <div id="modal-rarity-bar" class="h-full bg-gradient-to-r from-amber-600 to-uzumaki-gold rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Explanation -->
+                <div class="space-y-4 text-sm sm:text-base text-gray-300 leading-relaxed">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5 flex items-center">
+                            <i class="fa-solid fa-circle-info text-uzumaki-orange mr-2"></i> Cơ chế hoạt động & Uy lực
+                        </h4>
+                        <p id="modal-desc" class="bg-gray-900/50 p-3.5 rounded-xl border border-gray-800/80"></p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5 flex items-center">
+                            <i class="fa-solid fa-book-journal-whills text-uzumaki-red mr-2"></i> Nguồn gốc & Dấu ấn lịch sử
+                        </h4>
+                        <p id="modal-origin" class="bg-gray-900/50 p-3.5 rounded-xl border border-gray-800/80"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 bg-black/40 border-t border-gray-800 flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2 rounded-xl bg-uzumaki-red hover:bg-red-700 text-white text-sm font-semibold transition">
+                    Đóng Hồ Sơ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-red-900/30 bg-[#080607] py-10 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-uzumaki-red flex items-center justify-center p-1">
+                    <svg viewBox="0 0 100 100" class="w-full h-full text-white">
+                        <path fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round"
+                            d="M50,50 m0,-4 a4,4 0 1,1 0,8 a8,8 0 1,1 0,-16 a14,14 0 1,1 0,28 a22,22 0 1,1 0,-44 a32,32 0 1,1 0,64" />
+                    </svg>
+                </div>
+                <span class="font-display font-bold text-gray-300 text-sm">GIA TỘC UZUMAKI • BÁCH KHOA TOÀN THƯ NHẪN THUẬT</span>
+            </div>
+            <p class="text-xs text-gray-500 text-center sm:text-right">
+                Tổng hợp dữ liệu từ Naruto, Naruto Shippūden, Boruto: Naruto Next Generations & Boruto: Two Blue Vortex.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * BỘ TẠO HÌNH MINH HỌA ĐỘNG (SVG ANIMATIONS) CHO TỪNG LOẠI SỨC MẠNH
+         * Mỗi hàm trả về một chuỗi SVG có hiệu ứng chuyển động CSS mượt mà.
+         */
+        const VisualGenerators = {
+            // 1. Thuật Phong Ấn (Tứ Tượng / Bát Quái / Thi Quỷ Phong Tận)
+            fuinjutsu: (color = '#FF6B00', secondary = '#C81D25') => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="sealGlow-${color.replace('#','')}" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="${color}" stop-opacity="0.35"/>
+                            <stop offset="100%" stop-color="${secondary}" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="100" cy="60" r="52" fill="url(#sealGlow-${color.replace('#','')})"/>
+                    <!-- Outer Rotating Seal Ring -->
+                    <g class="animate-spin-slow" style="transform-origin: 100px 60px;">
+                        <circle cx="100" cy="60" r="46" fill="none" stroke="${color}" stroke-width="1.8" stroke-dasharray="6 4"/>
+                        <circle cx="100" cy="60" r="38" fill="none" stroke="${secondary}" stroke-width="1.2"/>
+                        <rect x="73" y="33" width="54" height="54" fill="none" stroke="${color}" stroke-width="1.2" opacity="0.8"/>
+                        <rect x="73" y="33" width="54" height="54" fill="none" stroke="${color}" stroke-width="1.2" transform="rotate(45 100 60)" opacity="0.8"/>
+                    </g>
+                    <!-- Inner Counter-Rotating Spiral -->
+                    <g class="animate-spin-reverse-slow" style="transform-origin: 100px 60px;">
+                        <path d="M100,60 m0,-3 a3,3 0 1,1 0,6 a7,7 0 1,1 0,-14 a12,12 0 1,1 0,24 a18,18 0 1,1 0,-36" 
+                              fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+                    </g>
+                    <!-- 8 Trigram Nodes -->
+                    <circle cx="100" cy="14" r="3" fill="#FFB703"/>
+                    <circle cx="100" cy="106" r="3" fill="#FFB703"/>
+                    <circle cx="54" cy="60" r="3" fill="#FFB703"/>
+                    <circle cx="146" cy="60" r="3" fill="#FFB703"/>
+                </svg>
+            `,
+
+            // 2. Thi Quỷ Phong Tận (Shiki Fūjin)
+            reaperSeal: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="reaperAura" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#A855F7" stop-opacity="0.4"/>
+                            <stop offset="100%" stop-color="#0B090A" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="100" cy="60" r="55" fill="url(#reaperAura)"/>
+                    <!-- Spectral Flames -->
+                    <path d="M70,95 Q60,55 85,30 Q100,15 115,30 Q140,55 130,95 Z" fill="none" stroke="#C084FC" stroke-width="2" class="animate-pulse"/>
+                    <!-- Reaper Eyes -->
+                    <ellipse cx="90" cy="48" rx="4" ry="2.5" fill="#EF4444" class="animate-ping" style="animation-duration: 3s;"/>
+                    <ellipse cx="110" cy="48" rx="4" ry="2.5" fill="#EF4444" class="animate-ping" style="animation-duration: 3s;"/>
+                    <!-- Soul Extraction Arm -->
+                    <path d="M40,75 C70,45 130,85 160,50" fill="none" stroke="#E879F9" stroke-width="3" stroke-linecap="round" class="animate-chain"/>
+                    <!-- Seal Formula -->
+                    <circle cx="100" cy="75" r="16" fill="none" stroke="#F43F5E" stroke-width="1.5" stroke-dasharray="3 3" class="animate-spin-slow" style="transform-origin: 100px 75px;"/>
+                </svg>
+            `,
+
+            // 3. Kim Cang Phong Tỏa (Adamantine Sealing Chains)
+            chains: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <filter id="goldGlow">
+                            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <!-- Central Uzumaki Core -->
+                    <circle cx="100" cy="60" r="14" fill="#FFB703" opacity="0.25" class="animate-ping"/>
+                    <circle cx="100" cy="60" r="8" fill="#FF6B00"/>
+                    <!-- Intersecting Golden Chains -->
+                    <g filter="url(#goldGlow)">
+                        <path d="M10,20 Q60,70 100,60 T190,100" fill="none" stroke="#FFB703" stroke-width="4" stroke-linecap="round" class="animate-chain"/>
+                        <path d="M10,100 Q60,50 100,60 T190,20" fill="none" stroke="#F59E0B" stroke-width="4" stroke-linecap="round" class="animate-chain" style="animation-direction: reverse;"/>
+                        <path d="M30,10 C80,90 120,30 170,110" fill="none" stroke="#FDE047" stroke-width="2.5" stroke-dasharray="10 6" class="animate-chain"/>
+                        <path d="M170,10 C120,90 80,30 30,110" fill="none" stroke="#FDE047" stroke-width="2.5" stroke-dasharray="10 6" class="animate-chain"/>
+                    </g>
+                </svg>
+            `,
+
+            // 4. Cảm Nhận Ác Ý / Thần Lạc Tâm Nhãn (Sensory Pulse)
+            sensory: (color = '#EF4444') => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <circle cx="100" cy="60" r="12" fill="none" stroke="${color}" stroke-width="2" class="animate-wave"/>
+                    <circle cx="100" cy="60" r="12" fill="none" stroke="${color}" stroke-width="2" class="animate-wave" style="animation-delay: 0.7s;"/>
+                    <circle cx="100" cy="60" r="12" fill="none" stroke="${color}" stroke-width="2" class="animate-wave" style="animation-delay: 1.4s;"/>
+                    <!-- Center Eye/Mind Symbol -->
+                    <path d="M76,60 Q100,40 124,60 Q100,80 76,60 Z" fill="#161A1D" stroke="${color}" stroke-width="2"/>
+                    <circle cx="100" cy="60" r="6" fill="${color}"/>
+                    <!-- Detected Chakra Nodes -->
+                    <circle cx="45" cy="35" r="3" fill="#FFB703" class="animate-pulse"/>
+                    <circle cx="155" cy="40" r="3" fill="#EF4444" class="animate-pulse"/>
+                    <circle cx="145" cy="90" r="3" fill="#38BDF8" class="animate-pulse"/>
+                </svg>
+            `,
+
+            // 5. Chakra Cửu Vĩ Kurama / Baryon Mode
+            kurama: (mode = 'kcm') => {
+                const c1 = mode === 'baryon' ? '#DC2626' : '#FF6B00';
+                const c2 = mode === 'baryon' ? '#F97316' : '#FACC15';
+                return `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="kuramaGrad-${mode}" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="${c2}" stop-opacity="0.85"/>
+                            <stop offset="60%" stop-color="${c1}" stop-opacity="0.45"/>
+                            <stop offset="100%" stop-color="#0B090A" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="100" cy="60" r="52" fill="url(#kuramaGrad-${mode})" class="animate-pulse"/>
+                    <!-- 9 Flowing Tails Energy -->
+                    <g class="animate-float">
+                        <path d="M100,85 C70,80 45,50 35,25" fill="none" stroke="${c1}" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M100,85 C80,75 60,40 55,15" fill="none" stroke="${c2}" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M100,85 C90,70 80,35 80,10" fill="none" stroke="${c1}" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M100,85 C100,65 100,30 100,8" fill="none" stroke="${c2}" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M100,85 C110,70 120,35 120,10" fill="none" stroke="${c1}" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M100,85 C120,75 140,40 145,15" fill="none" stroke="${c2}" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M100,85 C130,80 155,50 165,25" fill="none" stroke="${c1}" stroke-width="3" stroke-linecap="round"/>
+                    </g>
+                    <!-- Kurama Slit Eyes -->
+                    <path d="M78,56 L92,62 L78,64 Z" fill="#EF4444"/>
+                    <path d="M122,56 L108,62 L122,64 Z" fill="#EF4444"/>
+                </svg>
+            `},
+
+            // 6. Rinnegan (Luân Hồi Nhãn - Nagato)
+            rinnegan: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="rinneGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#D8B4FE"/>
+                            <stop offset="70%" stop-color="#9333EA"/>
+                            <stop offset="100%" stop-color="#581C87"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- Eye Sclera -->
+                    <circle cx="100" cy="60" r="44" fill="url(#rinneGrad)" stroke="#E9D5FF" stroke-width="2"/>
+                    <!-- Concentric Rinnegan Ripples -->
+                    <circle cx="100" cy="60" r="36" fill="none" stroke="#1E1B4B" class="animate-rinnegan"/>
+                    <circle cx="100" cy="60" r="28" fill="none" stroke="#1E1B4B" class="animate-rinnegan" style="animation-delay: 0.3s;"/>
+                    <circle cx="100" cy="60" r="20" fill="none" stroke="#1E1B4B" class="animate-rinnegan" style="animation-delay: 0.6s;"/>
+                    <circle cx="100" cy="60" r="12" fill="none" stroke="#1E1B4B" class="animate-rinnegan" style="animation-delay: 0.9s;"/>
+                    <!-- Pupil -->
+                    <circle cx="100" cy="60" r="4.5" fill="#090D16"/>
+                </svg>
+            `,
+
+            // 7. Rasengan & Các Biến Thể (Rasenshuriken / Vanishing)
+            rasengan: (variant = 'normal') => {
+                const coreColor = variant === 'vanishing' ? '#A5F3FC' : '#38BDF8';
+                return `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="rasenCore-${variant}" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#FFFFFF"/>
+                            <stop offset="45%" stop-color="${coreColor}"/>
+                            <stop offset="100%" stop-color="#0284C7" stop-opacity="0"/>
+                        </radialGradient>
+                    </defs>
+                    ${variant === 'shuriken' ? `
+                        <!-- 4 Wind Blades of Rasenshuriken -->
+                        <g class="animate-rasengan" style="transform-origin: 100px 60px;">
+                            <path d="M100,10 Q115,40 100,60 Q85,40 100,10 Z" fill="#E0F2FE" opacity="0.85"/>
+                            <path d="M100,110 Q115,80 100,60 Q85,80 100,110 Z" fill="#E0F2FE" opacity="0.85"/>
+                            <path d="M50,60 Q80,45 100,60 Q80,75 50,60 Z" fill="#E0F2FE" opacity="0.85"/>
+                            <path d="M150,60 Q120,45 100,60 Q120,75 150,60 Z" fill="#E0F2FE" opacity="0.85"/>
+                        </g>
+                    ` : ''}
+                    <circle cx="100" cy="60" r="34" fill="url(#rasenCore-${variant})" class="${variant === 'vanishing' ? 'animate-pulse' : ''}"/>
+                    <g class="animate-rasengan" style="transform-origin: 100px 60px;">
+                        <ellipse cx="100" cy="60" rx="26" ry="12" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8"/>
+                        <ellipse cx="100" cy="60" rx="12" ry="26" fill="none" stroke="#7DD3FC" stroke-width="1.5" opacity="0.8"/>
+                        <circle cx="100" cy="60" r="14" fill="#FFFFFF" opacity="0.9"/>
+                    </g>
+                </svg>
+            `},
+
+            // 8. Lục Đạo Tiên Nhân & Cầu Đạo Ngọc (Six Paths Sage Mode)
+            sixPaths: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <!-- Golden Yang Aura -->
+                    <circle cx="100" cy="60" r="42" fill="none" stroke="#FACC15" stroke-width="1.5" stroke-dasharray="4 4" class="animate-spin-slow" style="transform-origin: 100px 60px;"/>
+                    <!-- 9 Truth-Seeking Orbs (Gudōdama) -->
+                    <g class="animate-orbit" style="transform-origin: 100px 60px;">
+                        <circle cx="100" cy="18" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="128" cy="28" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="142" cy="55" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="135" cy="84" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="112" cy="100" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="88" cy="100" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="65" cy="84" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="58" cy="55" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                        <circle cx="72" cy="28" r="5" fill="#18181B" stroke="#FACC15" stroke-width="1.5"/>
+                    </g>
+                    <!-- Rinnegan + 9 Magatama Symbol in Center -->
+                    <circle cx="100" cy="60" r="14" fill="none" stroke="#F97316" stroke-width="2"/>
+                    <circle cx="100" cy="60" r="5" fill="#FACC15"/>
+                </svg>
+            `,
+
+            // 9. Dấu Ấn Karma (Boruto)
+            karma: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <filter id="karmaBlueGlow">
+                            <feGaussianBlur stdDeviation="3" result="blur"/>
+                            <feMerge>
+                                <feMergeNode in="blur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <!-- Diamond Karma Seal -->
+                    <polygon points="100,25 122,60 100,95 78,60" fill="#0F172A" stroke="#38BDF8" stroke-width="3" filter="url(#karmaBlueGlow)"/>
+                    <polygon points="100,38 113,60 100,82 87,60" fill="#0284C7" opacity="0.6" class="animate-pulse"/>
+                    <!-- Spreading Karma Circuit Lines -->
+                    <g filter="url(#karmaBlueGlow)">
+                        <path d="M78,60 L45,60 L30,40" fill="none" stroke="#38BDF8" stroke-width="3" class="animate-karma"/>
+                        <path d="M122,60 L155,60 L170,80" fill="none" stroke="#38BDF8" stroke-width="3" class="animate-karma"/>
+                        <path d="M100,25 L100,10" fill="none" stroke="#7DD3FC" stroke-width="2.5" class="animate-karma"/>
+                        <path d="M100,95 L100,110" fill="none" stroke="#7DD3FC" stroke-width="2.5" class="animate-karma"/>
+                    </g>
+                </svg>
+            `,
+
+            // 10. Jōgan (Tịnh Nhãn - Boruto)
+            jogan: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="joganIris" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#E0F2FE"/>
+                            <stop offset="50%" stop-color="#38BDF8"/>
+                            <stop offset="100%" stop-color="#0369A1"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- Dark Sclera -->
+                    <ellipse cx="100" cy="60" rx="54" ry="34" fill="#090D16" stroke="#38BDF8" stroke-width="2"/>
+                    <!-- Luminous Blue Iris -->
+                    <circle cx="100" cy="60" r="24" fill="url(#joganIris)" class="animate-pulse"/>
+                    <circle cx="100" cy="60" r="28" fill="none" stroke="#7DD3FC" stroke-width="1" stroke-dasharray="4 3" class="animate-spin-slow" style="transform-origin: 100px 60px;"/>
+                    <!-- Faint Starlight Pupil -->
+                    <circle cx="100" cy="60" r="8" fill="#BAE6FD" opacity="0.85"/>
+                </svg>
+            `,
+
+            // 11. Rasengan Uzuhiko (Luân chuyển hành tinh)
+            uzuhiko: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <!-- Planetary Spin Rings -->
+                    <ellipse cx="100" cy="60" rx="68" ry="20" fill="none" stroke="#38BDF8" stroke-width="1.8" transform="rotate(-18 100 60)" class="animate-pulse"/>
+                    <ellipse cx="100" cy="60" rx="58" ry="16" fill="none" stroke="#F43F5E" stroke-width="1.5" transform="rotate(18 100 60)" stroke-dasharray="8 4"/>
+                    <ellipse cx="100" cy="60" rx="44" ry="44" fill="none" stroke="#60A5FA" stroke-width="1" stroke-dasharray="3 5" class="animate-spin-slow" style="transform-origin: 100px 60px;"/>
+                    <!-- Core Vortex -->
+                    <circle cx="100" cy="60" r="16" fill="#0284C7" opacity="0.5"/>
+                    <circle cx="100" cy="60" r="9" fill="#FFFFFF" class="animate-ping" style="animation-duration: 2s;"/>
+                </svg>
+            `,
+
+            // 12. Byakugan (Bạch Nhãn - Himawari)
+            byakugan: () => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <!-- Gentle Fist Aura -->
+                    <circle cx="100" cy="60" r="42" fill="none" stroke="#E2E8F0" stroke-width="1.5" opacity="0.5" class="animate-wave"/>
+                    <!-- Lavender/White Iris -->
+                    <circle cx="100" cy="60" r="32" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2.5"/>
+                    <circle cx="100" cy="60" r="14" fill="none" stroke="#CBD5E1" stroke-width="2"/>
+                    <!-- Tenketsu Meridian Points -->
+                    <line x1="30" y1="60" x2="62" y2="60" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
+                    <line x1="138" y1="60" x2="170" y2="60" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3 3"/>
+                    <circle cx="42" cy="52" r="2" fill="#38BDF8"/>
+                    <circle cx="158" cy="68" r="2" fill="#38BDF8"/>
+                </svg>
+            `,
+
+            // 13. Bách Hào Thuật / Hồi Phục (Byakugō / Heal Bite)
+            regeneration: (color = '#A855F7') => `
+                <svg viewBox="0 0 200 120" class="w-full h-full">
+                    <!-- Forehead Diamond Seal -->
+                    <polygon points="100,28 114,60 100,92 86,60" fill="${color}" opacity="0.25" class="animate-pulse"/>
+                    <polygon points="100,36 110,60 100,84 90,60" fill="none" stroke="${color}" stroke-width="2.5"/>
+                    <!-- Healing Cellular Crosses -->
+                    <g stroke="#4ADE80" stroke-width="2" stroke-linecap="round" class="animate-float">
+                        <line x1="55" y1="40" x2="55" y2="50"/><line x1="50" y1="45" x2="60" y2="45"/>
+                        <line x1="145" y1="70" x2="145" y2="80"/><line x1="140" y1="75" x2="150" y2="75"/>
+                        <line x1="140" y1="32" x2="140" y2="40"/><line x1="136" y1="36" x2="144" y2="36"/>
+                    </g>
+                </svg>
+            `
+        };
+
+        /**
+         * DỮ LIỆU TOÀN DIỆN VỀ CÁC THÀNH VIÊN GIA TỘC UZUMAKI
+         */
+        const uzumakiData = [
+            {
+                id: 'ashina',
+                name: 'Ashina Uzumaki',
+                title: 'Tộc Trưởng Khai Quốc • Thủy Tổ Phong Ấn Thuật',
+                era: 'genesis',
+                eraLabel: 'Thời Khai Sinh & Làng Xoáy Nước',
+                badgeColor: 'bg-red-900/80 text-red-200 border-red-700',
+                avatarSymbol: '渦',
+                summary: 'Người sáng lập và lãnh đạo Làng Xoáy Nước (Uzushiogakure) cùng thời với Hashirama Senju và Madara Uchiha. Ông được tôn xưng là thủy tổ của các thuật phong ấn bậc thầy tại Konoha.',
+                stats: { chakra: 'Cấp Thần Thoại', specialty: 'Fūinjutsu Tối Thượng', status: 'Huyền Thoại Cổ Đại' },
+                powers: [
+                    {
+                        name: 'Bậc Thầy Phong Ấn Thuật (Fūinjutsu)',
+                        jpName: 'Fūinjutsu no Shiso (封印術の始祖)',
+                        rank: 'Cấp S+',
+                        visualType: 'fuinjutsu',
+                        visualArgs: ['#FF6B00', '#C81D25'],
+                        powerStat: 96,
+                        chakraStat: 95,
+                        rarityStat: 100,
+                        shortDesc: 'Sáng tạo và truyền dạy toàn bộ nền tảng thuật phong ấn cho Làng Lá, bao gồm cả ấn ký trên lưng áo các nhẫn giả Konoha.',
+                        mechanism: 'Ashina có thể thi triển các kết giới và thuật phong ấn phức tạp chỉ bằng một cái phất tay hoặc trong tích tắc mà không cần chuẩn bị bùa chú rườm rà. Ông dễ dàng phong ấn những Vĩ Thú khổng lồ đang cuồng nộ chỉ trong vài giây.',
+                        origin: 'Được truyền thừa từ huyết thống Asura Ōtsutsuki và phát triển thành nghệ thuật độc tôn của Uzushiogakure. Để tri ân, Konoha đã khắc biểu tượng xoáy nước Uzumaki lên đồng phục Chunin/Jonin.'
+                    },
+                    {
+                        name: 'Tứ Tượng Phong Ấn & Bát Quái Phong Ấn',
+                        jpName: 'Shishō Fūin / Hakke no Fūin Shiki',
+                        rank: 'Cấp S',
+                        visualType: 'fuinjutsu',
+                        visualArgs: ['#FFB703', '#8B0000'],
+                        powerStat: 94,
+                        chakraStat: 90,
+                        rarityStat: 95,
+                        shortDesc: 'Kết hợp hai Tứ Tượng Phong Ấn tạo thành Bát Quái, cho phép Chakra của Vĩ Thú rò rỉ có kiểm soát để hòa nhập với vật chủ.',
+                        mechanism: 'Tạo ra hai vòng xoáy phong ấn lồng vào nhau. Cấu trúc Bát Quái đảm bảo phong ấn không bao giờ vỡ đột ngột mà từ từ chuyển hóa Chakra tà ác của Vĩ Thú thành nguồn năng lượng tinh khiết cho Jinchūriki.',
+                        origin: 'Bí thuật gia truyền của gia tộc Uzumaki do Ashina hoàn thiện, sau này được Kushina truyền lại cho Minato Namikaze để phong ấn Cửu Vĩ vào Naruto.'
+                    },
+                    {
+                        name: 'Thi Quỷ Phong Tận',
+                        jpName: 'Shiki Fūjin (屍鬼封尽)',
+                        rank: 'Cấm Thuật Cấp S',
+                        visualType: 'reaperSeal',
+                        visualArgs: [],
+                        powerStat: 100,
+                        chakraStat: 100,
+                        rarityStat: 99,
+                        shortDesc: 'Triệu hồi Tử Thần (Shinigami) để đoạt lấy linh hồn mục tiêu và phong ấn vĩnh viễn vào bụng Tử Thần.',
+                        mechanism: 'Người thi triển đánh đổi chính linh hồn của mình để triệu hồi Tử Thần vô hình. Cánh tay Tử Thần xuyên qua cơ thể người dùng, tóm lấy linh hồn đối phương (hoặc chia cắt linh hồn Vĩ Thú làm đôi) và kéo vào cõi hư vô.',
+                        origin: 'Cấm thuật tối thượng được cất giữ trong Đền Thờ Mặt Nạ của gia tộc Uzumaki ở ngoại ô Làng Lá.'
+                    },
+                    {
+                        name: 'Sinh Lực & Tuổi Thọ Siêu Phàm',
+                        jpName: 'Uzumaki Seimeiryoku',
+                        rank: 'Huyết Kế Bẩm Sinh',
+                        visualType: 'sensory',
+                        visualArgs: ['#FF6B00'],
+                        powerStat: 88,
+                        chakraStat: 98,
+                        rarityStat: 92,
+                        shortDesc: 'Nguồn dự trữ Chakra khổng lồ giúp Ashina sống qua nhiều thế hệ và duy trì trạng thái đỉnh cao ngay cả khi tuổi đã rất cao.',
+                        mechanism: 'Cấu trúc tế bào mang năng lượng dương cực đại từ Asura giúp làm chậm quá trình lão hóa tự nhiên, tăng cường sức chịu đựng và khả năng phục hồi thể chất gấp nhiều lần nhẫn giả thông thường.',
+                        origin: 'Đặc trưng di truyền cốt lõi của dòng máu thuần chủng Uzumaki.'
+                    }
+                ]
+            },
+            {
+                id: 'mito',
+                name: 'Mito Uzumaki',
+                title: 'Jinchūriki Cửu Vĩ Đầu Tiên • Phu Nhân Hokage Đệ Nhất',
+                era: 'genesis',
+                eraLabel: 'Thời Khai Sinh & Làng Lá Sơ Khai',
+                badgeColor: 'bg-orange-900/80 text-orange-200 border-orange-700',
+                avatarSymbol: '九',
+                summary: 'Công chúa của Uzushiogakure kết hôn với Hashirama Senju để thắt chặt liên minh giữa hai tộc. Bà tự phong ấn toàn bộ Cửu Vĩ Kurama vào cơ thể mình sau trận chiến Thung Lũng Tận Cùng.',
+                stats: { chakra: 'Cấp Vĩ Thú (100% Kurama)', specialty: 'Trấn Áp Vĩ Thú & Cảm Nhận', status: 'Jinchūriki Đời Thứ 1' },
+                powers: [
+                    {
+                        name: 'Kim Cang Phong Tỏa',
+                        jpName: 'Kongō Fūsa (金剛封鎖)',
+                        rank: 'Huyết Kế / Cấp S',
+                        visualType: 'chains',
+                        visualArgs: [],
+                        powerStat: 95,
+                        chakraStat: 92,
+                        rarityStat: 98,
+                        shortDesc: 'Phóng ra các sợi xích Chakra màu vàng ròng từ cơ thể để trói chặt và vô hiệu hóa hoàn toàn sức mạnh của Cửu Vĩ.',
+                        mechanism: 'Biến đổi Chakra thuần khiết thành các chuỗi xích vật lý siêu bền. Xích không chỉ khóa chặt chuyển động vật lý mà còn trực tiếp phong bế dòng chảy Chakra của Vĩ Thú bên trong cơ thể Mito.',
+                        origin: 'Huyết kế độc quyền chỉ xuất hiện ở những thành viên Uzumaki sở hữu tư chất đặc biệt.'
+                    },
+                    {
+                        name: 'Cảm Nhận Ác Ý (Negative Emotions Sensing)',
+                        jpName: 'Akui Kanchi (悪意感知)',
+                        rank: 'Năng Lực Đặc Biệt',
+                        visualType: 'sensory',
+                        visualArgs: ['#EF4444'],
+                        powerStat: 85,
+                        chakraStat: 80,
+                        rarityStat: 96,
+                        shortDesc: 'Nhận biết tức thì mọi cảm xúc tiêu cực, sát ý và sự dối trá của bất kỳ ai trong phạm vi rộng lớn.',
+                        mechanism: 'Khi hòa hợp với nguồn Chakra khổng lồ của Cửu Vĩ, giác quan của Mito đạt đến cảnh giới thấu thị tâm lý, nhìn xuyên qua mọi lớp ngụy trang (như Bạch Zetsu) dựa trên dao động ác ý.',
+                        origin: 'Năng lực cộng hưởng giữa huyết thống cảm nhận của Uzumaki và bản chất của Cửu Vĩ Kurama (sau này Naruto cũng kế thừa năng lực này).'
+                    },
+                    {
+                        name: 'Sức Mạnh Jinchūriki Cửu Vĩ Toàn Phần',
+                        jpName: 'Kyūbi no Jinchūriki',
+                        rank: 'Cấp Thảm Họa',
+                        visualType: 'kurama',
+                        visualArgs: ['kcm'],
+                        powerStat: 98,
+                        chakraStat: 100,
+                        rarityStat: 99,
+                        shortDesc: 'Trở thành vật chứa của 100% thực thể Kurama hung bạo nhất trong lịch sử mà không bao giờ để Vĩ Thú thoát ra ngoài.',
+                        mechanism: 'Sử dụng phong ấn Uzumaki đỉnh cao kết hợp ý chí sắt đá để giam cầm trọn vẹn Cửu Vĩ suốt hàng chục năm cho đến tận cuối đời.',
+                        origin: 'Sau trận chiến giữa Hashirama và Madara, Mito đã tự mình phong ấn Kurama để bảo vệ sự bình yên cho Làng Lá.'
+                    },
+                    {
+                        name: 'Dấu Ấn Trán & Bí Thuật Trường Thọ (Giả thuyết Bách Hào)',
+                        jpName: 'Byakugō no In (百豪の印)',
+                        rank: 'Cấp S',
+                        visualType: 'regeneration',
+                        visualArgs: ['#A855F7'],
+                        powerStat: 89,
+                        chakraStat: 94,
+                        rarityStat: 95,
+                        shortDesc: 'Dấu ấn hình thoi trên trán tích tụ một lượng Chakra khổng lồ qua nhiều năm, giúp duy trì phong ấn Cửu Vĩ và hồi phục.',
+                        mechanism: 'Tập trung Chakra vào một điểm duy nhất trên trán mỗi ngày để tạo thành kho dự trữ năng lượng tinh khiết, có thể giải phóng bất cứ lúc nào để gia cố phong ấn hoặc tái tạo tế bào.',
+                        origin: 'Mito mang dấu ấn hình thoi giống hệt Bách Hào Thuật mà cháu gái bà là Tsunade Senju đã hoàn thiện sau này.'
+                    }
+                ]
+            },
+            {
+                id: 'kushina',
+                name: 'Kushina Uzumaki',
+                title: 'Ớt Đỏ Hung Hãn • Jinchūriki Cửu Vĩ Thứ Hai',
+                era: 'konoha-akatsuki',
+                eraLabel: 'Kỷ Nguyên Làng Lá (Thế Hệ Minato)',
+                badgeColor: 'bg-red-800/80 text-red-100 border-red-600',
+                avatarSymbol: '鎖',
+                summary: 'Được đưa từ Uzushiogakure tới Konoha vì sở hữu lượng Chakra đặc biệt mạnh mẽ ngay cả trong nội bộ gia tộc Uzumaki. Mẹ của Hokage Đệ Thất Naruto Uzumaki.',
+                stats: { chakra: 'Cực Đại & Đậm Đặc', specialty: 'Kim Cang Phong Tỏa Toàn Diện', status: 'Anh Hùng Làng Lá' },
+                powers: [
+                    {
+                        name: 'Kim Cang Phong Tỏa (Phiên Bản Hoàn Chỉnh)',
+                        jpName: 'Kongō Fūsa (金剛封鎖)',
+                        rank: 'Cấp S+',
+                        visualType: 'chains',
+                        visualArgs: [],
+                        powerStat: 97,
+                        chakraStat: 93,
+                        rarityStat: 98,
+                        shortDesc: 'Triệu hồi hàng chục sợi xích Chakra khổng lồ đủ sức trói chặt 100% Cửu Vĩ và tạo kết giới cô lập cả Hokage Đệ Tam.',
+                        mechanism: 'Ngay cả khi đang hấp hối sau khi bị rút mất Vĩ Thú và vừa sinh con, Kushina vẫn phóng ra những sợi xích vàng khổng lồ khóa cứng mọi cử động của Kurama và dựng kết giới ngăn không cho ai can thiệp.',
+                        origin: 'Thiên phú bẩm sinh vượt trội của Kushina khiến cô trở thành người sử dụng Kim Cang Phong Tỏa mạnh mẽ nhất lịch sử.'
+                    },
+                    {
+                        name: 'Sinh Lực Mãnh Liệt & Kháng Cự Rút Vĩ Thú',
+                        jpName: 'Kyōjin na Seimeiryoku',
+                        rank: 'Huyết Kế Bẩm Sinh',
+                        visualType: 'regeneration',
+                        visualArgs: ['#EF4444'],
+                        powerStat: 92,
+                        chakraStat: 96,
+                        rarityStat: 97,
+                        shortDesc: 'Sống sót sau khi bị Obito rút mất toàn bộ Cửu Vĩ khỏi cơ thể — điều mà mọi Jinchūriki khác đều tử vong ngay lập tức.',
+                        mechanism: 'Hệ thống tuần hoàn Chakra đặc biệt của tộc Uzumaki ngăn chặn sự sụp đổ nội tạng tức thì khi mất đi nguồn năng lượng cộng sinh từ Vĩ Thú, giúp cô đủ sức chiến đấu bảo vệ con trai.',
+                        origin: 'Minh chứng rõ nét nhất cho sức sống bền bỉ như cỏ dại của gia tộc Uzumaki.'
+                    },
+                    {
+                        name: 'Hệ Thống Phong Ấn Thuật Truyền Thống Uzushio',
+                        jpName: 'Uzushio Fūinjutsu',
+                        rank: 'Cấp S',
+                        visualType: 'fuinjutsu',
+                        visualArgs: ['#C81D25', '#FF6B00'],
+                        powerStat: 91,
+                        chakraStat: 88,
+                        rarityStat: 90,
+                        shortDesc: 'Kho tàng kiến thức phong ấn cổ truyền của Làng Xoáy Nước mà Kushina đã truyền dạy toàn bộ cho Minato Namikaze.',
+                        mechanism: 'Thành thạo Tứ Tượng Phong Ấn, Bát Quái Phong Ấn và kỹ thuật cấy ghép một phần linh hồn/Chakra của bản thân vào ấn ký để xuất hiện trong tiềm thức của Naruto 16 năm sau.',
+                        origin: 'Di sản cuối cùng của quê hương Uzushiogakure trước khi ngôi làng bị các cường quốc vây đánh và hủy diệt.'
+                    }
+                ]
+            },
+            {
+                id: 'nagato',
+                name: 'Nagato (Pain)',
+                title: 'Thủ Lĩnh Akatsuki • Chủ Nhân Lục Đạo Luân Hồi',
+                era: 'konoha-akatsuki',
+                eraLabel: 'Kỷ Nguyên Akatsuki & Làng Mưa',
+                badgeColor: 'bg-purple-950/90 text-purple-200 border-purple-700',
+                avatarSymbol: '輪',
+                summary: 'Hậu duệ gia tộc Uzumaki tại Làng Mưa. Nhờ dòng máu Uzumaki thuần chủng, Nagato là người duy nhất ngoài tộc Ōtsutsuki có thể điều khiển cùng lúc cả hai con mắt Rinnegan mà không bị kiệt sức.',
+                stats: { chakra: 'Vô Tận (Đủ Nuôi 2 Rinnegan)', specialty: 'Rinnegan & Lục Đạo', status: 'Thần Của Làng Mưa' },
+                powers: [
+                    {
+                        name: 'Rinnegan & Lục Đạo Luân Hồi (Pain Rikudō)',
+                        jpName: 'Rinnegan / Pain Rikudō (輪廻眼 • ペイン六道)',
+                        rank: 'Huyết Kế Cương La',
+                        visualType: 'rinnegan',
+                        visualArgs: [],
+                        powerStat: 100,
+                        chakraStat: 99,
+                        rarityStat: 100,
+                        shortDesc: 'Đôi mắt tối thượng của Lục Đạo Hiền Nhân cho phép điều khiển 6 cơ thể xác sống (Thiên, Tu La, Nhân Gian, Súc Sinh, Ngạ Quỷ, Địa Ngục Đạo).',
+                        mechanism: 'Truyền Chakra thông qua các thanh hắc thiết (Kuroi Jushinki) để điều khiển 6 phân thân từ xa với tầm nhìn chia sẻ chung: Thần La Thiên Chinh (đẩy vạn vật), Vạn Tượng Thiên Dẫn (hút vạn vật), Địa Bộc Thiên Tinh (tạo mặt trăng thu nhỏ), hấp thụ mọi nhẫn thuật, rút linh hồn và triệu hồi Diêm Vương.',
+                        origin: 'Được Madara Uchiha bí mật cấy ghép từ khi còn nhỏ vì chỉ có thể chất Uzumaki của Nagato mới chịu đựng nổi áp lực của cặp Rinnegan.'
+                    },
+                    {
+                        name: 'Ngoại Đạo: Luân Hồi Thiên Sinh Thuật',
+                        jpName: 'Gedō: Rinne Tensei no Jutsu (外道・輪廻天生之術)',
+                        rank: 'Cấm Thuật Cấp S+',
+                        visualType: 'reaperSeal',
+                        visualArgs: [],
+                        powerStat: 98,
+                        chakraStat: 100,
+                        rarityStat: 100,
+                        shortDesc: 'Quyền năng tối thượng của Ngoại Đạo cho phép hồi sinh toàn bộ người đã chết trong một ngôi làng chỉ bằng một kết ấn.',
+                        mechanism: 'Triệu hồi Diêm Vương từ cõi âm để giải phóng toàn bộ linh hồn vừa lìa khỏi xác, trả chúng về lại cơ thể cũ và chữa lành mọi vết thương chí mạng. Đổi lại, người dùng phải tiêu hao toàn bộ sinh mệnh.',
+                        origin: 'Nagato đã dùng chiêu thức này để hồi sinh hàng vạn dân làng và nhẫn giả Konoha sau trận hủy diệt Làng Lá.'
+                    },
+                    {
+                        name: 'Tinh Thông Ngũ Đại Nguyên Tố & Âm Dương Độn',
+                        jpName: 'Godai Seishitsu Henka & Onmyōton',
+                        rank: 'Cấp S',
+                        visualType: 'fuinjutsu',
+                        visualArgs: ['#A855F7', '#38BDF8'],
+                        powerStat: 93,
+                        chakraStat: 90,
+                        rarityStat: 95,
+                        shortDesc: 'Làm chủ hoàn toàn Hỏa, Thủy, Thổ, Lôi, Phong Độn cùng Âm Dương Độn ngay từ khi mới 10 tuổi.',
+                        mechanism: 'Rinnegan mở khóa toàn bộ hiểu biết về bản chất Chakra, giúp Nagato thi triển mọi nhẫn thuật thuộc 5 hệ nguyên tố ở cấp độ bậc thầy mà không cần tập luyện nhiều năm.',
+                        origin: 'Được Jiraiya trực tiếp huấn luyện và kinh ngạc công nhận là thiên tài ngàn năm có một.'
+                    },
+                    {
+                        name: 'Thể Chất Uzumaki Chịu Tải Rinnegan',
+                        jpName: 'Uzumaki no Karada',
+                        rank: 'Huyết Kế Bẩm Sinh',
+                        visualType: 'sensory',
+                        visualArgs: ['#A855F7'],
+                        powerStat: 90,
+                        chakraStat: 98,
+                        rarityStat: 96,
+                        shortDesc: 'Nền tảng sinh lực giúp Nagato duy trì cặp Rinnegan suốt đời (trong khi Obito chỉ chịu nổi 1 mắt và suýt mất trí).',
+                        mechanism: 'Lượng Chakra dồi dào liên tục nuôi dưỡng đôi mắt thần, thậm chí sau khi bị cạn kiệt sinh lực vì Ngoại Đạo Ma Tượng, Nagato vẫn đủ sức điều khiển 6 Pain san phẳng Konoha.',
+                        origin: 'Di truyền thuần chủng từ cha mẹ đều là người tộc Uzumaki.'
+                    }
+                ]
+            },
+            {
+                id: 'karin',
+                name: 'Karin',
+                title: 'Nhẫn Giả Cảm Nhận Tối Thượng • Thành Viên Đội Taka',
+                era: 'konoha-akatsuki',
+                eraLabel: 'Kỷ Nguyên Taka & Đại Chiến Ninja Lần 4',
+                badgeColor: 'bg-rose-950/90 text-rose-200 border-rose-700',
+                avatarSymbol: '癒',
+                summary: 'Người sống sót hiếm hoi mang dòng máu thuần chủng Uzumaki với mái tóc đỏ rực. Cô sở hữu khả năng cảm nhận Chakra đứng đầu thế giới nhẫn giả và thể chất hồi phục độc nhất vô nhị.',
+                stats: { chakra: 'Tinh Khiết & Hồi Phục', specialty: 'Thần Lạc Tâm Nhãn & Trị Thương', status: 'Cộng Sự Orochimaru' },
+                powers: [
+                    {
+                        name: 'Thần Lạc Tâm Nhãn (Kagura Shingan)',
+                        jpName: 'Kagura Shingan (神楽心眼)',
+                        rank: 'Năng Lực Độc Tôn',
+                        visualType: 'sensory',
+                        visualArgs: ['#38BDF8'],
+                        powerStat: 82,
+                        chakraStat: 85,
+                        rarityStat: 99,
+                        shortDesc: 'Mở rộng giác quan cảm nhận Chakra ra phạm vi hàng chục km, phân biệt chính xác từng cá nhân, số lượng và phát hiện nói dối.',
+                        mechanism: 'Khi nhắm mắt và mở tâm nhãn, Karin nhìn thấy Chakra của mọi sinh vật dưới dạng ánh sáng màu sắc và kích thước khác nhau. Nếu ai đó nói dối, dòng Chakra của họ sẽ dao động bất thường ngay lập tức.',
+                        origin: 'Kỹ năng cảm nhận bẩm sinh được Karin phát triển đến mức hoàn hảo trong thời gian ở căn cứ của Orochimaru.'
+                    },
+                    {
+                        name: 'Thể Chất Hồi Phục (Heal Bite)',
+                        jpName: 'Chiyu no Taishitsu',
+                        rank: 'Huyết Kế Bẩm Sinh',
+                        visualType: 'regeneration',
+                        visualArgs: ['#22C55E'],
+                        powerStat: 85,
+                        chakraStat: 92,
+                        rarityStat: 98,
+                        shortDesc: 'Chỉ cần cắn vào da của Karin, người bị thương sẽ hấp thụ trực tiếp Chakra sinh mệnh của cô để lành mọi vết thương chí mạng trong tích tắc.',
+                        mechanism: 'Chakra của Karin mang đậm tính Dương và năng lượng tái tạo tế bào. Khi truyền trực tiếp qua vết cắn, nó kích hoạt quá trình phân bào siêu tốc và bổ sung ngay lập tức lượng Chakra đã mất cho người nhận.',
+                        origin: 'Từng cứu sống Sasuke Uchiha khỏi cái chết nhiều lần (như trận đấu với Killer B và Danzo) cũng như hồi sinh Tsunade khi bị tách làm đôi.'
+                    },
+                    {
+                        name: 'Kim Cang Phong Tỏa (Bộc Phát Bản Năng)',
+                        jpName: 'Kongō Fūsa (金剛封鎖)',
+                        rank: 'Cấp S',
+                        visualType: 'chains',
+                        visualArgs: [],
+                        powerStat: 93,
+                        chakraStat: 90,
+                        rarityStat: 96,
+                        shortDesc: 'Trong cơn tuyệt vọng muốn cứu Sasuke tại Đại chiến Ninja lần 4, Karin đã thức tỉnh hoàn chỉnh Xích Kim Cang của tộc Uzumaki.',
+                        mechanism: 'Phóng ra những sợi xích vàng khổng lồ nghiền nát bức tượng Phật nghìn tay (Shin Sūsenju) của Guruguru (Tobi Zetsu) chỉ trong một đòn, khiến chính Orochimaru cũng phải kinh ngạc.',
+                        origin: 'Huyết kế ẩn giấu trong dòng máu Uzumaki của Karin bộc phát khi cảm xúc đạt đến cực hạn.'
+                    }
+                ]
+            },
+            {
+                id: 'naruto',
+                name: 'Naruto Uzumaki',
+                title: 'Hokage Đệ Thất • Anh Hùng Cứu Thế & Jinchūriki Mạnh Nhất',
+                era: 'naruto-era',
+                eraLabel: 'Thời Đại Naruto & Đại Chiến Nhẫn Giả',
+                badgeColor: 'bg-orange-600/90 text-white border-orange-400',
+                avatarSymbol: '七',
+                summary: 'Con trai của Hokage Đệ Thứ Minato Namikaze và Kushina Uzumaki. Naruto là hiện thân tái sinh của Asura Ōtsutsuki, người hợp nhất thành công sức mạnh của tất cả 9 Vĩ Thú và Lục Đạo Tiên Nhân.',
+                stats: { chakra: 'Vô Hạn (9 Vĩ Thú + Lục Đạo)', specialty: 'Rasengan, Tiên Thuật & Baryon', status: 'Hokage Đệ Thất' },
+                powers: [
+                    {
+                        name: 'Chế Độ Hạt Nhân (Baryon Mode)',
+                        jpName: 'Barion Mōdo (重粒子モード)',
+                        rank: 'Cấp Thần Thánh (Tối Thượng)',
+                        visualType: 'kurama',
+                        visualArgs: ['baryon'],
+                        powerStat: 100,
+                        chakraStat: 100,
+                        rarityStat: 100,
+                        shortDesc: 'Hợp nhất Chakra của Naruto và Kurama làm nguyên liệu phản ứng nhiệt hạch để tạo ra một loại năng lượng hoàn toàn mới.',
+                        mechanism: 'Giống như phản ứng tổng hợp hạt nhân trên Mặt Trời, Baryon Mode tiêu hủy dần sinh mệnh của Kurama để tạo ra tốc độ, phản xạ và sức mạnh áp đảo hoàn toàn Isshiki Ōtsutsuki. Mọi đòn đánh chạm vào đối thủ đều rút ngắn trực tiếp tuổi thọ của kẻ đó.',
+                        origin: 'Tuyệt kỹ cuối cùng của Kurama được kích hoạt trong trận tử chiến bảo vệ Làng Lá trước Isshiki Ōtsutsuki.'
+                    },
+                    {
+                        name: 'Lục Đạo Tiên Nhân Thuật & Cầu Đạo Ngọc',
+                        jpName: 'Rikudō Sennin Mōdo (六道仙人モード)',
+                        rank: 'Cấp Thần Thánh',
+                        visualType: 'sixPaths',
+                        visualArgs: [],
+                        powerStat: 99,
+                        chakraStat: 99,
+                        rarityStat: 100,
+                        shortDesc: 'Nhận truyền thừa sức mạnh Dương từ Hagoromo Ōtsutsuki, sở hữu 9 Cầu Đạo Ngọc (Gudōdama) và Chakra của cả 9 Vĩ Thú.',
+                        mechanism: 'Cho phép bay lượn tự do, cảm nhận mọi thứ ở chiều không gian khác (như ảnh phân thân Limbo của Madara), vô hiệu hóa mọi nhẫn thuật không mang Tiên Thuật và sử dụng Huyết Kế Giới Hạn của cả 9 Vĩ Thú (Dung Độn, Từ Độn, Phí Độn...).',
+                        origin: 'Được Lục Đạo Tiên Nhân Hagoromo ban tặng trong Đại chiến Ninja lần thứ 4.'
+                    },
+                    {
+                        name: 'Phong Độn: La Toàn Thủ Lý Kiếm & Các Biến Thể Rasengan',
+                        jpName: 'Fūton: Rasenshuriken & Bijūdama Rasenshuriken',
+                        rank: 'Cấp S+',
+                        visualType: 'rasengan',
+                        visualArgs: ['shuriken'],
+                        powerStat: 98,
+                        chakraStat: 95,
+                        rarityStat: 95,
+                        shortDesc: 'Kết hợp biến đổi hình dạng tối đa (Rasengan) với biến đổi tính chất Phong Độn (và Chakra Vĩ Thú), tấn công ở cấp độ tế bào.',
+                        mechanism: 'Tạo ra vô số lưỡi dao gió siêu nhỏ cắt đứt hoàn toàn hệ thống kinh mạch Chakra của mục tiêu. Ở trạng thái Lục Đạo, Naruto có thể tung ra Lục Đạo: Siêu Đại Ngọc La Toàn Thủ Lý Kiếm hủy diệt cả thiên thạch của Madara.',
+                        origin: 'Naruto đã hoàn thiện nhẫn thuật mà ngay cả cha mình là Minato cũng chưa kịp làm được.'
+                    },
+                    {
+                        name: 'Tiên Nhân Thuật Núi Myōboku (Sage Mode)',
+                        jpName: 'Sennin Mōdo (仙人モード)',
+                        rank: 'Cấp S',
+                        visualType: 'sensory',
+                        visualArgs: ['#F59E0B'],
+                        powerStat: 92,
+                        chakraStat: 88,
+                        rarityStat: 92,
+                        shortDesc: 'Hấp thụ năng lượng tự nhiên hòa quyện với lượng Chakra Uzumaki khổng lồ để nâng cấp toàn diện thể chất và cảm nhận.',
+                        mechanism: 'Tăng cường sức mạnh vật lý, tốc độ, độ bền lên gấp nhiều lần. Đòn đánh Oa Nhân Quyền (Frog Kumite) sử dụng năng lượng tự nhiên bao quanh cơ thể để đánh trúng kẻ địch mà không cần chạm vào.',
+                        origin: 'Khổ luyện tại thánh địa cóc Myōboku dưới sự hướng dẫn của Đại Hiền Nhân Fukasaku.'
+                    },
+                    {
+                        name: 'Đa Trọng Ảnh Phân Thân Chi Thuật (Quy Mô Quân Đoàn)',
+                        jpName: 'Tajū Kage Bunshin no Jutsu (多重影分身の術)',
+                        rank: 'Cấm Thuật Cấp A',
+                        visualType: 'rasengan',
+                        visualArgs: ['normal'],
+                        powerStat: 89,
+                        chakraStat: 97,
+                        rarityStat: 90,
+                        shortDesc: 'Tạo ra hàng ngàn bản thể thực thụ cùng lúc mà không bị cạn kiệt Chakra nhờ dòng máu Uzumaki bẩm sinh.',
+                        mechanism: 'Chia đều Chakra cho hàng ngàn phân thân để tấn công áp đảo, trinh sát hoặc rút ngắn thời gian luyện tập từ hàng chục năm xuống chỉ còn vài ngày (mọi kinh nghiệm của phân thân đều truyền về bản thể).',
+                        origin: 'Cấm thuật đầu tiên Naruto học được từ Cuộn Phong Ấn của Hokage Đệ Nhất.'
+                    }
+                ]
+            },
+            {
+                id: 'boruto',
+                name: 'Boruto Uzumaki',
+                title: 'Kẻ Phản Bội Thầm Lặng • Truyền Nhân Của Sasuke & Ōtsutsuki',
+                era: 'boruto-tbv',
+                eraLabel: 'Thời Đại Boruto: Two Blue Vortex',
+                badgeColor: 'bg-sky-900/90 text-sky-200 border-sky-500',
+                avatarSymbol: '渦',
+                summary: 'Con trai cả của Naruto và Hinata Hyūga, mang trong mình hai dòng máu cao quý Uzumaki và Hyūga. Trong kỷ nguyên Two Blue Vortex, Boruto trở thành nhẫn giả đạt đến cảnh giới thần thánh với khả năng điều khiển năng lượng hành tinh.',
+                stats: { chakra: '100% Ōtsutsuki + Uzumaki', specialty: 'Rasengan Uzuhiko & Phi Lôi Thần', status: 'Đỉnh Cao Thế Hệ Mới' },
+                powers: [
+                    {
+                        name: 'Rasengan Uzuhiko (La Toàn Hoàn Xoáy Hành Tinh)',
+                        jpName: 'Rasengan: Uzuhiko (螺旋丸・渦彦)',
+                        rank: 'Cấp Thần Thánh',
+                        visualType: 'uzuhiko',
+                        visualArgs: [],
+                        powerStat: 100,
+                        chakraStat: 85,
+                        rarityStat: 100,
+                        shortDesc: 'Tuyệt kỹ tối thượng sử dụng chính lực ly tâm và sự tự quay của Trái Đất thay vì chỉ dựa vào Chakra cá nhân.',
+                        mechanism: 'Boruto kết nối dòng Chakra của mình với chuyển động quay của hành tinh. Khi đánh trúng mục tiêu (như Code), lực xoáy hành tinh vĩnh cửu truyền vào cơ thể kẻ địch, gây mất phương hướng vĩnh viễn và nghiền nát nội tạng cho đến khi hành tinh ngừng quay (hoặc Boruto giải thuật).',
+                        origin: 'Bí thuật do chính Boruto sáng tạo trong 3 năm lưu vong luyện tập cùng Sasuke Uchiha và Kashin Koji.'
+                    },
+                    {
+                        name: 'Dấu Ấn Karma (Kāma của Momoshiki)',
+                        jpName: 'Kāma (楔)',
+                        rank: 'Cấp Ōtsutsuki',
+                        visualType: 'karma',
+                        visualArgs: [],
+                        powerStat: 98,
+                        chakraStat: 96,
+                        rarityStat: 99,
+                        shortDesc: 'Dấu ấn nén dữ liệu sinh học của Momoshiki Ōtsutsuki, biến cơ thể Boruto thành 100% thực thể Ōtsutsuki thuần chủng.',
+                        mechanism: 'Hấp thụ mọi nhẫn thuật tấn công, mở cổng dịch chuyển không-thời gian, bay lượn và truy cập trực tiếp hàng ngàn năm kinh nghiệm chiến đấu thực chiến của Momoshiki Ōtsutsuki (True Essence).',
+                        origin: 'Được Momoshiki khắc lên lòng bàn tay sau trận chiến tại kỳ thi Chunin và tái cấu trúc cơ thể Boruto sau cái chết tạm thời của cậu.'
+                    },
+                    {
+                        name: 'Jōgan (Tịnh Nhãn - Đôi Mắt Thuần Khiết)',
+                        jpName: 'Jōgan (淨眼)',
+                        rank: 'Huyết Kế Thần Nhãn',
+                        visualType: 'jogan',
+                        visualArgs: [],
+                        powerStat: 96,
+                        chakraStat: 90,
+                        rarityStat: 100,
+                        shortDesc: 'Thần nhãn bí ẩn xuất hiện ở mắt phải của Boruto, được Toneri Ōtsutsuki gọi là "Ngôi sao hy vọng" chống lại sự hủy diệt.',
+                        mechanism: 'Nhìn thấy dòng chảy Chakra và điểm yếu chí mạng (giống Byakugan), cảm nhận được tà khí/ác ý (giống khả năng tộc Uzumaki) và nhìn trước được các vết nứt dịch chuyển không-thời gian trước khi kẻ địch xuất hiện.',
+                        origin: 'Kết tinh độc nhất từ sự giao thoa giữa huyết thống Asura (Naruto Uzumaki) và Hamura (Hinata Hyūga).'
+                    },
+                    {
+                        name: 'Phi Lôi Thần Thuật (Phiên Bản Cải Tiến)',
+                        jpName: 'Hiraishin no Jutsu (飛雷神の術)',
+                        rank: 'Cấp S',
+                        visualType: 'fuinjutsu',
+                        visualArgs: ['#38BDF8', '#0284C7'],
+                        powerStat: 94,
+                        chakraStat: 88,
+                        rarityStat: 97,
+                        shortDesc: 'Nhẫn thuật không-thời gian trứ danh của ông nội Minato Namikaze được Boruto tái hiện để du hành xuyên các chiều không gian.',
+                        mechanism: 'Boruto sử dụng các vật phẩm kim loại có hình dạng đặc biệt (như huy hiệu lá, hoa, sao) làm điểm neo Chakra. Cậu có thể dịch chuyển tức thời ngay cả tới chiều không gian của Thập Vĩ (Jūbi).',
+                        origin: 'Được Kashin Koji truyền dạy dựa trên những tương lai mà Koji nhìn thấy qua Thập Phương (Ten Directions).'
+                    },
+                    {
+                        name: 'Rasengan Vô Hình & Kiếm Thuật Lưu Phái Uchiha',
+                        jpName: 'Kieru Rasengan & Uchiha Kenjutsu',
+                        rank: 'Cấp A+',
+                        visualType: 'rasengan',
+                        visualArgs: ['vanishing'],
+                        powerStat: 91,
+                        chakraStat: 82,
+                        rarityStat: 94,
+                        shortDesc: 'Vô thức truyền Lôi Độn vào Rasengan khiến quả cầu biến mất giữa không trung trước khi phát nổ bất ngờ vào mục tiêu.',
+                        mechanism: 'Kết hợp cùng kiếm thuật bậc thầy học từ Sasuke Uchiha và khả năng sử dụng thành thạo Lôi Độn (Tử Điện), Phong Độn, Thủy Độn.',
+                        origin: 'Minh chứng cho tư chất thiên tài bẩm sinh của Boruto khi tự tạo biến thể Rasengan chỉ trong vài ngày.'
+                    }
+                ]
+            },
+            {
+                id: 'himawari',
+                name: 'Himawari Uzumaki',
+                title: 'Jinchūriki Cửu Vĩ Thế Hệ Mới • Ánh Dương Của Làng Lá',
+                era: 'boruto-tbv',
+                eraLabel: 'Thời Đại Boruto: Two Blue Vortex',
+                badgeColor: 'bg-amber-700/90 text-amber-100 border-amber-400',
+                avatarSymbol: '向',
+                summary: 'Con gái út của Naruto và Hinata. Trong Boruto: Two Blue Vortex, Himawari gây chấn động toàn thế giới nhẫn giả khi trở thành Jinchūriki mới của Kurama với mức độ tương thích Chakra vượt xa cả Naruto.',
+                stats: { chakra: 'Tương Thích Vĩ Thú Tuyệt Đối', specialty: 'Kurama Tái Sinh & Bạch Nhãn', status: 'Tiềm Năng Vô Hạn' },
+                powers: [
+                    {
+                        name: 'Cửu Vĩ Kurama Tái Sinh & Cộng Hưởng Hoàn Hảo',
+                        jpName: 'Kyūbi Saisei & Chō-Chōwa',
+                        rank: 'Cấp Thần Thánh',
+                        visualType: 'kurama',
+                        visualArgs: ['kcm'],
+                        powerStat: 97,
+                        chakraStat: 98,
+                        rarityStat: 100,
+                        shortDesc: 'Sau khi Kurama hy sinh vì Baryon Mode, một phần Chakra của Cửu Vĩ đã tái sinh bên trong cơ thể Himawari.',
+                        mechanism: 'Khác với Naruto mất 16 năm mới hòa hợp được với Cửu Vĩ, Chakra của Himawari và Kurama hòa làm một ngay lập tức mà không cần bất kỳ phong ấn cưỡng chế nào. Cô có thể bắn Bom Vĩ Thú (Bijūdama) trực tiếp từ miệng và hồi phục tức thì vết gãy xương cho đồng đội.',
+                        origin: 'Nhờ sở hữu đồng thời dòng máu Uzumaki (sinh lực), Hyūga (kinh mạch) và một phần Chakra Cửu Vĩ di truyền từ cha, Himawari trở thành vật chứa tự nhiên hoàn hảo nhất lịch sử.'
+                    },
+                    {
+                        name: 'Byakugan & Điểm Huyệt Nhu Quyền',
+                        jpName: 'Byakugan / Jūken (白眼 • 柔拳)',
+                        rank: 'Huyết Kế Giới Hạn',
+                        visualType: 'byakugan',
+                        visualArgs: [],
+                        powerStat: 88,
+                        chakraStat: 80,
+                        rarityStat: 92,
+                        shortDesc: 'Thức tỉnh Bạch Nhãn từ khi còn rất nhỏ, sở hữu tầm nhìn 360 độ và khả năng nhìn thấu 361 huyệt đạo trên cơ thể.',
+                        mechanism: 'Khi kết hợp Bạch Nhãn với nguồn Chakra Vĩ Thú dồi dào, các đòn đánh Nhu Quyền của Himawari có thể đánh thẳng vào hệ thống kinh mạch của cả những thực thể Thần Thụ (Shinju) như Jura.',
+                        origin: 'Di sản huyết thống cao quý từ mẹ Hinata Hyūga, từng hạ gục cả Naruto và Kurama chỉ bằng một cú điểm huyệt.'
+                    }
+                ]
+            },
+            {
+                id: 'others',
+                name: 'Các Thành Viên Khác & Di Sản Uzushiogakure',
+                title: 'Honoka, Fusō & Các Tộc Nhân Làng Xoáy Nước',
+                era: 'genesis',
+                eraLabel: 'Lịch Sử Uzushiogakure & Phân Nhánh',
+                badgeColor: 'bg-stone-800 text-stone-200 border-stone-600',
+                avatarSymbol: '渦',
+                summary: 'Ngoài những nhân vật trung tâm, lịch sử còn ghi nhận nhiều tộc nhân Uzumaki khác mang năng lực độc đáo rải rác khắp thế giới sau sự sụp đổ của Làng Xoáy Nước.',
+                stats: { chakra: 'Bền Bỉ & Phong Ấn', specialty: 'Kết Giới & Vĩ Thú Nhân Tạo', status: 'Di Sản Toàn Cầu' },
+                powers: [
+                    {
+                        name: 'Honoka Uzumaki & Bí Thuật Vĩ Thú Nhân Tạo',
+                        jpName: 'Giji Bijū no Fūin',
+                        rank: 'Cấp S',
+                        visualType: 'fuinjutsu',
+                        visualArgs: ['#F97316', '#7C2D12'],
+                        powerStat: 86,
+                        chakraStat: 88,
+                        rarityStat: 94,
+                        shortDesc: 'Một kunoichi cuối cùng của Uzushiogakure đã hy sinh để phong ấn và tiêu diệt con quái vật Reibi (Không Vĩ).',
+                        mechanism: 'Sử dụng phong ấn gia truyền kết hợp với sinh lực Uzumaki để kiềm chế một thực thể bóng tối được tạo ra từ cảm xúc tiêu cực của con người.',
+                        origin: 'Xuất hiện trong phần ngoại truyện về di sản của Làng Xoáy Nước (Naruto Shippūden).'
+                    },
+                    {
+                        name: 'Fusō Uzumaki & Huyết Thống Phân Nhánh Làng Mưa',
+                        jpName: 'Amegakure no Uzumaki',
+                        rank: 'Huyết Kế Bẩm Sinh',
+                        visualType: 'sensory',
+                        visualArgs: ['#C81D25'],
+                        powerStat: 75,
+                        chakraStat: 85,
+                        rarityStat: 88,
+                        shortDesc: 'Mẹ của Nagato, mang mái tóc đỏ đặc trưng và truyền lại dòng máu sinh lực thuần chủng cho con trai.',
+                        mechanism: 'Sau khi Uzushiogakure bị các đại cường quốc liên minh tiêu diệt vì quá lo sợ sức mạnh Phong Ấn Thuật của họ, các tộc nhân Uzumaki (như Fusō và mẹ của Karin) đã phải ẩn mình tại các quốc gia nhỏ như Làng Mưa và Làng Cỏ.',
+                        origin: 'Dù sống ẩn dật như thường dân, dòng máu của họ vẫn giữ nguyên khả năng tương thích với các sức mạnh cấp thần thánh.'
+                    }
+                ]
+            }
+        ];
+
+        // State Variables
+        let currentEra = 'all';
+        let currentSearch = '';
+
+        // DOM Elements
+        const timelineContainer = document.getElementById('timeline-container');
+        const emptyState = document.getElementById('empty-state');
+        const searchInput = document.getElementById('search-input');
+        const clearSearchBtn = document.getElementById('clear-search');
+        const eraButtons = document.querySelectorAll('.era-btn');
+
+        /**
+         * Hàm render danh sách nhân vật & sức mạnh lên giao diện
+         */
+        function renderTimeline() {
+            // Giữ lại đường kẻ dọc timeline
+            const lineHtml = `<div class="hidden lg:block absolute left-8 top-6 bottom-6 w-1 timeline-line rounded-full opacity-40"></div>`;
+            
+            const filteredMembers = uzumakiData.filter(member => {
+                const matchesEra = currentEra === 'all' || member.era === currentEra;
+                if (!matchesEra) return false;
+
+                if (!currentSearch.trim()) return true;
+                const q = currentSearch.toLowerCase();
+                
+                const inMember = member.name.toLowerCase().includes(q) || 
+                                 member.title.toLowerCase().includes(q) ||
+                                 member.summary.toLowerCase().includes(q);
+                
+                const inPowers = member.powers.some(p => 
+                    p.name.toLowerCase().includes(q) || 
+                    p.jpName.toLowerCase().includes(q) ||
+                    p.shortDesc.toLowerCase().includes(q)
+                );
+
+                return inMember || inPowers;
+            });
+
+            if (filteredMembers.length === 0) {
+                timelineContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            const cardsHtml = filteredMembers.map((member, index) => {
+                // Lọc các kỹ năng nếu người dùng đang gõ từ khóa tìm kiếm cụ thể
+                let displayedPowers = member.powers;
+                if (currentSearch.trim()) {
+                    const q = currentSearch.toLowerCase();
+                    const matchingPowers = member.powers.filter(p => 
+                        p.name.toLowerCase().includes(q) || 
+                        p.jpName.toLowerCase().includes(q) ||
+                        p.shortDesc.toLowerCase().includes(q)
+                    );
+                    if (matchingPowers.length > 0) {
+                        displayedPowers = matchingPowers;
+                    }
+                }
+
+                const powersGridHtml = displayedPowers.map((power, pIndex) => {
+                    const visualSvg = VisualGenerators[power.visualType] 
+                        ? VisualGenerators[power.visualType](...(power.visualArgs || [])) 
+                        : VisualGenerators.fuinjutsu();
+
+                    return `
+                        <div onclick="openJutsuModal('${member.id}', ${member.powers.indexOf(power)})" 
+                             class="group cursor-pointer bg-[#0E1012] hover:bg-[#16191D] border border-gray-800 hover:border-uzumaki-orange/70 rounded-xl p-4 transition-all duration-300 flex flex-col justify-between shadow-md hover:shadow-[0_0_20px_rgba(255,107,0,0.15)]">
+                            <div>
+                                <!-- Animated Visual Container -->
+                                <div class="w-full h-32 rounded-lg bg-[#070607] border border-gray-800/90 mb-3.5 overflow-hidden relative flex items-center justify-center group-hover:border-red-900/60 transition">
+                                    ${visualSvg}
+                                    <span class="absolute top-2 right-2 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-black/80 text-uzumaki-gold border border-amber-500/30">
+                                        ${power.rank}
+                                    </span>
+                                    <span class="absolute bottom-1.5 left-2 text-[10px] text-gray-500 group-hover:text-uzumaki-orange transition flex items-center gap-1">
+                                        <i class="fa-solid fa-expand"></i> Chi tiết
+                                    </span>
+                                </div>
+
+                                <h4 class="font-display font-bold text-white text-base group-hover:text-uzumaki-orange transition leading-snug">
+                                    ${power.name}
+                                </h4>
+                                <p class="text-[11px] text-gray-400 italic mb-2">${power.jpName}</p>
+                                <p class="text-xs text-gray-300 leading-relaxed line-clamp-3">
+                                    ${power.shortDesc}
+                                </p>
+                            </div>
+
+                            <!-- Mini Power Bar -->
+                            <div class="mt-4 pt-2.5 border-t border-gray-800/70 flex items-center justify-between text-[11px]">
+                                <span class="text-gray-400">Uy lực: <strong class="text-uzumaki-red">${power.powerStat}%</strong></span>
+                                <span class="text-uzumaki-orange font-semibold group-hover:translate-x-1 transition-transform">
+                                    Phân tích <i class="fa-solid fa-arrow-right ml-0.5"></i>
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <article class="relative lg:pl-20 transition-all duration-500">
+                        <!-- Timeline Node Badge (Desktop) -->
+                        <div class="hidden lg:flex absolute left-2 top-6 w-12 h-12 rounded-full bg-gradient-to-br from-uzumaki-red to-uzumaki-crimson border-2 border-uzumaki-gold shadow-[0_0_20px_rgba(200,29,37,0.7)] items-center justify-center font-display font-bold text-xl text-white z-10">
+                            ${member.avatarSymbol}
+                        </div>
+
+                        <!-- Character Main Card -->
+                        <div class="bg-uzumaki-card/95 border border-gray-800/90 rounded-2xl p-5 sm:p-7 shadow-xl hover:border-red-900/50 transition">
+                            <!-- Header Info -->
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-gray-800">
+                                <div class="flex items-start sm:items-center gap-3.5">
+                                    <div class="lg:hidden w-11 h-11 shrink-0 rounded-full bg-gradient-to-br from-uzumaki-red to-uzumaki-crimson border border-uzumaki-gold flex items-center justify-center font-display font-bold text-lg text-white">
+                                        ${member.avatarSymbol}
+                                    </div>
+                                    <div>
+                                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${member.badgeColor}">
+                                                ${member.eraLabel}
+                                            </span>
+                                            <span class="text-xs text-gray-400 font-medium">
+                                                • ${member.powers.length} Năng lực đặc trưng
+                                            </span>
+                                        </div>
+                                        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                                            ${member.name}
+                                        </h2>
+                                        <p class="text-xs sm:text-sm text-uzumaki-orange font-semibold mt-0.5">
+                                            ${member.title}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Character Quick Attributes -->
+                                <div class="flex flex-wrap gap-2 text-xs">
+                                    <div class="px-3 py-1.5 rounded-lg bg-black/50 border border-gray-800">
+                                        <span class="text-gray-400 block text-[10px] uppercase">Nguồn Chakra</span>
+                                        <span class="text-white font-semibold">${member.stats.chakra}</span>
+                                    </div>
+                                    <div class="px-3 py-1.5 rounded-lg bg-black/50 border border-gray-800">
+                                        <span class="text-gray-400 block text-[10px] uppercase">Sở Trường</span>
+                                        <span class="text-uzumaki-gold font-semibold">${member.stats.specialty}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Character Biography Summary -->
+                            <p class="text-sm text-gray-300 leading-relaxed mt-4 mb-6">
+                                ${member.summary}
+                            </p>
+
+                            <!-- Powers Grid -->
+                            <div>
+                                <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3 flex items-center">
+                                    <i class="fa-solid fa-fire text-uzumaki-red mr-2"></i> Hệ Thống Sức Mạnh & Nhẫn Thuật (Nhấn vào từng thẻ để xem chi tiết)
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                    ${powersGridHtml}
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            timelineContainer.innerHTML = lineHtml + cardsHtml;
+        }
+
+        /**
+         * Xử lý mở Modal chi tiết nhẫn thuật
+         */
+        function openJutsuModal(memberId, powerIndex) {
+            const member = uzumakiData.find(m => m.id === memberId);
+            if (!member) return;
+            const power = member.powers[powerIndex];
+            if (!power) return;
+
+            document.getElementById('modal-rank-badge').textContent = power.rank;
+            document.getElementById('modal-owner').textContent = `${member.name} • ${member.eraLabel}`;
+            document.getElementById('modal-title').textContent = power.name;
+            document.getElementById('modal-japanese').textContent = power.jpName;
+
+            // Update Stats
+            document.getElementById('modal-power-val').textContent = `${power.powerStat}%`;
+            document.getElementById('modal-power-bar').style.width = `${power.powerStat}%`;
+
+            document.getElementById('modal-chakra-val').textContent = `${power.chakraStat}%`;
+            document.getElementById('modal-chakra-bar').style.width = `${power.chakraStat}%`;
+
+            document.getElementById('modal-rarity-val').textContent = `${power.rarityStat}%`;
+            document.getElementById('modal-rarity-bar').style.width = `${power.rarityStat}%`;
+
+            // Update Descriptions
+            document.getElementById('modal-desc').textContent = power.mechanism;
+            document.getElementById('modal-origin').textContent = power.origin;
+
+            // Inject Large Visual
+            const visualContainer = document.getElementById('modal-visual');
+            visualContainer.innerHTML = VisualGenerators[power.visualType]
+                ? VisualGenerators[power.visualType](...(power.visualArgs || []))
+                : VisualGenerators.fuinjutsu();
+
+            // Show Modal
+            const modal = document.getElementById('jutsu-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        /**
+         * Đóng Modal
+         */
+        function closeModal() {
+            const modal = document.getElementById('jutsu-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Đóng modal khi click ra ngoài vùng hộp thoại
+        document.getElementById('jutsu-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Đóng modal khi nhấn phím Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        /**
+         * Xử lý bộ lọc thời đại
+         */
+        eraButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                eraButtons.forEach(b => {
+                    b.classList.remove('active', 'bg-uzumaki-red', 'text-white', 'shadow-md', 'shadow-red-900/50');
+                    b.classList.add('bg-uzumaki-card', 'text-gray-300');
+                });
+                btn.classList.add('active', 'bg-uzumaki-red', 'text-white', 'shadow-md', 'shadow-red-900/50');
+                btn.classList.remove('bg-uzumaki-card', 'text-gray-300');
+
+                currentEra = btn.getAttribute('data-era');
+                renderTimeline();
+            });
+        });
+
+        /**
+         * Xử lý thanh tìm kiếm
+         */
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            if (currentSearch.length > 0) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            renderTimeline();
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            currentSearch = '';
+            clearSearchBtn.classList.add('hidden');
+            renderTimeline();
+        });
+
+        function resetFilters() {
+            currentEra = 'all';
+            currentSearch = '';
+            searchInput.value = '';
+            clearSearchBtn.classList.add('hidden');
+            eraButtons.forEach(b => {
+                if (b.getAttribute('data-era') === 'all') {
+                    b.classList.add('active', 'bg-uzumaki-red', 'text-white', 'shadow-md', 'shadow-red-900/50');
+                    b.classList.remove('bg-uzumaki-card', 'text-gray-300');
+                } else {
+                    b.classList.remove('active', 'bg-uzumaki-red', 'text-white', 'shadow-md', 'shadow-red-900/50');
+                    b.classList.add('bg-uzumaki-card', 'text-gray-300');
+                }
+            });
+            renderTimeline();
+        }
+
+        function scrollToEncyclopedia() {
+            document.getElementById('encyclopedia-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Khởi chạy lần đầu khi tải trang
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTimeline();
+        });
+    </script>
+</body>
+</html>
