@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhãn Thuật Gia Tộc Uchiha & Susanoo — Từ Khai Sinh Đến Boruto: Two Blue Vortex</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tone.js cho hiệu ứng âm thanh kích hoạt nhãn thuật -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <!-- Google Fonts: Inter & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        uchiha: {
+                            black: '#070709',
+                            dark: '#0e0e13',
+                            card: '#14141c',
+                            red: '#dc2626',
+                            crimson: '#991b1b',
+                            purple: '#9333ea',
+                            rinnegan: '#a855f7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Nền và thanh cuộn phong cách Uchiha */
+        body {
+            background-color: #070709;
+            color: #e5e7eb;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(153, 27, 27, 0.14) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(126, 34, 206, 0.14) 0%, transparent 45%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070709;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7f1d1d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dc2626;
+        }
+
+        /* Animations cho Mangekyou Sharingan & Susanoo */
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes spinReverseSlow {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        @keyframes pulseAura {
+            0%, 100% { filter: drop-shadow(0 0 8px var(--aura-color, rgba(220, 38, 38, 0.7))); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 22px var(--aura-color, rgba(220, 38, 38, 1))); transform: scale(1.04); }
+        }
+        @keyframes susanooFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-6px) scale(1.02); }
+        }
+        @keyframes chakraFlame {
+            0%, 100% { opacity: 0.65; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.08); }
+        }
+        @keyframes eyeActivateFlash {
+            0% { transform: scale(0.3) rotate(-180deg); opacity: 0.2; filter: brightness(2.5); }
+            60% { transform: scale(1.15) rotate(20deg); opacity: 1; filter: brightness(1.6); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+        }
+
+        .eye-spin {
+            transform-origin: center;
+            animation: spinSlow 14s linear infinite;
+        }
+        .eye-spin-fast {
+            transform-origin: center;
+            animation: spinSlow 3.5s linear infinite;
+        }
+        .eye-activate-anim {
+            animation: eyeActivateFlash 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .aura-glow {
+            animation: pulseAura 3s ease-in-out infinite;
+        }
+        .susanoo-float {
+            animation: susanooFloat 3.8s ease-in-out infinite;
+        }
+        .chakra-flame {
+            transform-origin: bottom center;
+            animation: chakraFlame 1.8s ease-in-out infinite;
+        }
+
+        /* Hiệu ứng kính mờ & viền phát sáng */
+        .uchiha-card {
+            background: linear-gradient(145deg, rgba(22, 22, 30, 0.92), rgba(12, 12, 17, 0.96));
+            border: 1px solid rgba(220, 38, 38, 0.22);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .uchiha-card:hover {
+            border-color: rgba(220, 38, 38, 0.65);
+            box-shadow: 0 15px 35px -8px rgba(220, 38, 38, 0.25);
+            transform: translateY(-4px);
+        }
+        .uchiha-card.rinnegan-card:hover {
+            border-color: rgba(168, 85, 247, 0.7);
+            box-shadow: 0 15px 35px -8px rgba(168, 85, 247, 0.28);
+        }
+
+        /* Chảy máu Amaterasu */
+        @keyframes bloodDrip {
+            0% { height: 0px; opacity: 0.9; }
+            100% { height: 22px; opacity: 0.85; }
+        }
+        .amaterasu-bleed {
+            animation: bloodDrip 1.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-red-600 selection:text-white">
+
+    <!-- HEADER / HERO -->
+    <header class="relative border-b border-red-900/40 bg-gradient-to-b from-black via-[#120609] to-[#070709] pt-8 pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <!-- Họa tiết quạt Uchiwa mờ nền -->
+        <div class="absolute -top-24 -right-24 opacity-10 pointer-events-none">
+            <svg width="360" height="360" viewBox="0 0 200 200">
+                <path d="M100 10 A80 80 0 1 1 100 170 A80 80 0 1 1 100 10 Z" fill="#dc2626"/>
+                <path d="M20 90 A80 80 0 0 0 180 90 L180 110 A80 80 0 0 1 20 110 Z" fill="#ffffff"/>
+                <rect x="92" y="160" width="16" height="40" rx="4" fill="#ffffff"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-700/50 text-red-400 text-xs font-semibold tracking-wider uppercase mb-3">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                        Mật Thư Bia Đá Naka • Cập Nhật Boruto: Two Blue Vortex
+                    </div>
+                    <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+                        NHÃN THUẬT GIA TỘC <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-500 to-purple-500">UCHIHA</span>
+                    </h1>
+                    <p class="mt-3 text-gray-400 max-w-2xl text-sm sm:text-base leading-relaxed">
+                        Hệ thống lưu trữ toàn bộ huyết kế giới hạn <strong class="text-red-400">Sharingan</strong>, <strong class="text-red-400">Mangekyou Sharingan</strong>, <strong class="text-rose-400">Vĩnh Cửu (EMS)</strong>, <strong class="text-purple-400">Rinnegan</strong> cùng hình thái <strong class="text-indigo-400">Susanoo</strong> từ Thủy tổ Indra Otsutsuki đến thế hệ mới nhất Sarada Uchiha.
+                    </p>
+                </div>
+
+                <!-- Nút bật/tắt âm thanh & Thống kê nhanh -->
+                <div class="flex flex-col items-center md:items-end gap-3">
+                    <button id="soundToggleBtn" onclick="toggleAudio()" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-zinc-900/90 hover:bg-red-950/60 border border-red-800/50 text-sm font-medium text-gray-200 transition shadow-lg">
+                        <span id="soundIcon" class="text-red-500 text-lg">🔊</span>
+                        <span id="soundText">Âm Thanh Nhãn Thuật: BẬT</span>
+                    </button>
+                    <div class="flex gap-4 text-xs text-gray-400 bg-black/50 px-4 py-2 rounded-xl border border-zinc-800">
+                        <div><span class="text-red-400 font-bold text-sm">10</span> Nhân Vật</div>
+                        <div class="border-l border-zinc-700 pl-4"><span class="text-purple-400 font-bold text-sm">25+</span> Huyết Kế</div>
+                        <div class="border-l border-zinc-700 pl-4"><span class="text-indigo-400 font-bold text-sm">6</span> Dạng Susanoo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- THANH LỌC THỜI GIAN, TÌM KIẾM & CHUYỂN CHẾ ĐỘ XEM -->
+    <section class="sticky top-0 z-30 bg-[#070709]/95 backdrop-blur-md border-b border-zinc-800/80 py-3.5 px-4 sm:px-6 lg:px-8 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3.5">
+            
+            <!-- Bộ lọc dòng thời gian -->
+            <div class="flex flex-wrap items-center gap-2" id="eraFilters">
+                <button data-era="all" class="era-btn active px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-red-600 text-white shadow-md shadow-red-600/30 transition">
+                    Tất Cả Thời Đại
+                </button>
+                <button data-era="origin" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-zinc-900 text-gray-300 hover:bg-zinc-800 border border-zinc-800 transition">
+                    1. Khai Sinh & Chiến Quốc
+                </button>
+                <button data-era="konoha" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-zinc-900 text-gray-300 hover:bg-zinc-800 border border-zinc-800 transition">
+                    2. Làng Lá & Akatsuki
+                </button>
+                <button data-era="boruto" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-zinc-900 text-gray-300 hover:bg-zinc-800 border border-zinc-800 transition">
+                    3. Thế Hệ Mới (Boruto)
+                </button>
+                <button data-era="kinjutsu" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-purple-950/60 text-purple-300 hover:bg-purple-900/60 border border-purple-700/50 transition">
+                    ✦ Sharingan Cơ Bản & Cấm Thuật
+                </button>
+            </div>
+
+            <!-- Ô tìm kiếm nhanh -->
+            <div class="relative w-full lg:w-80">
+                <input type="text" id="searchInput" placeholder="Tìm tên nhân vật hoặc chiêu thức (Kamui, Ohirume...)" 
+                    class="w-full pl-10 pr-9 py-2 rounded-xl bg-zinc-900/90 border border-zinc-700/80 focus:border-red-500 focus:ring-1 focus:ring-red-500 text-sm text-white placeholder-gray-500 outline-none transition">
+                <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-2.5 text-gray-400 hover:text-white text-sm">✕</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Khu vực hiển thị Cấm Thuật & Sharingan Cơ Bản (Mặc định hiện khi chọn tab hoặc ở cuối trang) -->
+        <div id="kinjutsuSection" class="mb-10">
+            <div class="flex items-center gap-3 mb-5">
+                <div class="w-1.5 h-7 bg-gradient-to-b from-red-500 to-purple-600 rounded-full"></div>
+                <div>
+                    <h2 class="font-display text-xl sm:text-2xl font-bold text-white">Cấp Độ Tiến Hóa Sharingan & Cấm Thuật Gia Tộc</h2>
+                    <p class="text-xs sm:text-sm text-gray-400">Nền tảng nhãn thuật chung của huyết thống Uchiha trước và sau khi thức tỉnh Mangekyou</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Sharingan 1-3 Tomoe -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-red-950 text-red-400 text-xs font-bold border border-red-800/50">CƠ BẢN</span>
+                            <span class="text-xs text-gray-500">1 → 3 Câu Ngọc</span>
+                        </div>
+                        <div class="flex justify-center my-3" id="baseSharinganVisual">
+                            <!-- SVG 3 Tomoe Sharingan -->
+                        </div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Sharingan (Tả Luân Nhãn)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Thức tỉnh qua chấn động cảm xúc mạnh. Gồm hai năng lực cốt lõi: <strong class="text-red-400">Nhãn Lực Thấu Thị</strong> (nhìn thấy dòng chảy chakra, đọc chuyển động cơ bắp để sao chép nhẫn thuật/thể thuật) và <strong class="text-red-400">Nhãn Lực Thôi Miên</strong> (thi triển ảo thuật chỉ qua giao tiếp ánh mắt).
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>Tiêu hao: Thấp</span>
+                        <span class="text-red-400">Khắc chế: Thể thuật & Ảo thuật</span>
+                    </div>
+                </div>
+
+                <!-- Mangekyou & EMS -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-rose-950 text-rose-400 text-xs font-bold border border-rose-800/50">TIẾN HÓA</span>
+                            <span class="text-xs text-gray-500">MS → EMS</span>
+                        </div>
+                        <div class="flex justify-center my-3">
+                            <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-red-950 to-black border-2 border-red-600/60 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.4)]">
+                                <span class="font-display text-xs font-bold text-center text-red-400 px-2">VĨNH CỬU<br>MANGEKYOU</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Mangekyou & Vĩnh Cửu (EMS)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Thức tỉnh khi chứng kiến cái chết của người thân yêu nhất. Mỗi cá nhân sở hữu hoa văn và năng lực độc nhất, đồng thời mở khóa <strong class="text-indigo-400">Susanoo</strong>. Dùng nhiều sẽ gây mù lòa, chỉ hóa giải khi cấy ghép mắt của anh chị em ruột để đạt <strong class="text-rose-400">EMS</strong>.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>Tác dụng phụ MS: Mù lòa</span>
+                        <span class="text-emerald-400">EMS: Ánh sáng vĩnh cửu</span>
+                    </div>
+                </div>
+
+                <!-- Cấm thuật Izanagi -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between border-purple-900/40">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-purple-950 text-purple-300 text-xs font-bold border border-purple-700/50">CẤM THUẬT</span>
+                            <span class="text-xs text-gray-500">Ảo Thuật Thực Tại</span>
+                        </div>
+                        <div class="flex justify-center my-3" id="izanagiVisual">
+                            <!-- SVG Mắt Izanagi -->
+                        </div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Izanagi (Y Tà Na Kỳ)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Ứng dụng tối thượng của <strong class="text-purple-400">Âm Dương Độn</strong> tự thi triển lên bản thân. Trong khoảng thời gian kích hoạt, mọi thương tổn hay cái chết của người dùng đều bị biến thành ảo ảnh, còn kết quả có lợi trở thành thực tại. <strong class="text-red-400">Cái giá: Con mắt thi triển vĩnh viễn mất ánh sáng.</strong>
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>Người dùng: Madara, Obito, Danzo</span>
+                        <span class="text-red-500 font-semibold">Mù 1 mắt</span>
+                    </div>
+                </div>
+
+                <!-- Cấm thuật Izanami -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between border-purple-900/40">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-purple-950 text-purple-300 text-xs font-bold border border-purple-700/50">CẤM THUẬT</span>
+                            <span class="text-xs text-gray-500">Vòng Lặp Vô Tận</span>
+                        </div>
+                        <div class="flex justify-center my-3" id="izanamiVisual">
+                            <!-- SVG Mắt Izanami -->
+                        </div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Izanami (Y Tà Na Mỹ)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Sinh ra để khắc chế kẻ lạm dụng Izanagi. Ghi lại cảm giác cơ thể của cả hai thông qua mắt, tạo ra <strong class="text-purple-400">vòng lặp thời gian vô tận</strong> không thể phá giải bằng chakra. Nạn nhân chỉ thoát ra khi từ bỏ sự chối bỏ và chấp nhận số phận thật của mình.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>Người dùng: Itachi, Naori</span>
+                        <span class="text-red-500 font-semibold">Mù 1 mắt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tiêu đề danh sách thành viên Uchiha -->
+        <div id="membersHeader" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-1.5 h-7 bg-red-600 rounded-full"></div>
+                <div>
+                    <h2 class="font-display text-xl sm:text-2xl font-bold text-white">Hồ Sơ Nhãn Thuật & Susanoo Từng Thành Viên</h2>
+                    <p class="text-xs sm:text-sm text-gray-400">Nhấn <strong class="text-red-400">"Kích Hoạt Nhãn Thuật"</strong> để biến đổi đồng tử & triệu hồi Susanoo, hoặc xem chi tiết thông số</p>
+                </div>
+            </div>
+            <div id="resultCount" class="text-xs font-medium text-gray-400 bg-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-800 self-start sm:self-auto">
+                Hiển thị 10 thành viên
+            </div>
+        </div>
+
+        <!-- Lưới hiển thị các nhân vật Uchiha -->
+        <div id="uchihaGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <!-- Nội dung sẽ được render bằng JavaScript -->
+        </div>
+
+        <!-- Thông báo không tìm thấy kết quả -->
+        <div id="emptyState" class="hidden text-center py-16 bg-zinc-900/40 rounded-2xl border border-zinc-800">
+            <div class="text-4xl mb-3">👁️</div>
+            <h3 class="text-lg font-bold text-white">Không tìm thấy nhãn thuật hoặc nhân vật phù hợp</h3>
+            <p class="text-sm text-gray-400 mt-1">Thử tìm kiếm từ khóa khác như: <em>Kamui, Amaterasu, Ohirume, Madara, Sarada...</em></p>
+            <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-xl transition">
+                Đặt lại bộ lọc
+            </button>
+        </div>
+    </main>
+
+    <!-- MODAL CHI TIẾT NHÂN VẬT & BIỂU ĐỒ SỨC MẠNH -->
+    <div id="detailModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+        <div class="relative w-full max-w-4xl bg-[#0f0f15] border border-red-800/60 rounded-2xl shadow-2xl overflow-hidden my-8 animate-fadeIn">
+            <!-- Nút đóng -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-zinc-900/90 hover:bg-red-600 text-gray-300 hover:text-white flex items-center justify-center border border-zinc-700 transition">
+                ✕
+            </button>
+
+            <div id="modalBody" class="p-6 sm:p-8 max-h-[88vh] overflow-y-auto">
+                <!-- Nội dung modal được render động -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-zinc-900 bg-black/80 py-6 px-4 text-center text-xs text-gray-500 mt-12">
+        <p>Tổng hợp dữ liệu từ Manga/Anime <span class="text-gray-400">Naruto Shippuden</span>, <span class="text-gray-400">Itachi Shinden</span> & <span class="text-red-400 font-medium">Boruto: Two Blue Vortex</span>.</p>
+        <p class="mt-1">Đồ họa hoa văn Mangekyou Sharingan, Rinnegan & Susanoo được dựng bằng vector SVG động.</p>
+    </footer>
+
+    <!-- JAVASCRIPT XỬ LÝ DỮ LIỆU, ĐỒ HỌA SVG & TƯƠNG TÁC -->
+    <script>
+        // =========================================================================
+        // 1. HỆ THỐNG ÂM THANH MÔ PHỎNG KÍCH HOẠT NHÃN THUẬT (TONE.JS)
+        // =========================================================================
+        let soundEnabled = true;
+        let audioInitialized = false;
+
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const text = document.getElementById('soundText');
+            if (soundEnabled) {
+                icon.textContent = '🔊';
+                text.textContent = 'Âm Thanh Nhãn Thuật: BẬT';
+            } else {
+                icon.textContent = '🔇';
+                text.textContent = 'Âm Thanh Nhãn Thuật: TẮT';
+            }
+        }
+
+        async function playSharinganSound(type = 'ms') {
+            if (!soundEnabled) return;
+            try {
+                if (!audioInitialized) {
+                    await Tone.start();
+                    audioInitialized = true;
+                }
+                const now = Tone.now();
+                const synth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: type === 'rinnegan' ? 'sine' : 'sawtooth' },
+                    envelope: { attack: 0.02, decay: 0.35, sustain: 0.1, release: 0.8 }
+                }).toDestination();
+                synth.volume.value = -12;
+
+                if (type === 'rinnegan') {
+                    // Âm trầm vang vọng của Rinnegan / Ohirume
+                    synth.triggerAttackRelease(['C2', 'G2', 'D#3'], '0.7', now);
+                } else if (type === 'susanoo') {
+                    // Âm thanh gầm vang triệu hồi Susanoo
+                    synth.triggerAttackRelease(['A1', 'E2', 'A2', 'C3'], '0.9', now);
+                } else {
+                    // Tiếng rít sắc bén đặc trưng khi Sharingan xoay chuyển
+                    synth.triggerAttackRelease(['E4', 'B4'], '0.18', now);
+                    synth.triggerAttackRelease(['G#4', 'E5'], '0.35', now + 0.12);
+                }
+            } catch (e) {
+                console.warn('Audio context blocked until interaction', e);
+            }
+        }
+
+        // =========================================================================
+        // 2. BỘ VẼ SVG ĐỘ NÉT CAO CHO TỪNG LOẠI MẮT & SUSANOO
+        // =========================================================================
+        function getEyeSVG(eyeType, extraClass = '') {
+            // Khung đồng tử nền đỏ đặc trưng của Sharingan
+            const baseRedEye = (innerContent, isRinnegan = false, hasBlood = false) => {
+                const bgFill = isRinnegan ? 'url(#rinneganGrad)' : 'url(#sharinganGrad)';
+                const strokeCol = isRinnegan ? '#2e1065' : '#450a0a';
+                return `
+                <svg viewBox="0 0 120 120" class="w-24 h-24 sm:w-28 sm:h-28 ${extraClass} overflow-visible">
+                    <defs>
+                        <radialGradient id="sharinganGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ef4444"/>
+                            <stop offset="70%" stop-color="#dc2626"/>
+                            <stop offset="100%" stop-color="#7f1d1d"/>
+                        </radialGradient>
+                        <radialGradient id="rinneganGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#d8b4fe"/>
+                            <stop offset="60%" stop-color="#a855f7"/>
+                            <stop offset="100%" stop-color="#581c87"/>
+                        </radialGradient>
+                    </defs>
+                    <!-- Hào quang viền ngoài -->
+                    <circle cx="60" cy="60" r="56" fill="none" stroke="${isRinnegan ? '#a855f7' : '#ef4444'}" stroke-width="1.5" stroke-opacity="0.45"/>
+                    <!-- Tròng mắt chính -->
+                    <circle cx="60" cy="60" r="52" fill="${bgFill}" stroke="${strokeCol}" stroke-width="3"/>
+                    <!-- Hoa văn nhãn thuật xoay -->
+                    <g class="eye-pattern">
+                        ${innerContent}
+                    </g>
+                    <!-- Ánh phản chiếu thủy tinh thể -->
+                    <ellipse cx="44" cy="40" rx="7" ry="4" transform="rotate(-30 44 40)" fill="white" fill-opacity="0.35"/>
+                    ${hasBlood ? `<path d="M58 110 Q60 128 56 136 Q62 136 62 110 Z" fill="#991b1b" class="amaterasu-bleed"/>` : ''}
+                </svg>`;
+            };
+
+            switch (eyeType) {
+                case 'base_3tomoe':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="32" fill="none" stroke="#09090b" stroke-width="2" stroke-opacity="0.75"/>
+                        <circle cx="60" cy="60" r="10" fill="#09090b"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="28" r="5.5" fill="#09090b"/>
+                                <path d="M60 22.5 Q69 24 67 32 Q63 27 60 28 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                    `);
+
+                case 'indra':
+                    // Mangekyou xoắn ốc nguyên thủy của Indra
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="8" fill="#09090b"/>
+                        <path d="M60 60 C60 42, 78 42, 78 60 C78 82, 40 82, 40 58 C40 30, 88 30, 88 62 C88 94, 30 94, 30 56 C30 22, 95 22, 95 60" 
+                              fill="none" stroke="#09090b" stroke-width="4.5" stroke-linecap="round"/>
+                    `);
+
+                case 'madara_ems':
+                    // Vĩnh Cửu Mangekyou của Madara (3 vòng tròn giao nhau + 3 thanh kiếm thẳng của Izuna)
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="36" fill="none" stroke="#09090b" stroke-width="2.5"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M55 16 L65 16 L62 60 L58 60 Z" fill="#09090b"/>
+                                <circle cx="60" cy="34" r="11" fill="none" stroke="#09090b" stroke-width="5"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'madara_rinnegan':
+                    // Rinnegan vòng tròn đồng tâm của Madara
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="42" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="32" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="22" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="12" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="5" fill="#09090b"/>
+                    `, true);
+
+                case 'izuna':
+                    // Mangekyou 3 thanh kiếm thẳng của Izuna
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="34" fill="none" stroke="#09090b" stroke-width="2"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M54 14 L66 14 L63 55 L57 55 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="10" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'fugaku':
+                    // Mangekyou bánh xe lốc xoáy của Fugaku
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="34" fill="none" stroke="#09090b" stroke-width="3"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 Q78 35 60 15 Q52 38 60 60 Z" fill="#09090b"/>
+                                <circle cx="60" cy="24" r="5" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'shisui':
+                    // Mangekyou 4 cánh chong chóng của Shisui
+                    return baseRedEye(`
+                        ${[0, 90, 180, 270].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 L60 14 Q84 22 76 48 L60 60 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="2.5"/>
+                    `);
+
+                case 'itachi':
+                    // Mangekyou 3 cánh phi tiêu cong của Itachi + vệt máu Amaterasu
+                    return baseRedEye(`
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 C44 42, 46 20, 62 14 C58 32, 68 44, 60 60 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `, false, true);
+
+                case 'obito':
+                    // Mangekyou 3 lưỡi liềm chong chóng của Obito & Kakashi
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="35" fill="none" stroke="#09090b" stroke-width="3"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 52 C42 46, 35 28, 56 15 C48 30, 56 42, 68 50 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="10" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'sasuke_ems':
+                    // Vĩnh Cửu Mangekyou ngôi sao 6 cánh nguyên tử của Sasuke
+                    return baseRedEye(`
+                        <polygon points="60,12 98,82 22,82" fill="none" stroke="#09090b" stroke-width="5.5" stroke-linejoin="round"/>
+                        <polygon points="60,108 98,38 22,38" fill="none" stroke="#09090b" stroke-width="5.5" stroke-linejoin="round"/>
+                        ${[0, 60, 120, 180, 240, 300].map(deg => `
+                            <line x1="60" y1="60" x2="60" y2="18" stroke="#09090b" stroke-width="3" transform="rotate(${deg} 60 60)"/>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'sasuke_rinnegan':
+                    // Rinnegan 6 Tomoe Lục Đạo của Sasuke
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="40" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="27" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="14" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="5" fill="#09090b"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="33" r="4" fill="#09090b"/>
+                                <path d="M60 29 Q66 30 65 36 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        ${[60, 180, 300].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="20" r="4" fill="#09090b"/>
+                                <path d="M60 16 Q66 17 65 23 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                    `, true);
+
+                case 'shin':
+                    // Mangekyou 3 chấm tròn quanh đồng tử lớn của Shin Uchiha
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="22" fill="#09090b"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="23" r="8" fill="#09090b"/>
+                                <path d="M53 27 L67 27 L63 42 L57 42 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="7" fill="#dc2626"/>
+                    `);
+
+                case 'sarada':
+                    // Mangekyou hình mặt trời 8 tia của Sarada Uchiha (Boruto)
+                    return baseRedEye(`
+                        ${[0, 45, 90, 135, 180, 225, 270, 315].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 L54 26 L60 11 L66 26 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="11" fill="#dc2626" stroke="#09090b" stroke-width="3.5"/>
+                    `);
+
+                case 'izanagi_eye':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="30" fill="none" stroke="#09090b" stroke-width="2" stroke-dasharray="6 4"/>
+                        <circle cx="60" cy="60" r="12" fill="#09090b"/>
+                        <path d="M25 60 Q60 25 95 60 Q60 95 25 60 Z" fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity="0.6"/>
+                    `);
+
+                case 'izanami_eye':
+                    return baseRedEye(`
+                        <path d="M60 20 A40 40 0 1 1 22 72" fill="none" stroke="#09090b" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M60 100 A40 40 0 1 1 98 48" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-opacity="0.7" stroke-linecap="round"/>
+                        <circle cx="60" cy="60" r="11" fill="#09090b"/>
+                    `);
+            }
+        }
+
+        // Vẽ minh họa Susanoo cách điệu cho từng nhân vật sở hữu
+        function getSusanooSVG(susanooData) {
+            if (!susanooData) {
+                return `
+                <div class="w-full h-36 rounded-xl bg-zinc-950/80 border border-zinc-800/80 flex flex-col items-center justify-center p-3 text-center">
+                    <span class="text-2xl opacity-40 mb-1">🛡️</span>
+                    <span class="text-xs font-medium text-gray-500">Chưa ghi nhận Susanoo</span>
+                    <span class="text-[11px] text-gray-600 mt-0.5">Chưa thức tỉnh hoặc thiếu 2 mắt</span>
+                </div>`;
+            }
+
+            const { color, glow, weaponType, formName } = susanooData;
+
+            // Vũ khí đặc trưng của từng Susanoo
+            let weaponSVG = '';
+            if (weaponType === 'totsuka_yata') {
+                // Kiếm hồ lô Totsuka & Khiên Yata của Itachi
+                weaponSVG = `
+                    <!-- Khiên Yata bên trái -->
+                    <path d="M18 48 Q12 72 28 92 Q42 74 34 48 Z" fill="${color}" fill-opacity="0.45" stroke="#fde047" stroke-width="2"/>
+                    <!-- Kiếm Totsuka rực lửa bên phải -->
+                    <path d="M88 85 L106 20 L95 45 L84 82 Z" fill="#fef08a" stroke="#f97316" stroke-width="1.5"/>
+                    <ellipse cx="86" cy="86" rx="7" ry="10" fill="#ea580c"/>
+                `;
+            } else if (weaponType === 'quad_blades') {
+                // Song kiếm 4 tay của Madara
+                weaponSVG = `
+                    <path d="M12 22 L42 75 L36 78 L8 26 Z" fill="#93c5fd" stroke="#ffffff" stroke-width="1"/>
+                    <path d="M108 22 L78 75 L84 78 L112 26 Z" fill="#93c5fd" stroke="#ffffff" stroke-width="1"/>
+                    <path d="M16 95 L44 65" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M104 95 L76 65" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+                `;
+            } else if (weaponType === 'indra_bow') {
+                // Cung tên Indra / Cánh tím của Sasuke
+                weaponSVG = `
+                    <!-- Đôi cánh sau lưng -->
+                    <path d="M40 52 L8 24 L22 65 L38 68 Z" fill="${color}" fill-opacity="0.4" stroke="#c084fc" stroke-width="1.5"/>
+                    <path d="M80 52 L112 24 L98 65 L82 68 Z" fill="${color}" fill-opacity="0.4" stroke="#c084fc" stroke-width="1.5"/>
+                    <!-- Cung sét -->
+                    <path d="M92 25 Q116 60 92 95" fill="none" stroke="#e9d5ff" stroke-width="2.5"/>
+                    <line x1="72" y1="60" x2="114" y2="60" stroke="#38bdf8" stroke-width="2.5"/>
+                `;
+            } else if (weaponType === 'drill_lance') {
+                // Mũi khoan xoắn ốc xanh lục của Shisui
+                weaponSVG = `
+                    <polygon points="88,88 106,16 98,92" fill="#86efac" stroke="#16a34a" stroke-width="1.5"/>
+                    <path d="M90 76 L102 68 M92 60 L104 52 M95 44 L105 36" stroke="#14532d" stroke-width="2"/>
+                `;
+            } else if (weaponType === 'kamui_shuriken') {
+                // Kamui Shuriken xanh ngọc bích của Obito/Kakashi
+                weaponSVG = `
+                    <g transform="translate(96, 42)">
+                        <circle cx="0" cy="0" r="14" fill="none" stroke="#5eead4" stroke-width="2"/>
+                        <path d="M0 -16 L4 -4 L16 0 L4 4 L0 16 L-4 4 L-16 0 L-4 -4 Z" fill="#99f6e4"/>
+                    </g>
+                `;
+            } else {
+                // Kiếm chakra tím nguyên thủy của Indra
+                weaponSVG = `
+                    <path d="M92 90 L104 22 L98 92 Z" fill="#d8b4fe" stroke="#9333ea" stroke-width="1.5"/>
+                `;
+            }
+
+            return `
+            <div class="relative w-full h-36 rounded-xl bg-gradient-to-b from-zinc-950 via-[#0d0b14] to-black border border-zinc-800/90 flex flex-col items-center justify-between p-2.5 overflow-hidden group">
+                <!-- Hào quang nền -->
+                <div class="absolute inset-0 opacity-25 blur-xl transition-opacity group-hover:opacity-45" style="background: radial-gradient(circle, ${glow} 0%, transparent 70%);"></div>
+                
+                <svg viewBox="0 0 120 110" class="w-28 h-24 susanoo-float relative z-10" style="filter: drop-shadow(0 0 8px ${glow});">
+                    <!-- Ngọn lửa Chakra bùng cháy -->
+                    <path d="M30 105 Q20 65 38 35 Q45 12 60 8 Q75 12 82 35 Q100 65 90 105 Z" 
+                          fill="${color}" fill-opacity="0.28" class="chakra-flame"/>
+                    <!-- Giáp vai Tengu -->
+                    <path d="M26 52 L44 42 L76 42 L94 52 L86 78 L34 78 Z" 
+                          fill="${color}" fill-opacity="0.55" stroke="${glow}" stroke-width="2" stroke-linejoin="round"/>
+                    <!-- Mũ giáp chiến thần Tengu & Sừng -->
+                    <path d="M46 40 L42 22 L52 30 L60 16 L68 30 L78 22 L74 40 Z" 
+                          fill="${color}" stroke="${glow}" stroke-width="1.8"/>
+                    <!-- Đôi mắt phát sáng của Susanoo -->
+                    <polygon points="50,33 57,35 51,37" fill="#ffffff"/>
+                    <polygon points="70,33 63,35 69,37" fill="#ffffff"/>
+                    <!-- Mũi dài Tengu -->
+                    <polygon points="58,36 62,36 60,44" fill="#ffffff" fill-opacity="0.85"/>
+                    <!-- Vũ khí đặc trưng -->
+                    ${weaponSVG}
+                </svg>
+
+                <div class="relative z-10 text-center w-full">
+                    <span class="inline-block px-2 py-0.5 rounded text-[11px] font-bold tracking-wide text-white" style="background-color: ${color}44; border: 1px solid ${glow}88;">
+                        ${formName}
+                    </span>
+                </div>
+            </div>`;
+        }
+
+        // =========================================================================
+        // 3. CƠ SỞ DỮ LIỆU ĐẦY ĐỦ 10 THÀNH VIÊN GIA TỘC UCHIHA
+        // =========================================================================
+        const uchihaMembers = [
+            {
+                id: 'indra',
+                name: 'Indra Otsutsuki',
+                title: 'Thủy Tổ Gia Tộc Uchiha • Con Trưởng Lục Đạo Hiền Nhân',
+                era: 'origin',
+                eraLabel: 'Thời Khai Sinh',
+                eyeBadge: 'Mangekyou Nguyên Thủy',
+                isRinnegan: false,
+                primaryEye: 'indra',
+                secondaryEye: null,
+                auraColor: '#9333ea',
+                susanoo: {
+                    color: '#7e22ce',
+                    glow: '#c084fc',
+                    weaponType: 'indra_sword',
+                    formName: 'Susanoo Toàn Chân Thể Tím'
+                },
+                summary: 'Người đầu tiên trên thế giới thức tỉnh Sharingan và Mangekyou Sharingan sau khi khai mở sức mạnh âm tính từ cha mình là Hagoromo Otsutsuki.',
+                abilities: [
+                    {
+                        name: 'Mangekyou Sharingan Xoắn Ốc',
+                        type: 'Huyết Kế Nguyên Thủy',
+                        desc: 'Hoa văn xoắn ốc tượng trưng cho dòng chảy tinh thần vô tận, mang lại nhãn lực cực đại và khả năng sao chép/sáng tạo kết ấn nhẫn thuật đầu tiên.'
+                    },
+                    {
+                        name: 'Susanoo Toàn Chân Thể Khổng Lồ',
+                        type: 'Nhẫn Thuật Tối Thượng',
+                        desc: 'Triệu hồi chiến thần chakra màu tím khổng lồ với sức phá hủy ngang ngửa Hóa Thân Ashura của em trai.'
+                    },
+                    {
+                        name: 'Amaterasu & Lôi Độn Tối Thượng',
+                        type: 'Huyết Kế / Nguyên Tố',
+                        desc: 'Sở hữu ngọn lửa đen thiêu rụi vạn vật cùng Lôi Độn & Hỏa Độn uy lực cấp thần thánh.'
+                    }
+                ],
+                stats: { genjutsu: 94, ninjutsu: 98, defense: 96, spacetime: 50 }
+            },
+            {
+                id: 'madara',
+                name: 'Madara Uchiha',
+                title: 'Huyền Thoại Chiến Quốc • Đồng Sáng Lập Làng Lá',
+                era: 'origin',
+                eraLabel: 'Thời Chiến Quốc',
+                eyeBadge: 'EMS → Rinnegan',
+                isRinnegan: true,
+                primaryEye: 'madara_ems',
+                secondaryEye: 'madara_rinnegan',
+                auraColor: '#3b82f6',
+                susanoo: {
+                    color: '#1d4ed8',
+                    glow: '#60a5fa',
+                    weaponType: 'quad_blades',
+                    formName: 'Susanoo Toàn Chân Thể 4 Tay'
+                },
+                summary: 'Người đầu tiên trong gia tộc đạt tới Vĩnh Cửu Mangekyou Sharingan (sau khi nhận mắt từ em trai Izuna) và tiến hóa lên Rinnegan nhờ tế bào Hashirama.',
+                abilities: [
+                    {
+                        name: 'Limbo: Hengoku (Luân Mộ: Biên Ngục)',
+                        type: 'Rinnegan Độc Quyền',
+                        desc: 'Tạo ra tối đa 4 phân thân vô hình tồn tại trong thế giới song song "Limbo". Không thể bị nhìn thấy hay chạm tới nếu không có Rinnegan hoặc Chakra Lục Đạo.'
+                    },
+                    {
+                        name: 'Tengai Shinsei (Thiên Ngại Chấn Tinh)',
+                        type: 'Rinnegan / Susanoo',
+                        desc: 'Kết ấn đồng thời cùng Susanoo để kéo các thiên thạch khổng lồ từ tầng khí quyển giáng xuống hủy diệt chiến trường.'
+                    },
+                    {
+                        name: 'Susanoo Toàn Chân Thể Song Kiếm & Thao Túng Cửu Vĩ',
+                        type: 'EMS',
+                        desc: 'Susanoo xanh dương cao ngang dãy núi, sở hữu 4 cánh tay vung song kiếm tạo sóng xung kích chém đôi đỉnh núi và khống chế hoàn toàn Cửu Vĩ.'
+                    }
+                ],
+                stats: { genjutsu: 96, ninjutsu: 100, defense: 99, spacetime: 85 }
+            },
+            {
+                id: 'izuna',
+                name: 'Izuna Uchiha',
+                title: 'Phó Tộc Trưởng Thời Chiến Quốc • Em Trai Madara',
+                era: 'origin',
+                eraLabel: 'Thời Chiến Quốc',
+                eyeBadge: 'Mangekyou Sharingan',
+                isRinnegan: false,
+                primaryEye: 'izuna',
+                secondaryEye: null,
+                auraColor: '#dc2626',
+                susanoo: null,
+                summary: 'Một trong hai người đầu tiên của gia tộc Uchiha thức tỉnh Mangekyou Sharingan, sở hữu thực lực ngang ngửa Tobirama Senju trước khi nhường đôi mắt cho anh trai Madara.',
+                abilities: [
+                    {
+                        name: 'Mangekyou Sharingan Tam Kiếm',
+                        type: 'Huyết Kế Giới Hạn',
+                        desc: 'Hoa văn gồm 3 thanh kiếm thẳng hướng vào đồng tử, gia tăng cực đại tốc độ phản xạ trong cận chiến kiếm thuật và khả năng thi triển ảo thuật tức thời.'
+                    },
+                    {
+                        name: 'Hỏa Độn: Hào Hỏa Cầu & Kiếm Thuật Đỉnh Cao',
+                        type: 'Nhẫn Thuật / Thể Thuật',
+                        desc: 'Kết hợp nhãn lực dự đoán chuyển động với kiếm thuật điêu luyện, nhiều lần đẩy lùi các đợt tấn công của tộc Senju.'
+                    }
+                ],
+                stats: { genjutsu: 86, ninjutsu: 88, defense: 78, spacetime: 30 }
+            },
+            {
+                id: 'fugaku',
+                name: 'Fugaku Uchiha',
+                title: 'Tộc Trưởng Uchiha • Đội Trưởng Cảnh Vệ Làng Lá',
+                era: 'konoha',
+                eraLabel: 'Thời Đại Làng Lá',
+                eyeBadge: 'Mangekyou (Anime/Novel)',
+                isRinnegan: false,
+                primaryEye: 'fugaku',
+                secondaryEye: null,
+                auraColor: '#b91c1c',
+                susanoo: null,
+                summary: 'Được mệnh danh là "Fugaku Hung Nhãn" trong Đại Chiến Ninja lần 3. Ông giấu kín việc thức tỉnh Mangekyou Sharingan để tránh bị tộc nhân ép dùng nó khống chế Cửu Vĩ.',
+                abilities: [
+                    {
+                        name: 'Khống Chế Vĩ Thú (Cửu Vĩ)',
+                        type: 'Mangekyou Sharingan',
+                        desc: 'Nhãn lực đủ mạnh để đoạt quyền kiểm soát hoàn toàn Kurama, tương tự như Madara và Obito.'
+                    },
+                    {
+                        name: 'Ảo Thuật Tiên Tri Ngắn Hạn',
+                        type: 'Ảo Thuật Cao Cấp',
+                        desc: 'Trong tiểu thuyết Itachi Shinden & Anime, ông có thể dùng Mangekyou mô phỏng kịch bản tương lai ngắn hạn cho đối phương thấy.'
+                    }
+                ],
+                stats: { genjutsu: 90, ninjutsu: 87, defense: 80, spacetime: 35 }
+            },
+            {
+                id: 'shisui',
+                name: 'Shisui Uchiha',
+                title: 'Shisui Thân Thuấn • Thiên Tài Ảo Thuật Tộc Uchiha',
+                era: 'konoha',
+                eraLabel: 'Thời Đại Làng Lá',
+                eyeBadge: 'Mangekyou Sharingan',
+                isRinnegan: false,
+                primaryEye: 'shisui',
+                secondaryEye: null,
+                auraColor: '#16a34a',
+                susanoo: {
+                    color: '#15803d',
+                    glow: '#4ade80',
+                    weaponType: 'drill_lance',
+                    formName: 'Susanoo Xanh Lục (Mũi Khoan)'
+                },
+                summary: 'Người bạn thân thiết như anh trai của Itachi. Nổi tiếng với Thuật Thân Thuấn tạo ra hàng chục phân thân thực thể và sở hữu ảo thuật tối thượng Kotoamatsukami.',
+                abilities: [
+                    {
+                        name: 'Kotoamatsukami (Biệt Thiên Thần)',
+                        type: 'Ảo Thuật Tối Thượng',
+                        desc: 'Ảo thuật mạnh nhất của gia tộc Uchiha: xâm nhập tâm trí mục tiêu, cấy ghép ý nghĩ giả mà nạn nhân hoàn toàn không hay biết mình đang bị điều khiển, thậm chí không cần giao tiếp mắt.'
+                    },
+                    {
+                        name: 'Susanoo Xanh Lục & Tsukumo',
+                        type: 'Mangekyou (Thiết kế bởi Kishimoto)',
+                        desc: 'Susanoo màu xanh lục bảo trang bị ngọn giáo khoan khổng lồ kết hợp Hỏa Độn và bắn ra hàng loạt kim chakra (Tsukumo).'
+                    }
+                ],
+                stats: { genjutsu: 100, ninjutsu: 89, defense: 86, spacetime: 40 }
+            },
+            {
+                id: 'itachi',
+                name: 'Itachi Uchiha',
+                title: 'Thiên Tài Bất Thế • Thành Viên Akatsuki',
+                era: 'konoha',
+                eraLabel: 'Làng Lá / Akatsuki',
+                eyeBadge: 'Mangekyou Sharingan',
+                isRinnegan: false,
+                primaryEye: 'itachi',
+                secondaryEye: null,
+                auraColor: '#ea580c',
+                susanoo: {
+                    color: '#ea580c',
+                    glow: '#fb923c',
+                    weaponType: 'totsuka_yata',
+                    formName: 'Susanoo Thần Khí (Totsuka & Yata)'
+                },
+                summary: 'Tốt nghiệp Học viện năm 7 tuổi, thức tỉnh Sharingan năm 8 tuổi và Mangekyou năm 13 tuổi. Bậc thầy về ảo thuật, phân tích chiến thuật và sở hữu bộ đôi Thần Khí bất khả chiến bại.',
+                abilities: [
+                    {
+                        name: 'Tsukuyomi (Nguyệt Đọc - Mắt Trái)',
+                        type: 'Ảo Thuật Không-Thời Gian',
+                        desc: 'Kéo nạn nhân vào thế giới ảo thuật do Itachi toàn quyền kiểm soát không gian, thời gian và vật chất. 72 giờ tra tấn trong Tsukuyomi chỉ trôi qua trong 1 phần nghìn giây ngoài thực tại.'
+                    },
+                    {
+                        name: 'Amaterasu (Thiên Chiếu - Mắt Phải)',
+                        type: 'Huyết Kế Hỏa Độn',
+                        desc: 'Triệu hồi ngọn lửa đen nóng ngang bề mặt mặt trời tại tiêu điểm ánh nhìn, thiêu cháy mọi thứ kể cả lửa thường cho đến khi mục tiêu hóa thành tro bụi.'
+                    },
+                    {
+                        name: 'Susanoo Trang Bị Kiếm Totsuka & Khiên Yata',
+                        type: 'Thần Khí Tâm Linh',
+                        desc: 'Kiếm Totsuka phong ấn vĩnh viễn mọi thứ nó đâm trúng vào thế giới ảo mộng; Khiên Yata biến đổi thuộc tính để vô hiệu hóa mọi đòn tấn công vật lý lẫn nhẫn thuật. Kèm chiêu tầm xa Yasaka Magatama.'
+                    }
+                ],
+                stats: { genjutsu: 99, ninjutsu: 94, defense: 98, spacetime: 45 }
+            },
+            {
+                id: 'obito',
+                name: 'Obito Uchiha (& Kakashi Hatake)',
+                title: 'Tobi / Madara Giả Mạo • Kẻ Thao Túng Akatsuki',
+                era: 'konoha',
+                eraLabel: 'Làng Lá / Akatsuki',
+                eyeBadge: 'Mangekyou (Kamui Đôi)',
+                isRinnegan: false,
+                primaryEye: 'obito',
+                secondaryEye: null,
+                auraColor: '#0d9488',
+                susanoo: {
+                    color: '#0f766e',
+                    glow: '#2dd4bf',
+                    weaponType: 'kamui_shuriken',
+                    formName: 'Susanoo Toàn Chân Thể Ngọc Bích'
+                },
+                summary: 'Sở hữu cặp mắt Mangekyou mang năng lực Không-Thời Gian biến ảo bậc nhất thế giới Ninja: Kamui. Khi hai mắt hợp nhất, tạo nên sức mạnh công thủ toàn diện.',
+                abilities: [
+                    {
+                        name: 'Kamui Mắt Phải (Tầm Gần & Phi Vật Thể Hóa)',
+                        type: 'Nhẫn Thuật Không-Thời Gian',
+                        desc: 'Cho phép Obito dịch chuyển các bộ phận cơ thể sang chiều không gian khác trong tối đa 5 phút liên tục, khiến mọi đòn tấn công đi xuyên qua người, đồng thời hút mục tiêu chạm phải vào không gian Kamui.'
+                    },
+                    {
+                        name: 'Kamui Mắt Trái (Tầm Xa - Kakashi)',
+                        type: 'Nhẫn Thuật Không-Thời Gian',
+                        desc: 'Tạo ra hố xoáy không gian tại bất kỳ vị trí nào trong tầm nhìn để xé toạc và dịch chuyển mục tiêu từ xa.'
+                    },
+                    {
+                        name: 'Susanoo Toàn Chân Thể & Kamui Shuriken',
+                        type: 'Hợp Nhất Hai Mắt',
+                        desc: 'Susanoo màu xanh ngọc bích có cánh, phóng ra các phi tiêu khổng lồ mang hoa văn Mangekyou làm biến mất mọi thứ chúng chạm vào, kết hợp Kamui Raikiri.'
+                    }
+                ],
+                stats: { genjutsu: 91, ninjutsu: 93, defense: 97, spacetime: 100 }
+            },
+            {
+                id: 'sasuke',
+                name: 'Sasuke Uchiha',
+                title: 'Hokage Bóng Tối • Hậu Duệ Trực Tiếp Của Indra',
+                era: 'konoha',
+                eraLabel: 'Làng Lá → Boruto',
+                eyeBadge: 'EMS + Rinnegan 6 Tomoe',
+                isRinnegan: true,
+                primaryEye: 'sasuke_ems',
+                secondaryEye: 'sasuke_rinnegan',
+                auraColor: '#7e22ce',
+                susanoo: {
+                    color: '#6b21a8',
+                    glow: '#c084fc',
+                    weaponType: 'indra_bow',
+                    formName: 'Susanoo Toàn Chân Thể / Indra'
+                },
+                summary: 'Đạt tới Vĩnh Cửu Mangekyou Sharingan từ đôi mắt của Itachi và được Lục Đạo Hiền Nhân ban cho Rinnegan 6 Tomoe tối thượng ở mắt trái.',
+                abilities: [
+                    {
+                        name: 'Amaterasu (Trái) & Kagutsuchi (Phải)',
+                        type: 'Viêm Độn Tối Thượng',
+                        desc: 'Mắt trái triệu hồi lửa đen Amaterasu, mắt phải dùng Viêm Độn: Gia Cụ Thổ (Kagutsuchi) để điều khiển hình dạng, tạo khiên gai lửa đen hoặc dập tắt ngọn lửa.'
+                    },
+                    {
+                        name: 'Amenotejikara (Thiên Thủ Lực - Rinnegan)',
+                        type: 'Nhẫn Thuật Không-Thời Gian',
+                        desc: 'Hoán đổi tức thời vị trí của bản thân với bất kỳ vật thể, nhẫn thuật hay đối thủ nào trong phạm vi tầm nhìn, tạo ra những đòn tập kích không thể né tránh.'
+                    },
+                    {
+                        name: 'Susanoo Toàn Chân Thể & Mũi Tên Indra',
+                        type: 'EMS / Lục Đạo',
+                        desc: 'Susanoo màu tím có cánh sử dụng cung tên sét và kiếm Chidori. Khi hấp thụ chakra 9 Vĩ Thú, biến thành Susanoo Thần Thánh bắn ra "Indra\'s Arrow".'
+                    }
+                ],
+                stats: { genjutsu: 93, ninjutsu: 99, defense: 96, spacetime: 97 }
+            },
+            {
+                id: 'shin',
+                name: 'Shin Uchiha',
+                title: 'Vật Thí Nghiệm Của Orochimaru • Tín Đồ Cuồng Tín Itachi',
+                era: 'boruto',
+                eraLabel: 'Thế Hệ Boruto',
+                eyeBadge: 'Mangekyou Nhân Tạo',
+                isRinnegan: false,
+                primaryEye: 'shin',
+                secondaryEye: null,
+                auraColor: '#dc2626',
+                susanoo: null,
+                summary: 'Không mang huyết thống Uchiha gốc nhưng sở hữu cấu trúc di truyền độc nhất không bao giờ đào thải cấy ghép, thức tỉnh Mangekyou Sharingan trên toàn cơ thể.',
+                abilities: [
+                    {
+                        name: 'Thao Túng Vũ Khí Từ Xa (Telekinesis)',
+                        type: 'Mangekyou Độc Quyền',
+                        desc: 'Sau khi chạm tay để lại dấu ấn đặc biệt lên bất kỳ vũ khí kim loại nào, Shin có thể điều khiển quỹ đạo bay của chúng từ xa bằng ý nghĩ.'
+                    },
+                    {
+                        name: 'Nhãn Thuật Không-Thời Gian (Sinh Vật Mắt)',
+                        type: 'Không-Thời Gian',
+                        desc: 'Thông qua các sinh vật nhỏ mang mắt Sharingan, Shin có thể mở cổng xoáy không-thời gian để dịch chuyển bản thân và đồng minh.'
+                    }
+                ],
+                stats: { genjutsu: 75, ninjutsu: 82, defense: 74, spacetime: 84 }
+            },
+            {
+                id: 'sarada',
+                name: 'Sarada Uchiha',
+                title: 'Kunoichi Thế Hệ Mới • Boruto: Two Blue Vortex',
+                era: 'boruto',
+                eraLabel: 'Boruto: Two Blue Vortex (Mới Nhất)',
+                eyeBadge: 'Mangekyou Mặt Trời 8 Tia',
+                isRinnegan: false,
+                primaryEye: 'sarada',
+                secondaryEye: null,
+                auraColor: '#e11d48',
+                susanoo: null,
+                summary: 'Con gái của Sasuke và Sakura. Cô thức tỉnh Mangekyou Sharingan hình mặt trời 8 tia nhờ tình yêu thương và mong muốn bảo vệ Boruto, đồng thời khai mở năng lực trọng lực tối thượng trong Two Blue Vortex.',
+                abilities: [
+                    {
+                        name: 'Ohirume (Đại Nhật Nữ Thần — Mới Nhất)',
+                        type: 'Mangekyou Trọng Lực / Không Gian',
+                        desc: 'Triệu hồi các quả cầu đen / hố đen trọng lực mini lơ lửng trên không. Các quả cầu này tạo ra lực hấp dẫn khủng khiếp hút chặt, xé nát mục tiêu hoặc làm chệch hướng đòn tấn công, trong khi Sarada và đồng minh được chọn hoàn toàn miễn nhiễm với lực hút.'
+                    },
+                    {
+                        name: 'Sharingan 3 Tomoe & Chidori Siêu Tốc',
+                        type: 'Huyết Kế / Lôi Độn',
+                        desc: 'Kết hợp nhãn lực thấu thị đọc chuyển động của Sharingan với sức mạnh bộc phát Chidori và khả năng kiểm soát chakra chuẩn xác thừa hưởng từ mẹ.'
+                    }
+                ],
+                stats: { genjutsu: 85, ninjutsu: 92, defense: 86, spacetime: 95 }
+            }
+        ];
+
+        // =========================================================================
+        // 4. RENDER GIAO DIỆN & TƯƠNG TÁC
+        // =========================================================================
+        let currentEra = 'all';
+        let searchQuery = '';
+
+        function initStaticVisuals() {
+            document.getElementById('baseSharinganVisual').innerHTML = getEyeSVG('base_3tomoe', 'eye-spin');
+            document.getElementById('izanagiVisual').innerHTML = getEyeSVG('izanagi_eye', 'aura-glow');
+            document.getElementById('izanamiVisual').innerHTML = getEyeSVG('izanami_eye', 'aura-glow');
+        }
+
+        function renderMembers() {
+            const grid = document.getElementById('uchihaGrid');
+            const emptyState = document.getElementById('emptyState');
+            const resultCount = document.getElementById('resultCount');
+            const kinjutsuSection = document.getElementById('kinjutsuSection');
+            const membersHeader = document.getElementById('membersHeader');
+
+            // Nếu người dùng chọn tab riêng "Cấm Thuật", chỉ hiện phần Cấm Thuật
+            if (currentEra === 'kinjutsu') {
+                kinjutsuSection.classList.remove('hidden');
+                membersHeader.classList.add('hidden');
+                grid.innerHTML = '';
+                emptyState.classList.add('hidden');
+                return;
+            } else {
+                membersHeader.classList.remove('hidden');
+                if (currentEra === 'all' && searchQuery === '') {
+                    kinjutsuSection.classList.remove('hidden');
+                } else {
+                    kinjutsuSection.classList.add('hidden');
+                }
+            }
+
+            const q = searchQuery.toLowerCase().trim();
+            const filtered = uchihaMembers.filter(member => {
+                const matchEra = currentEra === 'all' || member.era === currentEra;
+                if (!matchEra) return false;
+                if (!q) return true;
+
+                const inName = member.name.toLowerCase().includes(q);
+                const inTitle = member.title.toLowerCase().includes(q);
+                const inEye = member.eyeBadge.toLowerCase().includes(q);
+                const inSummary = member.summary.toLowerCase().includes(q);
+                const inAbilities = member.abilities.some(ab => 
+                    ab.name.toLowerCase().includes(q) || ab.desc.toLowerCase().includes(q)
+                );
+                const inSusanoo = member.susanoo && member.susanoo.formName.toLowerCase().includes(q);
+
+                return inName || inTitle || inEye || inSummary || inAbilities || inSusanoo;
+            });
+
+            resultCount.textContent = `Hiển thị ${filtered.length} thành viên`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(m => {
+                const cardClass = m.isRinnegan ? 'uchiha-card rinnegan-card' : 'uchiha-card';
+                const badgeStyle = m.isRinnegan 
+                    ? 'bg-purple-950/80 text-purple-300 border-purple-600/60' 
+                    : 'bg-red-950/80 text-red-300 border-red-600/60';
+
+                return `
+                <article class="${cardClass} rounded-2xl p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden" style="--aura-color: ${m.auraColor};">
+                    <!-- Thanh màu điểm nhấn trên cùng -->
+                    <div class="absolute top-0 left-0 right-0 h-1" style="background: linear-gradient(90deg, transparent, ${m.auraColor}, transparent);"></div>
+
+                    <div>
+                        <!-- Header thẻ nhân vật -->
+                        <div class="flex flex-wrap items-start justify-between gap-2 mb-4">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-zinc-900 text-gray-300 border border-zinc-700">
+                                        ${m.eraLabel}
+                                    </span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold border ${badgeStyle}">
+                                        ${m.eyeBadge}
+                                    </span>
+                                </div>
+                                <h3 class="font-display text-xl sm:text-2xl font-bold text-white tracking-wide">${m.name}</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">${m.title}</p>
+                            </div>
+                        </div>
+
+                        <!-- Khu vực trực quan: Mắt Nhãn Thuật & Susanoo -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 my-4 bg-black/45 p-3.5 rounded-xl border border-zinc-800/80">
+                            <!-- Cột 1: Đồng tử Nhãn Thuật -->
+                            <div class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-950/80 border border-zinc-800/80 relative">
+                                <div id="eye-container-${m.id}" class="flex items-center justify-center gap-2 aura-glow">
+                                    ${getEyeSVG(m.primaryEye, 'eye-spin')}
+                                    ${m.secondaryEye ? `<div class="scale-90 -ml-2">${getEyeSVG(m.secondaryEye, 'eye-spin')}</div>` : ''}
+                                </div>
+                                <span class="text-[11px] font-medium text-gray-400 mt-2 text-center">
+                                    ${m.secondaryEye ? 'EMS & Rinnegan' : m.eyeBadge}
+                                </span>
+                            </div>
+
+                            <!-- Cột 2: Hình thái Susanoo -->
+                            <div class="flex flex-col items-center justify-center">
+                                ${getSusanooSVG(m.susanoo)}
+                            </div>
+                        </div>
+
+                        <!-- Mô tả ngắn -->
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-4">
+                            ${m.summary}
+                        </p>
+
+                        <!-- Danh sách nhãn thuật tiêu biểu -->
+                        <div class="space-y-2.5">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                Nhãn Thuật & Tuyệt Kỹ Đặc Trưng
+                            </h4>
+                            ${m.abilities.map(ab => `
+                                <div class="p-3 rounded-xl bg-zinc-900/75 border border-zinc-800/90 hover:border-zinc-700 transition">
+                                    <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+                                        <span class="text-sm font-bold text-white">${ab.name}</span>
+                                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-black/60 text-red-400 border border-red-900/40">${ab.type}</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">${ab.desc}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Các nút tương tác dưới thẻ -->
+                    <div class="mt-5 pt-4 border-t border-zinc-800/80 flex flex-wrap items-center gap-2.5">
+                        <button onclick="activateDojutsu('${m.id}')" 
+                            class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-600 hover:to-rose-600 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-red-900/30 flex items-center justify-center gap-1.5 transition active:scale-95">
+                            <span>👁️</span> Kích Hoạt Nhãn Thuật
+                        </button>
+                        <button onclick="openMemberModal('${m.id}')" 
+                            class="py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-gray-200 border border-zinc-700 text-xs sm:text-sm font-medium transition">
+                            Chỉ Số & Chi Tiết
+                        </button>
+                    </div>
+                </article>
+                `;
+            }).join('');
+        }
+
+        // Hiệu ứng kích hoạt biến đổi mắt từ 3 Tomoe sang Mangekyou / Rinnegan
+        function activateDojutsu(memberId) {
+            const member = uchihaMembers.find(m => m.id === memberId);
+            if (!member) return;
+
+            const container = document.getElementById(`eye-container-${memberId}`);
+            if (!container) return;
+
+            // Phát âm thanh
+            playSharinganSound(member.isRinnegan ? 'rinnegan' : 'ms');
+
+            // Bước 1: Hiện Sharingan 3 Tomoe xoay nhanh
+            container.innerHTML = getEyeSVG('base_3tomoe', 'eye-spin-fast');
+
+            // Bước 2: Sau 450ms bùng nổ biến đổi thành Mangekyou / Rinnegan
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="eye-activate-anim flex items-center justify-center gap-2">
+                        ${getEyeSVG(member.primaryEye, 'eye-spin-fast')}
+                        ${member.secondaryEye ? `<div class="scale-90 -ml-2">${getEyeSVG(member.secondaryEye, 'eye-spin-fast')}</div>` : ''}
+                    </div>
+                `;
+                // Trả về tốc độ xoay ổn định sau 2.2s
+                setTimeout(() => {
+                    container.innerHTML = `
+                        ${getEyeSVG(member.primaryEye, 'eye-spin')}
+                        ${member.secondaryEye ? `<div class="scale-90 -ml-2">${getEyeSVG(member.secondaryEye, 'eye-spin')}</div>` : ''}
+                    `;
+                }, 2200);
+            }, 450);
+        }
+
+        // Mở Modal chi tiết chỉ số sức mạnh
+        function openMemberModal(memberId) {
+            const m = uchihaMembers.find(item => item.id === memberId);
+            if (!m) return;
+
+            playSharinganSound(m.susanoo ? 'susanoo' : 'ms');
+
+            const modal = document.getElementById('detailModal');
+            const body = document.getElementById('modalBody');
+
+            const statBar = (label, value, colorClass) => `
+                <div>
+                    <div class="flex justify-between text-xs font-medium mb-1">
+                        <span class="text-gray-300">${label}</span>
+                        <span class="text-white font-bold">${value}/100</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
+                        <div class="h-full rounded-full ${colorClass}" style="width: ${value}%; transition: width 0.8s ease;"></div>
+                    </div>
+                </div>
+            `;
+
+            body.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6 items-center border-b border-zinc-800 pb-6">
+                    <div class="flex items-center gap-3 p-4 rounded-2xl bg-black/70 border border-zinc-800 aura-glow" style="--aura-color: ${m.auraColor};">
+                        ${getEyeSVG(m.primaryEye, 'eye-spin')}
+                        ${m.secondaryEye ? getEyeSVG(m.secondaryEye, 'eye-spin') : ''}
+                    </div>
+                    <div class="text-center md:text-left flex-1">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-red-950 text-red-400 border border-red-800/50 mb-2">
+                            ${m.eraLabel} • ${m.eyeBadge}
+                        </span>
+                        <h2 class="font-display text-2xl sm:text-3xl font-black text-white">${m.name}</h2>
+                        <p class="text-sm text-gray-400 mt-1">${m.title}</p>
+                        <p class="text-sm text-gray-300 mt-3 leading-relaxed">${m.summary}</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <!-- Biểu đồ chỉ số sức mạnh nhãn thuật -->
+                    <div class="bg-zinc-950/90 p-5 rounded-2xl border border-zinc-800">
+                        <h3 class="font-display text-base font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="text-red-500">📊</span> Chỉ Số Sức Mạnh Huyết Kế
+                        </h3>
+                        <div class="space-y-4">
+                            ${statBar('Ảo Thuật & Thôi Miên (Genjutsu)', m.stats.genjutsu, 'bg-gradient-to-r from-red-600 to-rose-500')}
+                            ${statBar('Uy Lực Nhẫn Thuật / Hủy Diệt', m.stats.ninjutsu, 'bg-gradient-to-r from-orange-600 to-amber-500')}
+                            ${statBar('Phòng Thủ Tuyệt Đối & Susanoo', m.stats.defense, 'bg-gradient-to-r from-indigo-600 to-blue-500')}
+                            ${statBar('Thao Túng Không-Thời Gian / Trọng Lực', m.stats.spacetime, 'bg-gradient-to-r from-purple-600 to-fuchsia-500')}
+                        </div>
+                    </div>
+
+                    <!-- Susanoo chi tiết -->
+                    <div class="bg-zinc-950/90 p-5 rounded-2xl border border-zinc-800 flex flex-col justify-between">
+                        <h3 class="font-display text-base font-bold text-white mb-3 flex items-center gap-2">
+                            <span class="text-indigo-400">🛡️</span> Hình Thái Chiến Thần Susanoo
+                        </h3>
+                        ${getSusanooSVG(m.susanoo)}
+                        <p class="text-xs text-gray-400 mt-3 leading-relaxed">
+                            ${m.susanoo 
+                                ? `Susanoo là lớp giáp chakra khổng lồ chỉ thức tỉnh khi người dùng khai mở sức mạnh của cả hai con mắt Mangekyou Sharingan. Hình thái của ${m.name} đạt cấp độ <strong class="text-white">${m.susanoo.formName}</strong>.` 
+                                : `${m.name} chưa từng thi triển Susanoo trong nguyên tác (do chưa hội tụ đủ điều kiện hai mắt Mangekyou hoặc không sử dụng trong thực chiến).`}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chi tiết toàn bộ nhãn thuật -->
+                <div class="mt-6">
+                    <h3 class="font-display text-base font-bold text-white mb-3">Danh Sách Chi Tiết Tất Cả Nhãn Thuật</h3>
+                    <div class="grid grid-cols-1 gap-3">
+                        ${m.abilities.map(ab => `
+                            <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="font-bold text-red-400 text-base">${ab.name}</span>
+                                    <span class="text-xs px-2.5 py-0.5 rounded-full bg-black text-gray-300 border border-zinc-700">${ab.type}</span>
+                                </div>
+                                <p class="text-sm text-gray-300 leading-relaxed">${ab.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Đóng modal khi click ra ngoài
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Xử lý sự kiện bộ lọc Era
+        document.querySelectorAll('.era-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.era-btn').forEach(b => {
+                    b.classList.remove('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30', 'active');
+                    if (b.dataset.era === 'kinjutsu') {
+                        b.classList.add('bg-purple-950/60', 'text-purple-300');
+                    } else {
+                        b.classList.add('bg-zinc-900', 'text-gray-300');
+                    }
+                });
+
+                btn.classList.remove('bg-zinc-900', 'text-gray-300', 'bg-purple-950/60', 'text-purple-300');
+                btn.classList.add('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30', 'active');
+
+                currentEra = btn.dataset.era;
+                renderMembers();
+            });
+        });
+
+        // Xử lý tìm kiếm
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            if (searchQuery.length > 0) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            renderMembers();
+        });
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchQuery = '';
+            clearSearchBtn.classList.add('hidden');
+            renderMembers();
+        }
+
+        function resetAllFilters() {
+            clearSearch();
+            document.querySelector('.era-btn[data-era="all"]').click();
+        }
+
+        // Khởi chạy trang
+        window.onload = function() {
+            initStaticVisuals();
+            renderMembers();
+        };
+    </script>
+</body>
+</html>

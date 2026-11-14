@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uchiha Clan Dojutsu & Susanoo Encyclopedia — From Genesis to Boruto: Two Blue Vortex</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tone.js for synthesized Dojutsu activation sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <!-- Google Fonts: Inter & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Cinzel', 'serif'],
+                    },
+                    colors: {
+                        uchiha: {
+                            black: '#070709',
+                            dark: '#0e0e13',
+                            card: '#14141c',
+                            red: '#dc2626',
+                            crimson: '#991b1b',
+                            purple: '#9333ea',
+                            rinnegan: '#a855f7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Uchiha Dark Crimson / Obsidian Theme & Custom Scrollbar */
+        body {
+            background-color: #070709;
+            color: #e5e7eb;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(153, 27, 27, 0.14) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(126, 34, 206, 0.14) 0%, transparent 45%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070709;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7f1d1d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #dc2626;
+        }
+
+        /* Animations for Mangekyo Sharingan, Susanoo & Floating Embers */
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulseAura {
+            0%, 100% { filter: drop-shadow(0 0 8px var(--aura-color, rgba(220, 38, 38, 0.7))); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 22px var(--aura-color, rgba(220, 38, 38, 1))); transform: scale(1.04); }
+        }
+        @keyframes susanooFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-6px) scale(1.02); }
+        }
+        @keyframes chakraFlame {
+            0%, 100% { opacity: 0.65; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.08); }
+        }
+        @keyframes eyeActivateFlash {
+            0% { transform: scale(0.3) rotate(-180deg); opacity: 0.2; filter: brightness(2.5); }
+            60% { transform: scale(1.15) rotate(20deg); opacity: 1; filter: brightness(1.6); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1); }
+        }
+        @keyframes floatEmber {
+            0% { transform: translateY(100vh) translateX(0) scale(0.6); opacity: 0; }
+            20% { opacity: 0.7; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) translateX(30px) scale(1.1); opacity: 0; }
+        }
+
+        .ember-particle {
+            position: fixed;
+            bottom: -10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatEmber linear infinite;
+        }
+
+        .eye-spin {
+            transform-origin: center;
+            animation: spinSlow 14s linear infinite;
+        }
+        .eye-spin-fast {
+            transform-origin: center;
+            animation: spinSlow 3.5s linear infinite;
+        }
+        .eye-activate-anim {
+            animation: eyeActivateFlash 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .aura-glow {
+            animation: pulseAura 3s ease-in-out infinite;
+        }
+        .susanoo-float {
+            animation: susanooFloat 3.8s ease-in-out infinite;
+        }
+        .chakra-flame {
+            transform-origin: bottom center;
+            animation: chakraFlame 1.8s ease-in-out infinite;
+        }
+
+        /* Glassmorphic Card & Glowing Borders */
+        .uchiha-card {
+            background: linear-gradient(145deg, rgba(22, 22, 30, 0.92), rgba(12, 12, 17, 0.96));
+            border: 1px solid rgba(220, 38, 38, 0.22);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .uchiha-card:hover {
+            border-color: rgba(220, 38, 38, 0.65);
+            box-shadow: 0 15px 35px -8px rgba(220, 38, 38, 0.25);
+            transform: translateY(-4px);
+        }
+        .uchiha-card.rinnegan-card:hover {
+            border-color: rgba(168, 85, 247, 0.7);
+            box-shadow: 0 15px 35px -8px rgba(168, 85, 247, 0.28);
+        }
+
+        /* Amaterasu Bleeding Eye Effect */
+        @keyframes bloodDrip {
+            0% { height: 0px; opacity: 0.9; }
+            100% { height: 22px; opacity: 0.85; }
+        }
+        .amaterasu-bleed {
+            animation: bloodDrip 1.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-red-600 selection:text-white">
+
+    <!-- Floating Chakra / Fire Embers Container -->
+    <div id="emberContainer" aria-hidden="true"></div>
+
+    <!-- HEADER / HERO -->
+    <header class="relative border-b border-red-900/40 bg-gradient-to-b from-black via-[#120609] to-[#070709] pt-8 pb-10 px-4 sm:px-6 lg:px-8 overflow-hidden z-10">
+        <!-- Uchiwa Fan Watermark -->
+        <div class="absolute -top-24 -right-24 opacity-10 pointer-events-none">
+            <svg width="360" height="360" viewBox="0 0 200 200">
+                <path d="M100 10 A80 80 0 1 1 100 170 A80 80 0 1 1 100 10 Z" fill="#dc2626"/>
+                <path d="M20 90 A80 80 0 0 0 180 90 L180 110 A80 80 0 0 1 20 110 Z" fill="#ffffff"/>
+                <rect x="92" y="160" width="16" height="40" rx="4" fill="#ffffff"/>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="text-center md:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-700/50 text-red-400 text-xs font-semibold tracking-wider uppercase mb-3">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                        Naka Shrine Stone Tablet • Updated for Boruto: Two Blue Vortex
+                    </div>
+                    <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+                        UCHIHA CLAN <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-rose-500 to-purple-500">DOJUTSU & SUSANOO</span>
+                    </h1>
+                    <p class="mt-3 text-gray-400 max-w-2xl text-sm sm:text-base leading-relaxed">
+                        A complete interactive archive of every <strong class="text-red-400">Sharingan</strong>, <strong class="text-red-400">Mangekyo Sharingan</strong>, <strong class="text-rose-400">Eternal Mangekyo (EMS)</strong>, <strong class="text-purple-400">Rinnegan</strong>, and <strong class="text-indigo-400">Susanoo</strong> manifestation — from the Progenitor Indra Otsutsuki to Sarada Uchiha.
+                    </p>
+                </div>
+
+                <!-- Sound Toggle & Quick Lore Stats -->
+                <div class="flex flex-col items-center md:items-end gap-3">
+                    <button id="soundToggleBtn" onclick="toggleAudio()" title="Toggle synthesized Sharingan sound effects" class="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-zinc-900/90 hover:bg-red-950/60 border border-red-800/50 text-sm font-medium text-gray-200 transition shadow-lg">
+                        <span id="soundIcon" class="text-red-500 text-lg">🔊</span>
+                        <span id="soundText">Dojutsu Audio: ON</span>
+                    </button>
+                    <div class="flex gap-4 text-xs text-gray-400 bg-black/50 px-4 py-2 rounded-xl border border-zinc-800">
+                        <div><span class="text-red-400 font-bold text-sm">10</span> Wielders</div>
+                        <div class="border-l border-zinc-700 pl-4"><span class="text-purple-400 font-bold text-sm">25+</span> Kekkei Genkai</div>
+                        <div class="border-l border-zinc-700 pl-4"><span class="text-indigo-400 font-bold text-sm">8</span> Susanoo Forms</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- STICKY FILTER & SEARCH BAR -->
+    <section class="sticky top-0 z-30 bg-[#070709]/95 backdrop-blur-md border-b border-zinc-800/80 py-3.5 px-4 sm:px-6 lg:px-8 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3.5">
+            
+            <!-- Timeline Era Filter Tabs -->
+            <div class="flex flex-wrap items-center gap-2" id="eraFilters">
+                <button data-era="all" class="era-btn active px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-red-600 text-white shadow-md shadow-red-600/30 transition">
+                    All Eras
+                </button>
+                <button data-era="origin" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-zinc-900 text-gray-300 hover:bg-zinc-800 border border-zinc-800 transition">
+                    Genesis & Warring States
+                </button>
+                <button data-era="konoha" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-zinc-900 text-gray-300 hover:bg-zinc-800 border border-zinc-800 transition">
+                    Shinobi World Wars & Akatsuki
+                </button>
+                <button data-era="boruto" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-zinc-900 text-gray-300 hover:bg-zinc-800 border border-zinc-800 transition">
+                    New Era & Two Blue Vortex
+                </button>
+                <button data-era="kinjutsu" class="era-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-purple-950/60 text-purple-300 hover:bg-purple-900/60 border border-purple-700/50 transition">
+                    ✦ Base Sharingan & Forbidden Kinjutsu
+                </button>
+            </div>
+
+            <!-- Real-time Search Bar -->
+            <div class="relative w-full lg:w-80">
+                <input type="text" id="searchInput" placeholder="Search character or ability (Kamui, Ohirume...)" 
+                    class="w-full pl-10 pr-9 py-2 rounded-xl bg-zinc-900/90 border border-zinc-700/80 focus:border-red-500 focus:ring-1 focus:ring-red-500 text-sm text-white placeholder-gray-500 outline-none transition">
+                <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <button id="clearSearchBtn" onclick="clearSearch()" title="Clear search" class="hidden absolute right-3 top-2.5 text-gray-400 hover:text-white text-sm">✕</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        
+        <!-- Foundational & Forbidden Clan Dojutsu Section -->
+        <div id="kinjutsuSection" class="mb-10">
+            <div class="flex items-center gap-3 mb-5">
+                <div class="w-1.5 h-7 bg-gradient-to-b from-red-500 to-purple-600 rounded-full"></div>
+                <div>
+                    <h2 class="font-display text-xl sm:text-2xl font-bold text-white">Sharingan Evolution & Forbidden Clan Kinjutsu</h2>
+                    <p class="text-xs sm:text-sm text-gray-400">Core ocular foundations shared across the Uchiha bloodline before and after Mangekyo awakening</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Base Sharingan (1-3 Tomoe) -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-red-950 text-red-400 text-xs font-bold border border-red-800/50">FOUNDATIONAL</span>
+                            <span class="text-xs text-gray-500">1 → 3 Tomoe</span>
+                        </div>
+                        <div class="flex justify-center my-3" id="baseSharinganVisual"></div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Base Sharingan (1–3 Tomoe)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Awakened through intense emotional trauma. Grants two core abilities: the <strong class="text-red-400">Eye of Insight</strong> (perceiving chakra flow, predicting muscle tension, and copying ninjutsu/taijutsu) and the <strong class="text-red-400">Eye of Hypnotism</strong> (casting potent genjutsu via direct eye contact).
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>Chakra Drain: Low</span>
+                        <span class="text-red-400">Copy Wheel Eye</span>
+                    </div>
+                </div>
+
+                <!-- Mangekyo & Eternal Mangekyo -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-rose-950 text-rose-400 text-xs font-bold border border-rose-800/50">EVOLUTION</span>
+                            <span class="text-xs text-gray-500">MS → EMS</span>
+                        </div>
+                        <div class="flex justify-center my-3">
+                            <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-red-950 to-black border-2 border-red-600/60 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.4)]">
+                                <span class="font-display text-xs font-bold text-center text-red-400 px-2">ETERNAL<br>MANGEKYO</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Mangekyo & Eternal (EMS)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Awakened by witnessing the loss of one's closest bond. Grants unique left/right ocular powers and unlocks <strong class="text-indigo-400">Susanoo</strong>. Overuse gradually seals the user's eyesight in darkness unless cured by transplanting a sibling's Mangekyo to achieve <strong class="text-rose-400">Eternal Light</strong>.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>MS Cost: Blindness</span>
+                        <span class="text-emerald-400">EMS: Zero Vision Loss</span>
+                    </div>
+                </div>
+
+                <!-- Forbidden Kinjutsu: Izanagi -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between border-purple-900/40">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-purple-950 text-purple-300 text-xs font-bold border border-purple-700/50">KINJUTSU</span>
+                            <span class="text-xs text-gray-500">Reality Rewriting</span>
+                        </div>
+                        <div class="flex justify-center my-3" id="izanagiVisual"></div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Izanagi (Reality Rewriting)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            The ultimate <strong class="text-purple-400">Yin–Yang Release</strong> genjutsu cast upon oneself. Within its active duration, any injury or even death experienced by the user is turned into an illusion, while advantageous outcomes become reality. <strong class="text-red-400">Price: The eye loses its light forever.</strong>
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>Wielders: Madara, Obito, Danzo</span>
+                        <span class="text-red-500 font-semibold">Blinds 1 Eye</span>
+                    </div>
+                </div>
+
+                <!-- Forbidden Kinjutsu: Izanami -->
+                <div class="uchiha-card rounded-2xl p-5 flex flex-col justify-between border-purple-900/40">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md bg-purple-950 text-purple-300 text-xs font-bold border border-purple-700/50">KINJUTSU</span>
+                            <span class="text-xs text-gray-500">Infinite Destiny Loop</span>
+                        </div>
+                        <div class="flex justify-center my-3" id="izanamiVisual"></div>
+                        <h3 class="text-lg font-bold text-white text-center mb-2">Izanami (Infinite Destiny Loop)</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            Created to punish Izanagi abusers. Records physical sensations of both caster and target through sight to trap the victim in an <strong class="text-purple-400">inescapable temporal loop</strong>. The target can only escape by abandoning denial and accepting their true self and fate.
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-zinc-800/80 flex justify-between text-xs text-gray-400">
+                        <span>Wielders: Itachi, Naori</span>
+                        <span class="text-red-500 font-semibold">Blinds 1 Eye</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roster Header -->
+        <div id="membersHeader" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-1.5 h-7 bg-red-600 rounded-full"></div>
+                <div>
+                    <h2 class="font-display text-xl sm:text-2xl font-bold text-white">Chronological Uchiha Wielder Roster</h2>
+                    <p class="text-xs sm:text-sm text-gray-400">Click <strong class="text-red-400">"Activate Dojutsu"</strong> to awaken the eye pattern, or click any card for the full inspection modal</p>
+                </div>
+            </div>
+            <div id="resultCount" class="text-xs font-medium text-gray-400 bg-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-800 self-start sm:self-auto">
+                Showing 10 Wielders
+            </div>
+        </div>
+
+        <!-- Uchiha Wielder Cards Grid -->
+        <div id="uchihaGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+            <!-- Dynamically rendered via JavaScript -->
+        </div>
+
+        <!-- Empty Search State -->
+        <div id="emptyState" class="hidden text-center py-16 bg-zinc-900/40 rounded-2xl border border-zinc-800">
+            <div class="text-4xl mb-3">👁️</div>
+            <h3 class="text-lg font-bold text-white">No matching Dojutsu or Uchiha wielder found</h3>
+            <p class="text-sm text-gray-400 mt-1">Try searching for keywords like: <em>Kamui, Amaterasu, Ohirume, Limbo, Madara, or Sarada</em>.</p>
+            <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-xl transition">
+                Reset Filters
+            </button>
+        </div>
+    </main>
+
+    <!-- FULL INSPECTION MODAL -->
+    <div id="detailModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+        <div class="relative w-full max-w-4xl bg-[#0f0f15] border border-red-800/60 rounded-2xl shadow-2xl overflow-hidden my-8">
+            <!-- Close Button -->
+            <button onclick="closeModal()" title="Close modal" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-zinc-900/90 hover:bg-red-600 text-gray-300 hover:text-white flex items-center justify-center border border-zinc-700 transition">
+                ✕
+            </button>
+
+            <div id="modalBody" class="p-6 sm:p-8 max-h-[88vh] overflow-y-auto">
+                <!-- Dynamically rendered modal content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-zinc-900 bg-black/80 py-6 px-4 text-center text-xs text-gray-500 mt-12 relative z-10">
+        <p>Compiled from <span class="text-gray-400">Naruto</span>, <span class="text-gray-400">Naruto Shippuden</span>, <span class="text-gray-400">Itachi Shinden</span> & <span class="text-red-400 font-medium">Boruto: Two Blue Vortex</span>.</p>
+        <p class="mt-1">All Mangekyo Sharingan, Rinnegan, and Susanoo manifestations are rendered via custom animated inline vector SVGs.</p>
+    </footer>
+
+    <!-- JAVASCRIPT DATA, SVG GENERATORS & INTERACTIVITY -->
+    <script>
+        // =========================================================================
+        // 1. FLOATING EMBER PARTICLES GENERATOR
+        // =========================================================================
+        function createEmbers() {
+            const container = document.getElementById('emberContainer');
+            const colors = ['#ef4444', '#dc2626', '#f97316', '#a855f7'];
+            for (let i = 0; i < 22; i++) {
+                const ember = document.createElement('div');
+                ember.className = 'ember-particle';
+                const size = Math.random() * 4 + 2;
+                ember.style.width = `${size}px`;
+                ember.style.height = `${size}px`;
+                ember.style.left = `${Math.random() * 100}vw`;
+                ember.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                ember.style.boxShadow = `0 0 8px ${ember.style.backgroundColor}`;
+                ember.style.animationDuration = `${Math.random() * 10 + 8}s`;
+                ember.style.animationDelay = `${Math.random() * 8}s`;
+                container.appendChild(ember);
+            }
+        }
+
+        // =========================================================================
+        // 2. SYNTHESIZED DOJUTSU AUDIO ENGINE (TONE.JS)
+        // =========================================================================
+        let soundEnabled = true;
+        let audioInitialized = false;
+
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            const text = document.getElementById('soundText');
+            if (soundEnabled) {
+                icon.textContent = '🔊';
+                text.textContent = 'Dojutsu Audio: ON';
+            } else {
+                icon.textContent = '🔇';
+                text.textContent = 'Dojutsu Audio: OFF';
+            }
+        }
+
+        async function playSharinganSound(type = 'ms') {
+            if (!soundEnabled) return;
+            try {
+                if (!audioInitialized) {
+                    await Tone.start();
+                    audioInitialized = true;
+                }
+                const now = Tone.now();
+                const synth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: type === 'rinnegan' ? 'sine' : 'sawtooth' },
+                    envelope: { attack: 0.02, decay: 0.35, sustain: 0.1, release: 0.8 }
+                }).toDestination();
+                synth.volume.value = -12;
+
+                if (type === 'rinnegan') {
+                    synth.triggerAttackRelease(['C2', 'G2', 'D#3'], '0.7', now);
+                } else if (type === 'susanoo') {
+                    synth.triggerAttackRelease(['A1', 'E2', 'A2', 'C3'], '0.9', now);
+                } else {
+                    synth.triggerAttackRelease(['E4', 'B4'], '0.18', now);
+                    synth.triggerAttackRelease(['G#4', 'E5'], '0.35', now + 0.12);
+                }
+            } catch (e) {
+                console.warn('Audio context awaiting user gesture', e);
+            }
+        }
+
+        // =========================================================================
+        // 3. HIGH-PRECISION CUSTOM SVG GENERATORS (EYES & SUSANOO)
+        // =========================================================================
+        function getEyeSVG(eyeType, extraClass = '') {
+            const baseRedEye = (innerContent, isRinnegan = false, hasBlood = false) => {
+                const bgFill = isRinnegan ? 'url(#rinneganGrad)' : 'url(#sharinganGrad)';
+                const strokeCol = isRinnegan ? '#2e1065' : '#450a0a';
+                return `
+                <svg viewBox="0 0 120 120" class="w-24 h-24 sm:w-28 sm:h-28 ${extraClass} overflow-visible">
+                    <defs>
+                        <radialGradient id="sharinganGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ef4444"/>
+                            <stop offset="70%" stop-color="#dc2626"/>
+                            <stop offset="100%" stop-color="#7f1d1d"/>
+                        </radialGradient>
+                        <radialGradient id="rinneganGrad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#d8b4fe"/>
+                            <stop offset="60%" stop-color="#a855f7"/>
+                            <stop offset="100%" stop-color="#581c87"/>
+                        </radialGradient>
+                    </defs>
+                    <circle cx="60" cy="60" r="56" fill="none" stroke="${isRinnegan ? '#a855f7' : '#ef4444'}" stroke-width="1.5" stroke-opacity="0.45"/>
+                    <circle cx="60" cy="60" r="52" fill="${bgFill}" stroke="${strokeCol}" stroke-width="3"/>
+                    <g class="eye-pattern">
+                        ${innerContent}
+                    </g>
+                    <ellipse cx="44" cy="40" rx="7" ry="4" transform="rotate(-30 44 40)" fill="white" fill-opacity="0.35"/>
+                    ${hasBlood ? `<path d="M58 110 Q60 128 56 136 Q62 136 62 110 Z" fill="#991b1b" class="amaterasu-bleed"/>` : ''}
+                </svg>`;
+            };
+
+            switch (eyeType) {
+                case 'base_3tomoe':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="32" fill="none" stroke="#09090b" stroke-width="2" stroke-opacity="0.75"/>
+                        <circle cx="60" cy="60" r="10" fill="#09090b"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="28" r="5.5" fill="#09090b"/>
+                                <path d="M60 22.5 Q69 24 67 32 Q63 27 60 28 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                    `);
+
+                case 'indra':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="8" fill="#09090b"/>
+                        <path d="M60 60 C60 42, 78 42, 78 60 C78 82, 40 82, 40 58 C40 30, 88 30, 88 62 C88 94, 30 94, 30 56 C30 22, 95 22, 95 60" 
+                              fill="none" stroke="#09090b" stroke-width="4.5" stroke-linecap="round"/>
+                    `);
+
+                case 'madara_ems':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="36" fill="none" stroke="#09090b" stroke-width="2.5"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M55 16 L65 16 L62 60 L58 60 Z" fill="#09090b"/>
+                                <circle cx="60" cy="34" r="11" fill="none" stroke="#09090b" stroke-width="5"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'madara_rinnegan':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="42" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="32" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="22" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="12" fill="none" stroke="#1e1b4b" stroke-width="2.2"/>
+                        <circle cx="60" cy="60" r="5" fill="#09090b"/>
+                    `, true);
+
+                case 'izuna':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="34" fill="none" stroke="#09090b" stroke-width="2"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M54 14 L66 14 L63 55 L57 55 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="10" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'fugaku':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="34" fill="none" stroke="#09090b" stroke-width="3"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 Q78 35 60 15 Q52 38 60 60 Z" fill="#09090b"/>
+                                <circle cx="60" cy="24" r="5" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'shisui':
+                    return baseRedEye(`
+                        ${[0, 90, 180, 270].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 L60 14 Q84 22 76 48 L60 60 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="2.5"/>
+                    `);
+
+                case 'itachi':
+                    return baseRedEye(`
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 C44 42, 46 20, 62 14 C58 32, 68 44, 60 60 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `, false, true);
+
+                case 'obito':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="35" fill="none" stroke="#09090b" stroke-width="3"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 52 C42 46, 35 28, 56 15 C48 30, 56 42, 68 50 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="10" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'sasuke_ems':
+                    return baseRedEye(`
+                        <polygon points="60,12 98,82 22,82" fill="none" stroke="#09090b" stroke-width="5.5" stroke-linejoin="round"/>
+                        <polygon points="60,108 98,38 22,38" fill="none" stroke="#09090b" stroke-width="5.5" stroke-linejoin="round"/>
+                        ${[0, 60, 120, 180, 240, 300].map(deg => `
+                            <line x1="60" y1="60" x2="60" y2="18" stroke="#09090b" stroke-width="3" transform="rotate(${deg} 60 60)"/>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="9" fill="#dc2626" stroke="#09090b" stroke-width="3"/>
+                    `);
+
+                case 'sasuke_rinnegan':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="40" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="27" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="14" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="5" fill="#09090b"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="33" r="4" fill="#09090b"/>
+                                <path d="M60 29 Q66 30 65 36 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        ${[60, 180, 300].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="20" r="4" fill="#09090b"/>
+                                <path d="M60 16 Q66 17 65 23 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                    `, true);
+
+                case 'shin':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="22" fill="#09090b"/>
+                        ${[0, 120, 240].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <circle cx="60" cy="23" r="8" fill="#09090b"/>
+                                <path d="M53 27 L67 27 L63 42 L57 42 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="7" fill="#dc2626"/>
+                    `);
+
+                case 'sarada':
+                    return baseRedEye(`
+                        ${[0, 45, 90, 135, 180, 225, 270, 315].map(deg => `
+                            <g transform="rotate(${deg} 60 60)">
+                                <path d="M60 60 L54 26 L60 11 L66 26 Z" fill="#09090b"/>
+                            </g>
+                        `).join('')}
+                        <circle cx="60" cy="60" r="11" fill="#dc2626" stroke="#09090b" stroke-width="3.5"/>
+                    `);
+
+                case 'izanagi_eye':
+                    return baseRedEye(`
+                        <circle cx="60" cy="60" r="30" fill="none" stroke="#09090b" stroke-width="2" stroke-dasharray="6 4"/>
+                        <circle cx="60" cy="60" r="12" fill="#09090b"/>
+                        <path d="M25 60 Q60 25 95 60 Q60 95 25 60 Z" fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity="0.6"/>
+                    `);
+
+                case 'izanami_eye':
+                    return baseRedEye(`
+                        <path d="M60 20 A40 40 0 1 1 22 72" fill="none" stroke="#09090b" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M60 100 A40 40 0 1 1 98 48" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-opacity="0.7" stroke-linecap="round"/>
+                        <circle cx="60" cy="60" r="11" fill="#09090b"/>
+                    `);
+            }
+        }
+
+        // Custom Animated Susanoo SVG Generator
+        function getSusanooSVG(susanooData) {
+            if (!susanooData) {
+                return `
+                <div class="w-full h-36 rounded-xl bg-zinc-950/80 border border-zinc-800/80 flex flex-col items-center justify-center p-3 text-center">
+                    <span class="text-2xl opacity-40 mb-1">🛡️</span>
+                    <span class="text-xs font-medium text-gray-500">No Canonical Susanoo</span>
+                    <span class="text-[11px] text-gray-600 mt-0.5">Not manifested in manga/anime</span>
+                </div>`;
+            }
+
+            const { color, glow, weaponType, formName } = susanooData;
+
+            let weaponSVG = '';
+            if (weaponType === 'totsuka_yata') {
+                weaponSVG = `
+                    <path d="M18 48 Q12 72 28 92 Q42 74 34 48 Z" fill="${color}" fill-opacity="0.45" stroke="#fde047" stroke-width="2"/>
+                    <path d="M88 85 L106 20 L95 45 L84 82 Z" fill="#fef08a" stroke="#f97316" stroke-width="1.5"/>
+                    <ellipse cx="86" cy="86" rx="7" ry="10" fill="#ea580c"/>
+                `;
+            } else if (weaponType === 'quad_blades') {
+                weaponSVG = `
+                    <path d="M12 22 L42 75 L36 78 L8 26 Z" fill="#93c5fd" stroke="#ffffff" stroke-width="1"/>
+                    <path d="M108 22 L78 75 L84 78 L112 26 Z" fill="#93c5fd" stroke="#ffffff" stroke-width="1"/>
+                    <path d="M16 95 L44 65" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+                    <path d="M104 95 L76 65" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+                `;
+            } else if (weaponType === 'indra_bow') {
+                weaponSVG = `
+                    <path d="M40 52 L8 24 L22 65 L38 68 Z" fill="${color}" fill-opacity="0.4" stroke="#c084fc" stroke-width="1.5"/>
+                    <path d="M80 52 L112 24 L98 65 L82 68 Z" fill="${color}" fill-opacity="0.4" stroke="#c084fc" stroke-width="1.5"/>
+                    <path d="M92 25 Q116 60 92 95" fill="none" stroke="#e9d5ff" stroke-width="2.5"/>
+                    <line x1="72" y1="60" x2="114" y2="60" stroke="#38bdf8" stroke-width="2.5"/>
+                `;
+            } else if (weaponType === 'drill_lance') {
+                weaponSVG = `
+                    <polygon points="88,88 106,16 98,92" fill="#86efac" stroke="#16a34a" stroke-width="1.5"/>
+                    <path d="M90 76 L102 68 M92 60 L104 52 M95 44 L105 36" stroke="#14532d" stroke-width="2"/>
+                `;
+            } else if (weaponType === 'kamui_shuriken') {
+                weaponSVG = `
+                    <g transform="translate(96, 42)">
+                        <circle cx="0" cy="0" r="14" fill="none" stroke="#5eead4" stroke-width="2"/>
+                        <path d="M0 -16 L4 -4 L16 0 L4 4 L0 16 L-4 4 L-16 0 L-4 -4 Z" fill="#99f6e4"/>
+                    </g>
+                `;
+            } else if (weaponType === 'izuna_blade') {
+                weaponSVG = `
+                    <path d="M90 88 L104 24 L96 90 Z" fill="#93c5fd" stroke="#1e3a8a" stroke-width="1.5"/>
+                `;
+            } else if (weaponType === 'sarada_solar') {
+                weaponSVG = `
+                    <circle cx="96" cy="40" r="11" fill="#09090b" stroke="#fbbf24" stroke-width="2"/>
+                    <circle cx="96" cy="40" r="16" fill="none" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3 3"/>
+                `;
+            } else {
+                weaponSVG = `
+                    <path d="M92 90 L104 22 L98 92 Z" fill="#d8b4fe" stroke="#9333ea" stroke-width="1.5"/>
+                `;
+            }
+
+            return `
+            <div class="relative w-full h-36 rounded-xl bg-gradient-to-b from-zinc-950 via-[#0d0b14] to-black border border-zinc-800/90 flex flex-col items-center justify-between p-2.5 overflow-hidden group">
+                <div class="absolute inset-0 opacity-25 blur-xl transition-opacity group-hover:opacity-45" style="background: radial-gradient(circle, ${glow} 0%, transparent 70%);"></div>
+                
+                <svg viewBox="0 0 120 110" class="w-28 h-24 susanoo-float relative z-10" style="filter: drop-shadow(0 0 8px ${glow});">
+                    <path d="M30 105 Q20 65 38 35 Q45 12 60 8 Q75 12 82 35 Q100 65 90 105 Z" 
+                          fill="${color}" fill-opacity="0.28" class="chakra-flame"/>
+                    <path d="M26 52 L44 42 L76 42 L94 52 L86 78 L34 78 Z" 
+                          fill="${color}" fill-opacity="0.55" stroke="${glow}" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M46 40 L42 22 L52 30 L60 16 L68 30 L78 22 L74 40 Z" 
+                          fill="${color}" stroke="${glow}" stroke-width="1.8"/>
+                    <polygon points="50,33 57,35 51,37" fill="#ffffff"/>
+                    <polygon points="70,33 63,35 69,37" fill="#ffffff"/>
+                    <polygon points="58,36 62,36 60,44" fill="#ffffff" fill-opacity="0.85"/>
+                    ${weaponSVG}
+                </svg>
+
+                <div class="relative z-10 text-center w-full">
+                    <span class="inline-block px-2 py-0.5 rounded text-[11px] font-bold tracking-wide text-white" style="background-color: ${color}44; border: 1px solid ${glow}88;">
+                        ${formName}
+                    </span>
+                </div>
+            </div>`;
+        }
+
+        // =========================================================================
+        // 4. COMPLETE CHRONOLOGICAL UCHIHA DOJUTSU DATABASE (ENGLISH LORE)
+        // =========================================================================
+        const uchihaMembers = [
+            {
+                id: 'indra',
+                name: 'Indra Otsutsuki',
+                title: 'Progenitor of the Uchiha Clan • Eldest Son of the Sage of Six Paths',
+                era: 'origin',
+                eraLabel: 'Genesis Era',
+                eyeBadge: 'Original Spiral Mangekyo',
+                isRinnegan: false,
+                primaryEye: 'indra',
+                secondaryEye: null,
+                auraColor: '#9333ea',
+                susanoo: {
+                    color: '#7e22ce',
+                    glow: '#c084fc',
+                    weaponType: 'indra_sword',
+                    formName: 'Purple Complete Body Susanoo'
+                },
+                summary: 'The first human to inherit Hagoromo Otsutsuki\'s visual chakra, awakening both the Sharingan and the Mangekyo Sharingan in antiquity.',
+                loreNote: 'In the manga, Indra\'s original Mangekyo pattern was a continuous spiral; the anime later depicted it matching Sasuke\'s Choku-Tomoe pattern.',
+                abilities: [
+                    {
+                        name: 'Original Spiral Mangekyo Sharingan (Both Eyes)',
+                        type: 'Progenitor Kekkei Genkai',
+                        desc: 'A swirling spiral pattern representing infinite spiritual energy, granting godlike visual perception and enabling him to invent hand signs for ninjutsu.'
+                    },
+                    {
+                        name: 'Complete Body Susanoo (Purple)',
+                        type: 'Supreme Ocular Ninjutsu',
+                        desc: 'Manifests a colossal violet Tengu warrior capable of clashing evenly with Ashura\'s Six Paths Kunitsukami avatar.'
+                    },
+                    {
+                        name: 'Amaterasu & Divine Lightning Release',
+                        type: 'Kekkei Genkai / Nature',
+                        desc: 'Wields inextinguishable black flames alongside overwhelming Lightning and Fire Release techniques.'
+                    }
+                ],
+                stats: { genjutsu: 94, ninjutsu: 98, spacetime: 50, defense: 96, visual: 97 }
+            },
+            {
+                id: 'madara',
+                name: 'Madara Uchiha',
+                title: 'Legendary Ghost of the Uchiha • Co-Founder of Konohagakure',
+                era: 'origin',
+                eraLabel: 'Warring States Era',
+                eyeBadge: 'Eternal MS → Dual Rinnegan',
+                isRinnegan: true,
+                primaryEye: 'madara_ems',
+                secondaryEye: 'madara_rinnegan',
+                auraColor: '#3b82f6',
+                susanoo: {
+                    color: '#1d4ed8',
+                    glow: '#60a5fa',
+                    weaponType: 'quad_blades',
+                    formName: 'Royal Blue Complete Body Susanoo'
+                },
+                summary: 'The first Uchiha to awaken the Eternal Mangekyo Sharingan by transplanting his brother Izuna\'s eyes, and later evolved them into the Rinnegan by integrating Hashirama Senju\'s cells.',
+                loreNote: 'Madara\'s Choku-Tomoe (Straight Tomoe) Eternal Mangekyo grants supreme fluidity in reading and countering high-speed physical movements.',
+                abilities: [
+                    {
+                        name: 'Limbo: Border Jail (Rinnegan — Both Eyes)',
+                        type: 'Rinnegan Exclusive',
+                        desc: 'Projects up to four invisible shadows into the parallel world of "Limbo". They are completely undetectable and untouchable except by those possessing the Rinnegan or Six Paths Senjutsu.'
+                    },
+                    {
+                        name: 'Tengai Shinsei (Shattered Heaven)',
+                        type: 'Rinnegan / Susanoo',
+                        desc: 'Performs simultaneous hand seals alongside his Susanoo to pull colossal meteorites down from the upper atmosphere onto the battlefield.'
+                    },
+                    {
+                        name: 'Royal Blue Complete Body Susanoo & Tailed Beast Control',
+                        type: 'Eternal Mangekyo',
+                        desc: 'A mountain-sized four-armed samurai wielding dual chakra blades whose shockwaves slice mountain ranges in half, plus total hypnotic subjugation of the Nine-Tails.'
+                    }
+                ],
+                stats: { genjutsu: 96, ninjutsu: 100, spacetime: 85, defense: 99, visual: 100 }
+            },
+            {
+                id: 'izuna',
+                name: 'Izuna Uchiha',
+                title: 'Warring States Co-Leader • Younger Brother of Madara',
+                era: 'origin',
+                eraLabel: 'Warring States Era',
+                eyeBadge: 'Three-Blade Mangekyo',
+                isRinnegan: false,
+                primaryEye: 'izuna',
+                secondaryEye: null,
+                auraColor: '#dc2626',
+                susanoo: {
+                    color: '#1e3a8a',
+                    glow: '#3b82f6',
+                    weaponType: 'izuna_blade',
+                    formName: 'Dark Navy Susanoo (Game/Lore)'
+                },
+                summary: 'Alongside Madara, Izuna was among the very first Uchiha to awaken the Mangekyo Sharingan, rivaling Tobirama Senju in combat before gifting his eyes to Madara on his deathbed.',
+                loreNote: 'Izuna\'s three-bar Mangekyo design merged directly with Madara\'s three-circle pattern to forge Madara\'s iconic Eternal Mangekyo Sharingan.',
+                abilities: [
+                    {
+                        name: 'Three-Blade Mangekyo Sharingan (Both Eyes)',
+                        type: 'Kekkei Genkai',
+                        desc: 'Features three straight blades converging toward the pupil, dramatically sharpening kinetic perception, swordsmanship reflexes, and genjutsu potency.'
+                    },
+                    {
+                        name: 'High-Speed Kenjutsu & Fire Release Mastery',
+                        type: 'Ninjutsu / Taijutsu',
+                        desc: 'Combined predictive ocular prowess with lethal katana strikes and massive Fire Release techniques against the Senju Clan.'
+                    }
+                ],
+                stats: { genjutsu: 86, ninjutsu: 88, spacetime: 30, defense: 80, visual: 89 }
+            },
+            {
+                id: 'fugaku',
+                name: 'Fugaku Uchiha',
+                title: 'Uchiha Clan Head • Captain of the Konoha Military Police Force',
+                era: 'konoha',
+                eraLabel: 'Shinobi World Wars',
+                eyeBadge: 'Pinwheel Mangekyo (Anime Canon)',
+                isRinnegan: false,
+                primaryEye: 'fugaku',
+                secondaryEye: null,
+                auraColor: '#b91c1c',
+                susanoo: null,
+                summary: 'Feared as "Wicked Eye Fugaku" during the Third Shinobi World War. He kept his Mangekyo Sharingan secret so radical clan members would not force him to kidnap and control the Nine-Tails.',
+                loreNote: 'Featured in the Itachi Shinden anime adaptation; his Mangekyo awakened during the Third Great Ninja War after watching a close comrade sacrifice himself.',
+                abilities: [
+                    {
+                        name: 'Nine-Tails Subjugation Genjutsu (Both Eyes)',
+                        type: 'Mangekyo Sharingan',
+                        desc: 'Possessed sufficient ocular power to fully seize control of Kurama, matching the feats of Madara and Obito.'
+                    },
+                    {
+                        name: 'Predictive Simulation Genjutsu',
+                        type: 'High-Tier Genjutsu',
+                        desc: 'In Itachi Shinden, Fugaku projected realistic future scenarios directly into Itachi\'s mind to demonstrate the consequences of a coup d\'état.'
+                    }
+                ],
+                stats: { genjutsu: 91, ninjutsu: 87, spacetime: 35, defense: 80, visual: 90 }
+            },
+            {
+                id: 'shisui',
+                name: 'Shisui Uchiha',
+                title: '"Shisui of the Body Flicker" • Genjutsu Prodigy of Konoha',
+                era: 'konoha',
+                eraLabel: 'Shinobi World Wars',
+                eyeBadge: 'Four-Point Pinwheel MS',
+                isRinnegan: false,
+                primaryEye: 'shisui',
+                secondaryEye: null,
+                auraColor: '#16a34a',
+                susanoo: {
+                    color: '#15803d',
+                    glow: '#4ade80',
+                    weaponType: 'drill_lance',
+                    formName: 'Emerald Green Susanoo (Drill-Lance)'
+                },
+                summary: 'Itachi\'s closest friend and mentor, renowned for leaving tangible afterimages with the Body Flicker Technique and wielding the clan\'s most coveted mind-control genjutsu.',
+                loreNote: 'Shisui\'s Emerald Green Susanoo was specially designed by series creator Masashi Kishimoto and can be manifested even with a single eye in game canon.',
+                abilities: [
+                    {
+                        name: 'Kotoamatsukami (Left & Right Eyes)',
+                        type: 'Ultimate Subtle Genjutsu',
+                        desc: 'The pinnacle of Uchiha genjutsu: enters a target\'s mind and plants false experiences as if they were their own free will, without requiring eye contact or the victim ever realizing they are controlled.'
+                    },
+                    {
+                        name: 'Emerald Green Susanoo & Tsukumo',
+                        type: 'Mangekyo Manifestation',
+                        desc: 'A vibrant green Susanoo armed with a spiraled drill-lance capable of channeling Fire Release and firing barrages of chakra needles (Tsukumo).'
+                    }
+                ],
+                stats: { genjutsu: 100, ninjutsu: 89, spacetime: 40, defense: 86, visual: 95 }
+            },
+            {
+                id: 'itachi',
+                name: 'Itachi Uchiha',
+                title: 'Clan Prodigy • S-Rank Missing-Nin of Akatsuki',
+                era: 'konoha',
+                eraLabel: 'Shinobi World Wars & Akatsuki',
+                eyeBadge: 'Three-Curved-Blade MS',
+                isRinnegan: false,
+                primaryEye: 'itachi',
+                secondaryEye: null,
+                auraColor: '#ea580c',
+                susanoo: {
+                    color: '#ea580c',
+                    glow: '#fb923c',
+                    weaponType: 'totsuka_yata',
+                    formName: 'Vermilion Tengu Susanoo (Totsuka & Yata)'
+                },
+                summary: 'Graduated the Academy at age 7, mastered Sharingan at 8, and awakened Mangekyo at 13 after Shisui\'s death. A tactical genius whose Susanoo wields two legendary ethereal spirit weapons.',
+                loreNote: 'Black Zetsu famously declared that Itachi\'s Susanoo—combining the Sword of Totsuka and Yata Mirror—made him virtually invincible in combat.',
+                abilities: [
+                    {
+                        name: 'Tsukuyomi (Left Eye)',
+                        type: 'Space-Time Genjutsu',
+                        desc: 'Traps the victim in an illusionary realm where Itachi controls space, mass, and time—inflicting 72 hours of psychological torture within a single picosecond of real time.'
+                    },
+                    {
+                        name: 'Amaterasu (Right Eye)',
+                        type: 'Blaze Kekkei Genkai',
+                        desc: 'Ignites jet-black flames as hot as the sun at the user\'s focal point, burning through even regular fire until the target is reduced to ash.'
+                    },
+                    {
+                        name: 'Vermilion Susanoo: Sword of Totsuka & Yata Mirror',
+                        type: 'Ethereal Spirit Weapons',
+                        desc: 'The Sword of Totsuka seals anyone it pierces inside a drunken dream world forever, while the Yata Mirror alters its elemental nature to nullify any physical or ninjutsu attack. Also wields Yasaka Magatama.'
+                    }
+                ],
+                stats: { genjutsu: 99, ninjutsu: 94, spacetime: 45, defense: 98, visual: 96 }
+            },
+            {
+                id: 'obito',
+                name: 'Obito Uchiha & Kakashi Hatake',
+                title: 'Tobi / Masked Man • Wielders of Dual Kamui',
+                era: 'konoha',
+                eraLabel: 'Shinobi World Wars & Akatsuki',
+                eyeBadge: 'Three-Sickle Mangekyo',
+                isRinnegan: false,
+                primaryEye: 'obito',
+                secondaryEye: null,
+                auraColor: '#0d9488',
+                susanoo: {
+                    color: '#0f766e',
+                    glow: '#2dd4bf',
+                    weaponType: 'kamui_shuriken',
+                    formName: 'Cobalt Blue Complete Body Susanoo'
+                },
+                summary: 'Awakened simultaneously in both Obito and Kakashi upon Rin\'s death. Together, their eyes form Kamui—the most versatile space-time ninjutsu in the shinobi world.',
+                loreNote: 'When both eyes reunite (temporarily granted to Kakashi via Obito\'s Six Paths chakra), Kamui warping speed doubles and unlocks a winged Complete Body Susanoo.',
+                abilities: [
+                    {
+                        name: 'Kamui — Right Eye (Obito: Short-Range & Intangibility)',
+                        type: 'Space-Time Ninjutsu',
+                        desc: 'Slips parts of Obito\'s body into Kamui\'s pocket dimension for up to 5 continuous minutes—rendering him completely intangible to attacks—while warping touched targets away.'
+                    },
+                    {
+                        name: 'Kamui — Left Eye (Kakashi: Long-Range Spatial Sniping)',
+                        type: 'Space-Time Ninjutsu',
+                        desc: 'Opens a swirling dimensional barrier anywhere within line of sight to tear apart and banish distant targets into the Kamui dimension.'
+                    },
+                    {
+                        name: 'Cobalt Complete Body Susanoo & Kamui Shuriken',
+                        type: 'Dual Mangekyo Peak',
+                        desc: 'A winged azure Susanoo capable of hurling giant Mangekyo-patterned shuriken that warp away anything they strike, paired with Kamui Lightning Blade.'
+                    }
+                ],
+                stats: { genjutsu: 91, ninjutsu: 93, spacetime: 100, defense: 97, visual: 95 }
+            },
+            {
+                id: 'sasuke',
+                name: 'Sasuke Uchiha',
+                title: 'Supporting Kage • Direct Reincarnation of Indra',
+                era: 'konoha',
+                eraLabel: 'Shinobi Wars → Two Blue Vortex',
+                eyeBadge: 'Atom EMS + 6-Tomoe Rinnegan',
+                isRinnegan: true,
+                primaryEye: 'sasuke_ems',
+                secondaryEye: 'sasuke_rinnegan',
+                auraColor: '#7e22ce',
+                susanoo: {
+                    color: '#6b21a8',
+                    glow: '#c084fc',
+                    weaponType: 'indra_bow',
+                    formName: 'Deep Violet Complete Body Susanoo'
+                },
+                summary: 'Achieved the Eternal Mangekyo Sharingan via Itachi\'s eyes and was bestowed a unique 6-Tomoe Rinnegan in his left eye by Hagoromo Otsutsuki during the Fourth Great Ninja War.',
+                loreNote: 'Sasuke\'s 6-Tomoe Rinnegan retains all the visual powers of his Mangekyo Sharingan simultaneously without needing to switch eyes.',
+                abilities: [
+                    {
+                        name: 'Amaterasu (Left Eye) & Kagutsuchi (Right Eye)',
+                        type: 'Supreme Blaze Release',
+                        desc: 'Ignites black flames with his left eye and uses Blaze Release: Kagutsuchi (Flame Control) with his right eye to sculpt them into Susanoo weapons, spikes, or shields.'
+                    },
+                    {
+                        name: 'Amenotejikara (Left Rinnegan)',
+                        type: 'Space-Time Ninjutsu',
+                        desc: 'Instantaneously swaps the spatial coordinates of himself, opponents, or jutsu within range—creating unavoidable point-blank strikes and dimensional portals.'
+                    },
+                    {
+                        name: 'Deep Violet Susanoo & Indra\'s Arrow',
+                        type: 'EMS / Six Paths',
+                        desc: 'A winged violet Susanoo armed with a lightning bow and katana. By channeling the chakra of all nine Tailed Beasts into Susanoo as a vessel, he unleashes Indra\'s Arrow.'
+                    }
+                ],
+                stats: { genjutsu: 93, ninjutsu: 99, spacetime: 97, defense: 96, visual: 99 }
+            },
+            {
+                id: 'shin',
+                name: 'Shin Uchiha',
+                title: 'Orochimaru Test Subject • Obsessive Itachi Devotee',
+                era: 'boruto',
+                eraLabel: 'New Era (Boruto)',
+                eyeBadge: 'Three-Dot Triangle MS',
+                isRinnegan: false,
+                primaryEye: 'shin',
+                secondaryEye: null,
+                auraColor: '#dc2626',
+                susanoo: null,
+                summary: 'Not a biological Uchiha, Shin possessed a unique genetic makeup with zero tissue rejection, allowing him to harbor dozens of active Mangekyo Sharingan across his body and clones.',
+                loreNote: 'Shin\'s eyes were later adopted into Konoha\'s orphanage under Kabuto Yakushi\'s care following his defeat.',
+                abilities: [
+                    {
+                        name: 'Telekinetic Weapon Manipulation (Right Eye)',
+                        type: 'Mangekyo Exclusive',
+                        desc: 'After placing a special seal mark on any metallic weapon with his palm, Shin can telekinetically levitate and hurl them from any angle at high speed.'
+                    },
+                    {
+                        name: 'Space-Time Portal Jutsu (Partner Creature)',
+                        type: 'Space-Time Ninjutsu',
+                        desc: 'Through his miniature single-eyed clone creature, Shin can generate swirling dimensional rifts to teleport himself and objects across vast distances.'
+                    }
+                ],
+                stats: { genjutsu: 75, ninjutsu: 82, spacetime: 84, defense: 74, visual: 83 }
+            },
+            {
+                id: 'sarada',
+                name: 'Sarada Uchiha',
+                title: 'New Generation Kunoichi • Boruto: Two Blue Vortex',
+                era: 'boruto',
+                eraLabel: 'Two Blue Vortex (Latest)',
+                eyeBadge: 'Eight-Ray Sun Mangekyo',
+                isRinnegan: false,
+                primaryEye: 'sarada',
+                secondaryEye: null,
+                auraColor: '#e11d48',
+                susanoo: {
+                    color: '#be123c',
+                    glow: '#fbbf24',
+                    weaponType: 'sarada_solar',
+                    formName: 'Crimson-Gold Susanoo (Concept Preview)'
+                },
+                summary: 'Daughter of Sasuke and Sakura. She broke the Uchiha cycle of hatred by awakening her radiant 8-ray Sun Mangekyo Sharingan out of pure love and desire to protect Boruto Uzumaki.',
+                loreNote: 'Named after Amaterasu Omikami ("Ohirume"), Sarada\'s Mangekyo ability unveiled in Boruto: Two Blue Vortex manipulates localized black-hole gravity fields.',
+                abilities: [
+                    {
+                        name: 'Ohirume (Great Sun Goddess — Both Eyes)',
+                        type: 'Gravitational / Space-Time',
+                        desc: 'Manifests suspended black-hole gravitational spheres in midair. These orbs exert immense, selective gravitational pull—crushing enemies and bending incoming attacks inward while leaving Sarada and chosen allies completely unaffected.'
+                    },
+                    {
+                        name: '3-Tomoe Sharingan & Enhanced Chidori',
+                        type: 'Kekkei Genkai / Lightning',
+                        desc: 'Combines Sharingan kinetic prediction with high-speed Chidori thrusts and Sakura\'s chakra-enhanced superhuman strength.'
+                    }
+                ],
+                stats: { genjutsu: 85, ninjutsu: 92, spacetime: 96, defense: 86, visual: 94 }
+            }
+        ];
+
+        // =========================================================================
+        // 5. RENDER UI, SEARCH, ERA FILTERING & INTERACTIVE MODAL
+        // =========================================================================
+        let currentEra = 'all';
+        let searchQuery = '';
+
+        function initStaticVisuals() {
+            document.getElementById('baseSharinganVisual').innerHTML = getEyeSVG('base_3tomoe', 'eye-spin');
+            document.getElementById('izanagiVisual').innerHTML = getEyeSVG('izanagi_eye', 'aura-glow');
+            document.getElementById('izanamiVisual').innerHTML = getEyeSVG('izanami_eye', 'aura-glow');
+        }
+
+        function renderMembers() {
+            const grid = document.getElementById('uchihaGrid');
+            const emptyState = document.getElementById('emptyState');
+            const resultCount = document.getElementById('resultCount');
+            const kinjutsuSection = document.getElementById('kinjutsuSection');
+            const membersHeader = document.getElementById('membersHeader');
+
+            if (currentEra === 'kinjutsu') {
+                kinjutsuSection.classList.remove('hidden');
+                membersHeader.classList.add('hidden');
+                grid.innerHTML = '';
+                emptyState.classList.add('hidden');
+                return;
+            } else {
+                membersHeader.classList.remove('hidden');
+                if (currentEra === 'all' && searchQuery === '') {
+                    kinjutsuSection.classList.remove('hidden');
+                } else {
+                    kinjutsuSection.classList.add('hidden');
+                }
+            }
+
+            const q = searchQuery.toLowerCase().trim();
+            const filtered = uchihaMembers.filter(member => {
+                const matchEra = currentEra === 'all' || member.era === currentEra;
+                if (!matchEra) return false;
+                if (!q) return true;
+
+                const inName = member.name.toLowerCase().includes(q);
+                const inTitle = member.title.toLowerCase().includes(q);
+                const inEye = member.eyeBadge.toLowerCase().includes(q);
+                const inSummary = member.summary.toLowerCase().includes(q);
+                const inAbilities = member.abilities.some(ab => 
+                    ab.name.toLowerCase().includes(q) || ab.desc.toLowerCase().includes(q)
+                );
+                const inSusanoo = member.susanoo && member.susanoo.formName.toLowerCase().includes(q);
+
+                return inName || inTitle || inEye || inSummary || inAbilities || inSusanoo;
+            });
+
+            resultCount.textContent = `Showing ${filtered.length} Wielder${filtered.length === 1 ? '' : 's'}`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(m => {
+                const cardClass = m.isRinnegan ? 'uchiha-card rinnegan-card' : 'uchiha-card';
+                const badgeStyle = m.isRinnegan 
+                    ? 'bg-purple-950/80 text-purple-300 border-purple-600/60' 
+                    : 'bg-red-950/80 text-red-300 border-red-600/60';
+
+                return `
+                <article onclick="openMemberModal('${m.id}')" class="${cardClass} cursor-pointer rounded-2xl p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden" style="--aura-color: ${m.auraColor};">
+                    <!-- Top Glow Accent Line -->
+                    <div class="absolute top-0 left-0 right-0 h-1" style="background: linear-gradient(90deg, transparent, ${m.auraColor}, transparent);"></div>
+
+                    <div>
+                        <!-- Card Header -->
+                        <div class="flex flex-wrap items-start justify-between gap-2 mb-4">
+                            <div>
+                                <div class="flex flex-wrap items-center gap-2 mb-1">
+                                    <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-zinc-900 text-gray-300 border border-zinc-700">
+                                        ${m.eraLabel}
+                                    </span>
+                                    <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold border ${badgeStyle}">
+                                        ${m.eyeBadge}
+                                    </span>
+                                </div>
+                                <h3 class="font-display text-xl sm:text-2xl font-bold text-white tracking-wide">${m.name}</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">${m.title}</p>
+                            </div>
+                        </div>
+
+                        <!-- Side-by-Side Visual Showcase: Dojutsu Eye & Susanoo -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 my-4 bg-black/45 p-3.5 rounded-xl border border-zinc-800/80">
+                            <!-- Column 1: Dojutsu Pattern -->
+                            <div class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-950/80 border border-zinc-800/80 relative">
+                                <div id="eye-container-${m.id}" class="flex items-center justify-center gap-2 aura-glow">
+                                    ${getEyeSVG(m.primaryEye, 'eye-spin')}
+                                    ${m.secondaryEye ? `<div class="scale-90 -ml-2">${getEyeSVG(m.secondaryEye, 'eye-spin')}</div>` : ''}
+                                </div>
+                                <span class="text-[11px] font-medium text-gray-400 mt-2 text-center">
+                                    ${m.secondaryEye ? 'EMS & Rinnegan' : m.eyeBadge}
+                                </span>
+                            </div>
+
+                            <!-- Column 2: Susanoo Manifestation -->
+                            <div class="flex flex-col items-center justify-center">
+                                ${getSusanooSVG(m.susanoo)}
+                            </div>
+                        </div>
+
+                        <!-- Brief Summary -->
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed mb-4">
+                            ${m.summary}
+                        </p>
+
+                        <!-- Signature Dojutsu Abilities -->
+                        <div class="space-y-2.5">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                Signature Dojutsu & Techniques
+                            </h4>
+                            ${m.abilities.map(ab => `
+                                <div class="p-3 rounded-xl bg-zinc-900/75 border border-zinc-800/90 hover:border-zinc-700 transition">
+                                    <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+                                        <span class="text-sm font-bold text-white">${ab.name}</span>
+                                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-black/60 text-red-400 border border-red-900/40">${ab.type}</span>
+                                    </div>
+                                    <p class="text-xs text-gray-400 leading-relaxed">${ab.desc}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Interactive Action Buttons -->
+                    <div class="mt-5 pt-4 border-t border-zinc-800/80 flex flex-wrap items-center gap-2.5">
+                        <button onclick="event.stopPropagation(); activateDojutsu('${m.id}')" 
+                            title="Awaken Sharingan to Mangekyo / Rinnegan with audio"
+                            class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-600 hover:to-rose-600 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-red-900/30 flex items-center justify-center gap-1.5 transition active:scale-95">
+                            <span>👁️</span> Activate Dojutsu
+                        </button>
+                        <button onclick="event.stopPropagation(); openMemberModal('${m.id}')" 
+                            title="Open full lore breakdown & chakra stats"
+                            class="py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-gray-200 border border-zinc-700 text-xs sm:text-sm font-medium transition">
+                            Inspect Stats & Lore
+                        </button>
+                    </div>
+                </article>
+                `;
+            }).join('');
+        }
+
+        // Trigger Eye Awakening Animation (3-Tomoe -> Mangekyo / Rinnegan)
+        function activateDojutsu(memberId, targetElementId = null) {
+            const member = uchihaMembers.find(m => m.id === memberId);
+            if (!member) return;
+
+            const container = document.getElementById(targetElementId || `eye-container-${memberId}`);
+            if (!container) return;
+
+            playSharinganSound(member.isRinnegan ? 'rinnegan' : 'ms');
+
+            // Phase 1: Rapidly spinning 3-Tomoe Sharingan
+            container.innerHTML = getEyeSVG('base_3tomoe', 'eye-spin-fast');
+
+            // Phase 2: Burst transformation into Mangekyo / Rinnegan
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="eye-activate-anim flex items-center justify-center gap-2">
+                        ${getEyeSVG(member.primaryEye, 'eye-spin-fast')}
+                        ${member.secondaryEye ? `<div class="scale-90 -ml-2">${getEyeSVG(member.secondaryEye, 'eye-spin-fast')}</div>` : ''}
+                    </div>
+                `;
+                setTimeout(() => {
+                    container.innerHTML = `
+                        ${getEyeSVG(member.primaryEye, 'eye-spin')}
+                        ${member.secondaryEye ? `<div class="scale-90 -ml-2">${getEyeSVG(member.secondaryEye, 'eye-spin')}</div>` : ''}
+                    `;
+                }, 2200);
+            }, 450);
+        }
+
+        // Open Full Inspection Modal
+        function openMemberModal(memberId) {
+            const m = uchihaMembers.find(item => item.id === memberId);
+            if (!m) return;
+
+            playSharinganSound(m.susanoo ? 'susanoo' : 'ms');
+
+            const modal = document.getElementById('detailModal');
+            const body = document.getElementById('modalBody');
+
+            const statBar = (label, value, colorClass) => `
+                <div>
+                    <div class="flex justify-between text-xs font-medium mb-1">
+                        <span class="text-gray-300">${label}</span>
+                        <span class="text-white font-bold">${value}/100</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
+                        <div class="h-full rounded-full ${colorClass}" style="width: ${value}%; transition: width 0.8s ease;"></div>
+                    </div>
+                </div>
+            `;
+
+            body.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6 items-center border-b border-zinc-800 pb-6">
+                    <div class="flex flex-col items-center gap-3">
+                        <div id="modal-eye-container-${m.id}" class="flex items-center gap-3 p-4 rounded-2xl bg-black/70 border border-zinc-800 aura-glow" style="--aura-color: ${m.auraColor};">
+                            ${getEyeSVG(m.primaryEye, 'eye-spin')}
+                            ${m.secondaryEye ? getEyeSVG(m.secondaryEye, 'eye-spin') : ''}
+                        </div>
+                        <button onclick="activateDojutsu('${m.id}', 'modal-eye-container-${m.id}')" 
+                            class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-red-700 to-rose-700 hover:from-red-600 hover:to-rose-600 text-white text-xs font-semibold shadow-md flex items-center justify-center gap-1.5 transition active:scale-95">
+                            <span>👁️</span> Activate Dojutsu
+                        </button>
+                    </div>
+                    <div class="text-center md:text-left flex-1">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-red-950 text-red-400 border border-red-800/50 mb-2">
+                            ${m.eraLabel} • ${m.eyeBadge}
+                        </span>
+                        <h2 class="font-display text-2xl sm:text-3xl font-black text-white">${m.name}</h2>
+                        <p class="text-sm text-gray-400 mt-1">${m.title}</p>
+                        <p class="text-sm text-gray-300 mt-3 leading-relaxed">${m.summary}</p>
+                        ${m.loreNote ? `
+                            <div class="mt-3 p-2.5 rounded-xl bg-red-950/25 border border-red-900/40 text-xs text-red-200/90">
+                                <strong class="text-red-400">Canon Lore Note:</strong> ${m.loreNote}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                    <!-- Power & Chakra Stats Chart -->
+                    <div class="bg-zinc-950/90 p-5 rounded-2xl border border-zinc-800">
+                        <h3 class="font-display text-base font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="text-red-500">📊</span> Power & Chakra Stats Breakdown
+                        </h3>
+                        <div class="space-y-3.5">
+                            ${statBar('Genjutsu & Ocular Hypnosis', m.stats.genjutsu, 'bg-gradient-to-r from-red-600 to-rose-500')}
+                            ${statBar('Ninjutsu & Destructive Output', m.stats.ninjutsu, 'bg-gradient-to-r from-orange-600 to-amber-500')}
+                            ${statBar('Space-Time & Gravitational Control', m.stats.spacetime, 'bg-gradient-to-r from-purple-600 to-fuchsia-500')}
+                            ${statBar('Susanoo Defense & Absolute Guard', m.stats.defense, 'bg-gradient-to-r from-indigo-600 to-blue-500')}
+                            ${statBar('Visual Prowess & Kinetic Perception', m.stats.visual, 'bg-gradient-to-r from-emerald-600 to-teal-400')}
+                        </div>
+                    </div>
+
+                    <!-- Susanoo Details -->
+                    <div class="bg-zinc-950/90 p-5 rounded-2xl border border-zinc-800 flex flex-col justify-between">
+                        <h3 class="font-display text-base font-bold text-white mb-3 flex items-center gap-2">
+                            <span class="text-indigo-400">🛡️</span> Susanoo Manifestation
+                        </h3>
+                        ${getSusanooSVG(m.susanoo)}
+                        <p class="text-xs text-gray-400 mt-3 leading-relaxed">
+                            ${m.susanoo 
+                                ? `Susanoo is a gigantic humanoid chakra avatar awakened only by those who have unlocked the power of both Mangekyo Sharingan. ${m.name}'s manifestation reaches the <strong class="text-white">${m.susanoo.formName}</strong> stage.` 
+                                : `${m.name} never manifested a canonical Susanoo in the manga or anime series.`}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Detailed Breakdown of Left, Right & Both Eyes Abilities -->
+                <div class="mt-6">
+                    <h3 class="font-display text-base font-bold text-white mb-3">Detailed Ocular Ability Breakdown</h3>
+                    <div class="grid grid-cols-1 gap-3">
+                        ${m.abilities.map(ab => `
+                            <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                                    <span class="font-bold text-red-400 text-base">${ab.name}</span>
+                                    <span class="text-xs px-2.5 py-0.5 rounded-full bg-black text-gray-300 border border-zinc-700">${ab.type}</span>
+                                </div>
+                                <p class="text-sm text-gray-300 leading-relaxed">${ab.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Era Filter Tab Handling
+        document.querySelectorAll('.era-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.era-btn').forEach(b => {
+                    b.classList.remove('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30', 'active');
+                    if (b.dataset.era === 'kinjutsu') {
+                        b.classList.add('bg-purple-950/60', 'text-purple-300');
+                    } else {
+                        b.classList.add('bg-zinc-900', 'text-gray-300');
+                    }
+                });
+
+                btn.classList.remove('bg-zinc-900', 'text-gray-300', 'bg-purple-950/60', 'text-purple-300');
+                btn.classList.add('bg-red-600', 'text-white', 'shadow-md', 'shadow-red-600/30', 'active');
+
+                currentEra = btn.dataset.era;
+                renderMembers();
+            });
+        });
+
+        // Search Bar Handling
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            if (searchQuery.length > 0) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            renderMembers();
+        });
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchQuery = '';
+            clearSearchBtn.classList.add('hidden');
+            renderMembers();
+        }
+
+        function resetAllFilters() {
+            clearSearch();
+            document.querySelector('.era-btn[data-era="all"]').click();
+        }
+
+        // Initialize on Window Load
+        window.onload = function() {
+            createEmbers();
+            initStaticVisuals();
+            renderMembers();
+        };
+    </script>
+</body>
+</html>
