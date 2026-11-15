@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Susanoo Evolution - Hoạt Ảnh GIF Vô Tận</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font chữ hiện đại -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050508;
+            color: #f8fafc;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        .font-ninja {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Hiệu ứng con mắt Mangekyou Sharingan xoay & phát sáng */
+        @keyframes spinEye {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.08); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        @keyframes pulseAura {
+            0%, 100% { filter: drop-shadow(0 0 12px var(--chakra-color)) drop-shadow(0 0 28px var(--chakra-glow)); }
+            50% { filter: drop-shadow(0 0 22px var(--chakra-color)) drop-shadow(0 0 45px var(--chakra-glow)); }
+        }
+
+        @keyframes floatSusanoo {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-7px); }
+        }
+
+        @keyframes wingFlapLeft {
+            0%, 100% { transform: rotate(0deg) scaleX(1); }
+            50% { transform: rotate(-6deg) scaleX(0.96); }
+        }
+
+        @keyframes wingFlapRight {
+            0%, 100% { transform: rotate(0deg) scaleX(1); }
+            50% { transform: rotate(6deg) scaleX(0.96); }
+        }
+
+        @keyframes swordGlow {
+            0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 10px var(--chakra-color)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 25px #ffffff); }
+        }
+
+        .eye-spin {
+            transform-origin: center;
+            animation: spinEye 6s linear infinite;
+        }
+
+        .eye-burst {
+            animation: spinEye 0.8s cubic-bezier(0.22, 1, 0.36, 1) infinite !important;
+        }
+
+        .susanoo-aura {
+            animation: pulseAura 2.4s ease-in-out infinite, floatSusanoo 3.5s ease-in-out infinite;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .wing-left {
+            transform-origin: 220px 230px;
+            animation: wingFlapLeft 3s ease-in-out infinite;
+        }
+
+        .wing-right {
+            transform-origin: 280px 230px;
+            animation: wingFlapRight 3s ease-in-out infinite;
+        }
+
+        .chakra-sword {
+            animation: swordGlow 1.8s ease-in-out infinite;
+        }
+
+        /* Hiệu ứng chuyển đổi giữa các giai đoạn tiến hóa */
+        .stage-layer {
+            transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: 250px 320px;
+        }
+
+        .stage-hidden {
+            opacity: 0;
+            transform: scale(0.75);
+            pointer-events: none;
+        }
+
+        .stage-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Rung chấn màn hình khi bùng nổ tiến hóa */
+        @keyframes screenShake {
+            0%, 100% { transform: translate(0, 0); }
+            20% { transform: translate(-5px, 4px); }
+            40% { transform: translate(5px, -4px); }
+            60% { transform: translate(-4px, -3px); }
+            80% { transform: translate(4px, 3px); }
+        }
+
+        .shake-active {
+            animation: screenShake 0.35s ease-in-out;
+        }
+
+        /* Thanh cuộn tùy chỉnh */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-3 sm:p-6 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#07070c] to-black">
+
+    <!-- Khung ứng dụng chính -->
+    <div id="app-wrapper" class="w-full max-w-4xl bg-slate-900/75 backdrop-blur-2xl border border-slate-800/90 rounded-3xl shadow-[0_0_60px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col lg:flex-row">
+        
+        <!-- CỘT TRÁI: KHUNG HIỂN THỊ HOẠT ẢNH GIF (CANVAS + SVG) -->
+        <div class="relative w-full lg:w-[58%] aspect-square bg-[#06060a] flex items-center justify-center overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
+            
+            <!-- Lớp Canvas vẽ hào quang lửa Chakra, sét, sóng xung kích & hạt năng lượng (60FPS) -->
+            <canvas id="chakraCanvas" class="absolute inset-0 w-full h-full z-10 pointer-events-none"></canvas>
+
+            <!-- Lớp lóe sáng trắng/màu khi chuyển giai đoạn (Flash Effect) -->
+            <div id="flashOverlay" class="absolute inset-0 z-30 pointer-events-none opacity-0 transition-opacity duration-300 bg-white"></div>
+
+            <!-- Badge góc trên trái: Trạng thái GIF & FPS -->
+            <div class="absolute top-4 left-4 z-30 flex items-center gap-2 bg-black/65 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full">
+                <span id="liveDot" class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                <span class="text-xs font-bold tracking-widest text-white uppercase">GIF • 60 FPS</span>
+            </div>
+
+            <!-- Badge góc trên phải: Mangekyou Sharingan thu nhỏ đang xoay -->
+            <div class="absolute top-4 right-4 z-30 flex items-center gap-2.5 bg-black/65 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full">
+                <span id="eyeLabel" class="text-[11px] font-semibold tracking-wider text-slate-300 uppercase">Mangekyou</span>
+                <div class="w-7 h-7 rounded-full bg-red-600 border-2 border-black flex items-center justify-center overflow-hidden shadow-[0_0_12px_rgba(239,68,68,0.8)]">
+                    <svg id="mangekyouSvg" viewBox="0 0 100 100" class="w-full h-full eye-spin">
+                        <!-- Nền đỏ mắt Sharingan -->
+                        <circle cx="50" cy="50" r="46" fill="#dc2626" />
+                        <!-- Họa tiết Mangekyou động theo nhân vật -->
+                        <g id="mangekyouPattern" fill="#09090b"></g>
+                        <!-- Đồng tử giữa -->
+                        <circle cx="50" cy="50" r="9" fill="#dc2626" />
+                        <circle cx="50" cy="50" r="4" fill="#09090b" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- LỚP ĐỒ HỌA VECTOR SVG: CÁC GIAI ĐOẠN SUSANOO (Tọa độ 500x500) -->
+            <svg id="susanooSvg" viewBox="0 0 500 500" class="relative z-20 w-full h-full susanoo-aura" style="--chakra-color: #f97316; --chakra-glow: rgba(249, 115, 22, 0.7);">
+                <defs>
+                    <!-- Gradient cơ thể Susanoo -->
+                    <linearGradient id="susanooBodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="var(--chakra-light)" stop-opacity="0.92" />
+                        <stop offset="55%" stop-color="var(--chakra-color)" stop-opacity="0.78" />
+                        <stop offset="100%" stop-color="var(--chakra-dark)" stop-opacity="0.25" />
+                    </linearGradient>
+
+                    <!-- Gradient giáp trụ bán trong suốt -->
+                    <linearGradient id="armorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65" />
+                        <stop offset="40%" stop-color="var(--chakra-color)" stop-opacity="0.85" />
+                        <stop offset="100%" stop-color="var(--chakra-dark)" stop-opacity="0.9" />
+                    </linearGradient>
+
+                    <!-- Gradient thanh kiếm Chakra khổng lồ -->
+                    <linearGradient id="swordGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="var(--chakra-color)" stop-opacity="0.9" />
+                        <stop offset="50%" stop-color="#ffffff" stop-opacity="0.95" />
+                        <stop offset="100%" stop-color="var(--chakra-light)" stop-opacity="1" />
+                    </linearGradient>
+
+                    <!-- Lọc phát sáng -->
+                    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="5" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+
+                <!-- Bóng hình người thi triển (Uchiha / Ninja) đứng ở trung tâm hạt nhân Susanoo -->
+                <g id="userSilhouette" transform="translate(250, 345)">
+                    <!-- Hào quang quanh người thi triển -->
+                    <circle cx="0" cy="-10" r="24" fill="var(--chakra-light)" opacity="0.25" />
+                    <!-- Đầu và tóc -->
+                    <path d="M-9 -28 C-12 -38, 12 -38, 9 -28 C11 -22, 8 -16, 0 -16 C-8 -16, -11 -22, -9 -28 Z" fill="#09090b" />
+                    <!-- Áo choàng -->
+                    <path d="M-16 15 L-11 -15 L11 -15 L16 15 Z" fill="#09090b" />
+                    <!-- Đôi mắt phát sáng đỏ -->
+                    <circle cx="-3.5" cy="-24" r="1.5" fill="#ef4444" />
+                    <circle cx="3.5" cy="-24" r="1.5" fill="#ef4444" />
+                </g>
+
+                <!-- =========================================================
+                     GIAI ĐOẠN 1: BỘ XƯƠNG (RIBCAGE / SKELETON)
+                     ========================================================= -->
+                <g id="stage-0" class="stage-layer stage-visible">
+                    <!-- Cột sống năng lượng phía sau -->
+                    <path d="M250 180 L250 385" stroke="var(--chakra-light)" stroke-width="10" stroke-linecap="round" opacity="0.7" />
+                    <!-- Các đốt sống -->
+                    <g fill="var(--chakra-color)" stroke="#ffffff" stroke-width="1.5">
+                        <rect x="241" y="195" width="18" height="10" rx="4" />
+                        <rect x="240" y="218" width="20" height="11" rx="4" />
+                        <rect x="239" y="242" width="22" height="12" rx="4" />
+                        <rect x="240" y="268" width="20" height="11" rx="4" />
+                        <rect x="242" y="294" width="16" height="10" rx="4" />
+                    </g>
+
+                    <!-- Lồng ngực xương sườn bao bọc người thi triển -->
+                    <g fill="none" stroke="url(#armorGrad)" stroke-width="9" stroke-linecap="round" filter="url(#neonGlow)">
+                        <!-- Cặp xương sườn trên -->
+                        <path d="M242 215 C185 210, 165 245, 205 275" />
+                        <path d="M258 215 C315 210, 335 245, 295 275" />
+                        <!-- Cặp xương sườn giữa -->
+                        <path d="M240 245 C165 240, 150 288, 200 318" />
+                        <path d="M260 245 C335 240, 350 288, 300 318" />
+                        <!-- Cặp xương sườn dưới -->
+                        <path d="M242 275 C175 275, 168 322, 212 350" />
+                        <path d="M258 275 C325 275, 332 322, 288 350" />
+                    </g>
+
+                    <!-- Cánh tay xương khổng lồ bên phải -->
+                    <g fill="none" stroke="url(#armorGrad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M300 220 L355 255 L345 315" />
+                        <!-- Bàn tay xương với các ngón vuốt -->
+                        <path d="M345 315 L328 338 M345 315 L342 344 M345 315 L356 342 M345 315 L368 334" stroke-width="5" />
+                    </g>
+                </g>
+
+                <!-- =========================================================
+                     GIAI ĐOẠN 2: HÌNH NGƯỜI (HUMANOID SUSANOO)
+                     ========================================================= -->
+                <g id="stage-1" class="stage-layer stage-hidden">
+                    <!-- Hào quang cơ bắp chakra bao phủ khung xương -->
+                    <path d="M165 375 C155 280, 175 200, 215 185 L250 175 L285 185 C325 200, 345 280, 335 375 Z" fill="url(#susanooBodyGrad)" stroke="var(--chakra-light)" stroke-width="3" />
+
+                    <!-- Cầu vai cơ bắp -->
+                    <path d="M150 225 C140 190, 185 175, 212 195 Z" fill="url(#armorGrad)" />
+                    <path d="M350 225 C360 190, 315 175, 288 195 Z" fill="url(#armorGrad)" />
+
+                    <!-- Cánh tay hình người 2 bên -->
+                    <path d="M162 215 L125 280 L145 340 L165 330 L152 280 L182 235 Z" fill="url(#susanooBodyGrad)" stroke="var(--chakra-light)" stroke-width="2.5" />
+                    <path d="M338 215 L375 280 L355 340 L335 330 L348 280 L318 235 Z" fill="url(#susanooBodyGrad)" stroke="var(--chakra-light)" stroke-width="2.5" />
+
+                    <!-- Đầu sọ quỷ chiến binh (Dạng sơ khai) -->
+                    <g transform="translate(250, 150)">
+                        <!-- Sừng quỷ 2 bên -->
+                        <path d="M-24 -15 L-42 -42 L-16 -26 Z" fill="var(--chakra-light)" />
+                        <path d="M24 -15 L42 -42 L16 -26 Z" fill="var(--chakra-light)" />
+                        <!-- Hộp sọ -->
+                        <path d="M-28 -22 C-32 5, -20 22, 0 26 C20 22, 32 5, 28 -22 C15 -32, -15 -32, -28 -22 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+                        <!-- Hốc mắt phát sáng rực -->
+                        <polygon points="-18,-6 -6,-2 -14,5" fill="#ffffff" filter="url(#neonGlow)" />
+                        <polygon points="18,-6 6,-2 14,5" fill="#ffffff" filter="url(#neonGlow)" />
+                        <!-- Hàm răng quỷ -->
+                        <path d="M-12 12 L-6 16 L0 12 L6 16 L12 12" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+                    </g>
+                </g>
+
+                <!-- =========================================================
+                     GIAI ĐOẠN 3: GIÁP TRỤ CHIẾN BINH (ARMORED SUSANOO)
+                     ========================================================= -->
+                <g id="stage-2" class="stage-layer stage-hidden">
+                    <!-- Áo choàng lửa chakra phía sau -->
+                    <path d="M135 200 Q100 300 120 395 L380 395 Q400 300 365 200 Z" fill="var(--chakra-color)" opacity="0.35" />
+
+                    <!-- Giáp ngực Samurai nhiều lớp -->
+                    <path d="M160 385 L150 215 L205 182 L250 198 L295 182 L350 215 L340 385 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2.5" />
+                    <!-- Các đường vân giáp ngực -->
+                    <path d="M175 235 L250 260 L325 235 M172 275 L250 300 L328 275 M170 315 L250 340 L330 315" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.7" />
+
+                    <!-- Giáp cầu vai lớn có gai nhọn -->
+                    <path d="M155 195 L105 180 L118 235 L155 245 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+                    <path d="M345 195 L395 180 L382 235 L345 245 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+
+                    <!-- 4 Cánh tay cầm vũ khí đặc trưng (Hồ lô / Kiếm / Cung) -->
+                    <path d="M122 225 L82 285 L110 345 L130 335 L108 288 L145 240 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+                    <path d="M378 225 L418 285 L390 345 L370 335 L392 288 L355 240 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+
+                    <!-- Ngọc Yasaka Magatama trên tay trái -->
+                    <g transform="translate(95, 325)" filter="url(#neonGlow)">
+                        <circle cx="0" cy="0" r="22" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="6 4" />
+                        <circle cx="0" cy="-12" r="6" fill="#ffffff" />
+                        <circle cx="11" cy="7" r="6" fill="#ffffff" />
+                        <circle cx="-11" cy="7" r="6" fill="#ffffff" />
+                    </g>
+
+                    <!-- Mũ giáp Tengu chiến binh -->
+                    <g transform="translate(250, 142)">
+                        <!-- Mào mũ giáp Samurai -->
+                        <path d="M-36 -18 L-52 -48 L-18 -28 L0 -55 L18 -28 L52 -48 L36 -18 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+                        <!-- Khuôn mặt Tengu mũi dài uy nghiêm -->
+                        <path d="M-28 -18 L28 -18 L24 22 L0 32 L-24 22 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+                        <!-- Đôi mắt sắc lẹm -->
+                        <polygon points="-20,-5 -6,-1 -16,5" fill="#ffffff" filter="url(#neonGlow)" />
+                        <polygon points="20,-5 6,-1 16,5" fill="#ffffff" filter="url(#neonGlow)" />
+                        <!-- Mũi Tengu đặc trưng -->
+                        <path d="M0 0 L-5 14 L5 14 Z" fill="#ffffff" />
+                    </g>
+                </g>
+
+                <!-- =========================================================
+                     GIAI ĐOẠN 4: TOÀN CHÂN THỂ (PERFECT SUSANOO)
+                     ========================================================= -->
+                <g id="stage-3" class="stage-layer stage-hidden">
+                    <!-- Đôi cánh Chakra khổng lồ sải rộng -->
+                    <g class="wing-left" filter="url(#neonGlow)">
+                        <path d="M215 215 C140 135, 45 125, 18 175 C55 182, 85 195, 110 212 C60 212, 32 228, 22 255 C68 250, 102 252, 130 262 C85 272, 62 292, 55 318 C105 302, 155 285, 210 275 Z" fill="url(#susanooBodyGrad)" stroke="#ffffff" stroke-width="2.5" />
+                        <!-- Đường gân cánh phát sáng -->
+                        <path d="M205 225 L45 175 M200 242 L55 242 M198 258 L80 298" stroke="#ffffff" stroke-width="2" opacity="0.8" />
+                    </g>
+
+                    <g class="wing-right" filter="url(#neonGlow)">
+                        <path d="M285 215 C360 135, 455 125, 482 175 C445 182, 415 195, 390 212 C440 212, 468 228, 478 255 C432 250, 398 252, 370 262 C415 272, 438 292, 445 318 C395 302, 345 285, 290 275 Z" fill="url(#susanooBodyGrad)" stroke="#ffffff" stroke-width="2.5" />
+                        <!-- Đường gân cánh phát sáng -->
+                        <path d="M295 225 L455 175 M300 242 L445 242 M302 258 L420 298" stroke="#ffffff" stroke-width="2" opacity="0.8" />
+                    </g>
+
+                    <!-- Cơ thể khổng lồ mặc giáp Samurai Toàn chân thể -->
+                    <path d="M175 415 L165 205 L215 170 L250 185 L285 170 L335 205 L325 415 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="3" />
+                    
+                    <!-- Giáp tà váy chiến binh 2 bên -->
+                    <path d="M165 315 L125 405 L175 415 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+                    <path d="M335 315 L375 405 L325 415 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+
+                    <!-- Cầu vai đại tướng quân -->
+                    <path d="M168 185 L112 162 L125 225 L168 235 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2.5" />
+                    <path d="M332 185 L388 162 L375 225 L332 235 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2.5" />
+
+                    <!-- Cánh tay trái -->
+                    <path d="M135 220 L105 290 L132 350 L152 340 L132 290 L160 235 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+                    <!-- Cánh tay phải vung đại đao Chakra -->
+                    <path d="M365 220 L405 275 L382 325 L362 315 L380 275 L345 235 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2" />
+
+                    <!-- THANH KIẾM CHAKRA KHỔNG LỒ CHÉM XÉ BẦU TRỜI -->
+                    <g class="chakra-sword" transform="translate(382, 305) rotate(-32)">
+                        <!-- Chuôi kiếm -->
+                        <rect x="-6" y="0" width="12" height="42" rx="3" fill="#ffffff" />
+                        <rect x="-22" y="-6" width="44" height="10" rx="4" fill="var(--chakra-light)" stroke="#ffffff" stroke-width="2" />
+                        <!-- Lưỡi kiếm năng lượng dài sắc bén -->
+                        <path d="M-12 -6 L-8 -245 L0 -285 L8 -245 L12 -6 Z" fill="url(#swordGrad)" stroke="#ffffff" stroke-width="2.5" />
+                        <!-- Sóng năng lượng dọc sống kiếm -->
+                        <line x1="0" y1="-10" x2="0" y2="-265" stroke="#ffffff" stroke-width="3" />
+                    </g>
+
+                    <!-- Đầu thần chiến binh Tengu Toàn chân thể & Viên kim cương trán chứa người thi triển -->
+                    <g transform="translate(250, 128)">
+                        <!-- Sừng vương miện lớn -->
+                        <path d="M-32 -16 L-62 -56 L-20 -28 L0 -64 L20 -28 L62 -56 L32 -16 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2.5" />
+                        <!-- Khuôn mặt thần chiến -->
+                        <path d="M-26 -18 L26 -18 L22 20 L0 30 L-22 20 Z" fill="url(#armorGrad)" stroke="#ffffff" stroke-width="2.5" />
+                        <!-- Viên ngọc trán phát sáng rực rỡ -->
+                        <polygon points="0,-24 8,-14 0,-4 -8,-14" fill="#ffffff" filter="url(#neonGlow)" />
+                        <!-- Mắt thần uy lực -->
+                        <polygon points="-19,-4 -5,0 -15,6" fill="#ffffff" filter="url(#neonGlow)" />
+                        <polygon points="19,-4 5,0 15,6" fill="#ffffff" filter="url(#neonGlow)" />
+                        <!-- Mũi Tengu -->
+                        <path d="M0 1 L-5 15 L5 15 Z" fill="#ffffff" />
+                    </g>
+                </g>
+            </svg>
+
+            <!-- Thanh thông tin giai đoạn ở đáy khung hình GIF -->
+            <div class="absolute bottom-4 inset-x-4 z-30 flex flex-col items-center pointer-events-none">
+                <div class="bg-black/75 backdrop-blur-md border border-white/15 px-5 py-2.5 rounded-2xl text-center shadow-2xl max-w-full">
+                    <div id="charTitleDisplay" class="font-ninja text-sm sm:text-base font-black tracking-wider uppercase text-orange-400">
+                        UCHIHA ITACHI
+                    </div>
+                    <div id="stageTitleDisplay" class="text-xs sm:text-sm font-semibold text-white mt-0.5">
+                        Giai đoạn 1: Bộ Xương (Ribcage)
+                    </div>
+                    <!-- Thanh tiến trình chu kỳ GIF -->
+                    <div class="w-48 sm:w-64 h-1.5 bg-slate-800 rounded-full overflow-hidden mt-2 mx-auto">
+                        <div id="loopProgressBar" class="h-full bg-orange-500 transition-all duration-75" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CỘT PHẢI: BẢNG ĐIỀU KHIỂN TƯƠNG TÁC -->
+        <div class="w-full lg:w-[42%] p-5 sm:p-6 flex flex-col justify-between bg-slate-900/90">
+            <div>
+                <!-- Tiêu đề bảng điều khiển -->
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="font-ninja text-lg sm:text-xl font-bold text-white tracking-wide">SUSANOO STUDIO</h2>
+                        <p class="text-xs text-slate-400">Mô phỏng tiến hóa huyết kế giới hạn</p>
+                    </div>
+                    <!-- Nút Auto Loop (Chế độ GIF tự động) -->
+                    <button id="btnAutoLoop" onclick="toggleAutoLoop()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition cursor-pointer">
+                        <span id="autoIcon">🔄</span>
+                        <span id="autoText">Auto GIF: BẬT</span>
+                    </button>
+                </div>
+
+                <!-- 1. CHỌN NHÂN VẬT (MÀU CHAKRA & MANGEKYOU) -->
+                <div class="mb-5">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                        1. Chọn Huyết Kế / Nhân Vật
+                    </label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2" id="characterButtons">
+                        <!-- Các nút sẽ được tạo tự động bằng JS -->
+                    </div>
+                </div>
+
+                <!-- 2. CHỌN GIAI ĐOẠN TIẾN HÓA -->
+                <div class="mb-5">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                        2. Giai Đoạn Tiến Hóa
+                    </label>
+                    <div class="grid grid-cols-2 gap-2" id="stageButtons">
+                        <button onclick="selectStageManual(0)" data-stage="0" class="stage-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-800 transition cursor-pointer">
+                            <div class="text-xs font-bold text-white">I. Bộ Xương</div>
+                            <div class="text-[10px] text-slate-400">Ribcage / Skeleton</div>
+                        </button>
+                        <button onclick="selectStageManual(1)" data-stage="1" class="stage-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-800 transition cursor-pointer">
+                            <div class="text-xs font-bold text-white">II. Hình Người</div>
+                            <div class="text-[10px] text-slate-400">Humanoid Form</div>
+                        </button>
+                        <button onclick="selectStageManual(2)" data-stage="2" class="stage-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-800 transition cursor-pointer">
+                            <div class="text-xs font-bold text-white">III. Giáp Trụ</div>
+                            <div class="text-[10px] text-slate-400">Armored Tengu</div>
+                        </button>
+                        <button onclick="selectStageManual(3)" data-stage="3" class="stage-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-800 transition cursor-pointer">
+                            <div class="text-xs font-bold text-white">IV. Toàn Chân Thể</div>
+                            <div class="text-[10px] text-slate-400">Perfect Susanoo</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. ĐIỀU CHỈNH TỐC ĐỘ VÒNG LẶP -->
+                <div class="mb-5 bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800">
+                    <div class="flex justify-between items-center mb-1.5">
+                        <label for="speedSlider" class="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                            3. Tốc độ chuyển đổi GIF
+                        </label>
+                        <span id="speedValue" class="text-xs font-bold text-indigo-400">1.0x (Chuẩn)</span>
+                    </div>
+                    <input id="speedSlider" type="range" min="0.5" max="2.5" step="0.25" value="1" oninput="updateSpeed(this.value)" class="w-full accent-indigo-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg">
+                </div>
+            </div>
+
+            <!-- CÁC NÚT HÀNH ĐỘNG: BÙNG NỔ CHAKRA & CHỤP KHUNG HÌNH -->
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-2 border-t border-slate-800">
+                <button onclick="triggerChakraBurst()" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 shadow-lg shadow-red-950/50 active:scale-95 transition cursor-pointer flex items-center justify-center gap-2">
+                    <span>🔥</span> Bùng Nổ Chakra
+                </button>
+                <button onclick="captureFrame()" class="py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm text-slate-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 active:scale-95 transition cursor-pointer flex items-center justify-center gap-2">
+                    <span>📸</span> Chụp Ảnh
+                </button>
+            </div>
+
+            <!-- Hộp thông báo trạng thái (Thay thế cho alert) -->
+            <div id="toastMessage" class="mt-3 text-center text-xs font-medium text-emerald-400 opacity-0 transition-opacity duration-300 h-4">
+                Đã lưu khung hình Susanoo!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // DỮ LIỆU CÁC NHÂN VẬT SỞ HỮU SUSANOO TRONG NARUTO
+        // =========================================================================
+        const CHARACTERS = [
+            {
+                id: 'itachi',
+                name: 'Uchiha Itachi',
+                shortName: 'Itachi',
+                title: 'Totsuka & Yata',
+                color: '#f97316',      // Đỏ cam rực lửa
+                light: '#fed7aa',
+                dark: '#9a3412',
+                glow: 'rgba(249, 115, 22, 0.75)',
+                hasLightning: false,
+                eyeSvg: `
+                    <path d="M50 8 C62 28, 62 42, 50 50 C38 42, 38 28, 50 8 Z" />
+                    <path d="M86 71 C63 72, 51 64, 50 50 C63 44, 75 51, 86 71 Z" />
+                    <path d="M14 71 C25 51, 37 44, 50 50 C49 64, 37 72, 14 71 Z" />
+                `
+            },
+            {
+                id: 'sasuke',
+                name: 'Uchiha Sasuke',
+                shortName: 'Sasuke',
+                title: 'Tím Điện Quang',
+                color: '#a855f7',      // Tím điện quang
+                light: '#f3e8ff',
+                dark: '#581c87',
+                glow: 'rgba(168, 85, 247, 0.75)',
+                hasLightning: true,
+                eyeSvg: `
+                    <ellipse cx="50" cy="50" rx="14" ry="38" fill="none" stroke="#09090b" stroke-width="6"/>
+                    <ellipse cx="50" cy="50" rx="14" ry="38" transform="rotate(60 50 50)" fill="none" stroke="#09090b" stroke-width="6"/>
+                    <ellipse cx="50" cy="50" rx="14" ry="38" transform="rotate(120 50 50)" fill="none" stroke="#09090b" stroke-width="6"/>
+                `
+            },
+            {
+                id: 'madara',
+                name: 'Uchiha Madara',
+                shortName: 'Madara',
+                title: 'Thiên Thạch Xanh',
+                color: '#3b82f6',      // Xanh dương uy quyền
+                light: '#dbeafe',
+                dark: '#1e3a8a',
+                glow: 'rgba(59, 130, 246, 0.75)',
+                hasLightning: false,
+                eyeSvg: `
+                    <circle cx="50" cy="50" r="26" fill="none" stroke="#09090b" stroke-width="6"/>
+                    <path d="M50 8 L56 26 L44 26 Z" />
+                    <path d="M86 71 L68 66 L74 56 Z" />
+                    <path d="M14 71 L26 56 L32 66 Z" />
+                `
+            },
+            {
+                id: 'kakashi',
+                name: 'Kakashi / Obito',
+                shortName: 'Kakashi',
+                title: 'Kamui Ngọc Lục Bảo',
+                color: '#10b981',      // Xanh ngọc lục bảo
+                light: '#d1fae5',
+                dark: '#065f46',
+                glow: 'rgba(16, 185, 129, 0.75)',
+                hasLightning: false,
+                eyeSvg: `
+                    <path d="M50 6 C72 20, 72 40, 50 50 C58 34, 52 20, 50 6 Z" />
+                    <path d="M88 72 C64 84, 48 74, 50 50 C60 64, 75 66, 88 72 Z" />
+                    <path d="M12 72 C14 44, 30 35, 50 50 C33 52, 23 63, 12 72 Z" />
+                `
+            },
+            {
+                id: 'indra',
+                name: 'Otsutsuki Indra',
+                shortName: 'Indra',
+                title: 'Thủy Tổ Lôi Tím',
+                color: '#6366f1',      // Chàm tím cổ đại
+                light: '#e0e7ff',
+                dark: '#312e81',
+                glow: 'rgba(99, 102, 241, 0.75)',
+                hasLightning: true,
+                eyeSvg: `
+                    <path d="M50 12 Q65 32 50 50 Q35 32 50 12 Z" fill="none" stroke="#09090b" stroke-width="5"/>
+                    <path d="M50 88 Q65 68 50 50 Q35 68 50 88 Z" fill="none" stroke="#09090b" stroke-width="5"/>
+                    <path d="M12 50 Q32 35 50 50 Q32 65 12 50 Z" fill="none" stroke="#09090b" stroke-width="5"/>
+                    <path d="M88 50 Q68 35 50 50 Q68 65 88 50 Z" fill="none" stroke="#09090b" stroke-width="5"/>
+                `
+            }
+        ];
+
+        const STAGE_NAMES = [
+            "Giai đoạn 1: Bộ Xương (Ribcage)",
+            "Giai đoạn 2: Hình Người (Humanoid)",
+            "Giai đoạn 3: Giáp Trụ (Armored Tengu)",
+            "Giai đoạn 4: Toàn Chân Thể (Perfect Susanoo)"
+        ];
+
+        // Trạng thái hệ thống
+        let currentCharIndex = 0;
+        let currentStage = 0;
+        let autoLoop = true;
+        let speedMultiplier = 1.0;
+        let stageTimer = 0;
+        const BASE_STAGE_DURATION = 2600; // 2.6 giây mỗi giai đoạn ở tốc độ 1.0x
+        let lastFrameTime = performance.now();
+
+        // Biến Canvas & Hệ thống hạt
+        const canvas = document.getElementById('chakraCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let shockwaves = [];
+        let lightnings = [];
+
+        // =========================================================================
+        // KHỞI TẠO GIAO DIỆN & NÚT BẤM
+        // =========================================================================
+        function initUI() {
+            const charContainer = document.getElementById('characterButtons');
+            charContainer.innerHTML = '';
+
+            CHARACTERS.forEach((char, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `char-btn flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-800 transition cursor-pointer text-left`;
+                btn.dataset.index = idx;
+                btn.onclick = () => selectCharacter(idx, true);
+
+                btn.innerHTML = `
+                    <span class="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm" style="background-color: ${char.color}; box-shadow: 0 0 8px ${char.color};"></span>
+                    <div class="overflow-hidden">
+                        <div class="text-xs font-bold text-white truncate">${char.shortName}</div>
+                        <div class="text-[10px] text-slate-400 truncate">${char.title}</div>
+                    </div>
+                `;
+                charContainer.appendChild(btn);
+            });
+
+            applyCharacterTheme(CHARACTERS[0]);
+            updateActiveButtons();
+            resizeCanvas();
+        }
+
+        // Cập nhật màu sắc Chakra & Họa tiết Mangekyou Sharingan
+        function applyCharacterTheme(char) {
+            const svg = document.getElementById('susanooSvg');
+            svg.style.setProperty('--chakra-color', char.color);
+            svg.style.setProperty('--chakra-light', char.light);
+            svg.style.setProperty('--chakra-dark', char.dark);
+            svg.style.setProperty('--chakra-glow', char.glow);
+
+            // Cập nhật mắt Mangekyou
+            document.getElementById('mangekyouPattern').innerHTML = char.eyeSvg;
+
+            // Cập nhật tiêu đề & thanh tiến trình
+            const charTitle = document.getElementById('charTitleDisplay');
+            charTitle.textContent = `${char.name} • ${char.title}`;
+            charTitle.style.color = char.light;
+
+            document.getElementById('loopProgressBar').style.backgroundColor = char.color;
+        }
+
+        // Chuyển đổi giai đoạn tiến hóa Susanoo
+        function setStage(stageIndex, withBurst = true) {
+            currentStage = stageIndex;
+            stageTimer = 0;
+
+            for (let i = 0; i < 4; i++) {
+                const el = document.getElementById(`stage-${i}`);
+                if (i === stageIndex) {
+                    el.classList.remove('stage-hidden');
+                    el.classList.add('stage-visible');
+                } else {
+                    el.classList.remove('stage-visible');
+                    el.classList.add('stage-hidden');
+                }
+            }
+
+            document.getElementById('stageTitleDisplay').textContent = STAGE_NAMES[stageIndex];
+            updateActiveButtons();
+
+            if (withBurst) {
+                triggerChakraBurst(stageIndex === 3 ? 1.5 : 1.0);
+            }
+        }
+
+        // Chọn nhân vật thủ công
+        function selectCharacter(index, triggerEffect = true) {
+            currentCharIndex = index;
+            applyCharacterTheme(CHARACTERS[index]);
+            updateActiveButtons();
+            if (triggerEffect) {
+                triggerChakraBurst(1.2);
+            }
+        }
+
+        // Chọn giai đoạn thủ công (Tự động tắt Auto Loop để người dùng ngắm kỹ)
+        function selectStageManual(stageIndex) {
+            if (autoLoop) {
+                autoLoop = false;
+                updateAutoButtonUI();
+            }
+            setStage(stageIndex, true);
+        }
+
+        // Bật/Tắt chế độ Auto Loop GIF
+        function toggleAutoLoop() {
+            autoLoop = !autoLoop;
+            stageTimer = 0;
+            updateAutoButtonUI();
+        }
+
+        function updateAutoButtonUI() {
+            const btn = document.getElementById('btnAutoLoop');
+            const text = document.getElementById('autoText');
+            const dot = document.getElementById('liveDot');
+            if (autoLoop) {
+                btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition cursor-pointer";
+                text.textContent = "Auto GIF: BẬT";
+                dot.classList.remove('bg-amber-400');
+                dot.classList.add('bg-red-500');
+            } else {
+                btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 transition cursor-pointer";
+                text.textContent = "Auto GIF: TẮT";
+                dot.classList.remove('bg-red-500');
+                dot.classList.add('bg-amber-400');
+            }
+        }
+
+        // Cập nhật trạng thái viền sáng cho các nút đang chọn
+        function updateActiveButtons() {
+            const activeChar = CHARACTERS[currentCharIndex];
+            document.querySelectorAll('.char-btn').forEach((btn, idx) => {
+                if (idx === currentCharIndex) {
+                    btn.style.borderColor = activeChar.color;
+                    btn.style.backgroundColor = 'rgba(30, 41, 59, 0.95)';
+                } else {
+                    btn.style.borderColor = '#334155';
+                    btn.style.backgroundColor = 'rgba(30, 41, 59, 0.45)';
+                }
+            });
+
+            document.querySelectorAll('.stage-btn').forEach((btn, idx) => {
+                if (idx === currentStage) {
+                    btn.style.borderColor = activeChar.color;
+                    btn.style.backgroundColor = 'rgba(30, 41, 59, 0.95)';
+                } else {
+                    btn.style.borderColor = '#334155';
+                    btn.style.backgroundColor = 'rgba(30, 41, 59, 0.45)';
+                }
+            });
+        }
+
+        // Điều chỉnh tốc độ GIF
+        function updateSpeed(val) {
+            speedMultiplier = parseFloat(val);
+            document.getElementById('speedValue').textContent = `${speedMultiplier.toFixed(2)}x`;
+        }
+
+        // =========================================================================
+        // HIỆU ỨNG BÙNG NỔ CHAKRA, RUNG CHẤN & LÓE SÁNG
+        // =========================================================================
+        function triggerChakraBurst(intensity = 1.0) {
+            const char = CHARACTERS[currentCharIndex];
+            const w = canvas.width;
+            const h = canvas.height;
+            const cx = w * 0.5;
+            const cy = h * 0.62;
+
+            // 1. Tạo sóng xung kích (Shockwave)
+            shockwaves.push({
+                x: cx,
+                y: cy,
+                radius: 15,
+                maxRadius: w * 0.58 * intensity,
+                alpha: 0.95,
+                color: char.color,
+                light: char.light
+            });
+
+            // 2. Phun trào hàng loạt hạt năng lượng
+            const count = Math.floor(45 * intensity);
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = (2 + Math.random() * 6) * intensity;
+                particles.push({
+                    x: cx + (Math.random() - 0.5) * 40,
+                    y: cy + (Math.random() - 0.5) * 40,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 1.5,
+                    size: 2.5 + Math.random() * 4.5,
+                    alpha: 1,
+                    decay: 0.015 + Math.random() * 0.02,
+                    color: Math.random() > 0.35 ? char.color : '#ffffff'
+                });
+            }
+
+            // 3. Tạo tia sét điện quang (đặc biệt mạnh với Sasuke & Indra)
+            const boltCount = char.hasLightning ? 6 : 2;
+            for (let b = 0; b < boltCount; b++) {
+                spawnLightning(cx, cy, char.light);
+            }
+
+            // 4. Lóe sáng màn hình nhẹ
+            const flash = document.getElementById('flashOverlay');
+            flash.style.backgroundColor = char.light;
+            flash.style.opacity = (0.22 * intensity).toString();
+            setTimeout(() => {
+                flash.style.opacity = '0';
+            }, 140);
+
+            // 5. Rung chấn khung hình & Xoay nhanh con mắt Mangekyou
+            const wrapper = document.getElementById('app-wrapper');
+            wrapper.classList.remove('shake-active');
+            void wrapper.offsetWidth;
+            wrapper.classList.add('shake-active');
+
+            const eyeSvg = document.getElementById('mangekyouSvg');
+            eyeSvg.classList.add('eye-burst');
+            setTimeout(() => {
+                eyeSvg.classList.remove('eye-burst');
+            }, 650);
+        }
+
+        function spawnLightning(startX, startY, color) {
+            const segments = [];
+            let curX = startX + (Math.random() - 0.5) * 80;
+            let curY = startY + (Math.random() - 0.5) * 80;
+            const angle = Math.random() * Math.PI * 2;
+            const steps = 6 + Math.floor(Math.random() * 5);
+
+            for (let i = 0; i < steps; i++) {
+                const nextX = curX + Math.cos(angle) * 22 + (Math.random() - 0.5) * 32;
+                const nextY = curY + Math.sin(angle) * 22 + (Math.random() - 0.5) * 32;
+                segments.push({ x1: curX, y1: curY, x2: nextX, y2: nextY });
+                curX = nextX;
+                curY = nextY;
+            }
+
+            lightnings.push({
+                segments,
+                alpha: 1,
+                color
+            });
+        }
+
+        // =========================================================================
+        // VÒNG LẶP RENDER CANVAS 60FPS (LỬA CHAKRA BẬP BÙNG & HẠT BAY LÊN)
+        // =========================================================================
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function animateLoop(now) {
+            const dt = now - lastFrameTime;
+            lastFrameTime = now;
+
+            // Xử lý tiến trình tự động chuyển đổi (Auto GIF Loop)
+            if (autoLoop) {
+                stageTimer += dt * speedMultiplier;
+                const progress = Math.min((stageTimer / BASE_STAGE_DURATION) * 100, 100);
+                document.getElementById('loopProgressBar').style.width = `${progress}%`;
+
+                if (stageTimer >= BASE_STAGE_DURATION) {
+                    const nextStage = (currentStage + 1) % 4;
+                    // Khi hoàn tất Toàn Chân Thể (giai đoạn 3) quay về 0 -> tự động chuyển sang nhân vật tiếp theo!
+                    if (nextStage === 0) {
+                        const nextChar = (currentCharIndex + 1) % CHARACTERS.length;
+                        selectCharacter(nextChar, false);
+                    }
+                    setStage(nextStage, true);
+                }
+            } else {
+                document.getElementById('loopProgressBar').style.width = '100%';
+            }
+
+            renderCanvasEffects(now);
+            requestAnimationFrame(animateLoop);
+        }
+
+        function renderCanvasEffects(time) {
+            const w = canvas.width;
+            const h = canvas.height;
+            const char = CHARACTERS[currentCharIndex];
+
+            ctx.clearRect(0, 0, w, h);
+
+            // 1. Vẽ hào quang nền tỏa nhiệt từ trung tâm Susanoo
+            const scaleFactor = 0.55 + currentStage * 0.16; // Càng tiến hóa hào quang càng lớn
+            const grad = ctx.createRadialGradient(
+                w * 0.5, h * 0.58, 10,
+                w * 0.5, h * 0.55, w * 0.52 * scaleFactor
+            );
+            grad.addColorStop(0, char.glow);
+            grad.addColorStop(0.55, char.color + '33');
+            grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+
+            // 2. Vẽ các luồng lửa Chakra bập bùng bay lên liên tục
+            if (Math.random() < 0.65 + currentStage * 0.1) {
+                const spread = (60 + currentStage * 42) * (w / 500);
+                particles.push({
+                    x: w * 0.5 + (Math.random() - 0.5) * spread * 2,
+                    y: h * 0.82 - Math.random() * 40,
+                    vx: (Math.random() - 0.5) * 1.2,
+                    vy: -(1.8 + Math.random() * 2.8) * speedMultiplier,
+                    size: (3 + Math.random() * 6) * (w / 500),
+                    alpha: 0.85,
+                    decay: 0.012 + Math.random() * 0.012,
+                    color: Math.random() > 0.25 ? char.color : char.light
+                });
+            }
+
+            // Tia sét ngẫu nhiên cho Sasuke & Indra ở giai đoạn cao
+            if (char.hasLightning && currentStage >= 2 && Math.random() < 0.08) {
+                spawnLightning(w * 0.5, h * 0.5, char.light);
+            }
+
+            // 3. Cập nhật & Vẽ hạt lửa Chakra
+            ctx.globalCompositeOperation = 'lighter';
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx + Math.sin(time * 0.005 + i) * 0.4;
+                p.y += p.vy;
+                p.alpha -= p.decay;
+                p.size *= 0.985;
+
+                if (p.alpha <= 0 || p.size <= 0.4) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.fill();
+            }
+
+            // 4. Cập nhật & Vẽ sóng xung kích (Shockwaves)
+            for (let i = shockwaves.length - 1; i >= 0; i--) {
+                const sw = shockwaves[i];
+                sw.radius += 11 * speedMultiplier;
+                sw.alpha -= 0.032;
+
+                if (sw.alpha <= 0 || sw.radius >= sw.maxRadius) {
+                    shockwaves.splice(i, 1);
+                    continue;
+                }
+
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = sw.light;
+                ctx.lineWidth = 4 * sw.alpha;
+                ctx.globalAlpha = Math.max(0, sw.alpha);
+                ctx.stroke();
+            }
+
+            // 5. Cập nhật & Vẽ tia sét điện quang
+            for (let i = lightnings.length - 1; i >= 0; i--) {
+                const bolt = lightnings[i];
+                bolt.alpha -= 0.07;
+                if (bolt.alpha <= 0) {
+                    lightnings.splice(i, 1);
+                    continue;
+                }
+
+                ctx.strokeStyle = bolt.color;
+                ctx.lineWidth = 2.2;
+                ctx.globalAlpha = Math.max(0, bolt.alpha);
+                ctx.beginPath();
+                bolt.segments.forEach(seg => {
+                    ctx.moveTo(seg.x1, seg.y1);
+                    ctx.lineTo(seg.x2, seg.y2);
+                });
+                ctx.stroke();
+            }
+
+            ctx.globalAlpha = 1;
+            ctx.globalCompositeOperation = 'source-over';
+        }
+
+        // =========================================================================
+        // CHỨC NĂNG CHỤP & TẢI XUỐNG KHUNG HÌNH SUSANOO HIỆN TẠI (PNG HD)
+        // =========================================================================
+        function captureFrame() {
+            const char = CHARACTERS[currentCharIndex];
+            const exportCanvas = document.createElement('canvas');
+            const size = 800;
+            exportCanvas.width = size;
+            exportCanvas.height = size;
+            const eCtx = exportCanvas.getContext('2d');
+
+            // Nền tối vũ trụ
+            eCtx.fillStyle = '#06060a';
+            eCtx.fillRect(0, 0, size, size);
+
+            // Vẽ lại lớp hạt Canvas hiện tại
+            eCtx.drawImage(canvas, 0, 0, size, size);
+
+            // Chuyển đổi SVG Susanoo hiện tại sang ảnh để ghép vào Canvas xuất file
+            const svgEl = document.getElementById('susanooSvg').cloneNode(true);
+            svgEl.setAttribute('width', size);
+            svgEl.setAttribute('height', size);
+            // Gắn trực tiếp giá trị biến CSS vào inline style để SVG render đúng màu khi xuất ảnh
+            svgEl.style.setProperty('--chakra-color', char.color);
+            svgEl.style.setProperty('--chakra-light', char.light);
+            svgEl.style.setProperty('--chakra-dark', char.dark);
+
+            const svgData = new XMLSerializer().serializeToString(svgEl);
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+
+            const img = new Image();
+            img.onload = function () {
+                eCtx.drawImage(img, 0, 0, size, size);
+                URL.revokeObjectURL(url);
+
+                // Thêm chữ ký góc dưới
+                eCtx.fillStyle = 'rgba(0,0,0,0.65)';
+                eCtx.fillRect(0, size - 54, size, 54);
+                eCtx.font = 'bold 20px Cinzel, serif';
+                eCtx.fillStyle = char.light;
+                eCtx.textAlign = 'center';
+                eCtx.fillText(`${char.name.toUpperCase()} — ${STAGE_NAMES[currentStage]}`, size / 2, size - 20);
+
+                // Tải ảnh xuống
+                const link = document.createElement('a');
+                link.download = `Susanoo_${char.id}_Stage${currentStage + 1}.png`;
+                link.href = exportCanvas.toDataURL('image/png');
+                link.click();
+
+                showToast(`📸 Đã tải ảnh ${char.shortName} - Giai đoạn ${currentStage + 1}!`);
+            };
+            img.src = url;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastMessage');
+            toast.textContent = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 2800);
+        }
+
+        // Khởi chạy ứng dụng khi tải xong trang
+        window.onload = function () {
+            initUI();
+            triggerChakraBurst(1.1);
+            requestAnimationFrame(animateLoop);
+        };
+    </script>
+</body>
+</html>
