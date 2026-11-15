@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bản Đồ Thế Giới Shinobi & Đại Chiến Ninja Lần 4 | Naruto Scroll Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment-bg: #f3e5c8;
+            --parchment-dark: #dfd0b0;
+            --ink-primary: #2b1d12;
+            --ink-secondary: #5c432e;
+            --konoha-red: #b91c1c;
+            --allied-blue: #1d4ed8;
+            --akatsuki-crimson: #991b1b;
+            --gold-accent: #b45309;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1c140d;
+            font-family: 'Noto Serif', serif;
+            color: var(--ink-primary);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .font-naruto-title {
+            font-family: 'Cinzel', serif;
+        }
+
+        .font-ui {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Hiệu ứng giấy cuộn cổ điển (Washi/Parchment Texture) */
+        .parchment-surface {
+            background-color: #f4e6c8;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255, 248, 231, 0.4) 0%, rgba(194, 168, 120, 0.35) 100%),
+                repeating-linear-gradient(45deg, rgba(139, 105, 65, 0.03) 0px, rgba(139, 105, 65, 0.03) 2px, transparent 2px, transparent 6px),
+                repeating-linear-gradient(-45deg, rgba(110, 80, 45, 0.03) 0px, rgba(110, 80, 45, 0.03) 2px, transparent 2px, transparent 8px);
+            box-shadow: inset 0 0 80px rgba(72, 48, 24, 0.45);
+        }
+
+        /* Trục gỗ cuộn giấy hai bên */
+        .scroll-roller-left, .scroll-roller-right {
+            background: linear-gradient(90deg, #2a180c 0%, #5c381e 25%, #855431 50%, #472914 85%, #1f1107 100%);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
+            position: relative;
+            z-index: 30;
+        }
+
+        .scroll-roller-cap {
+            background: radial-gradient(circle at 30% 30%, #d97706, #78350f 70%, #291204 100%);
+            border: 2px solid #451a03;
+        }
+
+        /* Viền hoa văn Ninja */
+        .ninja-border {
+            border: 2px solid #6b4c30;
+            box-shadow: 0 4px 15px rgba(30, 18, 8, 0.35), inset 0 0 12px rgba(139, 98, 56, 0.25);
+        }
+
+        /* Hiệu ứng SVG trên bản đồ */
+        #map-viewport {
+            cursor: grab;
+            touch-action: none;
+        }
+        #map-viewport:active {
+            cursor: grabbing;
+        }
+
+        .nation-poly {
+            transition: filter 0.25s ease, stroke-width 0.25s ease, fill-opacity 0.25s ease;
+            cursor: pointer;
+        }
+        .nation-poly:hover {
+            filter: brightness(1.08) drop-shadow(0 0 6px rgba(180, 83, 9, 0.5));
+            stroke-width: 2.5px;
+        }
+
+        /* Tách riêng hitbox tĩnh bên ngoài và lớp đồ họa bên trong để chống giật nảy khi hover */
+        .village-marker, .war-marker {
+            cursor: pointer;
+        }
+        .marker-visual {
+            pointer-events: none;
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), filter 0.18s ease;
+        }
+        .village-marker:hover .marker-visual,
+        .war-marker:hover .marker-visual {
+            transform: scale(1.18);
+            filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.9));
+        }
+
+        /* Animation đường hành quân */
+        @keyframes dashFlow {
+            to {
+                stroke-dashoffset: -24;
+            }
+        }
+        .war-arrow-allied {
+            stroke-dasharray: 8, 4;
+            animation: dashFlow 1.2s linear infinite;
+        }
+        .war-arrow-enemy {
+            stroke-dasharray: 6, 4;
+            animation: dashFlow 1.2s linear infinite;
+        }
+
+        /* Animation điểm giao tranh */
+        @keyframes pulseCombat {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.25); opacity: 1; }
+        }
+        .combat-pulse {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: pulseCombat 1.8s ease-in-out infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(139, 105, 65, 0.15);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7c5836;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5c3e23;
+        }
+
+        /* Biển cả với vân sóng Nhật Bản Seigaiha nhẹ */
+        .ocean-bg {
+            fill: #c7d5d8;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center">
+
+    <!-- Khung Cuộn Giấy Chính -->
+    <div class="relative w-full h-full flex items-stretch overflow-hidden bg-[#24170e]">
+        
+        <!-- Trục gỗ bên trái -->
+        <div class="scroll-roller-left w-3 sm:w-5 h-full flex flex-col justify-between items-center py-2 shrink-0">
+            <div class="scroll-roller-cap w-4 sm:w-7 h-5 rounded-sm shadow-md"></div>
+            <div class="w-1 h-full bg-amber-900/30 rounded"></div>
+            <div class="scroll-roller-cap w-4 sm:w-7 h-5 rounded-sm shadow-md"></div>
+        </div>
+
+        <!-- Vùng nội dung Cuộn Giấy -->
+        <div class="relative flex-1 h-full parchment-surface overflow-hidden flex flex-col">
+            
+            <!-- Viền trang trí trên & dưới của cuộn giấy -->
+            <div class="h-2 w-full bg-gradient-to-r from-red-900 via-amber-700 to-red-900 border-b border-amber-950/60 shrink-0"></div>
+
+            <!-- Thanh Tiêu Đề & Tìm Kiếm (Top HUD) -->
+            <header class="relative z-20 px-3 sm:px-6 py-2.5 bg-[#ebd7b2]/95 border-b-2 border-[#7c5836] shadow-md flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-3">
+                    <!-- Biểu tượng Xoáy Uzumaki -->
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-800 border-2 border-amber-950 flex items-center justify-center shadow-inner shrink-0">
+                        <svg viewBox="0 0 40 40" class="w-6 h-6 text-amber-100" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+                            <path d="M20 20c0-2.2 1.8-4 4-4s4 1.8 4 4c0 4.4-3.6 8-8 8s-8-3.6-8-8c0-6.6 5.4-12 12-12s12 5.4 12 12c0 8.8-7.2 16-16 16S4 28.8 4 20c0-10 7.5-17 17-17"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-naruto-title text-base sm:text-xl font-black tracking-wider text-[#2b1d12] uppercase">
+                                Bản Đồ Thế Giới Shinobi
+                            </h1>
+                            <span class="hidden md:inline-block px-2 py-0.5 text-[11px] font-ui font-bold bg-red-800 text-amber-50 rounded border border-red-950">
+                                忍界大戦 • SHINOBI WORLD
+                            </span>
+                        </div>
+                        <p class="text-[11px] sm:text-xs text-[#5c432e] font-medium">
+                            Ngũ Đại Cường Quốc • Các Làng Ẩn • Chiến Trường Đại Chiến Ninja Lần Thứ 4
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Thanh Tìm Kiếm & Điều Khiển Nhanh -->
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <div class="relative flex-1 sm:w-64">
+                        <input id="searchInput" type="text" placeholder="Tìm làng, quốc gia, sư đoàn, trận đánh..." 
+                            class="w-full pl-8 pr-3 py-1.5 text-xs sm:text-sm font-ui bg-[#fbf3e4] border border-[#7c5836] rounded-md text-[#2b1d12] placeholder-[#8c6d53] focus:outline-none focus:ring-2 focus:ring-red-800 shadow-inner">
+                        <svg class="w-4 h-4 text-[#7c5836] absolute left-2.5 top-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <!-- Dropdown kết quả tìm kiếm -->
+                        <div id="searchResults" class="hidden absolute left-0 right-0 top-full mt-1 max-h-64 overflow-y-auto bg-[#f7ebd2] border-2 border-[#6b4c30] rounded-md shadow-xl z-50 divide-y divide-[#d4be98]"></div>
+                    </div>
+
+                    <button id="toggleSidebarBtn" class="px-2.5 py-1.5 bg-[#5c3e23] hover:bg-[#422b17] text-amber-100 text-xs font-ui font-semibold rounded-md border border-[#2b1d12] shadow flex items-center gap-1.5 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                        </svg>
+                        <span class="hidden sm:inline">Lớp Bản Đồ</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Không Gian Bản Đồ Tương Tác -->
+            <main class="relative flex-1 w-full h-full overflow-hidden">
+                
+                <!-- Bảng Điều Khiển Lớp (Layers HUD Sidebar - Trái) -->
+                <aside id="layersPanel" class="absolute top-3 left-3 z-20 w-64 sm:w-72 bg-[#f5e7cb]/95 backdrop-blur-sm ninja-border rounded-lg p-3 shadow-xl transition-transform duration-300 max-h-[calc(100%-24px)] overflow-y-auto">
+                    <div class="flex items-center justify-between border-b border-[#8c6d53] pb-2 mb-2.5">
+                        <span class="font-naruto-title font-bold text-sm text-[#2b1d12] flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-red-700"></span>
+                            Tầng Dữ Liệu Bản Đồ
+                        </span>
+                        <button id="closeSidebarBtn" class="text-[#5c432e] hover:text-red-800 p-0.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Các Chế Độ Xem Nhanh (Presets) -->
+                    <div class="mb-3">
+                        <p class="text-[11px] font-ui font-semibold uppercase tracking-wider text-[#6e5036] mb-1.5">Chế độ hiển thị nhanh</p>
+                        <div class="grid grid-cols-3 gap-1 font-ui text-[11px]">
+                            <button onclick="setPreset('all')" id="preset-all" class="preset-btn py-1.5 px-1 rounded font-semibold bg-red-800 text-amber-50 border border-red-950 shadow-sm">Toàn Bộ</button>
+                            <button onclick="setPreset('geo')" id="preset-geo" class="preset-btn py-1.5 px-1 rounded font-semibold bg-[#e6d2ad] text-[#2b1d12] border border-[#9c7b56] hover:bg-[#dbc296]">Địa Lý & Làng</button>
+                            <button onclick="setPreset('war')" id="preset-war" class="preset-btn py-1.5 px-1 rounded font-semibold bg-[#e6d2ad] text-[#2b1d12] border border-[#9c7b56] hover:bg-[#dbc296]">Đại Chiến 4</button>
+                        </div>
+                    </div>
+
+                    <!-- Toggles từng lớp chi tiết -->
+                    <div class="space-y-2 font-ui text-xs">
+                        <label class="flex items-center justify-between p-2 rounded bg-[#ebd8b5]/80 border border-[#cbb082] cursor-pointer hover:bg-[#e3cca1]">
+                            <span class="flex items-center gap-2 font-medium">
+                                <span class="w-3 h-3 rounded-sm bg-emerald-700 inline-block"></span>
+                                Tên Quốc Gia & Lãnh Thổ
+                            </span>
+                            <input type="checkbox" id="layer-nations" checked class="accent-red-800 w-4 h-4 rounded">
+                        </label>
+
+                        <label class="flex items-center justify-between p-2 rounded bg-[#ebd8b5]/80 border border-[#cbb082] cursor-pointer hover:bg-[#e3cca1]">
+                            <span class="flex items-center gap-2 font-medium">
+                                <span class="w-3 h-3 rounded-sm bg-amber-600 inline-block"></span>
+                                Các Làng Ẩn (Hitai-ate)
+                            </span>
+                            <input type="checkbox" id="layer-villages" checked class="accent-red-800 w-4 h-4 rounded">
+                        </label>
+
+                        <div class="pt-1 border-t border-[#b89b6e]">
+                            <p class="text-[11px] font-bold text-red-900 uppercase tracking-wide mb-1.5">Đại Chiến Ninja Lần 4</p>
+                            
+                            <label class="flex items-center justify-between p-2 rounded bg-[#ebd8b5]/80 border border-[#cbb082] cursor-pointer hover:bg-[#e3cca1] mb-1.5">
+                                <span class="flex items-center gap-2 font-medium">
+                                    <span class="w-3 h-3 rounded-full bg-blue-700 inline-block"></span>
+                                    Trụ Sở HQ, Y Tế & Hậu Cần
+                                </span>
+                                <input type="checkbox" id="layer-hq" checked class="accent-red-800 w-4 h-4 rounded">
+                            </label>
+
+                            <label class="flex items-center justify-between p-2 rounded bg-[#ebd8b5]/80 border border-[#cbb082] cursor-pointer hover:bg-[#e3cca1] mb-1.5">
+                                <span class="flex items-center gap-2 font-medium">
+                                    <span class="w-3 h-3 rounded-full bg-indigo-700 inline-block"></span>
+                                    Triển Khai 5 Sư Đoàn & Mũi Tên
+                                </span>
+                                <input type="checkbox" id="layer-divisions" checked class="accent-red-800 w-4 h-4 rounded">
+                            </label>
+
+                            <label class="flex items-center justify-between p-2 rounded bg-[#ebd8b5]/80 border border-[#cbb082] cursor-pointer hover:bg-[#e3cca1]">
+                                <span class="flex items-center gap-2 font-medium">
+                                    <span class="w-3 h-3 rounded-full bg-red-700 inline-block"></span>
+                                    Điểm Combat & Căn Cứ Akatsuki
+                                </span>
+                                <input type="checkbox" id="layer-battles" checked class="accent-red-800 w-4 h-4 rounded">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Chú Giải Ký Hiệu (Legend) -->
+                    <div class="mt-3 pt-2.5 border-t border-[#8c6d53] font-ui text-[11px]">
+                        <p class="font-bold text-[#2b1d12] mb-1.5 uppercase tracking-wider">Chú Giải Chiến Thuật</p>
+                        <div class="grid grid-cols-1 gap-1.5 text-[#3d2a1b]">
+                            <div class="flex items-center gap-2">
+                                <span class="w-5 h-5 rounded bg-slate-800 text-amber-300 flex items-center justify-center text-[10px] font-bold border border-amber-500">忍</span>
+                                <span>Làng Ẩn (Nhấn để xem thông tin)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-5 h-5 rounded-full bg-blue-800 text-white flex items-center justify-center text-[10px] font-bold">HQ</span>
+                                <span>Tổng Hành Dinh & Trạm Y Tế</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-5 h-5 rounded-full bg-sky-700 text-white flex items-center justify-center text-[10px] font-bold">S1</span>
+                                <span>Sư Đoàn Liên Minh Shinobi (1–5)</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-5 h-5 rounded-full bg-red-700 text-white flex items-center justify-center text-[10px]">⚔</span>
+                                <span>Mặt Trận / Trận Chiến Quyết Định</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-5 h-0.5 border-t-2 border-dashed border-blue-700 inline-block"></span>
+                                <span>Hướng tiến quân Liên Minh</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-5 h-0.5 border-t-2 border-dashed border-red-700 inline-block"></span>
+                                <span>Hướng tấn công Akatsuki / Zetsu</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Công Cụ Zoom & Reset View (Góc dưới bên trái) -->
+                <div class="absolute bottom-4 left-3 z-20 flex items-center gap-1.5 bg-[#f5e7cb]/95 ninja-border rounded-lg p-1.5 shadow-lg font-ui">
+                    <button id="zoomInBtn" title="Phóng to" class="w-8 h-8 flex items-center justify-center rounded bg-[#e3cca1] hover:bg-[#d4b681] text-[#2b1d12] font-bold text-lg border border-[#9c7b56]">+</button>
+                    <button id="zoomOutBtn" title="Thu nhỏ" class="w-8 h-8 flex items-center justify-center rounded bg-[#e3cca1] hover:bg-[#d4b681] text-[#2b1d12] font-bold text-lg border border-[#9c7b56]">−</button>
+                    <button id="resetViewBtn" title="Đặt lại góc nhìn" class="px-2.5 h-8 flex items-center justify-center rounded bg-[#5c3e23] hover:bg-[#3f2916] text-amber-100 text-xs font-semibold border border-[#2b1d12]">
+                        Toàn Cảnh
+                    </button>
+                    <span id="zoomLevelText" class="px-2 text-xs font-semibold text-[#5c432e]">100%</span>
+                </div>
+
+                <!-- Thẻ Hiển Thị Nhanh Khi Di Chuột (Floating Tooltip) -->
+                <div id="mapTooltip" class="pointer-events-none hidden fixed z-40 px-3 py-1.5 bg-[#26180d]/95 text-amber-50 border border-amber-500/70 rounded shadow-xl text-xs font-ui max-w-xs">
+                    <div id="tooltipTitle" class="font-bold text-amber-300"></div>
+                    <div id="tooltipSub" class="text-[11px] text-amber-100/80"></div>
+                </div>
+
+                <!-- Bảng Thông Tin Chi Tiết Cuộn Giấy (Scroll Info Drawer - Phải) -->
+                <aside id="infoDrawer" class="hidden absolute top-3 right-3 bottom-3 z-30 w-[calc(100%-24px)] sm:w-96 bg-[#f7ebd2]/98 ninja-border rounded-lg shadow-2xl flex flex-col overflow-hidden transition-all">
+                    <!-- Header của Scroll Info -->
+                    <div class="bg-gradient-to-r from-[#3d2614] via-[#59381e] to-[#3d2614] px-4 py-3 text-amber-50 flex items-center justify-between border-b-2 border-amber-700">
+                        <div class="flex items-center gap-2.5">
+                            <div id="infoSymbolBox" class="w-10 h-10 rounded bg-[#1e150e] border border-amber-500/80 flex items-center justify-center shrink-0 p-1">
+                                <!-- SVG Symbol injected here -->
+                            </div>
+                            <div>
+                                <span id="infoBadge" class="inline-block px-1.5 py-0.2 text-[10px] font-ui font-bold uppercase tracking-wider bg-red-800 text-amber-100 rounded mb-0.5">QUỐC GIA</span>
+                                <h2 id="infoTitle" class="font-naruto-title text-base font-bold text-amber-200 leading-tight">Hỏa Quốc</h2>
+                                <p id="infoSubtitle" class="text-xs text-amber-100/80 italic">Land of Fire • Hi no Kuni</p>
+                            </div>
+                        </div>
+                        <button id="closeInfoBtn" class="p-1.5 rounded-full hover:bg-white/10 text-amber-200 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Nội dung chi tiết cuộn -->
+                    <div id="infoContent" class="p-4 overflow-y-auto space-y-3 text-sm leading-relaxed text-[#2b1d12] flex-1">
+                        <!-- Dynamic Content -->
+                    </div>
+
+                    <!-- Footer điều hướng nhanh -->
+                    <div class="px-4 py-2 bg-[#e8d3ab] border-t border-[#b89b6e] flex justify-between items-center text-xs font-ui">
+                        <span class="text-[#5c432e]">Nhấn vào điểm khác trên bản đồ để tra cứu</span>
+                        <button id="focusItemBtn" class="px-2.5 py-1 bg-red-800 hover:bg-red-900 text-amber-50 rounded font-semibold shadow-sm">
+                            Phóng Tới Vị Trí
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- BẢN ĐỒ SVG CHÍNH (SHINOBI WORLD MAP) -->
+                <svg id="map-viewport" viewBox="0 0 1400 950" class="w-full h-full block">
+                    <defs>
+                        <!-- Pattern Sóng Biển Nhật Bản Cổ Điển -->
+                        <pattern id="oceanWave" width="60" height="30" patternUnits="userSpaceOnUse">
+                            <rect width="60" height="30" fill="#c9d6d8"/>
+                            <path d="M0 15 Q 15 5, 30 15 T 60 15" fill="none" stroke="#a8bcc0" stroke-width="1.2" opacity="0.6"/>
+                            <path d="M0 28 Q 15 18, 30 28 T 60 28" fill="none" stroke="#a8bcc0" stroke-width="1" opacity="0.4"/>
+                        </pattern>
+
+                        <!-- Pattern Rừng Rậm (Hỏa Quốc) -->
+                        <pattern id="forestTexture" width="24" height="24" patternUnits="userSpaceOnUse">
+                            <circle cx="6" cy="8" r="3" fill="#4d7c47" opacity="0.25"/>
+                            <circle cx="18" cy="18" r="3.5" fill="#3f693a" opacity="0.25"/>
+                        </pattern>
+
+                        <!-- Pattern Sa Mạc (Phong Quốc) -->
+                        <pattern id="desertTexture" width="30" height="16" patternUnits="userSpaceOnUse">
+                            <path d="M0 8 Q 7.5 4, 15 8 T 30 8" fill="none" stroke="#b5894c" stroke-width="1" opacity="0.35"/>
+                        </pattern>
+
+                        <!-- Pattern Núi Đá (Thổ Quốc & Lôi Quốc) -->
+                        <pattern id="mountainTexture" width="28" height="24" patternUnits="userSpaceOnUse">
+                            <path d="M4 20 L11 8 L18 20 M14 20 L20 11 L26 20" fill="none" stroke="#5c4938" stroke-width="1" opacity="0.3"/>
+                        </pattern>
+
+                        <!-- Pattern Tuyết (Thiết Quốc & Tuyết Quốc) -->
+                        <pattern id="snowTexture" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <circle cx="5" cy="5" r="1.2" fill="#ffffff" opacity="0.7"/>
+                            <circle cx="15" cy="14" r="1.5" fill="#ffffff" opacity="0.7"/>
+                        </pattern>
+
+                        <!-- Hiệu ứng đổ bóng lục địa -->
+                        <filter id="landShadow" x="-5%" y="-5%" width="110%" height="110%">
+                            <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="#3b2816" flood-opacity="0.35"/>
+                        </filter>
+
+                        <!-- Hiệu ứng phát sáng điểm giao tranh -->
+                        <filter id="combatGlow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="3" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+
+                        <!-- Mũi tên chiến thuật Xanh (Liên Minh) -->
+                        <marker id="arrowAllied" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 1 L 10 5 L 0 9 z" fill="#1d4ed8"/>
+                        </marker>
+
+                        <!-- Mũi tên chiến thuật Đỏ (Akatsuki/Zetsu) -->
+                        <marker id="arrowEnemy" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 1 L 10 5 L 0 9 z" fill="#b91c1c"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Nhóm Pan & Zoom chính -->
+                    <g id="map-world-group">
+                        
+                        <!-- NỀN ĐẠI DƯƠNG -->
+                        <rect x="-400" y="-300" width="2200" height="1600" fill="url(#oceanWave)"/>
+
+                        <!-- Lưới Kinh Vĩ Tuyến Cổ Điển -->
+                        <g stroke="#8da3a8" stroke-width="0.7" stroke-dasharray="6,6" opacity="0.55">
+                            <line x1="0" y1="150" x2="1400" y2="150"/>
+                            <line x1="0" y1="350" x2="1400" y2="350"/>
+                            <line x1="0" y1="550" x2="1400" y2="550"/>
+                            <line x1="0" y1="750" x2="1400" y2="750"/>
+                            <line x1="250" y1="0" x2="250" y2="950"/>
+                            <line x1="550" y1="0" x2="550" y2="950"/>
+                            <line x1="850" y1="0" x2="850" y2="950"/>
+                            <line x1="1150" y1="0" x2="1150" y2="950"/>
+                        </g>
+
+                        <!-- Hoa Gió La Bàn Cổ Điển (Góc dưới phải đại dương) -->
+                        <g transform="translate(1250, 810)" opacity="0.75">
+                            <circle cx="0" cy="0" r="52" fill="#f4e6c8" fill-opacity="0.6" stroke="#5c432e" stroke-width="1.5"/>
+                            <circle cx="0" cy="0" r="44" fill="none" stroke="#5c432e" stroke-width="0.8" stroke-dasharray="3,3"/>
+                            <polygon points="0,-48 8,-8 48,0 8,8 0,48 -8,8 -48,0 -8,-8" fill="#7c5836"/>
+                            <polygon points="0,-48 8,-8 0,0" fill="#b91c1c"/>
+                            <polygon points="0,48 -8,8 0,0" fill="#3d2a1b"/>
+                            <text x="0" y="-56" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b1d12">BẮC (N)</text>
+                            <text x="0" y="66" text-anchor="middle" font-size="10" font-weight="bold" fill="#2b1d12">NAM (S)</text>
+                            <text x="62" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#2b1d12">ĐÔNG</text>
+                            <text x="-62" y="4" text-anchor="middle" font-size="10" font-weight="bold" fill="#2b1d12">TÂY</text>
+                        </g>
+
+                        <!-- ========================================== -->
+                        <!-- LỚP 1: ĐỊA LÝ LỤC ĐỊA & CÁC QUỐC GIA      -->
+                        <!-- ========================================== -->
+                        <g id="geography-layer" filter="url(#landShadow)">
+                            
+                            <!-- CỰC BẮC: TUYẾT QUỐC (Land of Snow / Yuki no Kuni) -->
+                            <path id="nation-snow" class="nation-poly" data-id="snow"
+                                d="M 320,35 L 490,25 L 540,75 L 470,115 L 350,110 L 300,70 Z"
+                                fill="#e8eff2" stroke="#5c432e" stroke-width="1.8"/>
+                            <path d="M 320,35 L 490,25 L 540,75 L 470,115 L 350,110 L 300,70 Z" fill="url(#snowTexture)" pointer-events="none"/>
+
+                            <!-- TÂY BẮC: THỔ QUỐC (Land of Earth / Tsuchi no Kuni) -->
+                            <path id="nation-earth" class="nation-poly" data-id="earth"
+                                d="M 155,155 L 365,135 L 455,195 L 445,295 L 385,355 L 270,365 L 180,315 L 130,235 Z"
+                                fill="#c9a679" stroke="#4a3520" stroke-width="2"/>
+                            <path d="M 155,155 L 365,135 L 455,195 L 445,295 L 385,355 L 270,365 L 180,315 L 130,235 Z" fill="url(#mountainTexture)" pointer-events="none"/>
+
+                            <!-- TRUNG BẮC: THÁC NƯỚC QUỐC (Land of Waterfall / Taki no Kuni) -->
+                            <path id="nation-waterfall" class="nation-poly" data-id="waterfall"
+                                d="M 455,195 L 565,180 L 595,255 L 535,315 L 445,295 Z"
+                                fill="#99c2b2" stroke="#4a3520" stroke-width="1.8"/>
+
+                            <!-- THẢO QUỐC (Land of Grass / Kusa no Kuni) -->
+                            <path id="nation-grass" class="nation-poly" data-id="grass"
+                                d="M 385,355 L 445,295 L 535,315 L 530,395 L 430,415 Z"
+                                fill="#9db876" stroke="#4a3520" stroke-width="1.8"/>
+
+                            <!-- VŨ QUỐC (Land of Rain / Ame no Kuni) -->
+                            <path id="nation-rain" class="nation-poly" data-id="rain"
+                                d="M 325,435 L 430,415 L 475,485 L 430,555 L 335,535 L 305,475 Z"
+                                fill="#7e94a6" stroke="#374754" stroke-width="2"/>
+
+                            <!-- TÂY & TÂY NAM: PHONG QUỐC (Land of Wind / Kaze no Kuni) -->
+                            <path id="nation-wind" class="nation-poly" data-id="wind"
+                                d="M 85,430 L 265,385 L 325,435 L 305,475 L 335,535 L 315,635 L 285,765 L 155,785 L 75,675 L 65,530 Z"
+                                fill="#e6c485" stroke="#5c432e" stroke-width="2"/>
+                            <path d="M 85,430 L 265,385 L 325,435 L 305,475 L 335,535 L 315,635 L 285,765 L 155,785 L 75,675 L 65,530 Z" fill="url(#desertTexture)" pointer-events="none"/>
+
+                            <!-- XUYÊN QUỐC (Land of Rivers / Kawa no Kuni) -->
+                            <path id="nation-rivers" class="nation-poly" data-id="rivers"
+                                d="M 335,535 L 430,555 L 445,675 L 375,745 L 285,765 L 315,635 Z"
+                                fill="#b5c99a" stroke="#4a3520" stroke-width="1.8"/>
+
+                            <!-- TRUNG TÂM: HỎA QUỐC (Land of Fire / Hi no Kuni) -->
+                            <path id="nation-fire" class="nation-poly" data-id="fire"
+                                d="M 430,415 L 530,395 L 675,385 L 775,445 L 810,545 L 745,655 L 625,705 L 485,695 L 445,675 L 430,555 L 475,485 Z"
+                                fill="#8ab072" stroke="#3b522c" stroke-width="2.2"/>
+                            <path d="M 430,415 L 530,395 L 675,385 L 775,445 L 810,545 L 745,655 L 625,705 L 485,695 L 445,675 L 430,555 L 475,485 Z" fill="url(#forestTexture)" pointer-events="none"/>
+
+                            <!-- TRÀ QUỐC (Land of Tea / Cha no Kuni) -->
+                            <path id="nation-tea" class="nation-poly" data-id="tea"
+                                d="M 525,735 L 605,725 L 625,795 L 560,825 L 515,780 Z"
+                                fill="#a3be8c" stroke="#4a3520" stroke-width="1.6"/>
+
+                            <!-- CỰC NAM: QUỶ QUỐC (Land of Demons / Oni no Kuni) -->
+                            <path id="nation-demons" class="nation-poly" data-id="demons"
+                                d="M 290,825 L 410,815 L 435,885 L 330,905 L 275,870 Z"
+                                fill="#9c899e" stroke="#4a3520" stroke-width="1.6"/>
+
+                            <!-- BẮC: ĐIỀN QUỐC / ÂM THANH (Land of Rice Fields / Sound - Ta/Oto no Kuni) -->
+                            <path id="nation-sound" class="nation-poly" data-id="sound"
+                                d="M 565,180 L 705,165 L 735,265 L 665,335 L 535,315 L 595,255 Z"
+                                fill="#b8b094" stroke="#4a3520" stroke-width="1.8"/>
+
+                            <!-- THIẾT QUỐC (Land of Iron / Tetsu no Kuni - Trung lập Samurai) -->
+                            <path id="nation-iron" class="nation-poly" data-id="iron"
+                                d="M 705,165 L 845,145 L 875,245 L 795,295 L 735,265 Z"
+                                fill="#dce6eb" stroke="#475569" stroke-width="2"/>
+                            <path d="M 705,165 L 845,145 L 875,245 L 795,295 L 735,265 Z" fill="url(#snowTexture)" pointer-events="none"/>
+
+                            <!-- SUỐI NƯỚC NÓNG QUỐC (Land of Hot Water / Yu no Kuni) -->
+                            <path id="nation-hotwater" class="nation-poly" data-id="hotwater"
+                                d="M 665,335 L 735,265 L 795,295 L 835,365 L 775,445 L 675,385 Z"
+                                fill="#c2b28f" stroke="#4a3520" stroke-width="1.8"/>
+
+                            <!-- SƯƠNG GIÁ QUỐC (Land of Frost / Shimo no Kuni) -->
+                            <path id="nation-frost" class="nation-poly" data-id="frost"
+                                d="M 795,295 L 875,245 L 965,265 L 955,345 L 835,365 Z"
+                                fill="#cbd5e1" stroke="#475569" stroke-width="1.8"/>
+
+                            <!-- ĐÔNG BẮC: LÔI QUỐC (Land of Lightning / Kaminari no Kuni) -->
+                            <path id="nation-lightning" class="nation-poly" data-id="lightning"
+                                d="M 875,135 L 1085,105 L 1225,165 L 1245,275 L 1145,335 L 955,345 L 965,265 L 875,245 Z"
+                                fill="#d9c382" stroke="#4a3520" stroke-width="2"/>
+                            <path d="M 875,135 L 1085,105 L 1225,165 L 1245,275 L 1145,335 L 955,345 L 965,265 L 875,245 Z" fill="url(#mountainTexture)" pointer-events="none"/>
+
+                            <!-- SÓNG QUỐC (Land of Waves / Nami no Kuni) -->
+                            <path id="nation-waves" class="nation-poly" data-id="waves"
+                                d="M 815,615 L 860,605 L 875,645 L 830,660 Z"
+                                fill="#94b8b8" stroke="#3b5252" stroke-width="1.6"/>
+
+                            <!-- XOÁY NƯỚC QUỐC (Land of Whirlpools / Uzu no Kuni) -->
+                            <path id="nation-whirlpools" class="nation-poly" data-id="whirlpools"
+                                d="M 865,495 L 920,485 L 935,535 L 880,550 Z"
+                                fill="#d48c70" stroke="#7c2d12" stroke-width="1.8"/>
+
+                            <!-- ĐÔNG NAM (QUẦN ĐẢO): THỦY QUỐC (Land of Water / Mizu no Kuni) -->
+                            <g id="nation-water" class="nation-poly" data-id="water">
+                                <!-- Đảo chính Kiri -->
+                                <path d="M 1035,445 L 1165,415 L 1235,495 L 1195,625 L 1085,665 L 1015,585 L 1010,505 Z"
+                                    fill="#82aba8" stroke="#2f4f4f" stroke-width="2"/>
+                                <!-- Các đảo vệ tinh Thủy Quốc -->
+                                <path d="M 975,415 L 1015,405 L 1025,435 L 985,445 Z" fill="#82aba8" stroke="#2f4f4f" stroke-width="1.5"/>
+                                <path d="M 1020,665 L 1065,655 L 1075,695 L 1030,705 Z" fill="#82aba8" stroke="#2f4f4f" stroke-width="1.5"/>
+                                <path d="M 1215,635 L 1255,625 L 1265,665 L 1225,675 Z" fill="#82aba8" stroke="#2f4f4f" stroke-width="1.5"/>
+                            </g>
+
+                            <!-- ĐẢO RÙA KHỔNG LỒ (Island Turtle - Genbu) -->
+                            <g id="nation-turtle" class="nation-poly" data-id="turtle" transform="translate(1275, 365)">
+                                <!-- Chân rùa -->
+                                <ellipse cx="-24" cy="-14" rx="10" ry="6" fill="#6b8e68" stroke="#2b1d12" stroke-width="1.5" transform="rotate(-25 -24 -14)"/>
+                                <ellipse cx="24" cy="-14" rx="10" ry="6" fill="#6b8e68" stroke="#2b1d12" stroke-width="1.5" transform="rotate(25 24 -14)"/>
+                                <ellipse cx="-22" cy="16" rx="9" ry="5" fill="#6b8e68" stroke="#2b1d12" stroke-width="1.5" transform="rotate(25 -22 16)"/>
+                                <ellipse cx="22" cy="16" rx="9" ry="5" fill="#6b8e68" stroke="#2b1d12" stroke-width="1.5" transform="rotate(-25 22 16)"/>
+                                <!-- Đầu rùa -->
+                                <ellipse cx="0" cy="-28" rx="8" ry="11" fill="#769c73" stroke="#2b1d12" stroke-width="1.5"/>
+                                <!-- Mai rùa đảo rừng -->
+                                <ellipse cx="0" cy="0" rx="28" ry="22" fill="#527a4e" stroke="#2b1d12" stroke-width="2"/>
+                                <path d="M -14,-8 L 0,-15 L 14,-8 L 14,8 L 0,15 L -14,8 Z" fill="none" stroke="#365433" stroke-width="1.2"/>
+                            </g>
+                        </g>
+
+                        <!-- ========================================== -->
+                        <!-- NHÃN TÊN CÁC QUỐC GIA (NATION LABELS)      -->
+                        <!-- ========================================== -->
+                        <g id="nation-labels-layer" pointer-events="none" text-anchor="middle">
+                            <!-- Ngũ Đại Cường Quốc (Chữ lớn nổi bật) -->
+                            <g transform="translate(615, 560)">
+                                <text y="0" font-size="18" font-weight="900" fill="#1e3315" class="font-naruto-title">HỎA QUỐC</text>
+                                <text y="15" font-size="11" font-weight="700" fill="#2d4721">Land of Fire (Hi no Kuni)</text>
+                            </g>
+
+                            <g transform="translate(195, 600)">
+                                <text y="0" font-size="17" font-weight="900" fill="#4a3110" class="font-naruto-title">PHONG QUỐC</text>
+                                <text y="14" font-size="11" font-weight="700" fill="#634318">Land of Wind (Kaze no Kuni)</text>
+                            </g>
+
+                            <g transform="translate(290, 245)">
+                                <text y="0" font-size="17" font-weight="900" fill="#3b2613" class="font-naruto-title">THỔ QUỐC</text>
+                                <text y="14" font-size="11" font-weight="700" fill="#52361c">Land of Earth (Tsuchi no Kuni)</text>
+                            </g>
+
+                            <g transform="translate(1075, 210)">
+                                <text y="0" font-size="17" font-weight="900" fill="#3d2e0c" class="font-naruto-title">LÔI QUỐC</text>
+                                <text y="14" font-size="11" font-weight="700" fill="#574212">Land of Lightning (Kaminari)</text>
+                            </g>
+
+                            <g transform="translate(1125, 540)">
+                                <text y="0" font-size="17" font-weight="900" fill="#173636" class="font-naruto-title">THỦY QUỐC</text>
+                                <text y="14" font-size="11" font-weight="700" fill="#234d4d">Land of Water (Mizu no Kuni)</text>
+                            </g>
+
+                            <!-- Các Tiểu Quốc & Vùng Trung Lập -->
+                            <g transform="translate(385, 485)">
+                                <text y="0" font-size="12" font-weight="800" fill="#1f2d38">VŨ QUỐC</text>
+                                <text y="11" font-size="9" font-weight="600" fill="#2d3e4d">Land of Rain</text>
+                            </g>
+
+                            <g transform="translate(465, 365)">
+                                <text y="0" font-size="11" font-weight="800" fill="#2f3d1d">THẢO QUỐC</text>
+                                <text y="10" font-size="8.5" fill="#3e5226">Land of Grass</text>
+                            </g>
+
+                            <g transform="translate(520, 245)">
+                                <text y="0" font-size="11" font-weight="800" fill="#1d3b30">THÁC NƯỚC QUỐC</text>
+                                <text y="10" font-size="8.5" fill="#295243">Land of Waterfall</text>
+                            </g>
+
+                            <g transform="translate(645, 255)">
+                                <text y="0" font-size="11" font-weight="800" fill="#363222">ĐIỀN QUỐC</text>
+                                <text y="10" font-size="8.5" fill="#4a4430">Land of Sound/Rice</text>
+                            </g>
+
+                            <g transform="translate(790, 210)">
+                                <text y="0" font-size="12" font-weight="800" fill="#1e293b">THIẾT QUỐC</text>
+                                <text y="11" font-size="9" font-weight="600" fill="#334155">Land of Iron (Samurai)</text>
+                            </g>
+
+                            <g transform="translate(895, 315)">
+                                <text y="0" font-size="10.5" font-weight="800" fill="#1e293b">SƯƠNG GIÁ QUỐC</text>
+                                <text y="10" font-size="8.5" fill="#334155">Land of Frost</text>
+                            </g>
+
+                            <g transform="translate(755, 365)">
+                                <text y="0" font-size="10.5" font-weight="800" fill="#3b2f1c">SUỐI NƯỚC NÓNG</text>
+                                <text y="10" font-size="8.5" fill="#524127">Land of Hot Water</text>
+                            </g>
+
+                            <g transform="translate(365, 650)">
+                                <text y="0" font-size="11" font-weight="800" fill="#2c381e">XUYÊN QUỐC</text>
+                                <text y="10" font-size="8.5" fill="#3f4f2b">Land of Rivers</text>
+                            </g>
+
+                            <g transform="translate(565, 780)">
+                                <text y="0" font-size="10" font-weight="800" fill="#27361c">TRÀ QUỐC</text>
+                                <text y="9" font-size="8" fill="#394f29">Land of Tea</text>
+                            </g>
+
+                            <g transform="translate(842, 675)">
+                                <text y="0" font-size="10" font-weight="800" fill="#1d3535">SÓNG QUỐC</text>
+                                <text y="9" font-size="8" fill="#294a4a">Land of Waves</text>
+                            </g>
+
+                            <g transform="translate(905, 565)">
+                                <text y="0" font-size="10.5" font-weight="800" fill="#7c2d12">XOÁY NƯỚC QUỐC</text>
+                                <text y="9" font-size="8.5" fill="#9a3412">Land of Whirlpools</text>
+                            </g>
+
+                            <g transform="translate(420, 72)">
+                                <text y="0" font-size="11" font-weight="800" fill="#1e293b">TUYẾT QUỐC</text>
+                                <text y="10" font-size="8.5" fill="#334155">Land of Snow</text>
+                            </g>
+
+                            <g transform="translate(355, 865)">
+                                <text y="0" font-size="11" font-weight="800" fill="#3b263d">QUỶ QUỐC</text>
+                                <text y="10" font-size="8.5" fill="#523554">Land of Demons</text>
+                            </g>
+
+                            <g transform="translate(1275, 412)">
+                                <text y="0" font-size="10.5" font-weight="800" fill="#143612">ĐẢO RÙA GENBU</text>
+                                <text y="10" font-size="8.5" fill="#1e4d1b">Island Turtle (Di động)</text>
+                            </g>
+                        </g>
+
+                        <!-- ========================================== -->
+                        <!-- LỚP 3A: MŨI TÊN HÀNH QUÂN ĐẠI CHIẾN 4      -->
+                        <!-- ========================================== -->
+                        <g id="war-arrows-layer">
+                            <!-- Liên Minh: Tổng Hành Dinh (Kumo) -> Các Mặt Trận -->
+                            <!-- HQ -> Sư đoàn 1 (Bờ biển Bắc Lôi Quốc) -->
+                            <path d="M 1030,175 Q 1060,130 1125,135" fill="none" stroke="#1d4ed8" stroke-width="2.5" class="war-arrow-allied" marker-end="url(#arrowAllied)"/>
+                            <!-- HQ -> Sư đoàn 2 (Biên giới Lôi - Sương Giá) -->
+                            <path d="M 1015,190 Q 945,220 915,270" fill="none" stroke="#1d4ed8" stroke-width="2.5" class="war-arrow-allied" marker-end="url(#arrowAllied)"/>
+                            <!-- HQ -> Trạm Y Tế & Hậu Cần -->
+                            <path d="M 1020,195 L 985,250" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#arrowAllied)"/>
+                            <!-- Sư đoàn 2 -> Mặt trận Trung tâm (Thập Vĩ) -->
+                            <path d="M 895,295 Q 845,355 815,410" fill="none" stroke="#1d4ed8" stroke-width="3" class="war-arrow-allied" marker-end="url(#arrowAllied)"/>
+                            <!-- Sư đoàn 3 (Rừng Bắc / Suối Nước Nóng) -> Mặt trận Trung tâm -->
+                            <path d="M 730,325 Q 765,375 795,410" fill="none" stroke="#1d4ed8" stroke-width="2.5" class="war-arrow-allied" marker-end="url(#arrowAllied)"/>
+                            <!-- Sư đoàn 4 (Sa mạc Phong/Thổ) -> Vùng chiến sự & Trung tâm -->
+                            <path d="M 335,335 Q 485,365 775,420" fill="none" stroke="#1d4ed8" stroke-width="2.5" class="war-arrow-allied" marker-end="url(#arrowAllied)"/>
+                            <!-- Sư đoàn 5 (Thiết Quốc) -> Chi viện Sư đoàn 2 & Trung tâm -->
+                            <path d="M 795,245 Q 845,260 885,280" fill="none" stroke="#1d4ed8" stroke-width="2.2" class="war-arrow-allied" marker-end="url(#arrowAllied)"/>
+                            <!-- Đội Phục Kích (Kankuro) tiến sâu vào lãnh thổ địch -->
+                            <path d="M 865,265 Q 785,175 685,125" fill="none" stroke="#2563eb" stroke-width="2" class="war-arrow-allied" marker-end="url(#arrowAllied)"/>
+                            <!-- Naruto & Killer B rời Đảo Rùa Genbu tiến ra chiến trường -->
+                            <path d="M 1245,365 Q 1030,395 830,425" fill="none" stroke="#eab308" stroke-width="3" stroke-dasharray="7,4" marker-end="url(#arrowAllied)"/>
+                            <!-- Sasuke & Tứ Đại Hokage từ Konoha tiến ra Mặt trận Trung tâm -->
+                            <path d="M 605,505 Q 705,465 785,435" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrowAllied)"/>
+
+                            <!-- Akatsuki / Zetsu Trắng: Từ Nghĩa Địa Núi tấn công -->
+                            <!-- Nghĩa Địa Núi -> Sư đoàn 1 (Đổ bộ đường biển phía Bắc) -->
+                            <path d="M 625,110 Q 885,45 1135,120" fill="none" stroke="#b91c1c" stroke-width="2.5" class="war-arrow-enemy" marker-end="url(#arrowEnemy)"/>
+                            <!-- Nghĩa Địa Núi -> Sư đoàn 2 (Hành quân ngầm dưới lòng đất) -->
+                            <path d="M 635,125 Q 785,185 890,275" fill="none" stroke="#991b1b" stroke-width="2.5" class="war-arrow-enemy" marker-end="url(#arrowEnemy)"/>
+                            <!-- Nghĩa Địa Núi -> Sư đoàn 3 (Rừng Bắc) -->
+                            <path d="M 625,130 Q 675,225 715,305" fill="none" stroke="#b91c1c" stroke-width="2.3" class="war-arrow-enemy" marker-end="url(#arrowEnemy)"/>
+                            <!-- Nghĩa Địa Núi -> Sư đoàn 4 (Cánh Tây Sa Mạc) -->
+                            <path d="M 600,125 Q 445,195 335,315" fill="none" stroke="#b91c1c" stroke-width="2.3" class="war-arrow-enemy" marker-end="url(#arrowEnemy)"/>
+                            <!-- Obito & Gedo Mazo -> Mặt trận Trung tâm -->
+                            <path d="M 630,130 Q 725,275 800,405" fill="none" stroke="#7f1d1d" stroke-width="3" class="war-arrow-enemy" marker-end="url(#arrowEnemy)"/>
+                        </g>
+
+                        <!-- ========================================== -->
+                        <!-- LỚP 2: CÁC LÀNG ẨN (HIDDEN VILLAGES)       -->
+                        <!-- ========================================== -->
+                        <g id="villages-layer">
+                            <!-- Sẽ được render tự động bằng JS từ dữ liệu chuẩn để đảm bảo icon Hitai-ate vector sắc nét và tương tác mượt -->
+                        </g>
+
+                        <!-- ========================================== -->
+                        <!-- LỚP 3B: ĐIỂM NÓNG ĐẠI CHIẾN NINJA LẦN 4    -->
+                        <!-- ========================================== -->
+                        <g id="war-markers-layer">
+                            <!-- Sẽ được render tự động bằng JS -->
+                        </g>
+
+                    </g>
+                </svg>
+            </main>
+
+            <!-- Viền trang trí dưới cùng -->
+            <div class="h-2 w-full bg-gradient-to-r from-red-900 via-amber-700 to-red-900 border-t border-amber-950/60 shrink-0"></div>
+        </div>
+
+        <!-- Trục gỗ bên phải -->
+        <div class="scroll-roller-right w-3 sm:w-5 h-full flex flex-col justify-between items-center py-2 shrink-0">
+            <div class="scroll-roller-cap w-4 sm:w-7 h-5 rounded-sm shadow-md"></div>
+            <div class="w-1 h-full bg-amber-900/30 rounded"></div>
+            <div class="scroll-roller-cap w-4 sm:w-7 h-5 rounded-sm shadow-md"></div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * ============================================================================
+         * 1. THƯ VIỆN BIỂU TƯỢNG HITAI-ATE (BĂNG TRÁN LÀNG ẨN) CHUẨN HÓA TỌA ĐỘ [-5, 5]
+         *    Không dùng <svg> lồng nhau để tránh lỗi tràn kích thước trên trình duyệt
+         * ============================================================================
+         */
+        const VILLAGE_SHAPES = {
+            konoha: `
+                <path d="M 0.3,0.4 C 0.3,-0.6 1.3,-1.2 2.1,-0.6 C 3.1,0.1 2.9,1.8 1.6,2.5 C -0.1,3.3 -2.3,2.3 -2.7,0.4 C -3.2,-1.9 -1.5,-4.0 0.9,-4.2 C 3.1,-4.4 4.7,-2.7 5.0,-0.6 L 5.8,0.1 L 4.3,0.8"/>
+                <path d="M -2.5,1.2 L -4.8,3.6 M 0.8,-4.2 L 1.4,-5.4"/>
+            `,
+            suna: `
+                <polygon points="-3.8,-4.2 3.8,-4.2 0,0"/>
+                <polygon points="-3.8,4.2 3.8,4.2 0,0"/>
+            `,
+            kiri: `
+                <line x1="-4.5" y1="-2.2" x2="-1.5" y2="-4.2"/>
+                <line x1="-2.2" y1="0.8" x2="2.2" y2="-2.2"/>
+                <line x1="-0.8" y1="3.4" x2="3.8" y2="0.4"/>
+                <line x1="1.8" y1="4.4" x2="4.8" y2="2.4"/>
+            `,
+            kumo: `
+                <path d="M -3.5,2.2 C -5.0,2.2 -5.5,0.6 -4.3,-0.3 C -4.6,-2.2 -2.7,-3.7 -0.9,-3.1 C 0.3,-4.4 2.6,-4.1 3.3,-2.4 C 5.0,-2.2 5.6,-0.1 4.4,1.2 C 4.0,1.9 3.2,2.2 2.4,2.2 Z"/>
+                <line x1="-2.5" y1="4.0" x2="2.5" y2="4.0"/>
+            `,
+            iwa: `
+                <polygon points="-5.0,3.8 -1.2,-3.2 2.6,3.8"/>
+                <polygon points="0.2,3.8 2.8,-0.8 5.2,3.8"/>
+            `,
+            ame: `
+                <line x1="-3.3" y1="-4.0" x2="-3.3" y2="4.0"/>
+                <line x1="-1.1" y1="-4.0" x2="-1.1" y2="4.0"/>
+                <line x1="1.1" y1="-4.0" x2="1.1" y2="4.0"/>
+                <line x1="3.3" y1="-4.0" x2="3.3" y2="4.0"/>
+            `,
+            oto: `
+                <circle cx="-1.5" cy="2.6" r="1.8"/>
+                <path d="M 0.3,2.6 L 0.3,-4.2 C 2.2,-3.4 3.6,-2.0 3.6,-0.4"/>
+            `,
+            taki: `
+                <path d="M -2.2,-4.2 L -2.2,1.6 C -2.2,3.1 -3.2,4.0 -4.4,4.2"/>
+                <path d="M 0,-4.2 L 0,2.6 C 0,3.6 -0.6,4.2 -1.4,4.5"/>
+                <path d="M 2.2,-4.2 L 2.2,1.6 C 2.2,3.1 3.2,4.0 4.4,4.2"/>
+            `,
+            kusa: `
+                <line x1="0" y1="4.2" x2="0" y2="-4.2"/>
+                <path d="M 0,3.4 C -2.4,1.8 -3.8,-0.4 -3.8,-2.4 C -1.8,-1.6 -0.7,0 0,1.8"/>
+                <path d="M 0,3.4 C 2.4,1.8 3.8,-0.4 3.8,-2.4 C 1.8,-1.6 0.7,0 0,1.8"/>
+            `,
+            uzushio: `
+                <path d="M 0,0 C 0,-0.8 0.7,-1.4 1.4,-1.4 C 2.3,-1.4 2.9,-0.7 2.9,0.1 C 2.9,1.5 1.7,2.6 0.2,2.6 C -1.8,2.6 -3.3,1.0 -3.3,-1.0 C -3.3,-3.3 -1.3,-4.9 1.0,-4.9 C 3.5,-4.9 5.2,-2.8 5.2,-0.3 C 5.2,2.6 2.8,4.8 -0.2,4.8 C -3.4,4.8 -5.4,2.3 -5.4,-0.8"/>
+            `,
+            yuki: `
+                <line x1="0" y1="-4.6" x2="0" y2="4.6"/>
+                <line x1="-4.0" y1="-2.3" x2="4.0" y2="2.3"/>
+                <line x1="4.0" y1="-2.3" x2="-4.0" y2="2.3"/>
+                <circle cx="0" cy="0" r="1.2"/>
+            `,
+            hoshi: `
+                <polygon points="0,-4.8 1.4,-1.5 4.8,-1.5 2.1,0.7 3.1,4.2 0,2.1 -3.1,4.2 -2.1,0.7 -4.8,-1.5 -1.4,-1.5"/>
+            `,
+            yugakure: `
+                <path d="M -2.6,2.4 C -3.4,0.8 -1.8,-0.4 -2.6,-2.4"/>
+                <path d="M 0,2.4 C -0.8,0.8 0.8,-0.4 0,-2.4"/>
+                <path d="M 2.6,2.4 C 1.8,0.8 3.4,-0.4 2.6,-2.4"/>
+                <line x1="-4.0" y1="4.0" x2="4.0" y2="4.0"/>
+            `,
+            shimogakure: `
+                <polygon points="-4.6,3.6 -0.8,-2.2 2.4,3.6"/>
+                <polygon points="0.2,3.6 2.6,-0.4 4.8,3.6"/>
+                <circle cx="-2.6" cy="-3.2" r="1.2"/>
+            `,
+            iron: `
+                <line x1="-3.2" y1="3.2" x2="3.2" y2="-3.2"/>
+                <line x1="-3.2" y1="-3.2" x2="3.2" y2="3.2"/>
+                <circle cx="0" cy="0" r="3.4"/>
+            `
+        };
+
+        // Hàm bọc biểu tượng vào thẻ SVG độc lập dành riêng cho bảng thông tin chi tiết bên phải
+        function wrapSymbolForDrawer(shapeKey) {
+            const inner = VILLAGE_SHAPES[shapeKey] || VILLAGE_SHAPES.konoha;
+            return `<svg viewBox="-7 -7 14 14" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+        }
+
+        /**
+         * ============================================================================
+         * 2. CƠ SỞ DỮ LIỆU ĐỊA LÝ, QUỐC GIA & LÀNG ẨN (CANON LORE)
+         * ============================================================================
+         */
+        const NATIONS_DATA = {
+            fire: {
+                id: 'fire',
+                category: 'Ngũ Đại Cường Quốc',
+                nameVi: 'Hỏa Quốc',
+                nameEn: 'Land of Fire (Hi no Kuni)',
+                symbolKey: 'konoha',
+                x: 615, y: 560,
+                capital: 'Làng Lá (Konohagakure)',
+                leader: 'Hỏa Quốc Đại Danh (Fire Daimyo)',
+                terrain: 'Rừng rậm nhiệt đới & ôn đới trù phú, khí hậu ấm áp, ôn hòa.',
+                lore: 'Quốc gia hùng mạnh và thịnh vượng bậc nhất thế giới Shinobi, nằm ở trung tâm lục địa. Với nguồn tài nguyên dồi dào và dân số đông đúc, Hỏa Quốc là nơi khai sinh ra hệ thống "Một Quốc Gia - Một Làng Ẩn" do Hashirama Senju và Madara Uchiha sáng lập.',
+                warRole: 'Hậu phương chiến lược lớn nhất của Liên Minh Shinobi. Đây cũng là nơi Sasuke Uchiha hồi sinh Tứ Đại Hokage tại Đền Thờ Mặt Nạ Gia Tộc Uzumaki trước khi tiến ra chiến trường.'
+            },
+            wind: {
+                id: 'wind',
+                category: 'Ngũ Đại Cường Quốc',
+                nameVi: 'Phong Quốc',
+                nameEn: 'Land of Wind (Kaze no Kuni)',
+                symbolKey: 'suna',
+                x: 195, y: 600,
+                capital: 'Làng Cát (Sunagakure)',
+                leader: 'Phong Quốc Đại Danh (Wind Daimyo)',
+                terrain: 'Sa mạc cát mênh mông, bão cát khắc nghiệt, các ốc đảo rải rác.',
+                lore: 'Nằm ở phía Tây Nam lục địa với diện tích rộng lớn nhưng phần lớn là sa mạc cằn cỗi. Người dân sinh sống tập trung quanh các ốc đảo. Làng Cát là đồng minh thân cận nhất của Làng Lá sau cuộc xâm lược bất thành.',
+                warRole: 'Cung cấp lực lượng tinh nhuệ cho Liên Minh Shinobi, đặc biệt là Sư đoàn 4 do Kazekage Đệ Ngũ Gaara làm Tổng chỉ huy chiến trường và Đội Phục Kích của Kankuro.'
+            },
+            water: {
+                id: 'water',
+                category: 'Ngũ Đại Cường Quốc',
+                nameVi: 'Thủy Quốc',
+                nameEn: 'Land of Water (Mizu no Kuni)',
+                symbolKey: 'kiri',
+                x: 1125, y: 540,
+                capital: 'Làng Sương Mù (Kirigakure)',
+                leader: 'Thủy Quốc Đại Danh (Water Daimyo)',
+                terrain: 'Quần đảo lớn ngoài khơi Đông Nam, bao phủ bởi sương mù dày đặc và núi cao.',
+                lore: 'Tách biệt hoàn toàn với đại lục bởi đại dương rộng lớn, Thủy Quốc từng có chính sách bế quan tỏa cảng và lịch sử đẫm máu dưới thời "Sương Mù Đẫm Máu" (Blood Mist) do Obito thao túng Yagura. Mizukage Đệ Ngũ Mei Terumi đã cải cách mở cửa đất nước.',
+                warRole: 'Đóng góp các ninja sử dụng Thủy độn bậc thầy và đội ngũ cảm nhận (như Ao - người giữ Bạch Nhãn điều khiển Thủy cầu tại Tổng Hành Dinh).'
+            },
+            lightning: {
+                id: 'lightning',
+                category: 'Ngũ Đại Cường Quốc',
+                nameVi: 'Lôi Quốc',
+                nameEn: 'Land of Lightning (Kaminari no Kuni)',
+                symbolKey: 'kumo',
+                x: 1075, y: 210,
+                capital: 'Làng Mây (Kumogakure)',
+                leader: 'Lôi Quốc Đại Danh (Lightning Daimyo)',
+                terrain: 'Bán đảo núi non hiểm trở ở Đông Bắc, mây mù che phủ và sấm sét quanh năm.',
+                lore: 'Sở hữu lực lượng quân sự hùng hậu và không ngừng phát triển sức mạnh công nghệ ninja (như Pháo Chakra). Lôi Quốc sở hữu hai Vĩ Thú hoàn hảo là Bát Vĩ (Killer B) và Nhị Vĩ (Yugito Nii).',
+                warRole: 'Trái tim chỉ huy của Đại Chiến Ninja Lần 4! Tổng Hành Dinh Liên Minh Shinobi được đặt tại Làng Mây, đồng thời bờ biển phía Bắc Lôi Quốc là tuyến đầu chống cuộc đổ bộ của quân đoàn Zetsu Trắng.'
+            },
+            earth: {
+                id: 'earth',
+                category: 'Ngũ Đại Cường Quốc',
+                nameVi: 'Thổ Quốc',
+                nameEn: 'Land of Earth (Tsuchi no Kuni)',
+                symbolKey: 'iwa',
+                x: 290, y: 245,
+                capital: 'Làng Đá (Iwagakure)',
+                leader: 'Thổ Quốc Đại Danh (Earth Daimyo)',
+                terrain: 'Cao nguyên đá hiểm trở, vách núi dựng đứng, gió bụi ("Nham Vũ").',
+                lore: 'Nằm ở phía Tây Bắc, được bao bọc bởi các dãy núi đá tự nhiên đóng vai trò như pháo đài bất khả xâm phạm. Làng Đá nổi tiếng với các nhẫn thuật Thổ độn quy mô lớn và từng nhiều lần xung đột với Làng Lá.',
+                warRole: 'Tsuchikage Đệ Tam Onoki cùng con trai Kitsuchi (Chỉ huy Sư đoàn 2) và cháu gái Kurotsuchi đóng vai trò trụ cột tuyến đầu chống lại Madara Uchiha và đội quân ngầm Zetsu Trắng.'
+            },
+            rain: {
+                id: 'rain',
+                category: 'Tiểu Quốc Chiến Lược',
+                nameVi: 'Vũ Quốc',
+                nameEn: 'Land of Rain (Ame no Kuni)',
+                symbolKey: 'ame',
+                x: 385, y: 485,
+                capital: 'Làng Mưa (Amegakure)',
+                leader: 'Pain (Nagato) / Konan (trước Đại chiến 4)',
+                terrain: 'Vùng trũng ẩm ướt, mưa rơi không ngừng quanh năm, kiến trúc tháp sắt công nghiệp.',
+                lore: 'Nằm kẹp giữa ba cường quốc Hỏa - Phong - Thổ, Vũ Quốc luôn là chiến trường đẫm máu trong các cuộc Đại Chiến Shinobi trước đây. Đây là quê hương của Nagato, Yahiko, Konan và từng là đại bản doanh bí mật của tổ chức Akatsuki.',
+                warRole: 'Trước khi Đại chiến 4 nổ ra, Tobi (Obito) đã giao chiến và sát hại Konan tại đây để đoạt lại đôi mắt Rinnegan của Nagato.'
+            },
+            iron: {
+                id: 'iron',
+                category: 'Quốc Gia Trung Lập',
+                nameVi: 'Thiết Quốc',
+                nameEn: 'Land of Iron (Tetsu no Kuni)',
+                symbolKey: 'iron',
+                x: 790, y: 210,
+                capital: 'Vùng Núi Tam Lang (Three Wolves)',
+                leader: 'Đại Tướng Mifune',
+                terrain: 'Vùng núi tuyết lạnh giá quanh năm ở phía Bắc.',
+                lore: 'Quốc gia đặc biệt không có ninja mà được bảo vệ bởi các Samurai sử dụng kiếm thuật truyền chakra. Thiết Quốc giữ vị thế trung lập tuyệt đối và là nơi tổ chức Hội Nghị Ngũ Đại Kage.',
+                warRole: 'Nơi Tobi chính thức tuyên chiến Đại Chiến Thế Giới Shinobi Lần Thứ 4. Trong chiến tranh, Đại tướng Mifune chỉ huy Sư đoàn 5 (Đặc chiến) phối hợp cùng Liên Minh.'
+            },
+            grass: {
+                id: 'grass',
+                category: 'Tiểu Quốc',
+                nameVi: 'Thảo Quốc',
+                nameEn: 'Land of Grass (Kusa no Kuni)',
+                symbolKey: 'kusa',
+                x: 465, y: 365,
+                capital: 'Làng Cỏ (Kusagakure)',
+                leader: 'Lãnh chúa Thảo Quốc',
+                terrain: 'Đồng cỏ rộng lớn, rừng tre và các hẻm núi.',
+                lore: 'Nằm giữa Hỏa Quốc, Thổ Quốc và Vũ Quốc. Cầu Kannabi nổi tiếng trong Đại chiến lần 3 nằm tại đây (nơi Obito trao Sharingan cho Kakashi).',
+                warRole: 'Nằm trên hành lang di chuyển chiến lược giữa cánh Tây và mặt trận trung tâm.'
+            },
+            waterfall: {
+                id: 'waterfall',
+                category: 'Tiểu Quốc',
+                nameVi: 'Thác Nước Quốc',
+                nameEn: 'Land of Waterfall (Taki no Kuni)',
+                symbolKey: 'taki',
+                x: 520, y: 245,
+                capital: 'Làng Thác Nước (Takigakure)',
+                leader: 'Shibuki',
+                terrain: 'Thung lũng sâu được bao quanh bởi các thác nước khổng lồ.',
+                lore: 'Tiểu quốc duy nhất ngoài Ngũ Đại Cường Quốc từng sở hữu một Vĩ Thú (Thất Vĩ Chomei - Jinchuriki Fu). Quê hương của thành viên Akatsuki Kakuzu.',
+                warRole: 'Giữ vị trí phòng ngự trung lập ở phía Bắc.'
+            },
+            sound: {
+                id: 'sound',
+                category: 'Tiểu Quốc',
+                nameVi: 'Điền Quốc (Âm Thanh)',
+                nameEn: 'Land of Rice Fields / Sound (Ta no Kuni)',
+                symbolKey: 'oto',
+                x: 645, y: 255,
+                capital: 'Làng Âm Thanh (Otogakure)',
+                leader: 'Orochimaru',
+                terrain: 'Vùng đồi núi và thung lũng hẻo lánh phía Bắc Hỏa Quốc.',
+                lore: 'Trước đây gọi là Điền Quốc, sau được Orochimaru thâu tóm và thành lập Làng Âm Thanh làm căn cứ thí nghiệm nhẫn thuật cấm.',
+                warRole: 'Nơi Kabuto Yakushi hoàn thiện Uế Thổ Chuyển Sinh (Edo Tensei) trước khi liên minh với Tobi tại Nghĩa Địa Núi.'
+            },
+            frost: {
+                id: 'frost',
+                category: 'Tiểu Quốc Tiền Tuyến',
+                nameVi: 'Sương Giá Quốc',
+                nameEn: 'Land of Frost (Shimo no Kuni)',
+                symbolKey: 'shimogakure',
+                x: 895, y: 315,
+                capital: 'Làng Sương Giá (Shimogakure)',
+                leader: 'Lãnh chúa Sương Giá',
+                terrain: 'Vùng đất lạnh giá nằm giữa Lôi Quốc và Suối Nước Nóng Quốc.',
+                lore: 'Một tiểu quốc nhỏ ở phía Đông Bắc, người dân phải sơ tán khẩn cấp khi chiến tranh bùng nổ.',
+                warRole: 'Trở thành tuyến giao tranh ác liệt bậc nhất của Sư đoàn 2 (Kitsuchi) và đặt Trạm Y Tế & Hậu Cần lớn của Liên Minh Shinobi.'
+            },
+            hotwater: {
+                id: 'hotwater',
+                category: 'Tiểu Quốc',
+                nameVi: 'Suối Nước Nóng Quốc',
+                nameEn: 'Land of Hot Water (Yu no Kuni)',
+                symbolKey: 'yugakure',
+                x: 755, y: 365,
+                capital: 'Làng Suối Nước Nóng (Yugakure)',
+                leader: 'Hội đồng Yugakure',
+                terrain: 'Nhiều suối khoáng nóng và khu rừng rậm phía Bắc Hỏa Quốc.',
+                lore: 'Quê hương của Hidan (thành viên bất tử của Akatsuki). Ngôi làng đã chuyển mình từ làng quân sự thành khu du lịch hòa bình.',
+                warRole: 'Khu vực rừng rậm giáp ranh là nơi Sư đoàn 3 của Kakashi Hatake giao chiến với Thất Kiếm Làng Sương Mù hồi sinh.'
+            },
+            whirlpools: {
+                id: 'whirlpools',
+                category: 'Cố Quốc Tàn Tích',
+                nameVi: 'Xoáy Nước Quốc',
+                nameEn: 'Land of Whirlpools (Uzu no Kuni)',
+                symbolKey: 'uzushio',
+                x: 905, y: 565,
+                capital: 'Làng Xoáy Nước (Uzushiogakure - Tàn tích)',
+                leader: 'Gia tộc Uzumaki (Trước khi diệt vong)',
+                terrain: 'Hòn đảo bao quanh bởi các dòng hải lưu xoáy cực mạnh.',
+                lore: 'Quê hương của gia tộc Uzumaki - bậc thầy phong ấn thuật và là họ hàng xa của gia tộc Senju. Làng Lá vẫn mang biểu tượng xoáy ốc trên áo giáp để tưởng nhớ tình hữu nghị này.',
+                warRole: 'Di sản phong ấn thuật của Uzumaki đóng vai trò quan trọng trong việc khống chế Vĩ Thú.'
+            },
+            waves: {
+                id: 'waves',
+                category: 'Tiểu Quốc Đảo',
+                nameVi: 'Sóng Quốc',
+                nameEn: 'Land of Waves (Nami no Kuni)',
+                symbolKey: 'kiri',
+                x: 842, y: 675,
+                capital: 'Cầu Đại Naruto (Great Naruto Bridge)',
+                leader: 'Tazuna (Kiến trúc sư trưởng)',
+                terrain: 'Đảo nhỏ gần bờ biển Đông Nam Hỏa Quốc.',
+                lore: 'Không có làng ninja riêng. Nơi Đội 7 thực hiện nhiệm vụ cấp A đầu tiên và đối đầu Zabuza Momochi cùng Haku.',
+                warRole: 'Vùng biển hậu phương yên bình.'
+            },
+            rivers: {
+                id: 'rivers',
+                category: 'Tiểu Quốc',
+                nameVi: 'Xuyên Quốc',
+                nameEn: 'Land of Rivers (Kawa no Kuni)',
+                symbolKey: 'suna',
+                x: 365, y: 650,
+                capital: 'Thung lũng Sông Lớn',
+                leader: 'Lãnh chúa Xuyên Quốc',
+                terrain: 'Hệ thống sông ngòi chằng chịt nằm kẹp giữa Hỏa Quốc và Phong Quốc.',
+                lore: 'Nơi đặt hang ổ bí mật của Akatsuki (nơi Gaara bị rút Nhất Vĩ Shukaku và Đội Guy giao chiến với Kisame).',
+                warRole: 'Tuyến đường tiếp vận nối Phong Quốc và Hỏa Quốc.'
+            },
+            tea: {
+                id: 'tea',
+                category: 'Tiểu Quốc',
+                nameVi: 'Trà Quốc',
+                nameEn: 'Land of Tea (Cha no Kuni)',
+                symbolKey: 'konoha',
+                x: 565, y: 780,
+                capital: 'Cảng Degarashi',
+                leader: 'Lãnh chúa Trà Quốc',
+                terrain: 'Hai bán đảo nhỏ ở cực Nam Hỏa Quốc.',
+                lore: 'Nổi tiếng với lễ hội chạy đua truyền thống Todoroki.',
+                warRole: 'Vùng hậu phương phía Nam.'
+            },
+            snow: {
+                id: 'snow',
+                category: 'Cực Bắc',
+                nameVi: 'Tuyết Quốc',
+                nameEn: 'Land of Snow (Yuki no Kuni)',
+                symbolKey: 'yuki',
+                x: 420, y: 72,
+                capital: 'Làng Tuyết (Yukigakure)',
+                leader: 'Koyuki Kazahana',
+                terrain: 'Băng tuyết vĩnh cửu ở cực Bắc.',
+                lore: 'Phát triển công nghệ Giáp Chakra hiện đại.',
+                warRole: 'Nằm ngoài vùng chiến sự chính.'
+            },
+            demons: {
+                id: 'demons',
+                category: 'Cực Nam',
+                nameVi: 'Quỷ Quốc',
+                nameEn: 'Land of Demons (Oni no Kuni)',
+                symbolKey: 'hoshi',
+                x: 355, y: 865,
+                capital: 'Đền Thờ Quỷ Quốc',
+                leader: 'Nữ Tư Tế Shion',
+                terrain: 'Vùng núi sương mù ở cực Nam.',
+                lore: 'Nơi phong ấn ác linh Moryo qua nhiều thế hệ.',
+                warRole: 'Nằm ngoài vùng chiến sự chính.'
+            },
+            turtle: {
+                id: 'turtle',
+                category: 'Sinh Vật Khổng Lồ Di Động',
+                nameVi: 'Đảo Rùa Khổng Lồ (Genbu)',
+                nameEn: 'Giant Island Turtle (Shimagame)',
+                symbolKey: 'kumo',
+                x: 1275, y: 365,
+                capital: 'Thác Nước Sự Thật (Falls of Truth)',
+                leader: 'Motoi & Killer B (Quản lý)',
+                terrain: 'Mai của một con rùa biển khổng lồ có hệ sinh thái rừng rậm và thác nước.',
+                lore: 'Sinh vật được Làng Mây thuần hóa qua nhiều thế hệ để làm nơi huấn luyện Jinchuriki.',
+                warRole: 'Nơi Liên Minh Shinobi giấu và bảo vệ hai Jinchuriki cuối cùng là Naruto Uzumaki và Killer B. Tại đây Naruto đã thuần hóa được Cửu Vĩ Kurama trước khi phá vòng phong tỏa lao ra chiến trường.'
+            }
+        };
+
+        const VILLAGES_DATA = [
+            {
+                id: 'v-konoha',
+                nameVi: 'Làng Lá',
+                nameEn: 'Konohagakure (Hidden Leaf Village)',
+                nation: 'Hỏa Quốc (Land of Fire)',
+                kage: 'Tsunade (Hokage Đệ Ngũ)',
+                x: 590, y: 505,
+                symbolKey: 'konoha',
+                color: '#15803d',
+                description: 'Một trong Ngũ Đại Cường Quốc Nhẫn Giả, được sáng lập bởi Hashirama Senju và Madara Uchiha. Nổi tiếng với "Hỏa Chí" (Will of Fire) và các gia tộc danh giá như Senju, Uchiha, Hyuga, Nara, Yamanaka, Akimichi, Aburame, Inuzuka.'
+            },
+            {
+                id: 'v-suna',
+                nameVi: 'Làng Cát',
+                nameEn: 'Sunagakure (Hidden Sand Village)',
+                nation: 'Phong Quốc (Land of Wind)',
+                kage: 'Gaara (Kazekage Đệ Ngũ)',
+                x: 185, y: 535,
+                symbolKey: 'suna',
+                color: '#b45309',
+                description: 'Ẩn mình giữa thung lũng sa mạc được bao bọc bởi vách đá tự nhiên. Làng Cát nổi tiếng với Thuật Rối (Puppet Technique), Phong độn và từng là nơi phong ấn Nhất Vĩ Shukaku.'
+            },
+            {
+                id: 'v-kiri',
+                nameVi: 'Làng Sương Mù',
+                nameEn: 'Kirigakure (Hidden Mist Village)',
+                nation: 'Thủy Quốc (Land of Water)',
+                kage: 'Mei Terumi (Mizukage Đệ Ngũ)',
+                x: 1125, y: 495,
+                symbolKey: 'kiri',
+                color: '#0f766e',
+                description: 'Nằm trên hòn đảo chính của Thủy Quốc, bao phủ trong sương mù dày đặc. Làng Sương Mù nổi danh với nhóm "Thất Kiếm Làng Sương Mù" và các nhẫn thuật Thủy độn, Ám sát thuật.'
+            },
+            {
+                id: 'v-kumo',
+                nameVi: 'Làng Mây',
+                nameEn: 'Kumogakure (Hidden Cloud Village)',
+                nation: 'Lôi Quốc (Land of Lightning)',
+                kage: 'A (Raikage Đệ Tứ)',
+                x: 1035, y: 180,
+                symbolKey: 'kumo',
+                color: '#a16207',
+                description: 'Tọa lạc trên đỉnh dãy núi cao chạm mây của Lôi Quốc. Làng Mây nổi tiếng với thể thuật Lôi độn tốc độ cao, kiếm thuật Kenjutsu và lực lượng quân sự mạnh mẽ bậc nhất.'
+            },
+            {
+                id: 'v-iwa',
+                nameVi: 'Làng Đá',
+                nameEn: 'Iwagakure (Hidden Stone Village)',
+                nation: 'Thổ Quốc (Land of Earth)',
+                kage: 'Onoki (Tsuchikage Đệ Tam)',
+                x: 275, y: 205,
+                symbolKey: 'iwa',
+                color: '#78350f',
+                description: 'Được xây dựng trong các hang động và vách núi đá dựng đứng của Thổ Quốc. Nổi tiếng với tinh thần kiên định như đá và các nhẫn thuật Thổ độn, Bộc độn, Trần độn.'
+            },
+            {
+                id: 'v-ame',
+                nameVi: 'Làng Mưa',
+                nameEn: 'Amegakure (Hidden Rain Village)',
+                nation: 'Vũ Quốc (Land of Rain)',
+                kage: 'Hanzo / Pain (Nagato) / Konan',
+                x: 385, y: 455,
+                symbolKey: 'ame',
+                color: '#334155',
+                description: 'Ngôi làng công nghiệp với những tòa tháp chọc trời luôn chìm trong mưa. Nơi đây từng là đại bản doanh bí mật của Pain và tổ chức Akatsuki.'
+            },
+            {
+                id: 'v-oto',
+                nameVi: 'Làng Âm Thanh',
+                nameEn: 'Otogakure (Hidden Sound Village)',
+                nation: 'Điền Quốc (Land of Rice Fields)',
+                kage: 'Orochimaru (Lãnh đạo)',
+                x: 645, y: 225,
+                symbolKey: 'oto',
+                color: '#581c87',
+                description: 'Được Orochimaru thành lập tại Điền Quốc nhằm phục vụ mục đích nghiên cứu cấm thuật, Ấn Nguyền và thu thập các cơ thể có huyết kế giới hạn.'
+            },
+            {
+                id: 'v-taki',
+                nameVi: 'Làng Thác Nước',
+                nameEn: 'Takigakure (Hidden Waterfall Village)',
+                nation: 'Thác Nước Quốc (Land of Waterfall)',
+                kage: 'Shibuki (Trưởng làng)',
+                x: 520, y: 215,
+                symbolKey: 'taki',
+                color: '#047857',
+                description: 'Lối vào làng ẩn sau một thác nước khổng lồ. Nổi tiếng với "Nước Thần Anh Hùng" giúp tăng cường chakra vượt bậc.'
+            },
+            {
+                id: 'v-kusa',
+                nameVi: 'Làng Cỏ',
+                nameEn: 'Kusagakure (Hidden Grass Village)',
+                nation: 'Thảo Quốc (Land of Grass)',
+                kage: 'Hội đồng Làng Cỏ',
+                x: 465, y: 335,
+                symbolKey: 'kusa',
+                color: '#4d7c0f',
+                description: 'Ngôi làng giàu có nhờ nông nghiệp và thảo dược, đồng thời sở hữu nhiều ninja giỏi do thám và phân tích nhẫn thuật.'
+            },
+            {
+                id: 'v-uzushio',
+                nameVi: 'Làng Xoáy Nước (Tàn Tích)',
+                nameEn: 'Uzushiogakure (Hidden Eddy Village)',
+                nation: 'Xoáy Nước Quốc (Land of Whirlpools)',
+                kage: 'Ashina Uzumaki (Quá khứ)',
+                x: 895, y: 515,
+                symbolKey: 'uzushio',
+                color: '#9a3412',
+                description: 'Quê hương của gia tộc Uzumaki. Ngôi làng đã bị các cường quốc khác liên thủ phá hủy trong Đại Chiến Shinobi vì họ quá lo sợ sức mạnh phong ấn thuật của gia tộc Uzumaki.'
+            },
+            {
+                id: 'v-yuki',
+                nameVi: 'Làng Tuyết',
+                nameEn: 'Yukigakure (Hidden Snow Village)',
+                nation: 'Tuyết Quốc (Land of Snow)',
+                kage: 'Koyuki Kazahana',
+                x: 420, y: 48,
+                symbolKey: 'yuki',
+                color: '#0369a1',
+                description: 'Ngôi làng ở vùng băng giá cực Bắc, nổi tiếng với các công nghệ cơ khí và Giáp Chakra kháng nhẫn thuật.'
+            },
+            {
+                id: 'v-hoshi',
+                nameVi: 'Làng Sao',
+                nameEn: 'Hoshigakure (Hidden Star Village)',
+                nation: 'Hùng Quốc (Land of Bears)',
+                kage: 'Hoshikage (Tự phong)',
+                x: 355, y: 840,
+                symbolKey: 'hoshi',
+                color: '#6d28d9',
+                description: 'Ngôi làng nhỏ nằm trong thung lũng khí độc, nổi tiếng với phương pháp luyện tập Khổng Tước Diệu Pháp quanh thiên thạch sao rơi.'
+            },
+            {
+                id: 'v-yu',
+                nameVi: 'Làng Suối Nước Nóng',
+                nameEn: 'Yugakure (Hidden Hot Water Village)',
+                nation: 'Suối Nước Nóng Quốc',
+                kage: 'Hội đồng Yugakure',
+                x: 745, y: 340,
+                symbolKey: 'yugakure',
+                color: '#b45309',
+                description: 'Ngôi làng đã từ bỏ con đường chiến tranh để phát triển du lịch nghỉ dưỡng. Đây là quê hương của Hidan.'
+            },
+            {
+                id: 'v-shimo',
+                nameVi: 'Làng Sương Giá',
+                nameEn: 'Shimogakure (Hidden Frost Village)',
+                nation: 'Sương Giá Quốc',
+                kage: 'Trưởng làng Sương Giá',
+                x: 895, y: 288,
+                symbolKey: 'shimogakure',
+                color: '#475569',
+                description: 'Ngôi làng nằm trên tuyến biên giới với Lôi Quốc, nơi diễn ra nhiều trận giao tranh đầu tiên của Đại chiến lần 4.'
+            }
+        ];
+
+        /**
+         * ============================================================================
+         * 3. DỮ LIỆU ĐẠI CHIẾN NINJA LẦN THỨ 4 (4TH SHINOBI WORLD WAR)
+         * ============================================================================
+         */
+        const WAR_NODES_DATA = [
+            {
+                id: 'war-hq',
+                type: 'hq',
+                code: 'HQ',
+                nameVi: 'Tổng Hành Dinh Liên Minh Shinobi',
+                nameEn: 'Allied Shinobi Forces Headquarters',
+                location: 'Làng Mây - Lôi Quốc (Kumogakure)',
+                x: 1055, y: 155,
+                commander: 'Raikage Đệ Tứ A, Tsunade (Hokage Đệ Ngũ), Shikaku Nara (Quân sư trưởng), Inoichi Yamanaka (Chỉ huy liên lạc), Mabui, Ao (Đội trưởng cảm nhận Thủy cầu).',
+                tactics: 'Trung tâm não bộ điều phối toàn bộ 80.000 quân Liên Minh qua hệ thống truyền tin tâm linh của gia tộc Yamanaka và Thủy cầu cảm nhận của Ao. Sau này bị Thập Vĩ bắn Vĩ Thú Ngọc phá hủy hoàn toàn (Shikaku, Inoichi, Mabui hy sinh anh dũng sau khi truyền đạt chiến thuật cuối cùng).'
+            },
+            {
+                id: 'war-med',
+                type: 'hq',
+                code: 'Y TẾ',
+                nameVi: 'Tổng Cục Hậu Cần & Trạm Y Tế Dã Chiến',
+                nameEn: 'Logistical Support & Medical Division HQ',
+                location: 'Vùng hậu phương giáp ranh Lôi Quốc – Sương Giá Quốc',
+                x: 975, y: 255,
+                commander: 'Shizune (Đội trưởng Y tế), Ittan (Đội trưởng Hậu cần), Sakura Haruno, Hinata Hyuga, Neji Hyuga.',
+                tactics: 'Tiếp nhận, cứu chữa thương binh từ các chiến tuyến và cung cấp lương thảo, nhẫn cụ. Tại đây, nhóm Zetsu Trắng giả dạng đã xâm nhập ám sát nhân viên y tế ban đêm nhưng bị Sakura phát hiện và Naruto (Chế độ Chakra Cửu Vĩ) tiêu diệt toàn bộ.'
+            },
+            {
+                id: 'war-div1',
+                type: 'division',
+                code: 'SĐ 1',
+                nameVi: 'Sư Đoàn 1 (Đội Tầm Trung)',
+                nameEn: 'First Division (Mid-Range Battle Division)',
+                location: 'Bờ biển phía Bắc Lôi Quốc',
+                x: 1145, y: 135,
+                commander: 'Darui (Cánh tay phải của Raikage) • Thành viên tiêu biểu: Choza Akimichi, Tenten, Hiashi Hyuga, Atsui, Samui.',
+                tactics: 'Phòng thủ bờ biển ngăn chặn cuộc đổ bộ đường thủy của quân đoàn Zetsu Trắng và các nhẫn giả Uế Thổ Chuyển Sinh: Anh em Vàng Bạc (Kinkaku & Ginkaku), Kakuzu, Asuma Sarutobi, Dan Kato, Hizashi Hyuga. Darui đã phong ấn thành công Kinkaku & Ginkaku bằng bảo vật Lục Đạo.'
+            },
+            {
+                id: 'war-div2',
+                type: 'division',
+                code: 'SĐ 2',
+                nameVi: 'Sư Đoàn 2 (Đội Cận Chiến)',
+                nameEn: 'Second Division (Close-Range Battle Division)',
+                location: 'Biên giới Lôi Quốc – Sương Giá Quốc',
+                x: 910, y: 280,
+                commander: 'Kitsuchi (Con trai Tsuchikage Onoki) • Thành viên tiêu biểu: Kurotsuchi, Hinata Hyuga, Neji Hyuga, Karui.',
+                tactics: 'Đội hình tiên phong chuyên đánh giáp lá cà. Kitsuchi và Kurotsuchi đã sử dụng Thổ độn khổng lồ lật tung mặt đất, phát hiện và tiêu diệt hàng vạn quân Zetsu Trắng hành quân ngầm dưới lòng đất, sau đó đối đầu trực diện với Dị Ma Thần Tượng (Gedo Mazo) do Tobi triệu hồi.'
+            },
+            {
+                id: 'war-div3',
+                type: 'division',
+                code: 'SĐ 3',
+                nameVi: 'Sư Đoàn 3 (Đội Cận – Trung Chiến)',
+                nameEn: 'Third Division (Close-to-Mid Range Division)',
+                location: 'Khu rừng rậm phía Bắc (Giáp Suối Nước Nóng Quốc)',
+                x: 725, y: 315,
+                commander: 'Kakashi Hatake • Thành viên tiêu biểu: Might Guy, Sakura Haruno (tiền tuyến đầu), Rock Lee, Sai, Maki.',
+                tactics: 'Giao chiến ác liệt trong rừng sương mù với Thất Kiếm Làng Sương Mù hồi sinh (Zabuza Momochi, Mangetsu Hozuki, Fuguki Suikazan, Jinin, Kushimaru, Jinpachi, Ameyuri Ringo) cùng Haku, Pakura (Chước độn) và Gari (Bộc độn). Kakashi đã phong ấn toàn bộ Thất Kiếm.'
+            },
+            {
+                id: 'war-div4',
+                type: 'division',
+                code: 'SĐ 4',
+                nameVi: 'Sư Đoàn 4 (Đội Tầm Xa & Tổng Chỉ Huy)',
+                nameEn: 'Fourth Division (Long-Range Battle Division)',
+                location: 'Vùng sa mạc biên giới Phong Quốc – Thổ Quốc',
+                x: 325, y: 325,
+                commander: 'Gaara (Kazekage Đệ Ngũ – Tổng chỉ huy chiến trường), Shikamaru Nara (Phó chỉ huy), Tsuchikage Đệ Tam Onoki (chi viện), Temari, Choji.',
+                tactics: 'Đối đầu với Tứ Đại Kage hồi sinh cực mạnh: Vô Ảnh Mu (Tsuchikage Đệ Nhị), Gengetsu Hozuki (Mizukage Đệ Nhị), Raikage Đệ Tam và Kazekage Đệ Tứ (Rasa). Ngay sau đó, Kabuto triệu hồi Madara Uchiha thực sự tại chiến trường này, dẫn đến trận chiến huyền thoại giữa Ngũ Đại Kage và Madara.'
+            },
+            {
+                id: 'war-div5',
+                type: 'division',
+                code: 'SĐ 5',
+                nameVi: 'Sư Đoàn 5 (Đội Đặc Chiến & Samurai)',
+                nameEn: 'Fifth Division (Special Battle Division)',
+                location: 'Thiết Quốc & Cơ động chi viện các cánh',
+                x: 795, y: 245,
+                commander: 'Đại Tướng Mifune (Lãnh đạo Samurai Thiết Quốc) • Thành viên tiêu biểu: Kiba Inuzuka, Shino Aburame, Ino Yamanaka, Hana Inuzuka.',
+                tactics: 'Lực lượng cơ động nhanh chia nhỏ để chi viện cho Sư đoàn 2 và Đội Phục Kích. Đại tướng Mifune đã đích thân đánh bại và phong ấn Hanzo Kỳ Nhông (cựu thủ lĩnh Làng Mưa) trong một trận đấu kiếm kinh điển.'
+            },
+            {
+                id: 'war-ambush',
+                type: 'division',
+                code: 'PHỤC KÍCH',
+                nameVi: 'Đội Phục Kích & Đặc Nhiệm Cảm Nhận',
+                nameEn: 'Surprise Attack & Sensor Division',
+                location: 'Tiến sâu vào vùng núi phía Bắc địch',
+                x: 685, y: 125,
+                commander: 'Kankuro (Đội trưởng Phục kích), Muta Aburame (Đội trưởng Cảm nhận tiền phương) • Thành viên: Sai, Omoi, Zaji, Ittan.',
+                tactics: 'Xâm nhập hậu phương địch bằng đường không (chim mực của Sai). Tại đây diễn ra trận giao tranh đầu tiên của cuộc chiến chống lại đội phục kích Akatsuki gồm Sasori, Deidara, Shin (anh nuôi Sai) và Chukichi.'
+            },
+            {
+                id: 'war-akatsuki-base',
+                type: 'battle',
+                code: 'AKATSUKI',
+                nameVi: 'Nghĩa Địa Núi (Căn Cứ Bí Mật Akatsuki)',
+                nameEn: "Mountains' Graveyard (Akatsuki Hideout)",
+                location: 'Dãy núi hẻo lánh phía Bắc',
+                x: 615, y: 115,
+                commander: 'Obito Uchiha (Tobi) & Kabuto Yakushi',
+                tactics: 'Đại bản doanh bí mật của Akatsuki. Bên dưới lòng đất là cây nhân tạo Dị Ma Thần Tượng nuôi dưỡng 100.000 bản thể Zetsu Trắng được cường hóa bằng tế bào Hashirama. Tại đây Kabuto đã dùng Uế Thổ Chuyển Sinh triệu hồi hàng loạt nhẫn giả huyền thoại (bao gồm cả quan tài bí mật chứa Madara Uchiha) để liên minh với Tobi.'
+            },
+            {
+                id: 'war-main-battle',
+                type: 'battle',
+                code: 'QUYẾT CHIẾN',
+                nameVi: 'Chiến Trường Quyết Định & Hồi Sinh Thập Vĩ',
+                nameEn: 'Main Battlefield (Ten-Tails & Kaguya Revival)',
+                location: 'Vùng bình nguyên trung tâm (Giáp Hỏa Quốc – Suối Nước Nóng)',
+                x: 805, y: 420,
+                commander: 'Liên Minh Shinobi (Naruto, Sasuke, Sakura, Kakashi, Guy, Tứ Đại Hokage) vs Obito, Madara & Kaguya Otsutsuki',
+                tactics: 'Trận chiến tối hậu quyết định vận mệnh thế giới Shinobi:\n1. Naruto & Killer B cùng Kakashi, Guy phá vỡ mặt nạ của Obito.\n2. Madara và Obito hồi sinh Thập Vĩ (Juubi); toàn bộ Liên Minh Shinobi hội quân tại đây lập trận địa chống Thập Vĩ.\n3. Tứ Đại Hokage hồi sinh (Hashirama, Tobirama, Hiruzen, Minato) cùng Sasuke gia nhập chiến trường.\n4. Obito rồi Madara lần lượt trở thành Jinchuriki Thập Vĩ (Lục Đạo); Might Guy mở Bát Môn Độn Giáp Tử Môn.\n5. Hắc Zetsu phản bội Madara, hồi sinh Thủy Tổ Chakra Kaguya Otsutsuki trước khi Đội 7 phong ấn thành công Kaguya.'
+            }
+        ];
+
+        /**
+         * ============================================================================
+         * 4. RENDER CÁC ĐIỂM ĐÁNH DẤU LÊN BẢN ĐỒ SVG
+         * ============================================================================
+         */
+        const villagesLayer = document.getElementById('villages-layer');
+        const warMarkersLayer = document.getElementById('war-markers-layer');
+
+        function renderVillages() {
+            villagesLayer.innerHTML = '';
+            VILLAGES_DATA.forEach(v => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'village-marker');
+                g.setAttribute('transform', `translate(${v.x}, ${v.y})`);
+                g.dataset.id = v.id;
+
+                const shapeMarkup = VILLAGE_SHAPES[v.symbolKey] || VILLAGE_SHAPES.konoha;
+
+                g.innerHTML = `
+                    <!-- Hitbox tàng hình cố định để chống flicker / giật nảy khi hover -->
+                    <circle cx="0" cy="0" r="16" fill="transparent" />
+                    <!-- Lớp đồ họa băng trán Hitai-ate 22x15px chuẩn hóa tọa độ [-5, 5], KHÔNG dùng <svg> lồng nhau -->
+                    <g class="marker-visual">
+                        <!-- Bóng đổ nhẹ -->
+                        <rect x="-11" y="-6.5" width="22" height="15" rx="2.5" fill="rgba(0,0,0,0.35)"/>
+                        <!-- Tấm kim loại băng trán -->
+                        <rect x="-11" y="-7.5" width="22" height="15" rx="2.5" fill="#1e293b" stroke="#cbd5e1" stroke-width="1"/>
+                        <!-- 4 đinh tán góc -->
+                        <circle cx="-8.8" cy="-5.2" r="0.7" fill="#94a3b8"/>
+                        <circle cx="-8.8" cy="5.2" r="0.7" fill="#94a3b8"/>
+                        <circle cx="8.8" cy="-5.2" r="0.7" fill="#94a3b8"/>
+                        <circle cx="8.8" cy="5.2" r="0.7" fill="#94a3b8"/>
+                        <!-- Biểu tượng làng ẩn nằm gọn trong hộp [-5, 5] -->
+                        <g fill="none" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                            ${shapeMarkup}
+                        </g>
+                        <!-- Nhãn tên làng nhỏ gọn bên dưới -->
+                        <g transform="translate(0, 13.5)">
+                            <rect x="-27" y="-5" width="54" height="9.5" rx="2" fill="#26180d" fill-opacity="0.88" stroke="#b45309" stroke-width="0.6"/>
+                            <text y="1.5" text-anchor="middle" font-size="6.2" font-weight="700" fill="#fef3c7" font-family="Inter, sans-serif">${v.nameVi}</text>
+                        </g>
+                    </g>
+                `;
+
+                g.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openInfoPanel('village', v);
+                });
+                attachTooltip(g, `${v.nameVi} • ${v.nameEn}`, `Kage/Lãnh đạo: ${v.kage}`);
+                villagesLayer.appendChild(g);
+            });
+        }
+
+        function renderWarMarkers() {
+            warMarkersLayer.innerHTML = '';
+            WAR_NODES_DATA.forEach(w => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'war-marker');
+                g.setAttribute('transform', `translate(${w.x}, ${w.y})`);
+                g.dataset.id = w.id;
+                g.dataset.wartype = w.type;
+
+                let bgColor = '#1d4ed8';
+                let borderColor = '#93c5fd';
+                let pulseClass = '';
+                let iconInner = `<text y="2.2" text-anchor="middle" font-size="5.6" font-weight="900" fill="#ffffff" font-family="Inter, sans-serif">${w.code}</text>`;
+
+                if (w.type === 'hq') {
+                    bgColor = '#1e3a8a';
+                    borderColor = '#fbbf24';
+                } else if (w.type === 'division') {
+                    bgColor = '#0369a1';
+                    borderColor = '#bae6fd';
+                } else if (w.type === 'battle') {
+                    bgColor = '#b91c1c';
+                    borderColor = '#fef08a';
+                    pulseClass = 'combat-pulse';
+                    iconInner = `
+                        <g stroke="#fef08a" stroke-width="1.4" stroke-linecap="round">
+                            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5"/>
+                            <line x1="3.5" y1="-3.5" x2="-3.5" y2="3.5"/>
+                        </g>
+                    `;
+                }
+
+                g.innerHTML = `
+                    <!-- Hitbox tàng hình cố định giúp hover ổn định, không giật nảy -->
+                    <circle cx="0" cy="0" r="14" fill="transparent" />
+                    <!-- Lớp đồ họa thu gọn (~45% kích thước cũ) -->
+                    <g class="marker-visual">
+                        <g class="${pulseClass}">
+                            <circle cx="0" cy="0" r="8" fill="${bgColor}" stroke="${borderColor}" stroke-width="1.4" filter="url(#combatGlow)"/>
+                            ${iconInner}
+                        </g>
+                        <g transform="translate(0, -12.5)">
+                            <rect x="-31" y="-5" width="62" height="9" rx="2" fill="${bgColor}" fill-opacity="0.92" stroke="${borderColor}" stroke-width="0.6"/>
+                            <text y="1.2" text-anchor="middle" font-size="5.5" font-weight="800" fill="#ffffff" font-family="Inter, sans-serif">${w.code}: ${w.nameVi.split('(')[0].trim().slice(0, 14)}</text>
+                        </g>
+                    </g>
+                `;
+
+                g.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openInfoPanel('war', w);
+                });
+                attachTooltip(g, `${w.nameVi}`, `${w.nameEn} • ${w.location}`);
+                warMarkersLayer.appendChild(g);
+            });
+        }
+
+        // Gắn sự kiện click & tooltip cho các Quốc gia (Polygons)
+        document.querySelectorAll('.nation-poly').forEach(el => {
+            const nationId = el.dataset.id;
+            const data = NATIONS_DATA[nationId];
+            if (!data) return;
+
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openInfoPanel('nation', data);
+            });
+            attachTooltip(el, `${data.nameVi} • ${data.nameEn}`, `${data.category} • Thủ phủ: ${data.capital}`);
+        });
+
+        /**
+         * ============================================================================
+         * 5. HỆ THỐNG TOOLTIP & BẢNG THÔNG TIN CUỘN GIẤY (SCROLL INFO PANEL)
+         * ============================================================================
+         */
+        const tooltip = document.getElementById('mapTooltip');
+        const tooltipTitle = document.getElementById('tooltipTitle');
+        const tooltipSub = document.getElementById('tooltipSub');
+
+        function attachTooltip(element, title, sub) {
+            element.addEventListener('mouseenter', () => {
+                tooltipTitle.textContent = title;
+                tooltipSub.textContent = sub;
+                tooltip.classList.remove('hidden');
+            });
+            element.addEventListener('mousemove', (e) => {
+                const x = Math.min(e.clientX + 14, window.innerWidth - 260);
+                const y = Math.min(e.clientY + 14, window.innerHeight - 70);
+                tooltip.style.left = `${x}px`;
+                tooltip.style.top = `${y}px`;
+            });
+            element.addEventListener('mouseleave', () => {
+                tooltip.classList.add('hidden');
+            });
+        }
+
+        const infoDrawer = document.getElementById('infoDrawer');
+        const infoSymbolBox = document.getElementById('infoSymbolBox');
+        const infoBadge = document.getElementById('infoBadge');
+        const infoTitle = document.getElementById('infoTitle');
+        const infoSubtitle = document.getElementById('infoSubtitle');
+        const infoContent = document.getElementById('infoContent');
+        const focusItemBtn = document.getElementById('focusItemBtn');
+
+        let currentFocusCoords = { x: 700, y: 475 };
+
+        function openInfoPanel(type, item) {
+            currentFocusCoords = { x: item.x, y: item.y };
+            infoDrawer.classList.remove('hidden');
+
+            if (type === 'nation') {
+                infoBadge.textContent = item.category;
+                infoBadge.className = 'inline-block px-1.5 py-0.5 text-[10px] font-ui font-bold uppercase tracking-wider bg-emerald-800 text-amber-100 rounded mb-0.5';
+                infoTitle.textContent = item.nameVi;
+                infoSubtitle.textContent = item.nameEn;
+                infoSymbolBox.innerHTML = `<div class="w-7 h-7 text-amber-300 flex items-center justify-center">${wrapSymbolForDrawer(item.symbolKey)}</div>`;
+
+                infoContent.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 text-xs font-ui bg-[#ebd8b5] p-2.5 rounded border border-[#cbb082]">
+                        <div>
+                            <span class="text-[#6e5036] block">Thủ phủ / Làng Ẩn</span>
+                            <strong class="text-[#2b1d12]">${item.capital}</strong>
+                        </div>
+                        <div>
+                            <span class="text-[#6e5036] block">Lãnh đạo</span>
+                            <strong class="text-[#2b1d12]">${item.leader}</strong>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-amber-900 mb-1">Địa Hình & Khí Hậu</h3>
+                        <p class="text-[#3d2a1b]">${item.terrain}</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-amber-900 mb-1">Lịch Sử & Lore Chính Thức</h3>
+                        <p class="text-[#3d2a1b]">${item.lore}</p>
+                    </div>
+                    <div class="bg-red-950/10 border-l-4 border-red-800 p-2.5 rounded-r">
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-red-900 mb-1">Vai Trò Trong Đại Chiến Ninja Lần 4</h3>
+                        <p class="text-[#2b1d12] text-xs leading-relaxed">${item.warRole}</p>
+                    </div>
+                `;
+            } else if (type === 'village') {
+                infoBadge.textContent = 'LÀNG ẨN SHINOBI';
+                infoBadge.className = 'inline-block px-1.5 py-0.5 text-[10px] font-ui font-bold uppercase tracking-wider bg-amber-700 text-amber-50 rounded mb-0.5';
+                infoTitle.textContent = item.nameVi;
+                infoSubtitle.textContent = item.nameEn;
+                infoSymbolBox.innerHTML = `<div class="w-7 h-7 text-amber-300 flex items-center justify-center">${wrapSymbolForDrawer(item.symbolKey)}</div>`;
+
+                infoContent.innerHTML = `
+                    <div class="space-y-2 text-xs font-ui bg-[#ebd8b5] p-2.5 rounded border border-[#cbb082]">
+                        <div class="flex justify-between">
+                            <span class="text-[#6e5036]">Trực thuộc Quốc gia:</span>
+                            <strong class="text-[#2b1d12]">${item.nation}</strong>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-[#6e5036]">Kage / Người đứng đầu:</span>
+                            <strong class="text-[#2b1d12]">${item.kage}</strong>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-amber-900 mb-1">Đặc Trưng & Lịch Sử Ngôi Làng</h3>
+                        <p class="text-[#3d2a1b]">${item.description}</p>
+                    </div>
+                `;
+            } else if (type === 'war') {
+                const isEnemy = item.type === 'battle';
+                infoBadge.textContent = isEnemy ? 'MẶT TRẬN / CĂN CỨ ĐỊCH' : 'TRIỂN KHAI LIÊN MINH SHINOBI';
+                infoBadge.className = `inline-block px-1.5 py-0.5 text-[10px] font-ui font-bold uppercase tracking-wider ${isEnemy ? 'bg-red-800' : 'bg-blue-800'} text-amber-50 rounded mb-0.5`;
+                infoTitle.textContent = item.nameVi;
+                infoSubtitle.textContent = item.nameEn;
+                infoSymbolBox.innerHTML = `<span class="font-ui font-black text-xs text-amber-300 text-center leading-none">${item.code}</span>`;
+
+                infoContent.innerHTML = `
+                    <div class="text-xs font-ui bg-[#ebd8b5] p-2.5 rounded border border-[#cbb082]">
+                        <span class="text-[#6e5036] block">Vị trí chiến lược</span>
+                        <strong class="text-[#2b1d12]">${item.location}</strong>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-blue-900 mb-1">Chỉ Huy & Lực Lượng Tham Chiến</h3>
+                        <p class="text-[#2b1d12] font-medium text-xs leading-relaxed bg-blue-950/5 p-2 rounded border border-blue-900/20">${item.commander}</p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-red-900 mb-1">Diễn Biến & Chiến Thuật Chi Tiết</h3>
+                        <p class="text-[#2b1d12] whitespace-pre-line text-xs leading-relaxed">${item.tactics}</p>
+                    </div>
+                `;
+            }
+        }
+
+        document.getElementById('closeInfoBtn').addEventListener('click', () => {
+            infoDrawer.classList.add('hidden');
+        });
+
+        focusItemBtn.addEventListener('click', () => {
+            zoomToPoint(currentFocusCoords.x, currentFocusCoords.y, 2.0);
+        });
+
+        /**
+         * ============================================================================
+         * 6. HỆ THỐNG PAN & ZOOM MƯỢT MÀ (CHUỘT + CẢM ỨNG)
+         * ============================================================================
+         */
+        const svgViewport = document.getElementById('map-viewport');
+        const worldGroup = document.getElementById('map-world-group');
+        const zoomLevelText = document.getElementById('zoomLevelText');
+
+        let transform = { x: 0, y: 0, scale: 1 };
+        let isDragging = false;
+        let startDrag = { x: 0, y: 0 };
+        let lastTouchDist = null;
+
+        function updateTransform() {
+            // Giới hạn vùng kéo để không bị mất dấu bản đồ
+            transform.scale = Math.min(Math.max(0.65, transform.scale), 3.8);
+            const maxOffsetX = 900 * transform.scale;
+            const maxOffsetY = 650 * transform.scale;
+            transform.x = Math.min(Math.max(-maxOffsetX, transform.x), maxOffsetX);
+            transform.y = Math.min(Math.max(-maxOffsetY, transform.y), maxOffsetY);
+
+            worldGroup.setAttribute('transform', `translate(${transform.x}, ${transform.y}) scale(${transform.scale})`);
+            zoomLevelText.textContent = `${Math.round(transform.scale * 100)}%`;
+        }
+
+        function zoomToPoint(svgX, svgY, targetScale = 1.8) {
+            transform.scale = targetScale;
+            // Đưa điểm (svgX, svgY) về trung tâm viewBox (700, 475)
+            transform.x = 700 - svgX * targetScale;
+            transform.y = 475 - svgY * targetScale;
+            updateTransform();
+        }
+
+        // Mouse Pan
+        svgViewport.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            isDragging = true;
+            startDrag = { x: e.clientX - transform.x, y: e.clientY - transform.y };
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = svgViewport.getBoundingClientRect();
+            const scaleRatio = 1400 / rect.width;
+            transform.x = e.clientX - startDrag.x;
+            transform.y = e.clientY - startDrag.y;
+            updateTransform();
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Mouse Wheel Zoom
+        svgViewport.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomFactor = e.deltaY < 0 ? 1.14 : 0.88;
+            const rect = svgViewport.getBoundingClientRect();
+            const mouseX = ((e.clientX - rect.left) / rect.width) * 1400;
+            const mouseY = ((e.clientY - rect.top) / rect.height) * 950;
+
+            const newScale = Math.min(Math.max(0.65, transform.scale * zoomFactor), 3.8);
+            const ratio = newScale / transform.scale;
+
+            transform.x = mouseX - (mouseX - transform.x) * ratio;
+            transform.y = mouseY - (mouseY - transform.y) * ratio;
+            transform.scale = newScale;
+            updateTransform();
+        }, { passive: false });
+
+        // Touch Pan & Pinch Zoom
+        svgViewport.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                startDrag = {
+                    x: e.touches[0].clientX - transform.x,
+                    y: e.touches[0].clientY - transform.y
+                };
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                lastTouchDist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+            }
+        }, { passive: true });
+
+        svgViewport.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && isDragging) {
+                transform.x = e.touches[0].clientX - startDrag.x;
+                transform.y = e.touches[0].clientY - startDrag.y;
+                updateTransform();
+            } else if (e.touches.length === 2 && lastTouchDist) {
+                e.preventDefault();
+                const dist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                const zoomFactor = dist / lastTouchDist;
+                transform.scale *= zoomFactor;
+                lastTouchDist = dist;
+                updateTransform();
+            }
+        }, { passive: false });
+
+        svgViewport.addEventListener('touchend', () => {
+            isDragging = false;
+            lastTouchDist = null;
+        });
+
+        // Nút Zoom & Reset
+        document.getElementById('zoomInBtn').addEventListener('click', () => {
+            zoomToPoint(700 - transform.x / transform.scale, 475 - transform.y / transform.scale, transform.scale * 1.25);
+        });
+        document.getElementById('zoomOutBtn').addEventListener('click', () => {
+            zoomToPoint(700 - transform.x / transform.scale, 475 - transform.y / transform.scale, transform.scale * 0.8);
+        });
+        document.getElementById('resetViewBtn').addEventListener('click', () => {
+            transform = { x: 0, y: 0, scale: 1 };
+            updateTransform();
+        });
+
+        /**
+         * ============================================================================
+         * 7. ĐIỀU KHIỂN LỚP HIỂN THỊ (LAYERS) & TÌM KIẾM NHANH
+         * ============================================================================
+         */
+        const chkNations = document.getElementById('layer-nations');
+        const chkVillages = document.getElementById('layer-villages');
+        const chkHq = document.getElementById('layer-hq');
+        const chkDivisions = document.getElementById('layer-divisions');
+        const chkBattles = document.getElementById('layer-battles');
+
+        function applyLayerVisibility() {
+            document.getElementById('nation-labels-layer').style.display = chkNations.checked ? 'inline' : 'none';
+            villagesLayer.style.display = chkVillages.checked ? 'inline' : 'none';
+            document.getElementById('war-arrows-layer').style.display = chkDivisions.checked ? 'inline' : 'none';
+
+            document.querySelectorAll('.war-marker').forEach(el => {
+                const wtype = el.dataset.wartype;
+                if (wtype === 'hq') el.style.display = chkHq.checked ? 'inline' : 'none';
+                if (wtype === 'division') el.style.display = chkDivisions.checked ? 'inline' : 'none';
+                if (wtype === 'battle') el.style.display = chkBattles.checked ? 'inline' : 'none';
+            });
+        }
+
+        [chkNations, chkVillages, chkHq, chkDivisions, chkBattles].forEach(cb => {
+            cb.addEventListener('change', applyLayerVisibility);
+        });
+
+        window.setPreset = function(mode) {
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.className = 'preset-btn py-1.5 px-1 rounded font-semibold bg-[#e6d2ad] text-[#2b1d12] border border-[#9c7b56] hover:bg-[#dbc296]';
+            });
+            const activeBtn = document.getElementById(`preset-${mode}`);
+            activeBtn.className = 'preset-btn py-1.5 px-1 rounded font-semibold bg-red-800 text-amber-50 border border-red-950 shadow-sm';
+
+            if (mode === 'all') {
+                chkNations.checked = true;
+                chkVillages.checked = true;
+                chkHq.checked = true;
+                chkDivisions.checked = true;
+                chkBattles.checked = true;
+            } else if (mode === 'geo') {
+                chkNations.checked = true;
+                chkVillages.checked = true;
+                chkHq.checked = false;
+                chkDivisions.checked = false;
+                chkBattles.checked = false;
+            } else if (mode === 'war') {
+                chkNations.checked = true;
+                chkVillages.checked = false;
+                chkHq.checked = true;
+                chkDivisions.checked = true;
+                chkBattles.checked = true;
+            }
+            applyLayerVisibility();
+        };
+
+        // Sidebar Toggle (Mobile/Desktop)
+        const layersPanel = document.getElementById('layersPanel');
+        document.getElementById('toggleSidebarBtn').addEventListener('click', () => {
+            layersPanel.classList.toggle('hidden');
+        });
+        document.getElementById('closeSidebarBtn').addEventListener('click', () => {
+            layersPanel.classList.add('hidden');
+        });
+
+        // Tìm kiếm nhanh
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        const ALL_SEARCH_ITEMS = [
+            ...Object.values(NATIONS_DATA).map(n => ({ type: 'nation', label: `${n.nameVi} (${n.nameEn})`, sub: n.category, data: n })),
+            ...VILLAGES_DATA.map(v => ({ type: 'village', label: `${v.nameVi} (${v.nameEn})`, sub: `Làng Ẩn • ${v.nation}`, data: v })),
+            ...WAR_NODES_DATA.map(w => ({ type: 'war', label: `${w.nameVi}`, sub: `Đại Chiến 4 • ${w.location}`, data: w }))
+        ];
+
+        searchInput.addEventListener('input', () => {
+            const q = searchInput.value.trim().toLowerCase();
+            if (!q) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+            const matches = ALL_SEARCH_ITEMS.filter(item =>
+                item.label.toLowerCase().includes(q) || item.sub.toLowerCase().includes(q)
+            ).slice(0, 10);
+
+            if (matches.length === 0) {
+                searchResults.innerHTML = `<div class="p-2.5 text-xs font-ui text-[#6e5036]">Không tìm thấy địa điểm phù hợp.</div>`;
+            } else {
+                searchResults.innerHTML = matches.map((m, idx) => `
+                    <button data-idx="${idx}" class="search-item w-full text-left px-3 py-2 hover:bg-[#e6d2ad] transition font-ui block">
+                        <div class="text-xs font-bold text-[#2b1d12]">${m.label}</div>
+                        <div class="text-[10px] text-[#6e5036]">${m.sub}</div>
+                    </button>
+                `).join('');
+
+                searchResults.querySelectorAll('.search-item').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const chosen = matches[btn.dataset.idx];
+                        openInfoPanel(chosen.type, chosen.data);
+                        zoomToPoint(chosen.data.x, chosen.data.y, 1.85);
+                        searchResults.classList.add('hidden');
+                        searchInput.value = '';
+                    });
+                });
+            }
+            searchResults.classList.remove('hidden');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+        });
+
+        // Khởi chạy ứng dụng
+        window.addEventListener('DOMContentLoaded', () => {
+            renderVillages();
+            renderWarMarkers();
+            if (window.innerWidth < 640) {
+                layersPanel.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
