@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bách Khoa Toàn Thư Chakra - Naruto & Boruto Universe</title>
+    <style>
+        :root {
+            --bg-dark: #0f111a;
+            --bg-card: #1a1d2e;
+            --bg-card-hover: #23273d;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-gold: #f59e0b;
+            
+            /* Nature Colors */
+            --fire-bg: linear-gradient(135deg, #450a0a 0%, #991b1b 100%);
+            --fire-accent: #f87171;
+            --wind-bg: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            --wind-accent: #34d399;
+            --lightning-bg: linear-gradient(135deg, #1e1b4b 0%, #2563eb 100%);
+            --lightning-accent: #60a5fa;
+            --earth-bg: linear-gradient(135deg, #451a03 0%, #92400e 100%);
+            --earth-accent: #fbbf24;
+            --water-bg: linear-gradient(135deg, #083344 0%, #0284c7 100%);
+            --water-accent: #38bdf8;
+            --yin-yang-bg: linear-gradient(135deg, #18181b 0%, #52525b 100%);
+            --yin-yang-accent: #e4e4e7;
+            --kekkei-bg: linear-gradient(135deg, #3b0764 0%, #7e22ce 100%);
+            --kekkei-accent: #c084fc;
+            --tota-bg: linear-gradient(135deg, #4a044e 0%, #be185d 100%);
+            --tota-accent: #f472b6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            border-bottom: 2px solid var(--accent-gold);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #f59e0b, #ef4444, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #131624;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #2d334d;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .tab-btn {
+            background: #1e2235;
+            color: var(--text-main);
+            border: 1px solid #333b5c;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            background: #2b314d;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Titles */
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #2d334d;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.4rem;
+        }
+
+        /* Timeline (Lịch sử Chakra) */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 3px solid var(--accent-gold);
+            margin-left: 1rem;
+        }
+
+        .timeline-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            border: 1px solid #2d334d;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.6rem;
+            top: 1.5rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            border: 4px solid var(--bg-dark);
+        }
+
+        .timeline-era {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Grid Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Nature Element Cards */
+        .element-card {
+            border-radius: 16px;
+            padding: 1.8rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .element-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .el-fire { background: var(--fire-bg); }
+        .el-wind { background: var(--wind-bg); }
+        .el-lightning { background: var(--lightning-bg); }
+        .el-earth { background: var(--earth-bg); }
+        .el-water { background: var(--water-bg); }
+        .el-yinyang { background: var(--yin-yang-bg); }
+        .el-kekkei { background: var(--kekkei-bg); }
+        .el-tota { background: var(--tota-bg); }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-box {
+            width: 64px;
+            height: 64px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .card-title h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .card-title span {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.8rem 0;
+        }
+
+        .badge {
+            background: rgba(0,0,0,0.35);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .skill-list {
+            background: rgba(0,0,0,0.25);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-list h4 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.6rem;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 0.3rem;
+        }
+
+        .skill-item {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .skill-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-name {
+            font-weight: 700;
+            color: #fde047;
+        }
+
+        /* Diagram Container */
+        .diagram-box {
+            background: var(--bg-card);
+            border: 1px solid #2d334d;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        /* Dojutsu & Special Grid */
+        .dojutsu-card {
+            background: var(--bg-card);
+            border: 1px solid #333b5c;
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dojutsu-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Filter bar inside views */
+        .filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-chip {
+            background: #1e2235;
+            border: 1px solid #3b4266;
+            color: var(--text-main);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .filter-chip.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #fff;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #2d334d;
+        }
+
+        th {
+            background: #131624;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌀 Bách Khoa Toàn Thư Chakra</h1>
+    <p>Hệ thống hóa toàn diện nguồn gốc, bản chất, 5 hệ cơ bản, Âm-Dương Độn, Huyết Kế Giới Hạn, Huyết Kế Chọn Lọc, Huyết Kế Dung Hợp và các Nhẫn Thuật tiêu biểu từ thời Otsutsuki Kaguya đến kỷ nguyên Boruto.</p>
+</header>
+
+<nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchView('origin')">📜 1. Nguồn Gốc & Cấu Tạo</button>
+    <button class="tab-btn" onclick="switchView('basic5')">🔥 2. Ngũ Hành Cơ Bản & Âm Dương</button>
+    <button class="tab-btn" onclick="switchView('kekkei-genkai')">🧬 3. Huyết Kế Giới Hạn (Nguyên Tố)</button>
+    <button class="tab-btn" onclick="switchView('dojutsu')">👁️ 4. Nhãn Thuật & Đặc Biệt</button>
+    <button class="tab-btn" onclick="switchView('kekkei-tota')">⚛️ 5. Huyết Kế Chọn Lọc & Dung Hợp</button>
+    <button class="tab-btn" onclick="switchView('jutsu-db')">⚡ 6. Kho Tàng Nhẫn Thuật & Skill</button>
+</nav>
+
+<div class="container">
+
+    <!-- VIEW 1: NGUỒN GỐC & CẤU TẠO CHAKRA -->
+    <section id="view-origin" class="view-section active">
+        <div class="section-header">
+            <h2>📜 Lịch Sử & Cấu Tạo Sinh Học Của Chakra</h2>
+            <p>Từ trái cấm Thần Thụ của gia tộc Otsutsuki đến hệ thống kinh lạc (Keirakukei) trong cơ thể Shinobi.</p>
+        </div>
+
+        <!-- SVG SƠ ĐỒ CẤU TẠO CHAKRA -->
+        <div class="diagram-box">
+            <h3 style="color: var(--accent-gold); margin-bottom: 1rem;">Sơ Đồ Hình Thành & Chuyển Hóa Chakra</h3>
+            <svg viewBox="0 0 900 280" width="100%" height="auto" style="max-width: 850px;">
+                <!-- Năng lượng thể chất -->
+                <rect x="20" y="30" width="220" height="80" rx="12" fill="#7f1d1d" stroke="#f87171" stroke-width="2"/>
+                <text x="130" y="65" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">Năng Lượng Thể Chất</text>
+                <text x="130" y="88" fill="#fca5a5" font-size="12" text-anchor="middle">(130 nghìn tỷ tế bào cơ thể)</text>
+
+                <!-- Năng lượng tinh thần -->
+                <rect x="20" y="170" width="220" height="80" rx="12" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2"/>
+                <text x="130" y="205" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">Năng Lượng Tinh Thần</text>
+                <text x="130" y="228" fill="#93c5fd" font-size="12" text-anchor="middle">(Kinh nghiệm & Ý chí luyện tập)</text>
+
+                <!-- Arrows to Chakra -->
+                <path d="M240 70 L340 125" stroke="#f87171" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <path d="M240 210 L340 155" stroke="#60a5fa" stroke-width="3" fill="none"/>
+
+                <!-- CHAKRA CORE -->
+                <circle cx="420" cy="140" r="68" fill="#0f172a" stroke="#f59e0b" stroke-width="4"/>
+                <circle cx="420" cy="140" r="56" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4"/>
+                <text x="420" y="135" fill="#f59e0b" font-size="18" font-weight="bold" text-anchor="middle">CHAKRA</text>
+                <text x="420" y="156" fill="#e2e8f0" font-size="11" text-anchor="middle">361 Huyệt Đạo (Tenketsu)</text>
+
+                <!-- Nature Energy (Senjutsu) -->
+                <rect x="310" y="10" width="220" height="45" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+                <text x="420" y="37" fill="#34d399" font-size="13" font-weight="bold" text-anchor="middle">+ Năng Lượng Tự Nhiên = Tiên Thuật</text>
+                <path d="M420 55 L420 72" stroke="#34d399" stroke-width="2" stroke-dasharray="3,3"/>
+
+                <!-- Arrows to Outputs -->
+                <path d="M488 120 L590 65" stroke="#f59e0b" stroke-width="3" fill="none"/>
+                <path d="M488 140 L590 140" stroke="#f59e0b" stroke-width="3" fill="none"/>
+                <path d="M488 160 L590 215" stroke="#f59e0b" stroke-width="3" fill="none"/>
+
+                <!-- Outputs -->
+                <rect x="590" y="35" width="280" height="55" rx="10" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+                <text x="730" y="60" fill="#c084fc" font-size="14" font-weight="bold" text-anchor="middle">Nhẫn Thuật (Ninjutsu)</text>
+                <text x="730" y="78" fill="#cbd5e1" font-size="11" text-anchor="middle">Kết ấn (Hand Seals) + Biến đổi tính chất</text>
+
+                <rect x="590" y="112" width="280" height="55" rx="10" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+                <text x="730" y="137" fill="#f472b6" font-size="14" font-weight="bold" text-anchor="middle">Ảo Thuật (Genjutsu)</text>
+                <text x="730" y="155" fill="#cbd5e1" font-size="11" text-anchor="middle">Âm Độn tác động lên hệ thần kinh đối thủ</text>
+
+                <rect x="590" y="190" width="280" height="55" rx="10" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+                <text x="730" y="215" fill="#4ade80" font-size="14" font-weight="bold" text-anchor="middle">Thể Thuật (Taijutsu) & Bát Môn</text>
+                <text x="730" y="233" fill="#cbd5e1" font-size="11" text-anchor="middle">Cường hóa cơ bắp & mở khóa giới hạn</text>
+            </svg>
+        </div>
+
+        <!-- TIMELINE TỪ KAGUYA ĐẾN BORUTO -->
+        <h3 style="color: var(--accent-gold); margin: 2rem 0 1rem;">Dòng Thời Gian Tiến Hóa Chakra</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-era">Kỷ Nguyên Thần Thoại — Otsutsuki Kaguya & Isshiki</span>
+                <h4>1. Khởi Nguồn Từ Thần Thụ (Shinju)</h4>
+                <p>Gia tộc ngoài hành tinh <strong>Otsutsuki</strong> du hành qua các chiều không gian để gieo trồng Thần Thụ, hút cạn năng lượng sự sống của hành tinh thành <strong>Trái Chakra</strong>. Kaguya phản bội đồng tộc Isshiki, ăn Trái Chakra và trở thành thực thể đầu tiên trên Trái Đất sở hữu Chakra nguyên thủy (sở hữu Byakugan và Rinne Sharingan). Bà hợp nhất với Thần Thụ tạo thành <strong>Thập Vĩ (Juubi)</strong>.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Thời Đại Lục Đạo Tiên Nhân — Hagoromo & Hamura</span>
+                <h4>2. Nhẫn Tông (Ninshu) & Sự Ra Đời Của 9 Vĩ Thú</h4>
+                <p>Hai con trai của Kaguya là <strong>Hagoromo Otsutsuki</strong> (Lục Đạo Tiên Nhân) và <strong>Hamura Otsutsuki</strong> sinh ra đã mang sẵn Chakra bẩm sinh. Sau khi phong ấn mẹ mình, Hagoromo tách Chakra của Thập Vĩ thành 9 Vĩ Thú (Từ Nhất Vĩ Shukaku đến Cửu Vĩ Kurama). Ông chu du khắp thế giới truyền dạy <strong>Nhẫn Tông (Ninshu)</strong> — dùng Chakra để kết nối tâm hồn con người.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Thời Chiến Quốc — Indra & Asura</span>
+                <h4>3. Sự Biến Tướng Thành Nhẫn Thuật (Ninjutsu)</h4>
+                <p>Con trai trưởng <strong>Indra Otsutsuki</strong> phát minh ra <strong>Ấn Chú (Hand Seals)</strong>, biến Chakra từ công cụ kết nối hòa bình thành vũ khí chiến đấu (Nhẫn Thuật). Người em <strong>Asura Otsutsuki</strong> kế thừa ý chí hợp tác và sức mạnh thể chất Lục Đạo. Cuộc chiến của họ kéo dài qua nhiều kiếp luân hồi (Madara - Hashirama, Sasuke - Naruto).</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Kỷ Nguyên Làng Lá & Đại Chiến Nhẫn Giả Lần 4</span>
+                <h4>4. Hệ Thống Hóa Ngũ Hành & Huyết Kế</h4>
+                <p>Các làng Nhẫn Giả được thành lập. Chakra được phân loại khoa học thành 5 hệ nguyên tố cơ bản (Hỏa, Phong, Lôi, Thổ, Thủy) và 2 hệ phi nguyên tố (Âm, Dương). Sự pha trộn di truyền tạo nên các gia tộc sở hữu Huyết Kế Giới Hạn.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Kỷ Nguyên Hiện Tại (Boruto: Two Blue Vortex)</span>
+                <h4>5. Ấn Karma, Nhẫn Cụ Khoa Học & Thần Thuật (Shinjutsu)</h4>
+                <p>Chakra tiến hóa sang kỷ nguyên mới: gia tộc Otsutsuki sử dụng <strong>Karma</strong> để nén dữ liệu sinh học và tái sinh; khoa học nhẫn giả tạo ra công cụ hấp thụ/phóng thích Chakra mà không cần kết ấn; và <strong>Shinjutsu (Thần Thuật)</strong> của Otsutsuki Shibai được tiết lộ là đỉnh cao vượt trên mọi Nhẫn Thuật thông thường (như Toàn Năng của Eida, Phản Xạ của Daemon).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 2: 5 HỆ CƠ BẢN & ÂM DƯƠNG ĐỘN -->
+    <section id="view-basic5" class="view-section">
+        <div class="section-header">
+            <h2>🔥 Ngũ Hành Biến Đổi Tính Chất & Âm - Dương Độn</h2>
+            <p>Mọi Shinobi đều có ít nhất một thuộc tính Chakra bẩm sinh (kiểm tra bằng giấy thử Chakra). Ngũ hành tương khắc theo vòng tròn khép kín.</p>
+        </div>
+
+        <!-- SVG VÒNG TRÒN TƯƠNG KHẮC -->
+        <div class="diagram-box">
+            <h3 style="color: var(--accent-gold); margin-bottom: 0.5rem;">Vòng Tròn Tương Khắc Ngũ Hành</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Hỏa khắc Phong ➔ Phong khắc Lôi ➔ Lôi khắc Thổ ➔ Thổ khắc Thủy ➔ Thủy khắc Hỏa</p>
+            <svg viewBox="0 0 600 320" width="100%" height="auto" style="max-width: 550px;">
+                <circle cx="300" cy="165" r="115" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="8,6"/>
+                <!-- Fire Top -->
+                <circle cx="300" cy="50" r="36" fill="#991b1b" stroke="#f87171" stroke-width="3"/>
+                <text x="300" y="47" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">HỎA</text>
+                <text x="300" y="63" fill="#fca5a5" font-size="10" text-anchor="middle">Katon</text>
+
+                <!-- Wind Top-Right -->
+                <circle cx="410" cy="128" r="36" fill="#065f46" stroke="#34d399" stroke-width="3"/>
+                <text x="410" y="125" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">PHONG</text>
+                <text x="410" y="141" fill="#a7f3d0" font-size="10" text-anchor="middle">Futon</text>
+
+                <!-- Lightning Bottom-Right -->
+                <circle cx="368" cy="258" r="36" fill="#1e3a8a" stroke="#60a5fa" stroke-width="3"/>
+                <text x="368" y="255" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">LÔI</text>
+                <text x="368" y="271" fill="#bfdbfe" font-size="10" text-anchor="middle">Raiton</text>
+
+                <!-- Earth Bottom-Left -->
+                <circle cx="232" cy="258" r="36" fill="#78350f" stroke="#fbbf24" stroke-width="3"/>
+                <text x="232" y="255" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">THỔ</text>
+                <text x="232" y="271" fill="#fde68a" font-size="10" text-anchor="middle">Doton</text>
+
+                <!-- Water Top-Left -->
+                <circle cx="190" cy="128" r="36" fill="#075985" stroke="#38bdf8" stroke-width="3"/>
+                <text x="190" y="125" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">THỦY</text>
+                <text x="190" y="141" fill="#bae6fd" font-size="10" text-anchor="middle">Suiton</text>
+
+                <!-- Center Yin Yang -->
+                <circle cx="300" cy="165" r="32" fill="#18181b" stroke="#e4e4e7" stroke-width="2"/>
+                <text x="300" y="162" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">ÂM / DƯƠNG</text>
+                <text x="300" y="176" fill="#a1a1aa" font-size="9" text-anchor="middle">In / Yo</text>
+            </svg>
+        </div>
+
+        <div class="grid-2">
+            <!-- HỎA ĐỘN -->
+            <div class="element-card el-fire">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2">
+                            <path d="M12 2c1 4-2 6-2 10a4 4 0 0 0 8 0c0-3-2-5-2-8 3 2 5 5 5 9a9 9 0 1 1-18 0c0-4 3-8 9-11z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Hỏa Độn (Katon — 火遁)</h3>
+                        <span>Giấy thử Chakra: Cháy thành tro</span>
+                    </div>
+                </div>
+                <p>Biến đổi Chakra thành nhiệt độ cực cao, thiêu rụi mục tiêu. Phổ biến nhất ở Hỏa Quốc (tộc Uchiha, Sarutobi). <strong>Mạnh hơn Phong, yếu hơn Thủy.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Uchiha Madara</span>
+                    <span class="badge">Uchiha Itachi</span>
+                    <span class="badge">Uchiha Sasuke</span>
+                    <span class="badge">Sarutobi Hiruzen</span>
+                    <span class="badge">Jiraiya</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Chiêu Thức Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Hào Hỏa Cầu Chi Thuật (Gokakyu):</span> Thổi ra quả cầu lửa khổng lồ, thước đo trưởng thành của tộc Uchiha.</div>
+                    <div class="skill-item"><span class="skill-name">• Hào Hỏa Diệt Khước (Goka Mekkyaku):</span> Biển lửa diện rộng của Madara cần tới 20 Thủy Độn sư cùng lúc để dập tắt.</div>
+                    <div class="skill-item"><span class="skill-name">• Long Hỏa / Hào Long Hỏa Chi Thuật:</span> Bắn ra ngọn lửa hình đầu rồng có sức xuyên phá cực lớn.</div>
+                </div>
+            </div>
+
+            <!-- PHONG ĐỘN -->
+            <div class="element-card el-wind">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#a7f3d0" stroke-width="2">
+                            <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Phong Độn (Futon — 風遁)</h3>
+                        <span>Giấy thử Chakra: Bị cắt làm đôi</span>
+                    </div>
+                </div>
+                <p>Ép Chakra thành luồng khí sắc bén như lưỡi dao, chuyên dùng cho cận chiến và tầm trung với sát thương cắt xé cực đại. <strong>Mạnh hơn Lôi, yếu hơn Hỏa (và khuếch đại Hỏa).</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Uzumaki Naruto</span>
+                    <span class="badge">Temari</span>
+                    <span class="badge">Shimura Danzo</span>
+                    <span class="badge">Sarutobi Asuma</span>
+                    <span class="badge">Uzumaki Boruto</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Chiêu Thức Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Phong Độn: La Toàn Thủ Lý Kiếm (Rasenshuriken):</span> Kết hợp biến đổi hình thái tối thượng (Rasengan) và tính chất Phong, tạo hàng triệu vi kim gió phá hủy hệ kinh lạc ở cấp độ tế bào.</div>
+                    <div class="skill-item"><span class="skill-name">• Chân Không Ngọc / Chân Không Ba (Danzo):</span> Bắn ra các viên đạn hoặc lưỡi kiếm chân không sắc lẹm.</div>
+                    <div class="skill-item"><span class="skill-name">• Đại Liêm Dứu (Daikamaitachi - Temari):</span> Quạt tạo lốc xoáy cắt nát cả một khu rừng.</div>
+                </div>
+            </div>
+
+            <!-- LÔI ĐỘN -->
+            <div class="element-card el-lightning">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Lôi Độn (Raiton — 雷遁)</h3>
+                        <span>Giấy thử Chakra: Nhăn nhúm lại</span>
+                    </div>
+                </div>
+                <p>Tạo ra dòng điện cao thế có tốc độ cực nhanh, khả năng xuyên giáp cao và làm tê liệt hệ thần kinh. Phổ biến ở Lôi Quốc (Làng Mây). <strong>Mạnh hơn Thổ, yếu hơn Phong.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Hatake Kakashi</span>
+                    <span class="badge">Uchiha Sasuke</span>
+                    <span class="badge">Raikage Đệ Tam & Đệ Tứ</span>
+                    <span class="badge">Killer Bee</span>
+                    <span class="badge">Darui</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Chiêu Thức Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Chidori (Thiên Điểu) & Raikiri (Lôi Thiết):</span> Tập trung lượng lớn Lôi Chakra vào lòng bàn tay, tạo tiếng rít như ngàn con chim, dùng tốc độ cao để đâm xuyên mục tiêu.</div>
+                    <div class="skill-item"><span class="skill-name">• Kirin (Kỳ Lân - Sasuke):</span> Điều khiển sét tự nhiên từ mây giông giáng xuống với tốc độ 1/1000 giây, gần như không tốn Chakra.</div>
+                    <div class="skill-item"><span class="skill-name">• Lôi Độn Chakra Mode (Raikage):</span> Bọc cơ thể trong áo giáp sét, tăng phản xạ ngang ngửa Tia Chớp Vàng.</div>
+                </div>
+            </div>
+
+            <!-- THỔ ĐỘN -->
+            <div class="element-card el-earth">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="2">
+                            <polygon points="12 2 2 19 22 19 12 2"/>
+                            <line x1="12" y1="9" x2="12" y2="19"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Thổ Độn (Doton — 土遁)</h3>
+                        <span>Giấy thử Chakra: Vỡ vụn thành bụi</span>
+                    </div>
+                </div>
+                <p>Điều khiển đất đá, thay đổi địa hình, tăng độ cứng cơ thể hoặc thay đổi trọng lượng vật thể. Phổ biến ở Thổ Quốc (Làng Đá). <strong>Mạnh hơn Thủy, yếu hơn Lôi.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Onoki (Tsuchikage Đệ Tam)</span>
+                    <span class="badge">Mu (Tsuchikage Đệ Nhị)</span>
+                    <span class="badge">Deidara</span>
+                    <span class="badge">Kitsuchi</span>
+                    <span class="badge">Yamato</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Chiêu Thức Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Khinh Trọng Nham / Siêu Trọng Nham Chi Thuật (Onoki):</span> Giảm trọng lượng giúp người dùng bay lượn hoặc tăng trọng lượng nghiền nát đối thủ.</div>
+                    <div class="skill-item"><span class="skill-name">• Thổ Lưu Bích (Doryuheki):</span> Dựng bức tường đất kiên cố chặn đòn tấn công.</div>
+                    <div class="skill-item"><span class="skill-name">• Khai Thổ Quật / Sơn Thổ Chi Thuật (Kitsuchi):</span> Ép hai ngọn núi khổng lồ kẹp chặt cả Thập Vĩ.</div>
+                </div>
+            </div>
+
+            <!-- THỦY ĐỘN -->
+            <div class="element-card el-water">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#bae6fd" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Thủy Độn (Suiton — 水遁)</h3>
+                        <span>Giấy thử Chakra: Bị thấm ướt</span>
+                    </div>
+                </div>
+                <p>Linh hoạt nhất trong 5 hệ, có thể tấn công áp lực cao, phòng thủ hoặc tạo sương mù. Phổ biến ở Thủy Quốc (Làng Sương Mù). <strong>Mạnh hơn Hỏa, yếu hơn Thổ.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Senju Tobirama</span>
+                    <span class="badge">Hoshigaki Kisame</span>
+                    <span class="badge">Momochi Zabuza</span>
+                    <span class="badge">Hozuki Suigetsu</span>
+                    <span class="badge">Terumi Mei</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Chiêu Thức Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Đại Bộc Thủy Chi Thuật / Đại Giao Đạn (Kisame):</span> Tạo biển nước khổng lồ và cá mập Chakra hút cạn Chakra đối phương.</div>
+                    <div class="skill-item"><span class="skill-name">• Thủy Long Đạn Chi Thuật (Suiryuudan):</span> Triệu hồi rồng nước khổng lồ tấn công (Tobirama chỉ cần 1 ấn để thi triển).</div>
+                    <div class="skill-item"><span class="skill-name">• Thủy Hóa Chi Thuật (Tộc Hozuki):</span> Biến toàn bộ cơ thể thành dạng lỏng miễn nhiễm sát thương vật lý.</div>
+                </div>
+            </div>
+
+            <!-- ÂM ĐỘN & DƯƠNG ĐỘN -->
+            <div class="element-card el-yinyang">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#e4e4e7" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a5 5 0 0 1 0 10 5 5 0 0 0 0 10"/>
+                            <circle cx="12" cy="7" r="1" fill="#fff"/>
+                            <circle cx="12" cy="17" r="1" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Âm Độn (Inton) & Dương Độn (Yoton)</h3>
+                        <span>Nền tảng của Ảo Thuật, Y Thuật & Lục Đạo</span>
+                    </div>
+                </div>
+                <p><strong>Âm Độn (Năng lượng tinh thần):</strong> Tạo ra hình hài từ hư vô (Ảo thuật, Ảnh Thuật tộc Nara).<br><strong>Dương Độn (Năng lượng thể chất):</strong> Thổi sự sống vào hình hài (Y thuật, Bội Hóa tộc Akimichi).<br><strong>Âm-Dương Độn (Onmyoton):</strong> Quyền năng tối thượng của Lục Đạo Tiên Nhân, vô hiệu hóa mọi Nhẫn Thuật (Cầu Đạo Ngọc).</p>
+                <div class="badge-group">
+                    <span class="badge">Hagoromo Otsutsuki</span>
+                    <span class="badge">Naruto & Madara (Lục Đạo)</span>
+                    <span class="badge">Tộc Nara (Âm)</span>
+                    <span class="badge">Tộc Akimichi (Dương)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Chiêu Thức Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Vạn Vật Sáng Tạo (Banbutsu Sozo):</span> Lục Đạo Tiên Nhân dùng Âm Độn tạo hình dáng và Dương Độn thổi sự sống để tạo ra 9 Vĩ Thú.</div>
+                    <div class="skill-item"><span class="skill-name">• Cầu Đạo Ngọc (Gudodama):</span> Các quả cầu đen chứa cả 5 hệ cơ bản + Âm Dương Độn, nghiền nát mọi thứ chạm vào.</div>
+                    <div class="skill-item"><span class="skill-name">• Ảnh Chân Tự Chi Thuật (Nara) / Bội Hóa Chi Thuật (Akimichi):</span> Ứng dụng thuần túy của Âm và Dương Độn.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 3: HUYẾT KẾ GIỚI HẠN (NGUYÊN TỐ KẾT HỢP) -->
+    <section id="view-kekkei-genkai" class="view-section">
+        <div class="section-header">
+            <h2>🧬 Huyết Kế Giới Hạn Nguyên Tố (Kekkei Genkai — 血継限界)</h2>
+            <p>Khả năng di truyền cho phép một Shinobi đồng thời sử dụng và dung hợp <strong>2 hệ Chakra cơ bản</strong> để tạo ra một nguyên tố hoàn toàn mới mà người thường không thể sao chép (kể cả Sharingan).</p>
+        </div>
+
+        <div class="grid-3">
+            <!-- MỘC ĐỘN -->
+            <div class="element-card el-wind">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#86efac" stroke-width="2">
+                            <path d="M12 22v-9m0 0c-3 0-6-2-6-6 0-3 3-5 6-5s6 2 6 5c0 4-3 6-6 6z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Mộc Độn (Mokuton — 木遁)</h3>
+                        <span>Thổ Độn + Thủy Độn</span>
+                    </div>
+                </div>
+                <p>Huyết kế huyền thoại tạo ra cây cối và sự sống từ Chakra, có khả năng <strong>hấp thụ Chakra và chế ngự Vĩ Thú</strong>.</p>
+                <div class="badge-group">
+                    <span class="badge">Senju Hashirama (Bẩm sinh)</span>
+                    <span class="badge">Yamato, Madara, Obito, Danzo, Moegi</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Tiên Pháp Mộc Độn: Chân Số Thiên Thủ:</span> Triệu hồi tượng Phật ngàn tay khổng lồ lột sạch giáp Susanoo bọc Cửu Vĩ.</div>
+                    <div class="skill-item"><span class="skill-name">• Thụ Giới Giáng Đản:</span> Tạo ra cả một khu rừng rậm rạp trong chớp mắt.</div>
+                </div>
+            </div>
+
+            <!-- BĂNG ĐỘN -->
+            <div class="element-card el-water">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e0f2fe" stroke-width="2">
+                            <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Băng Độn (Hyoton — 氷遁)</h3>
+                        <span>Phong Độn + Thủy Độn</span>
+                    </div>
+                </div>
+                <p>Đóng băng hơi nước trong không khí thành băng cứng vĩnh cửu, miễn nhiễm với Hỏa Độn thông thường.</p>
+                <div class="badge-group">
+                    <span class="badge">Haku (Tộc Yuki)</span>
+                    <span class="badge">Các Ninja Tuyết Quốc</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Ma Kính Băng Tinh (Makyo Hyosho):</span> Tạo vòm gương băng bao vây đối thủ, cho phép Haku dịch chuyển giữa các gương với tốc độ ánh sáng.</div>
+                </div>
+            </div>
+
+            <!-- DUNG ĐỘN -->
+            <div class="element-card el-fire">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fdba74" stroke-width="2">
+                            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Dung Độn (Yoton — 溶遁)</h3>
+                        <span>Hỏa Độn + Thổ Độn</span>
+                    </div>
+                </div>
+                <p>Tạo ra dung nham nóng chảy, vôi tôi đông cứng hoặc cao su lưu hóa có sức ăn mòn khủng khiếp.</p>
+                <div class="badge-group">
+                    <span class="badge">Terumi Mei (Mizukage Đệ Ngũ)</span>
+                    <span class="badge">Roshi (Jinchuriki Tứ Vĩ)</span>
+                    <span class="badge">Kurotsuchi</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Dung Quái Chi Thuật (Mei):</span> Phun axit dung nham làm tan chảy cả xương sườn Susanoo của Sasuke.</div>
+                    <div class="skill-item"><span class="skill-name">• Dung Độn: La Toàn Thủ Lý Kiếm (Naruto):</span> Phá hủy Thần Thụ chỉ bằng một đòn.</div>
+                </div>
+            </div>
+
+            <!-- PHÍ ĐỘN -->
+            <div class="element-card el-tota">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fbcfe8" stroke-width="2">
+                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+                            <path d="M12 12v9m-4-4 4 4 4-4"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Phí Độn (Futton — 沸遁)</h3>
+                        <span>Hỏa Độn + Thủy Độn</span>
+                    </div>
+                </div>
+                <p>Tạo ra hơi nước axit ăn mòn cực mạnh hoặc đun sôi Chakra bên trong cơ thể để tăng cường sức mạnh bùng nổ.</p>
+                <div class="badge-group">
+                    <span class="badge">Terumi Mei</span>
+                    <span class="badge">Han (Jinchuriki Ngũ Vĩ)</span>
+                    <span class="badge">Naruto (Chakra Ngũ Vĩ)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Quái Lực Vô Song (Kairiki Muso):</span> Đun sôi Chakra đến điểm cực hạn, giúp Naruto đánh bật cả Kaguya.</div>
+                    <div class="skill-item"><span class="skill-name">• Xảo Vụ Chi Thuật (Komu):</span> Phun sương mù axit điều chỉnh được độ pH.</div>
+                </div>
+            </div>
+
+            <!-- LAM ĐỘN -->
+            <div class="element-card el-lightning">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Lam Độn (Ranton — 嵐遁)</h3>
+                        <span>Lôi Độn + Thủy Độn</span>
+                    </div>
+                </div>
+                <p>Tạo ra các chùm tia năng lượng điện từ (laser) dẫn hướng linh hoạt như dòng nước.</p>
+                <div class="badge-group">
+                    <span class="badge">Darui (Raikage Đệ Ngũ)</span>
+                    <span class="badge">Uchiha Madara (Lục Đạo)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Lệ Tuyến Tỏa Quang (Laser Circus):</span> Bắn hàng loạt tia laser uốn lượn tự động truy đuổi mục tiêu.</div>
+                    <div class="skill-item"><span class="skill-name">• Tiên Pháp Lam Độn: Quang Nha (Madara):</span> Tia sáng tốc độ ánh sáng cắt đôi Cầu Đạo Ngọc.</div>
+                </div>
+            </div>
+
+            <!-- TỪ ĐỘN -->
+            <div class="element-card el-earth">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2">
+                            <path d="M6 15v-2a6 6 0 1 1 12 0v2"/><rect x="4" y="15" width="4" height="5" rx="1"/><rect x="16" y="15" width="4" height="5" rx="1"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Từ Độn (Jiton — 磁遁)</h3>
+                        <span>Phong Độn + Thổ Độn</span>
+                    </div>
+                </div>
+                <p>Tạo từ trường điều khiển kim loại (Thiết Sa, Kim Sa) hoặc gắn từ tính phong ấn lên vật thể/đối thủ.</p>
+                <div class="badge-group">
+                    <span class="badge">Kazekage Đệ Tam (Thiết Sa)</span>
+                    <span class="badge">Rasa (Kim Sa)</span>
+                    <span class="badge">Gaara, Shinki, Shukaku</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Thiết Sa Giới Pháp:</span> Tạo mạng lưới gai sắt từ tính đâm xuyên mọi vật thể.</div>
+                    <div class="skill-item"><span class="skill-name">• Tiên Pháp Từ Độn: Rasengan:</span> Rasengan mang ấn chú phong ấn của Nhất Vĩ Shukaku.</div>
+                </div>
+            </div>
+
+            <!-- CHƯỚC ĐỘN -->
+            <div class="element-card el-fire">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Chước Độn (Shakuton — 灼遁)</h3>
+                        <span>Hỏa Độn + Phong Độn</span>
+                    </div>
+                </div>
+                <p>Tạo ra những quả cầu nhiệt cực nóng làm bốc hơi toàn bộ lượng nước trong cơ thể đối thủ, biến họ thành xác khô ngay lập tức.</p>
+                <div class="badge-group">
+                    <span class="badge">Pakura (Làng Cát)</span>
+                    <span class="badge">Maki</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Quá Chưng Sát (Kajosatsu):</span> Triệu hồi các quả cầu mặt trời tí hon thiêu khô nội tạng đối phương khi chạm vào.</div>
+                </div>
+            </div>
+
+            <!-- BẠO ĐỘN -->
+            <div class="element-card el-kekkei">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e9d5ff" stroke-width="2">
+                            <polygon points="12 2 15 8 22 9 17 14 18 21 12 18 6 21 7 14 2 9 9 8 12 2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Bạo Độn (Bakuton — 爆遁)</h3>
+                        <span>Thổ Độn + Lôi Độn</span>
+                    </div>
+                </div>
+                <p>Truyền Chakra gây nổ vào vật chất, tạo ra các vụ nổ từ cận chiến đến quy mô cấp độ phân tử.</p>
+                <div class="badge-group">
+                    <span class="badge">Deidara (Akatsuki)</span>
+                    <span class="badge">Gari (Bộc Phá Đội Làng Đá)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• C4 Karura (Deidara):</span> Tạo bom nano vô hình trong không khí, khi hít phải sẽ làm tan rã cơ thể ở cấp độ tế bào.</div>
+                    <div class="skill-item"><span class="skill-name">• C0 (Tự Sát Tối Thượng):</span> Vụ nổ bán kính 10km.</div>
+                </div>
+            </div>
+
+            <!-- TINH ĐỘN & CÁC HỆ KHÁC -->
+            <div class="element-card el-yinyang">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2">
+                            <polygon points="12 2 22 12 12 22 2 12 12 2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Tinh Độn, Nê Độn & Cương Độn</h3>
+                        <span>Các Huyết Kế Hiếm Khác</span>
+                    </div>
+                </div>
+                <p>Các biến thể đặc biệt xuất hiện trong Anime/Tiểu thuyết:</p>
+                <div class="skill-list">
+                    <div class="skill-item"><span class="skill-name">• Tinh Độn (Shoton - Guren):</span> Kết tinh mọi vật chất (kể cả Chakra) thành pha lê hồng.</div>
+                    <div class="skill-item"><span class="skill-name">• Nê Độn (Deiton - Akatsuchi/Ameyuki):</span> Điều khiển bùn lầy ăn mòn.</div>
+                    <div class="skill-item"><span class="skill-name">• Cương Độn (Koton - Hiruko):</span> Biến cơ thể thành thép đen bất khả xâm phạm.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 4: NHÃN THUẬT & HUYẾT KẾ ĐẶC BIỆT -->
+    <section id="view-dojutsu" class="view-section">
+        <div class="section-header">
+            <h2>👁️ Huyết Kế Nhãn Thuật (Dojutsu) & Cơ Thể Đặc Biệt</h2>
+            <p>Các huyết kế không tạo ra nguyên tố mà biểu hiện qua đôi mắt hoặc cấu trúc sinh học đặc thù của gia tộc.</p>
+        </div>
+
+        <div class="grid-3">
+            <!-- SHARINGAN & MANGEKYO -->
+            <div class="dojutsu-card" style="border-color: #ef4444;">
+                <div class="dojutsu-header">
+                    <!-- SVG Sharingan -->
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#dc2626" stroke="#000" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="10" fill="#000"/>
+                        <!-- 3 Tomoe -->
+                        <circle cx="50" cy="22" r="5" fill="#000"/>
+                        <circle cx="74" cy="64" r="5" fill="#000"/>
+                        <circle cx="26" cy="64" r="5" fill="#000"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #f87171;">Sharingan & Mangekyo</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Tộc Uchiha (Hậu duệ Indra)</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Thức tỉnh nhờ cảm xúc mãnh liệt (tình yêu/mất mát). Nhìn thấu dòng chảy Chakra, sao chép Nhẫn/Ảo/Thể thuật.</p>
+                <div class="skill-list">
+                    <h4>Quyền Năng Mangekyo (MS / EMS)</h4>
+                    <div class="skill-item"><span class="skill-name">• Susanoo:</span> Chiến thần Chakra khổng lồ bao bọc người dùng.</div>
+                    <div class="skill-item"><span class="skill-name">• Amaterasu (Itachi/Sasuke):</span> Ngọn lửa đen bất diệt cháy 7 ngày 7 đêm, thiêu rụi cả lửa thường.</div>
+                    <div class="skill-item"><span class="skill-name">• Tsukuyomi (Itachi):</span> Ảo thuật tra tấn tinh thần 72 giờ chỉ trong 1 giây thực tại.</div>
+                    <div class="skill-item"><span class="skill-name">• Kamui (Obito/Kakashi):</span> Nhãn thuật không-thời gian dịch chuyển vật thể vào chiều không gian riêng.</div>
+                    <div class="skill-item"><span class="skill-name">• Kotoamatsukami (Shisui):</span> Ảo thuật thao túng ý chí tối thượng mà nạn nhân không hề hay biết.</div>
+                    <div class="skill-item"><span class="skill-name">• Izanagi & Izanami:</span> Cấm thuật bẻ cong thực tại đổi lấy ánh sáng của một con mắt.</div>
+                </div>
+            </div>
+
+            <!-- BYAKUGAN & TENSEIGAN -->
+            <div class="dojutsu-card" style="border-color: #a855f7;">
+                <div class="dojutsu-header">
+                    <!-- SVG Byakugan -->
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#f3e8ff" stroke="#9333ea" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="24" fill="#e9d5ff" stroke="#a855f7" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="8" fill="#d8b4fe"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #c084fc;">Byakugan & Tenseigan</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Tộc Hyuga & Otsutsuki</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Bạch Nhãn mang lại tầm nhìn xuyên thấu gần 360 độ (trừ điểm mù nhỏ sau đốt sống cổ) và nhìn rõ 361 huyệt đạo (Tenketsu).</p>
+                <div class="skill-list">
+                    <h4>Skill & Tiến Hóa Tenseigan</h4>
+                    <div class="skill-item"><span class="skill-name">• Nhu Quyền (Juken) & Bát Quái Lục Thập Tứ Chưởng:</span> Đánh thẳng Chakra vào nội tạng và phong bế 64 huyệt đạo.</div>
+                    <div class="skill-item"><span class="skill-name">• Bát Quái Chưởng Hồi Thiên:</span> Xoay tròn phóng Chakra tạo lá chắn tuyệt đối.</div>
+                    <div class="skill-item"><span class="skill-name">• Tenseigan (Chuyển Sinh Nhãn - Toneri):</span> Kết hợp Byakugan thuần khiết + Chakra Otsutsuki, ban cho sức mạnh điều khiển trọng lực (Ngân Luân Chuyển Sinh Bộc) đủ sức cắt đôi Mặt Trăng.</div>
+                </div>
+            </div>
+
+            <!-- RINNEGAN & RINNE SHARINGAN -->
+            <div class="dojutsu-card" style="border-color: #8b5cf6;">
+                <div class="dojutsu-header">
+                    <!-- SVG Rinnegan -->
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#7c3aed" stroke="#000" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="36" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="26" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="16" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="6" fill="#000"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #a78bfa;">Rinnegan & Rinne Sharingan</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Hagoromo, Madara, Nagato, Sasuke, Kaguya</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Luân Hồi Nhãn thức tỉnh khi kết hợp Chakra Indra và Asura (tạo ra Chakra Lục Đạo). Cho phép làm chủ hoàn toàn 5 hệ cơ bản.</p>
+                <div class="skill-list">
+                    <h4>Lục Đạo Luân Hồi & Skill Riêng</h4>
+                    <div class="skill-item"><span class="skill-name">• Thiên Đạo:</span> Thần La Thiên Chinh (đẩy), Vạn Tượng Thiên Dẫn (hút), Địa Bộc Thiên Tinh (tạo thiên thạch phong ấn).</div>
+                    <div class="skill-item"><span class="skill-name">• Ngạ Quỷ / Nhân Gian / Súc Sinh / Địa Ngục / Tu La Đạo:</span> Hấp thụ Nhẫn thuật, đọc linh hồn, triệu hồi bất tử, hồi sinh Diêm Vương, vũ khí cơ khí.</div>
+                    <div class="skill-item"><span class="skill-name">• Amenotejikara (Sasuke) & Limbo (Madara):</span> Hoán đổi vị trí tức thời và tạo phân thân vô hình ở thế giới song song.</div>
+                    <div class="skill-item"><span class="skill-name">• Vô Hạn Nguyệt Độc (Rinne Sharingan):</span> Chiếu ảo thuật lên Mặt Trăng ru ngủ toàn nhân loại.</div>
+                </div>
+            </div>
+
+            <!-- JOGAN, KOKUGAN & SENRIGAN -->
+            <div class="dojutsu-card" style="border-color: #38bdf8;">
+                <div class="dojutsu-header">
+                    <!-- SVG Jogan / Kokugan -->
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#0f172a" stroke="#38bdf8" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="22" fill="#38bdf8" opacity="0.8"/>
+                        <circle cx="50" cy="50" r="10" fill="#e0f2fe"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #38bdf8;">Jogan, Kokugan & Senrigan</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Kỷ nguyên Boruto & Otsutsuki</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Những nhãn thuật thần thánh xuất hiện trong phần hậu truyện Boruto.</p>
+                <div class="skill-list">
+                    <h4>Chi Tiết Nhãn Thuật Mới</h4>
+                    <div class="skill-item"><span class="skill-name">• Jogan (Tịnh Nhãn - Boruto):</span> Nhìn thấy dòng chảy Chakra bất thường, điểm yếu kinh lạc và vết nứt không-thời gian.</div>
+                    <div class="skill-item"><span class="skill-name">• Kokugan (Isshiki / Kawaki):</span> Mắt bánh xe vàng thi triển <em>Sukunahikona</em> (thu nhỏ mọi vật vô tri tức thì) và <em>Daikokuten</em> (cất giữ và triệu hồi vật thể từ chiều không gian ngưng đọng thời gian).</div>
+                    <div class="skill-item"><span class="skill-name">• Senrigan (Thiên Lý Nhãn - Eida):</span> Thấu thị mọi sự kiện đang diễn ra hoặc trong quá khứ cho tới thời điểm người dùng ra đời.</div>
+                </div>
+            </div>
+
+            <!-- SHIKOTSUMYAKU -->
+            <div class="dojutsu-card" style="border-color: #e2e8f0;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#334155" stroke="#cbd5e1" stroke-width="3"/>
+                        <path d="M35 35 L65 65 M65 35 L35 65" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #f1f5f9;">Thi Cốt Mạch (Shikotsumyaku)</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Tộc Kaguya (Kimimaro)</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Kế thừa trực tiếp từ Kaguya Otsutsuki, cho phép điều khiển mật độ canxi để tạo vũ khí xương cứng hơn thép.</p>
+                <div class="skill-list">
+                    <h4>Skill Tiêu Biểu</h4>
+                    <div class="skill-item"><span class="skill-name">• Tảo Quyết Chi Vũ:</span> Mọc rừng gai xương khổng lồ bao phủ cả chiến trường và hòa nhập cơ thể vào xương.</div>
+                    <div class="skill-item"><span class="skill-name">• Cộng Sát Khôi Cốt (Kaguya):</span> Bắn xương khiến nạn nhân tan biến thành tro bụi (cả Lục Đạo cũng không cứu được).</div>
+                </div>
+            </div>
+
+            <!-- KETSURYUGAN & JUGO -->
+            <div class="dojutsu-card" style="border-color: #f43f5e;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#881337" stroke="#fb7185" stroke-width="3"/>
+                        <rect x="28" y="42" width="44" height="16" rx="8" fill="#000"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #fb7185;">Ketsuryugan & Tiên Nhân Hóa</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Tộc Chinoike & Tộc của Jugo</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Các huyết kế dị biệt về máu và hấp thụ tự nhiên.</p>
+                <div class="skill-list">
+                    <h4>Chi Tiết Huyết Kế</h4>
+                    <div class="skill-item"><span class="skill-name">• Ketsuryugan (Huyết Long Nhãn - Chino):</span> Điều khiển chất lỏng giàu sắt (đặc biệt là máu), biến nạn nhân thành bom người phát nổ.</div>
+                    <div class="skill-item"><span class="skill-name">• Tiên Nhân Hóa (Jugo):</span> Cơ thể tự động hấp thụ Năng Lượng Tự Nhiên, biến đổi hình thái cơ bắp (nguồn gốc của Ấn Chú Orochimaru).</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 5: HUYẾT KẾ CHỌN LỌC & DUNG HỢP -->
+    <section id="view-kekkei-tota" class="view-section">
+        <div class="section-header">
+            <h2>⚛️ Huyết Kế Chọn Lọc (Kekkei Tota) & Huyết Kế Dung Hợp (Kekkei Mora)</h2>
+            <p>Những cảnh giới dung hợp Chakra vượt xa Huyết Kế Giới Hạn thông thường.</p>
+        </div>
+
+        <div class="grid-2">
+            <!-- HUYẾT KẾ CHỌN LỌC -->
+            <div class="element-card el-tota">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#fbcfe8" stroke-width="2">
+                            <polygon points="12 2 22 20 2 20 12 2"/>
+                            <circle cx="12" cy="14" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Huyết Kế Chọn Lọc (Kekkei Tota — 血継淘汰)</h3>
+                        <span>Kết hợp đồng thời 3 Hệ Chakra Cơ Bản</span>
+                    </div>
+                </div>
+                <p>Không phải khả năng di truyền theo huyết thống gia tộc, mà là kỹ thuật cực hạn có thể truyền dạy cho người có tư chất đặc biệt. Cho đến nay, chỉ có duy nhất <strong>Trần Độn (Jinton)</strong> được ghi nhận.</p>
+                <div class="badge-group">
+                    <span class="badge">Mu (Tsuchikage Đệ Nhị)</span>
+                    <span class="badge">Onoki (Tsuchikage Đệ Tam)</span>
+                    <span class="badge">Ku (Bản sao nhân tạo)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Trần Độn (Jinton) = Hỏa + Thổ + Phong</h4>
+                    <div class="skill-item"><span class="skill-name">• Nguyên Giới Bác Ly Chi Thuật (Genkai Hakuri no Jutsu):</span> Tạo ra các khối hình học không gian 3D (hình lập phương, hình nón, hình trụ) với một lõi cầu sáng ở trung tâm. Khi khối hình học mở rộng bao trùm mục tiêu, mọi vật chất bên trong bị <strong>phân rã hoàn toàn thành bụi ở cấp độ nguyên tử</strong>, bỏ qua mọi lớp phòng ngự vật lý.</div>
+                </div>
+            </div>
+
+            <!-- HUYẾT KẾ DUNG HỢP -->
+            <div class="element-card el-kekkei">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#e9d5ff" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Huyết Kế Dung Hợp (Kekkei Mora — 血継網羅)</h3>
+                        <span>Kết hợp tất cả 7 hệ: Hỏa + Phong + Lôi + Thổ + Thủy + Âm + Dương</span>
+                    </div>
+                </div>
+                <p>Cảnh giới Chakra khởi thủy độc quyền của <strong>Otsutsuki Kaguya</strong> và những thực thể đạt tới sức mạnh Thập Vĩ / Lục Đạo tối thượng. Đây là nguồn gốc sinh ra toàn bộ các nhánh Huyết Kế Giới Hạn sau này.</p>
+                <div class="badge-group">
+                    <span class="badge">Otsutsuki Kaguya</span>
+                    <span class="badge">Otsutsuki Hagoromo & Hamura</span>
+                    <span class="badge">Uchiha Madara (Jinchuriki Thập Vĩ)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Các Thần Chiêu Cấp Độ Huyết Kế Dung Hợp</h4>
+                    <div class="skill-item"><span class="skill-name">• Bành Trướng Cầu Đạo Ngọc (Bocho Gudodama):</span> Quả cầu đen khổng lồ chứa toàn bộ 7 thuộc tính Chakra, đủ sức xóa sổ và tái tạo lại cả một chiều không gian.</div>
+                    <div class="skill-item"><span class="skill-name">• Amenominaka (Thiên Chi Ngự Trung):</span> Dịch chuyển tức thời bản thân và mọi người xung quanh sang 6 chiều không gian khác nhau (Dung nham, Băng giá, Axit, Trọng lực, Cát, Không gian gốc).</div>
+                    <div class="skill-item"><span class="skill-name">• Bát Thập Thần Không Kích (Yasogami Kugeki):</span> Tung ra hàng loạt cú đấm Chakra khổng lồ nghiền nát Susanoo Toàn Chân Thể chỉ trong một chạm.</div>
+                    <div class="skill-item"><span class="skill-name">• Hoàng Tuyền Tỷ Lương Phản (Yomotsu Hirasaka):</span> Xé rách không gian mở cổng dịch chuyển mà không cần kết ấn.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 6: KHO TÀNG NHẪN THUẬT & SKILL ĐẶC TRƯNG -->
+    <section id="view-jutsu-db" class="view-section">
+        <div class="section-header">
+            <h2>⚡ Bảng Phân Loại Các Nhẫn Thuật & Kỹ Năng Huyền Thoại Trong Phim</h2>
+            <p>Tổng hợp các hệ thống kỹ năng không phụ thuộc vào nguyên tố hoặc kết hợp đa yếu tố từ cổ đại đến hiện đại.</p>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-chip active" onclick="filterTable('all', this)">Tất cả</button>
+            <button class="filter-chip" onclick="filterTable('senjutsu', this)">Tiên Thuật & Vĩ Thú</button>
+            <button class="filter-chip" onclick="filterTable('spacetime', this)">Không-Thời Gian</button>
+            <button class="filter-chip" onclick="filterTable('kinjutsu', this)">Cấm Thuật & Phong Ấn</button>
+            <button class="filter-chip" onclick="filterTable('boruto', this)">Kỷ Nguyên Boruto / Shinjutsu</button>
+        </div>
+
+        <table id="jutsu-table">
+            <thead>
+                <tr>
+                    <th style="width: 22%;">Tên Chiêu Thức</th>
+                    <th style="width: 18%;">Phân Loại / Hệ</th>
+                    <th style="width: 20%;">Người Sở Hữu</th>
+                    <th style="width: 40%;">Cơ Chế Hoạt Động & Sức Mạnh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-cat="senjutsu">
+                    <td><strong>Tiên Nhân Thuật (Senjutsu) & Chế Độ Baryon</strong></td>
+                    <td>Năng lượng Tự nhiên + Vĩ Thú</td>
+                    <td>Hashirama, Jiraiya, Naruto, Minato, Kabuto, Mitsuki</td>
+                    <td>Hòa trộn Năng Lượng Tự Nhiên theo tỷ lệ 1:1:1 với Thể chất & Tinh thần. <strong>Chế độ Baryon</strong> (Naruto & Kurama) dung hợp hạt nhân 2 nguồn Chakra để tạo ra loại năng lượng mới làm bào mòn sinh mệnh đối thủ khi chạm vào.</td>
+                </tr>
+                <tr data-cat="senjutsu">
+                    <td><strong>Vĩ Thú Ngọc (Bijudama)</strong></td>
+                    <td>Biến đổi hình thái cực hạn (8:2)</td>
+                    <td>9 Vĩ Thú, Các Jinchuriki, Minato (Rasengan mô phỏng)</td>
+                    <td>Nén Chakra Dương (đen) và Chakra Âm (trắng) theo tỷ lệ chính xác <strong>8:2</strong> thành một quả cầu đặc quánh, bắn ra tia năng lượng san phẳng cả dãy núi.</td>
+                </tr>
+                <tr data-cat="spacetime">
+                    <td><strong>Phi Lôi Thần Thuật (Hiraishin no Jutsu)</strong></td>
+                    <td>Nhẫn thuật Không-Thời Gian</td>
+                    <td>Senju Tobirama (Sáng tạo), Namikaze Minato (Hoàn thiện)</td>
+                    <td>Đánh dấu Ấn Thuật lên vật thể/mục tiêu, cho phép người dùng dịch chuyển tức thời vượt qua mọi khoảng cách không gian trong 0 giây.</td>
+                </tr>
+                <tr data-cat="kinjutsu">
+                    <td><strong>Uế Thổ Chuyển Sinh (Edo Tensei)</strong></td>
+                    <td>Cấm Thuật (Kinjutsu)</td>
+                    <td>Tobirama, Orochimaru, Yakushi Kabuto</td>
+                    <td>Dùng vật hiến tế sống và DNA người chết để triệu hồi linh hồn từ Tịnh Độ trở về với cơ thể bất tử và lượng Chakra tự hồi phục vô hạn.</td>
+                </tr>
+                <tr data-cat="kinjutsu">
+                    <td><strong>Bát Môn Độn Giáp (Hachimon)</strong></td>
+                    <td>Thể Thuật Cấm Thuật</td>
+                    <td>Might Duy, Might Guy, Rock Lee, Metal Lee</td>
+                    <td>Mở lần lượt 8 cổng giới hạn dòng chảy Chakra trong hệ kinh lạc. Cổng thứ 8 (<strong>Tử Môn — Dạ Khải</strong>) bẻ cong không gian bằng áp lực thuần túy, đổi lấy tính mạng người dùng.</td>
+                </tr>
+                <tr data-cat="kinjutsu">
+                    <td><strong>Thi Quỷ Phong Tận (Shiki Fujin)</strong></td>
+                    <td>Phong Ấn Thuật (Tộc Uzumaki)</td>
+                    <td>Minato, Hiruzen, Orochimaru</td>
+                    <td>Triệu hồi Tử Thần rút linh hồn mục tiêu phong ấn vào bụng người thi triển. Cái giá phải trả là linh hồn của chính người dùng cũng bị Tử Thần nuốt chửng.</td>
+                </tr>
+                <tr data-cat="boruto">
+                    <td><strong>Rasengan: Uzuhiko</strong></td>
+                    <td>Nhẫn thuật hành tinh (Boruto)</td>
+                    <td>Uzumaki Boruto (Two Blue Vortex)</td>
+                    <td>Không chỉ dùng Chakra cá nhân mà kết nối trực tiếp với <strong>lực ly tâm và Chakra tự quay của Trái Đất</strong>. Khi đánh trúng, nạn nhân chịu sát thương xoay vĩnh viễn cho đến khi Trái Đất ngừng quay.</td>
+                </tr>
+                <tr data-cat="boruto">
+                    <td><strong>Ấn Karma & Thần Thuật (Shinjutsu)</strong></td>
+                    <td>Dữ liệu Otsutsuki / Quyền năng Thần</td>
+                    <td>Otsutsuki Shibai, Isshiki, Momoshiki, Boruto, Kawaki, Eida, Daemon</td>
+                    <td><strong>Karma:</strong> Hấp thụ mọi Nhẫn thuật, khuếch đại sức mạnh và mở cổng không gian.<br><strong>Shinjutsu:</strong> Quyền năng tối thượng không cần kết ấn (VD: <em>Toàn Năng</em> của Eida viết lại ký ức cả thế giới; <em>Phản Xạ</em> của Daemon bật ngược mọi ý định sát thương).</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</div>
+
+<script>
+    function switchView(viewId) {
+        // Hide all sections
+        document.querySelectorAll('.view-section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        // Remove active class from all buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        // Show selected section
+        document.getElementById('view-' + viewId).classList.add('active');
+        // Set active button
+        event.currentTarget.classList.add('active');
+    }
+
+    function filterTable(category, btnElement) {
+        document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        const rows = document.querySelectorAll('#jutsu-table tbody tr');
+        rows.forEach(row => {
+            if (category === 'all' || row.getAttribute('data-cat') === category) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

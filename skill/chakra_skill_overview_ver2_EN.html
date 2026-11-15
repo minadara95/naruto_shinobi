@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chakra Encyclopedia - Naruto & Boruto Universe</title>
+    <style>
+        :root {
+            --bg-dark: #0f111a;
+            --bg-card: #1a1d2e;
+            --bg-card-hover: #23273d;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-gold: #f59e0b;
+            
+            /* Nature Colors */
+            --fire-bg: linear-gradient(135deg, #450a0a 0%, #991b1b 100%);
+            --fire-accent: #f87171;
+            --wind-bg: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            --wind-accent: #34d399;
+            --lightning-bg: linear-gradient(135deg, #1e1b4b 0%, #2563eb 100%);
+            --lightning-accent: #60a5fa;
+            --earth-bg: linear-gradient(135deg, #451a03 0%, #92400e 100%);
+            --earth-accent: #fbbf24;
+            --water-bg: linear-gradient(135deg, #083344 0%, #0284c7 100%);
+            --water-accent: #38bdf8;
+            --yin-yang-bg: linear-gradient(135deg, #18181b 0%, #52525b 100%);
+            --yin-yang-accent: #e4e4e7;
+            --kekkei-bg: linear-gradient(135deg, #3b0764 0%, #7e22ce 100%);
+            --kekkei-accent: #c084fc;
+            --tota-bg: linear-gradient(135deg, #4a044e 0%, #be185d 100%);
+            --tota-accent: #f472b6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            border-bottom: 2px solid var(--accent-gold);
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #f59e0b, #ef4444, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #131624;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #2d334d;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .tab-btn {
+            background: #1e2235;
+            color: var(--text-main);
+            border: 1px solid #333b5c;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab-btn:hover {
+            background: #2b314d;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Titles */
+        .section-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #2d334d;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 0.4rem;
+        }
+
+        /* Timeline (Chakra History) */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 3px solid var(--accent-gold);
+            margin-left: 1rem;
+        }
+
+        .timeline-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            border: 1px solid #2d334d;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.6rem;
+            top: 1.5rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            border: 4px solid var(--bg-dark);
+        }
+
+        .timeline-era {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Grid Cards */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Nature Element Cards */
+        .element-card {
+            border-radius: 16px;
+            padding: 1.8rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .element-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .el-fire { background: var(--fire-bg); }
+        .el-wind { background: var(--wind-bg); }
+        .el-lightning { background: var(--lightning-bg); }
+        .el-earth { background: var(--earth-bg); }
+        .el-water { background: var(--water-bg); }
+        .el-yinyang { background: var(--yin-yang-bg); }
+        .el-kekkei { background: var(--kekkei-bg); }
+        .el-tota { background: var(--tota-bg); }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-box {
+            width: 64px;
+            height: 64px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .card-title h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .card-title span {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.8rem 0;
+        }
+
+        .badge {
+            background: rgba(0,0,0,0.35);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .skill-list {
+            background: rgba(0,0,0,0.25);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-list h4 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.6rem;
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding-bottom: 0.3rem;
+        }
+
+        .skill-item {
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .skill-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-name {
+            font-weight: 700;
+            color: #fde047;
+        }
+
+        /* Diagram Container */
+        .diagram-box {
+            background: var(--bg-card);
+            border: 1px solid #2d334d;
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        /* Dojutsu & Special Grid */
+        .dojutsu-card {
+            background: var(--bg-card);
+            border: 1px solid #333b5c;
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dojutsu-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Filter bar inside views */
+        .filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-chip {
+            background: #1e2235;
+            border: 1px solid #3b4266;
+            color: var(--text-main);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .filter-chip.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: #fff;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #2d334d;
+        }
+
+        th {
+            background: #131624;
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌀 Chakra Encyclopedia</h1>
+    <p>A comprehensive systemization of the origins, nature, 5 basic elements, Yin-Yang Release, Kekkei Genkai, Kekkei Tota, Kekkei Mora, and iconic Jutsu from the era of Otsutsuki Kaguya to the Boruto era.</p>
+</header>
+
+<nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchView('origin')">📜 1. Origins & Structure</button>
+    <button class="tab-btn" onclick="switchView('basic5')">🔥 2. Basic 5 Elements & Yin-Yang</button>
+    <button class="tab-btn" onclick="switchView('kekkei-genkai')">🧬 3. Elemental Kekkei Genkai</button>
+    <button class="tab-btn" onclick="switchView('dojutsu')">👁️ 4. Dojutsu & Special Traits</button>
+    <button class="tab-btn" onclick="switchView('kekkei-tota')">⚛️ 5. Kekkei Tota & Kekkei Mora</button>
+    <button class="tab-btn" onclick="switchView('jutsu-db')">⚡ 6. Jutsu & Skill Archive</button>
+</nav>
+
+<div class="container">
+
+    <!-- VIEW 1: ORIGINS & BIOLOGICAL STRUCTURE OF CHAKRA -->
+    <section id="view-origin" class="view-section active">
+        <div class="section-header">
+            <h2>📜 History & Biological Structure of Chakra</h2>
+            <p>From the forbidden fruit of the God Tree of the Otsutsuki Clan to the Chakra Pathway System (Keirakukei) within a Shinobi's body.</p>
+        </div>
+
+        <!-- SVG CHAKRA FORMATION DIAGRAM -->
+        <div class="diagram-box">
+            <h3 style="color: var(--accent-gold); margin-bottom: 1rem;">Chakra Formation & Transformation Diagram</h3>
+            <svg viewBox="0 0 900 280" width="100%" height="auto" style="max-width: 850px;">
+                <!-- Physical Energy -->
+                <rect x="20" y="30" width="220" height="80" rx="12" fill="#7f1d1d" stroke="#f87171" stroke-width="2"/>
+                <text x="130" y="65" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">Physical Energy</text>
+                <text x="130" y="88" fill="#fca5a5" font-size="12" text-anchor="middle">(130 trillion bodily cells)</text>
+
+                <!-- Spiritual Energy -->
+                <rect x="20" y="170" width="220" height="80" rx="12" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2"/>
+                <text x="130" y="205" fill="#fff" font-size="15" font-weight="bold" text-anchor="middle">Spiritual Energy</text>
+                <text x="130" y="228" fill="#93c5fd" font-size="12" text-anchor="middle">(Experience & Training Willpower)</text>
+
+                <!-- Arrows to Chakra -->
+                <path d="M240 70 L340 125" stroke="#f87171" stroke-width="3" fill="none"/>
+                <path d="M240 210 L340 155" stroke="#60a5fa" stroke-width="3" fill="none"/>
+
+                <!-- CHAKRA CORE -->
+                <circle cx="420" cy="140" r="68" fill="#0f172a" stroke="#f59e0b" stroke-width="4"/>
+                <circle cx="420" cy="140" r="56" fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="6,4"/>
+                <text x="420" y="135" fill="#f59e0b" font-size="18" font-weight="bold" text-anchor="middle">CHAKRA</text>
+                <text x="420" y="156" fill="#e2e8f0" font-size="11" text-anchor="middle">361 Chakra Points (Tenketsu)</text>
+
+                <!-- Nature Energy (Senjutsu) -->
+                <rect x="300" y="10" width="240" height="45" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+                <text x="420" y="37" fill="#34d399" font-size="13" font-weight="bold" text-anchor="middle">+ Nature Energy = Senjutsu</text>
+                <path d="M420 55 L420 72" stroke="#34d399" stroke-width="2" stroke-dasharray="3,3"/>
+
+                <!-- Arrows to Outputs -->
+                <path d="M488 120 L590 65" stroke="#f59e0b" stroke-width="3" fill="none"/>
+                <path d="M488 140 L590 140" stroke="#f59e0b" stroke-width="3" fill="none"/>
+                <path d="M488 160 L590 215" stroke="#f59e0b" stroke-width="3" fill="none"/>
+
+                <!-- Outputs -->
+                <rect x="590" y="35" width="280" height="55" rx="10" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+                <text x="730" y="60" fill="#c084fc" font-size="14" font-weight="bold" text-anchor="middle">Ninjutsu (Ninja Arts)</text>
+                <text x="730" y="78" fill="#cbd5e1" font-size="11" text-anchor="middle">Hand Seals + Nature Transformation</text>
+
+                <rect x="590" y="112" width="280" height="55" rx="10" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+                <text x="730" y="137" fill="#f472b6" font-size="14" font-weight="bold" text-anchor="middle">Genjutsu (Illusionary Arts)</text>
+                <text x="730" y="155" fill="#cbd5e1" font-size="11" text-anchor="middle">Yin Release disrupting cranial nerves</text>
+
+                <rect x="590" y="190" width="280" height="55" rx="10" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+                <text x="730" y="215" fill="#4ade80" font-size="14" font-weight="bold" text-anchor="middle">Taijutsu & Eight Inner Gates</text>
+                <text x="730" y="233" fill="#cbd5e1" font-size="11" text-anchor="middle">Physical enhancement & limiter release</text>
+            </svg>
+        </div>
+
+        <!-- TIMELINE FROM KAGUYA TO BORUTO -->
+        <h3 style="color: var(--accent-gold); margin: 2rem 0 1rem;">Timeline of Chakra Evolution</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-era">Mythological Era — Otsutsuki Kaguya & Isshiki</span>
+                <h4>1. Origin from the God Tree (Shinju)</h4>
+                <p>The extraterrestrial <strong>Otsutsuki Clan</strong> traveled across dimensions to plant God Trees, draining a planet's life energy into a <strong>Chakra Fruit</strong>. Kaguya betrayed her partner Isshiki, ate the Chakra Fruit, and became the first entity on Earth to wield primordial Chakra (possessing the Byakugan and Rinne Sharingan). She later merged with the God Tree to become the <strong>Ten-Tails (Juubi)</strong>.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Era of the Sage of Six Paths — Hagoromo & Hamura</span>
+                <h4>2. Ninshu (Ninja Creed) & Birth of the 9 Tailed Beasts</h4>
+                <p>Kaguya's two sons, <strong>Hagoromo Otsutsuki</strong> (Sage of Six Paths) and <strong>Hamura Otsutsuki</strong>, were born with inherent Chakra. After sealing their mother, Hagoromo split the Ten-Tails' Chakra into the 9 Tailed Beasts (from One-Tail Shukaku to Nine-Tails Kurama). He traveled the world teaching <strong>Ninshu</strong>—using Chakra to connect human souls in peace.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Warring States Period — Indra & Asura</span>
+                <h4>3. Transformation into Ninjutsu</h4>
+                <p>The elder son, <strong>Indra Otsutsuki</strong>, invented <strong>Hand Seals</strong>, turning Chakra from a tool of peaceful connection into a weapon of combat (Ninjutsu). The younger brother, <strong>Asura Otsutsuki</strong>, inherited the will of cooperation and Six Paths bodily power. Their conflict echoed across generations of reincarnations (Madara - Hashirama, Sasuke - Naruto).</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Hidden Village Era & Fourth Shinobi World War</span>
+                <h4>4. Systemization of the Five Elements & Bloodlines</h4>
+                <p>Shinobi villages were established. Chakra was systematically categorized into 5 basic elemental natures (Fire, Wind, Lightning, Earth, Water) and 2 non-elemental natures (Yin, Yang). Genetic inheritance gave rise to noble clans wielding Kekkei Genkai.</p>
+            </div>
+
+            <div class="timeline-item">
+                <span class="timeline-era">Current Era (Boruto: Two Blue Vortex)</span>
+                <h4>5. Karma Seals, Scientific Ninja Tools & Shinjutsu</h4>
+                <p>Chakra entered a new technological and divine era: the Otsutsuki use <strong>Karma</strong> to compress biological data for resurrection; ninja science created tools capable of absorbing and releasing Chakra without hand seals; and <strong>Shinjutsu (Divine Techniques)</strong> of Otsutsuki Shibai were revealed as the pinnacle above all Ninjutsu (such as Eida's Omnipotence and Daemon's Reflection).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 2: BASIC 5 ELEMENTS & YIN-YANG RELEASE -->
+    <section id="view-basic5" class="view-section">
+        <div class="section-header">
+            <h2>🔥 Five Basic Nature Transformations & Yin-Yang Release</h2>
+            <p>Every Shinobi possesses at least one innate Chakra affinity (tested via Chakra Induction Paper). The five elements form a closed cycle of superiority and weakness.</p>
+        </div>
+
+        <!-- SVG ELEMENTAL CYCLE DIAGRAM -->
+        <div class="diagram-box">
+            <h3 style="color: var(--accent-gold); margin-bottom: 0.5rem;">Elemental Superiority Cycle</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Fire beats Wind ➔ Wind beats Lightning ➔ Lightning beats Earth ➔ Earth beats Water ➔ Water beats Fire</p>
+            <svg viewBox="0 0 600 320" width="100%" height="auto" style="max-width: 550px;">
+                <circle cx="300" cy="165" r="115" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="8,6"/>
+                <!-- Fire Top -->
+                <circle cx="300" cy="50" r="36" fill="#991b1b" stroke="#f87171" stroke-width="3"/>
+                <text x="300" y="47" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">FIRE</text>
+                <text x="300" y="63" fill="#fca5a5" font-size="10" text-anchor="middle">Katon</text>
+
+                <!-- Wind Top-Right -->
+                <circle cx="410" cy="128" r="36" fill="#065f46" stroke="#34d399" stroke-width="3"/>
+                <text x="410" y="125" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">WIND</text>
+                <text x="410" y="141" fill="#a7f3d0" font-size="10" text-anchor="middle">Futon</text>
+
+                <!-- Lightning Bottom-Right -->
+                <circle cx="368" cy="258" r="36" fill="#1e3a8a" stroke="#60a5fa" stroke-width="3"/>
+                <text x="368" y="255" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">LIGHTNING</text>
+                <text x="368" y="271" fill="#bfdbfe" font-size="10" text-anchor="middle">Raiton</text>
+
+                <!-- Earth Bottom-Left -->
+                <circle cx="232" cy="258" r="36" fill="#78350f" stroke="#fbbf24" stroke-width="3"/>
+                <text x="232" y="255" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">EARTH</text>
+                <text x="232" y="271" fill="#fde68a" font-size="10" text-anchor="middle">Doton</text>
+
+                <!-- Water Top-Left -->
+                <circle cx="190" cy="128" r="36" fill="#075985" stroke="#38bdf8" stroke-width="3"/>
+                <text x="190" y="125" fill="#fff" font-size="14" font-weight="bold" text-anchor="middle">WATER</text>
+                <text x="190" y="141" fill="#bae6fd" font-size="10" text-anchor="middle">Suiton</text>
+
+                <!-- Center Yin Yang -->
+                <circle cx="300" cy="165" r="32" fill="#18181b" stroke="#e4e4e7" stroke-width="2"/>
+                <text x="300" y="162" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">YIN / YANG</text>
+                <text x="300" y="176" fill="#a1a1aa" font-size="9" text-anchor="middle">In / Yo</text>
+            </svg>
+        </div>
+
+        <div class="grid-2">
+            <!-- FIRE RELEASE -->
+            <div class="element-card el-fire">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2">
+                            <path d="M12 2c1 4-2 6-2 10a4 4 0 0 0 8 0c0-3-2-5-2-8 3 2 5 5 5 9a9 9 0 1 1-18 0c0-4 3-8 9-11z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Fire Release (Katon — 火遁)</h3>
+                        <span>Chakra Paper: Ignites and turns to ash</span>
+                    </div>
+                </div>
+                <p>Superheats Chakra to incinerate targets. Most common in the Land of Fire (Uchiha and Sarutobi clans). <strong>Strong against Wind, weak against Water.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Uchiha Madara</span>
+                    <span class="badge">Uchiha Itachi</span>
+                    <span class="badge">Uchiha Sasuke</span>
+                    <span class="badge">Sarutobi Hiruzen</span>
+                    <span class="badge">Jiraiya</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Techniques</h4>
+                    <div class="skill-item"><span class="skill-name">• Great Fireball Technique (Gokakyu):</span> Expels a massive sphere of fire; the rite of passage for the Uchiha clan.</div>
+                    <div class="skill-item"><span class="skill-name">• Great Fire Annihilation (Goka Mekkyaku):</span> Madara's sea of flames requiring 20 simultaneous Water Release users to extinguish.</div>
+                    <div class="skill-item"><span class="skill-name">• Dragon Fire / Great Dragon Fire:</span> Launches dragon-shaped flames with extreme piercing power.</div>
+                </div>
+            </div>
+
+            <!-- WIND RELEASE -->
+            <div class="element-card el-wind">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#a7f3d0" stroke-width="2">
+                            <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Wind Release (Futon — 風遁)</h3>
+                        <span>Chakra Paper: Splits cleanly in two</span>
+                    </div>
+                </div>
+                <p>Sharpens Chakra into razor-thin air currents for lethal close-to-mid-range slashing damage. <strong>Strong against Lightning, weak against Fire (and amplifies Fire).</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Uzumaki Naruto</span>
+                    <span class="badge">Temari</span>
+                    <span class="badge">Shimura Danzo</span>
+                    <span class="badge">Sarutobi Asuma</span>
+                    <span class="badge">Uzumaki Boruto</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Techniques</h4>
+                    <div class="skill-item"><span class="skill-name">• Wind Release: Rasenshuriken:</span> Combines pinnacle Shape Transformation (Rasengan) with Wind Nature, creating millions of microscopic wind needles that sever Chakra pathways at a cellular level.</div>
+                    <div class="skill-item"><span class="skill-name">• Vacuum Sphere / Vacuum Blade (Danzo):</span> Fires high-pressure compressed air bullets and blades.</div>
+                    <div class="skill-item"><span class="skill-name">• Great Cast Net / Sickle Weasel (Temari):</span> Fan-generated whirlwinds capable of leveling an entire forest.</div>
+                </div>
+            </div>
+
+            <!-- LIGHTNING RELEASE -->
+            <div class="element-card el-lightning">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Lightning Release (Raiton — 雷遁)</h3>
+                        <span>Chakra Paper: Wrinkles and crinkles</span>
+                    </div>
+                </div>
+                <p>Generates high-voltage electrical currents with extreme speed, piercing power, and paralytic effects. Common in the Land of Lightning (Kumogakure). <strong>Strong against Earth, weak against Wind.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Hatake Kakashi</span>
+                    <span class="badge">Uchiha Sasuke</span>
+                    <span class="badge">3rd & 4th Raikage</span>
+                    <span class="badge">Killer Bee</span>
+                    <span class="badge">Darui</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Techniques</h4>
+                    <div class="skill-item"><span class="skill-name">• Chidori & Raikiri (Lightning Blade):</span> Concentrates dense Lightning Chakra in the hand, sounding like a thousand chirping birds, used with high-speed thrusting.</div>
+                    <div class="skill-item"><span class="skill-name">• Kirin (Sasuke):</span> Harnesses natural lightning from thunderclouds to strike in 1/1000th of a second, requiring minimal personal Chakra.</div>
+                    <div class="skill-item"><span class="skill-name">• Lightning Release Chakra Mode (Raikage):</span> Wraps the body in lightning armor, boosting reflexes to rival the Yellow Flash.</div>
+                </div>
+            </div>
+
+            <!-- EARTH RELEASE -->
+            <div class="element-card el-earth">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="2">
+                            <polygon points="12 2 2 19 22 19 12 2"/>
+                            <line x1="12" y1="9" x2="12" y2="19"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Earth Release (Doton — 土遁)</h3>
+                        <span>Chakra Paper: Turns to dirt and crumbles</span>
+                    </div>
+                </div>
+                <p>Manipulates soil and rock, alters terrain, hardens the body, or changes the weight of objects. Common in the Land of Earth (Iwagakure). <strong>Strong against Water, weak against Lightning.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Onoki (3rd Tsuchikage)</span>
+                    <span class="badge">Mu (2nd Tsuchikage)</span>
+                    <span class="badge">Deidara</span>
+                    <span class="badge">Kitsuchi</span>
+                    <span class="badge">Yamato</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Techniques</h4>
+                    <div class="skill-item"><span class="skill-name">• Light-Weight & Added-Weight Rock Technique (Onoki):</span> Reduces weight to enable flight or increases mass to crush targets.</div>
+                    <div class="skill-item"><span class="skill-name">• Mud Wall (Doryuheki):</span> Erects a dense earthen barrier to block incoming attacks.</div>
+                    <div class="skill-item"><span class="skill-name">• Sandwich Technique (Kitsuchi):</span> Manifests two colossal rock formations to crush even the Ten-Tails.</div>
+                </div>
+            </div>
+
+            <!-- WATER RELEASE -->
+            <div class="element-card el-water">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#bae6fd" stroke-width="2">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Water Release (Suiton — 水遁)</h3>
+                        <span>Chakra Paper: Becomes damp and wet</span>
+                    </div>
+                </div>
+                <p>The most versatile of the five elements, capable of high-pressure offense, defense, or concealing mist. Common in the Land of Water (Kirigakure). <strong>Strong against Fire, weak against Earth.</strong></p>
+                <div class="badge-group">
+                    <span class="badge">Senju Tobirama</span>
+                    <span class="badge">Hoshigaki Kisame</span>
+                    <span class="badge">Momochi Zabuza</span>
+                    <span class="badge">Hozuki Suigetsu</span>
+                    <span class="badge">Terumi Mei</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Techniques</h4>
+                    <div class="skill-item"><span class="skill-name">• Great Exploding Water Colliding Wave / Super Shark Bomb (Kisame):</span> Creates an ocean dome and Chakra-absorbing sharks.</div>
+                    <div class="skill-item"><span class="skill-name">• Water Dragon Bullet (Suiryuudan):</span> Summons a massive water dragon (Tobirama required only a single hand seal).</div>
+                    <div class="skill-item"><span class="skill-name">• Hydrification Technique (Hozuki Clan):</span> Liquefies the user's entire body, granting immunity to physical attacks.</div>
+                </div>
+            </div>
+
+            <!-- YIN & YANG RELEASE -->
+            <div class="element-card el-yinyang">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#e4e4e7" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a5 5 0 0 1 0 10 5 5 0 0 0 0 10"/>
+                            <circle cx="12" cy="7" r="1" fill="#fff"/>
+                            <circle cx="12" cy="17" r="1" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Yin Release (Inton) & Yang Release (Yoton)</h3>
+                        <span>Foundation of Genjutsu, Medical Ninjutsu & Six Paths</span>
+                    </div>
+                </div>
+                <p><strong>Yin Release (Spiritual Energy):</strong> Creates form out of nothingness (Genjutsu, Nara Shadow techniques).<br><strong>Yang Release (Physical Energy):</strong> Breathes life into form (Medical Ninjutsu, Akimichi Expansion).<br><strong>Yin-Yang Release (Onmyoton):</strong> Supreme power of the Sage of Six Paths, nullifying all Ninjutsu (Truth-Seeking Balls).</p>
+                <div class="badge-group">
+                    <span class="badge">Hagoromo Otsutsuki</span>
+                    <span class="badge">Naruto & Madara (Six Paths)</span>
+                    <span class="badge">Nara Clan (Yin)</span>
+                    <span class="badge">Akimichi Clan (Yang)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Techniques</h4>
+                    <div class="skill-item"><span class="skill-name">• Creation of All Things (Banbutsu Sozo):</span> Hagoromo used Yin to shape forms and Yang to breathe life into them, creating the 9 Tailed Beasts.</div>
+                    <div class="skill-item"><span class="skill-name">• Truth-Seeking Balls (Gudodama):</span> Black orbs combining all 5 basic natures + Yin-Yang Release, disintegrating everything they touch.</div>
+                    <div class="skill-item"><span class="skill-name">• Shadow Imitation (Nara) / Multi-Size Technique (Akimichi):</span> Pure applications of Yin and Yang Release.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 3: ELEMENTAL KEKKEI GENKAI -->
+    <section id="view-kekkei-genkai" class="view-section">
+        <div class="section-header">
+            <h2>🧬 Elemental Kekkei Genkai (Bloodline Limits — 血継限界)</h2>
+            <p>Genetic abilities allowing a Shinobi to simultaneously wield and fuse <strong>2 basic Chakra natures</strong> to create an entirely new element that cannot be copied even by the Sharingan.</p>
+        </div>
+
+        <div class="grid-3">
+            <!-- WOOD RELEASE -->
+            <div class="element-card el-wind">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#86efac" stroke-width="2">
+                            <path d="M12 22v-9m0 0c-3 0-6-2-6-6 0-3 3-5 6-5s6 2 6 5c0 4-3 6-6 6z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Wood Release (Mokuton — 木遁)</h3>
+                        <span>Earth Release + Water Release</span>
+                    </div>
+                </div>
+                <p>Legendary bloodline generating trees and life force from Chakra, capable of <strong>absorbing Chakra and suppressing Tailed Beasts</strong>.</p>
+                <div class="badge-group">
+                    <span class="badge">Senju Hashirama (Innate)</span>
+                    <span class="badge">Yamato, Madara, Obito, Danzo, Moegi</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Sage Art Wood Release: True Several Thousand Hands:</span> Summons a colossal thousand-armed Buddha statue capable of stripping Susanoo armor off the Nine-Tails.</div>
+                    <div class="skill-item"><span class="skill-name">• Deep Forest Emergence:</span> Grows an entire dense forest in an instant.</div>
+                </div>
+            </div>
+
+            <!-- ICE RELEASE -->
+            <div class="element-card el-water">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e0f2fe" stroke-width="2">
+                            <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/><line x1="19.07" y1="4.93" x2="4.93" y2="19.07"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Ice Release (Hyoton — 氷遁)</h3>
+                        <span>Wind Release + Water Release</span>
+                    </div>
+                </div>
+                <p>Freezes moisture in the air into eternal ice immune to standard Fire Release.</p>
+                <div class="badge-group">
+                    <span class="badge">Haku (Yuki Clan)</span>
+                    <span class="badge">Land of Snow Shinobi</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Demonic Mirroring Ice Crystals (Makyo Hyosho):</span> Traps enemies in a dome of ice mirrors, allowing Haku to travel between them at near-light speed.</div>
+                </div>
+            </div>
+
+            <!-- LAVA RELEASE -->
+            <div class="element-card el-fire">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fdba74" stroke-width="2">
+                            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Lava Release (Yoton — 溶遁)</h3>
+                        <span>Fire Release + Earth Release</span>
+                    </div>
+                </div>
+                <p>Creates molten magma, quicklime, or vulcanized rubber with immense corrosive and binding properties.</p>
+                <div class="badge-group">
+                    <span class="badge">Terumi Mei (5th Mizukage)</span>
+                    <span class="badge">Roshi (4-Tails Jinchuriki)</span>
+                    <span class="badge">Kurotsuchi</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Melting Apparition Technique (Mei):</span> Expels acidic magma hot enough to melt Sasuke's Susanoo ribs.</div>
+                    <div class="skill-item"><span class="skill-name">• Lava Release: Rasenshuriken (Naruto):</span> Sliced through the God Tree in a single strike.</div>
+                </div>
+            </div>
+
+            <!-- BOIL RELEASE -->
+            <div class="element-card el-tota">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fbcfe8" stroke-width="2">
+                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+                            <path d="M12 12v9m-4-4 4 4 4-4"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Boil Release (Futton — 沸遁)</h3>
+                        <span>Fire Release + Water Release</span>
+                    </div>
+                </div>
+                <p>Generates corrosive acidic mist or boils Chakra internally to trigger explosive physical strength.</p>
+                <div class="badge-group">
+                    <span class="badge">Terumi Mei</span>
+                    <span class="badge">Han (5-Tails Jinchuriki)</span>
+                    <span class="badge">Naruto (5-Tails Chakra)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Unrivaled Strength (Kairiki Muso):</span> Boils Chakra to its peak, allowing Naruto to overpower Kaguya's vacuum fists.</div>
+                    <div class="skill-item"><span class="skill-name">• Skilled Mist Technique (Komu):</span> Releases pH-adjustable acid fog.</div>
+                </div>
+            </div>
+
+            <!-- STORM RELEASE -->
+            <div class="element-card el-lightning">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Storm Release (Ranton — 嵐遁)</h3>
+                        <span>Lightning Release + Water Release</span>
+                    </div>
+                </div>
+                <p>Creates beams of electromagnetic energy (lasers) that can be guided fluidly like flowing water.</p>
+                <div class="badge-group">
+                    <span class="badge">Darui (5th Raikage)</span>
+                    <span class="badge">Uchiha Madara (Six Paths)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Laser Circus:</span> Fires homing laser beams that curve mid-air to strike multiple targets.</div>
+                    <div class="skill-item"><span class="skill-name">• Sage Art Storm Release: Light Fang (Madara):</span> A light-speed beam capable of slicing a Truth-Seeking Ball staff in half.</div>
+                </div>
+            </div>
+
+            <!-- MAGNET RELEASE -->
+            <div class="element-card el-earth">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2">
+                            <path d="M6 15v-2a6 6 0 1 1 12 0v2"/><rect x="4" y="15" width="4" height="5" rx="1"/><rect x="16" y="15" width="4" height="5" rx="1"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Magnet Release (Jiton — 磁遁)</h3>
+                        <span>Wind Release + Earth Release</span>
+                    </div>
+                </div>
+                <p>Generates magnetic fields to manipulate metals (Iron Sand, Gold Dust) or apply sealing magnetism to targets.</p>
+                <div class="badge-group">
+                    <span class="badge">3rd Kazekage (Iron Sand)</span>
+                    <span class="badge">Rasa (Gold Dust)</span>
+                    <span class="badge">Gaara, Shinki, Shukaku</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Iron Sand World Method:</span> Creates a dense web of magnetized iron spikes piercing everything in range.</div>
+                    <div class="skill-item"><span class="skill-name">• Sage Art Magnet Release: Rasengan:</span> Infuses Shukaku's sealing curse markings into a Rasengan.</div>
+                </div>
+            </div>
+
+            <!-- SCORCH RELEASE -->
+            <div class="element-card el-fire">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Scorch Release (Shakuton — 灼遁)</h3>
+                        <span>Fire Release + Wind Release</span>
+                    </div>
+                </div>
+                <p>Creates blazing heat orbs that evaporate all water inside an opponent's body, mummifying them instantly.</p>
+                <div class="badge-group">
+                    <span class="badge">Pakura (Sunagakure)</span>
+                    <span class="badge">Maki</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Extremely Steaming Murder (Kajosatsu):</span> Summons miniature sun-like orbs that desiccate victims upon contact.</div>
+                </div>
+            </div>
+
+            <!-- EXPLOSION RELEASE -->
+            <div class="element-card el-kekkei">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#e9d5ff" stroke-width="2">
+                            <polygon points="12 2 15 8 22 9 17 14 18 21 12 18 6 21 7 14 2 9 9 8 12 2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Explosion Release (Bakuton — 爆遁)</h3>
+                        <span>Earth Release + Lightning Release</span>
+                    </div>
+                </div>
+                <p>Infuses explosive Chakra into matter, triggering detonations ranging from physical strikes to molecular-level bombs.</p>
+                <div class="badge-group">
+                    <span class="badge">Deidara (Akatsuki)</span>
+                    <span class="badge">Gari (Iwagakure Explosion Corps)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• C4 Karura (Deidara):</span> Releases microscopic nano-bombs into the air that disintegrate living organisms from the inside out when inhaled.</div>
+                    <div class="skill-item"><span class="skill-name">• C0 (Ultimate Art):</span> A 10-kilometer radius self-destruction blast.</div>
+                </div>
+            </div>
+
+            <!-- CRYSTAL, MUD & STEEL RELEASE -->
+            <div class="element-card el-yinyang">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2">
+                            <polygon points="12 2 22 12 12 22 2 12 12 2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Crystal, Mud & Steel Release</h3>
+                        <span>Rare Anime/Novel Bloodlines</span>
+                    </div>
+                </div>
+                <p>Specialized elemental variants featured in Anime & Novels:</p>
+                <div class="skill-list">
+                    <div class="skill-item"><span class="skill-name">• Crystal Release (Shoton - Guren):</span> Crystallizes all physical matter (including Chakra) into pink crystal.</div>
+                    <div class="skill-item"><span class="skill-name">• Mud Release (Deiton - Akatsuchi/Ameyuki):</span> Manipulates corrosive mud.</div>
+                    <div class="skill-item"><span class="skill-name">• Steel Release (Koton - Hiruko):</span> Turns the body into impenetrable black steel.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 4: DOJUTSU & SPECIAL BODILY TRAITS -->
+    <section id="view-dojutsu" class="view-section">
+        <div class="section-header">
+            <h2>👁️ Dojutsu (Visual Prowess) & Special Bodily Kekkei Genkai</h2>
+            <p>Bloodline traits that do not generate elements, instead manifesting through ocular powers or unique biological structures.</p>
+        </div>
+
+        <div class="grid-3">
+            <!-- SHARINGAN & MANGEKYO -->
+            <div class="dojutsu-card" style="border-color: #ef4444;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#dc2626" stroke="#000" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="28" fill="none" stroke="#000" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="10" fill="#000"/>
+                        <circle cx="50" cy="22" r="5" fill="#000"/>
+                        <circle cx="74" cy="64" r="5" fill="#000"/>
+                        <circle cx="26" cy="64" r="5" fill="#000"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #f87171;">Sharingan & Mangekyo</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Uchiha Clan (Descendants of Indra)</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Awakened through intense emotional trauma/love. Sees Chakra flow, predicts movement, and copies Ninjutsu, Genjutsu, and Taijutsu.</p>
+                <div class="skill-list">
+                    <h4>Mangekyo Powers (MS / EMS)</h4>
+                    <div class="skill-item"><span class="skill-name">• Susanoo:</span> Colossal Chakra avatar surrounding the user.</div>
+                    <div class="skill-item"><span class="skill-name">• Amaterasu (Itachi/Sasuke):</span> Inextinguishable black flames burning for 7 days and nights, consuming even normal fire.</div>
+                    <div class="skill-item"><span class="skill-name">• Tsukuyomi (Itachi):</span> Genjutsu inflicting 72 hours of mental torture within 1 second of real time.</div>
+                    <div class="skill-item"><span class="skill-name">• Kamui (Obito/Kakashi):</span> Space-time Dojutsu transferring objects into a personal dimension.</div>
+                    <div class="skill-item"><span class="skill-name">• Kotoamatsukami (Shisui):</span> Ultimate mind-control Genjutsu without the victim ever realizing.</div>
+                    <div class="skill-item"><span class="skill-name">• Izanagi & Izanami:</span> Forbidden techniques rewriting reality at the cost of one eye's light.</div>
+                </div>
+            </div>
+
+            <!-- BYAKUGAN & TENSEIGAN -->
+            <div class="dojutsu-card" style="border-color: #a855f7;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#f3e8ff" stroke="#9333ea" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="24" fill="#e9d5ff" stroke="#a855f7" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="8" fill="#d8b4fe"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #c084fc;">Byakugan & Tenseigan</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Hyuga & Otsutsuki Clans</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">The White Eye grants near-360° X-ray vision (save for a tiny blind spot behind the thoracic vertebra) and sight of all 361 Tenketsu.</p>
+                <div class="skill-list">
+                    <h4>Skills & Tenseigan Evolution</h4>
+                    <div class="skill-item"><span class="skill-name">• Gentle Fist (Juken) & Eight Trigrams 64 Palms:</span> Injects Chakra directly into internal organs and seals 64 Chakra points.</div>
+                    <div class="skill-item"><span class="skill-name">• Eight Trigrams Palms Revolving Heaven:</span> Rotates while expelling Chakra to form an absolute shield.</div>
+                    <div class="skill-item"><span class="skill-name">• Tenseigan (Reincarnation Eye - Toneri):</span> Formed by combining pure Byakugan with Otsutsuki Chakra, granting gravitational control (Silver Wheel Reincarnation Explosion) strong enough to split the Moon.</div>
+                </div>
+            </div>
+
+            <!-- RINNEGAN & RINNE SHARINGAN -->
+            <div class="dojutsu-card" style="border-color: #8b5cf6;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#7c3aed" stroke="#000" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="36" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="26" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="16" fill="none" stroke="#1e1b4b" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="6" fill="#000"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #a78bfa;">Rinnegan & Rinne Sharingan</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Hagoromo, Madara, Nagato, Sasuke, Kaguya</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">The Samsara Eye awakened by uniting Indra and Asura's Chakra (forming Six Paths Chakra). Grants mastery over all 5 basic elements.</p>
+                <div class="skill-list">
+                    <h4>Six Paths Techniques & Unique Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Deva Path:</span> Shinra Tensei (repel), Bansho Ten'in (attract), Chibaku Tensei (planetary sealing core).</div>
+                    <div class="skill-item"><span class="skill-name">• Preta / Human / Animal / Naraka / Asura Paths:</span> Ninjutsu absorption, soul extraction, immortal summons, King of Hell revival, mechanized weaponry.</div>
+                    <div class="skill-item"><span class="skill-name">• Amenotejikara (Sasuke) & Limbo (Madara):</span> Instantaneous spatial swapping and invisible clones in a parallel dimension.</div>
+                    <div class="skill-item"><span class="skill-name">• Infinite Tsukuyomi (Rinne Sharingan):</span> Projects a global Genjutsu onto the Moon to trap humanity in eternal sleep.</div>
+                </div>
+            </div>
+
+            <!-- JOGAN, KOKUGAN & SENRIGAN -->
+            <div class="dojutsu-card" style="border-color: #38bdf8;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#0f172a" stroke="#38bdf8" stroke-width="4"/>
+                        <circle cx="50" cy="50" r="22" fill="#38bdf8" opacity="0.8"/>
+                        <circle cx="50" cy="50" r="10" fill="#e0f2fe"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #38bdf8;">Jogan, Kokugan & Senrigan</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Boruto Era & Otsutsuki</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Divine ocular powers introduced in the Boruto sequel era.</p>
+                <div class="skill-list">
+                    <h4>New Dojutsu Breakdown</h4>
+                    <div class="skill-item"><span class="skill-name">• Jogan (Pure Eye - Boruto):</span> Perceives dark/anomalous Chakra flow, key Tenketsu points, and dimensional rifts.</div>
+                    <div class="skill-item"><span class="skill-name">• Kokugan (Isshiki / Kawaki):</span> Golden Dharma-wheel eye wielding <em>Sukunahikona</em> (instantly shrinking non-living matter) and <em>Daikokuten</em> (storing and summoning objects from a timeless dimension).</div>
+                    <div class="skill-item"><span class="skill-name">• Senrigan (Clairvoyance - Eida):</span> Projects consciousness to witness any present or past event up to the moment of the user's birth.</div>
+                </div>
+            </div>
+
+            <!-- SHIKOTSUMYAKU -->
+            <div class="dojutsu-card" style="border-color: #e2e8f0;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#334155" stroke="#cbd5e1" stroke-width="3"/>
+                        <path d="M35 35 L65 65 M65 35 L35 65" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #f1f5f9;">Dead Bone Pulse (Shikotsumyaku)</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Kaguya Clan (Kimimaro)</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Inherited directly from Kaguya Otsutsuki, allowing manipulation of calcium density to forge bone weapons harder than steel.</p>
+                <div class="skill-list">
+                    <h4>Iconic Skills</h4>
+                    <div class="skill-item"><span class="skill-name">• Dance of the Seedling Fern:</span> Sprouts a massive forest of bone spikes across the battlefield and merges the user's body within them.</div>
+                    <div class="skill-item"><span class="skill-name">• All-Killing Ash Bones (Kaguya):</span> Fires bone projectiles that crumble victims into ash upon impact (even Six Paths power cannot heal it).</div>
+                </div>
+            </div>
+
+            <!-- KETSURYUGAN & JUGO -->
+            <div class="dojutsu-card" style="border-color: #f43f5e;">
+                <div class="dojutsu-header">
+                    <svg width="56" height="56" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="46" fill="#881337" stroke="#fb7185" stroke-width="3"/>
+                        <rect x="28" y="42" width="44" height="16" rx="8" fill="#000"/>
+                    </svg>
+                    <div>
+                        <h3 style="color: #fb7185;">Ketsuryugan & Sage Transformation</h3>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Chinoike Clan & Jugo's Clan</span>
+                    </div>
+                </div>
+                <p style="font-size: 0.92rem;">Unique bloodline traits involving blood manipulation and passive nature energy absorption.</p>
+                <div class="skill-list">
+                    <h4>Bloodline Details</h4>
+                    <div class="skill-item"><span class="skill-name">• Ketsuryugan (Blood Dragon Eye - Chino):</span> Manipulates iron-rich liquids (especially blood), turning victims into exploding human bombs.</div>
+                    <div class="skill-item"><span class="skill-name">• Sage Transformation (Jugo):</span> Passively absorbs Nature Energy, mutating bodily forms (the origin of Orochimaru's Curse Marks).</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 5: KEKKEI TOTA & KEKKEI MORA -->
+    <section id="view-kekkei-tota" class="view-section">
+        <div class="section-header">
+            <h2>⚛️ Kekkei Tota (Bloodline Selection) & Kekkei Mora (Bloodline Encompassing)</h2>
+            <p>Transcendent levels of Chakra fusion far surpassing standard Kekkei Genkai.</p>
+        </div>
+
+        <div class="grid-2">
+            <!-- KEKKEI TOTA -->
+            <div class="element-card el-tota">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#fbcfe8" stroke-width="2">
+                            <polygon points="12 2 22 20 2 20 12 2"/>
+                            <circle cx="12" cy="14" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Kekkei Tota (Bloodline Selection — 血継淘汰)</h3>
+                        <span>Simultaneous Fusion of 3 Basic Chakra Natures</span>
+                    </div>
+                </div>
+                <p>Not inherited strictly by clan genetics, but an advanced technique passed down to those with exceptional affinity. To date, <strong>Dust Release (Jinton)</strong> is the only known Kekkei Tota.</p>
+                <div class="badge-group">
+                    <span class="badge">Mu (2nd Tsuchikage)</span>
+                    <span class="badge">Onoki (3rd Tsuchikage)</span>
+                    <span class="badge">Ku (Synthetic Clone)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Dust Release (Jinton) = Fire + Earth + Wind</h4>
+                    <div class="skill-item"><span class="skill-name">• Atomic Dismantling Jutsu (Genkai Hakuri no Jutsu):</span> Forms 3D geometric constructs (cubes, cones, cylinders) with a glowing sphere at the center. When expanded over a target, everything inside is <strong>pulverized into microscopic dust at the atomic level</strong>, bypassing all physical defenses.</div>
+                </div>
+            </div>
+
+            <!-- KEKKEI MORA -->
+            <div class="element-card el-kekkei">
+                <div class="card-top">
+                    <div class="icon-box">
+                        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#e9d5ff" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <div class="card-title">
+                        <h3>Kekkei Mora (Bloodline Encompassing — 血継網羅)</h3>
+                        <span>Fusion of All 7 Natures: Fire + Wind + Lightning + Earth + Water + Yin + Yang</span>
+                    </div>
+                </div>
+                <p>The primordial Chakra tier exclusive to <strong>Otsutsuki Kaguya</strong> and beings achieving ultimate Ten-Tails / Six Paths power. It is the root origin from which all subsequent Kekkei Genkai branched off.</p>
+                <div class="badge-group">
+                    <span class="badge">Otsutsuki Kaguya</span>
+                    <span class="badge">Otsutsuki Hagoromo & Hamura</span>
+                    <span class="badge">Uchiha Madara (Ten-Tails Jinchuriki)</span>
+                </div>
+                <div class="skill-list">
+                    <h4>Divine Techniques of Kekkei Mora</h4>
+                    <div class="skill-item"><span class="skill-name">• Expansive Truth-Seeking Ball (Bocho Gudodama):</span> A colossal black orb containing all 7 Chakra natures, capable of obliterating and recreating an entire dimension.</div>
+                    <div class="skill-item"><span class="skill-name">• Amenominaka:</span> Teleports the user and everyone nearby across 6 distinct dimensions (Lava, Ice, Acid, Gravity, Sand, Root Dimension).</div>
+                    <div class="skill-item"><span class="skill-name">• Eighty Gods Vacuum Attack (Yasogami Kugeki):</span> Unleashes a barrage of massive Chakra fists capable of shattering a Perfect Susanoo in a single blow.</div>
+                    <div class="skill-item"><span class="skill-name">• Yomotsu Hirasaka:</span> Tears open spatial rifts for instant travel without hand seals.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW 6: JUTSU & SKILL ARCHIVE -->
+    <section id="view-jutsu-db" class="view-section">
+        <div class="section-header">
+            <h2>⚡ Legendary Jutsu & Special Skill Classification Table</h2>
+            <p>A compilation of non-elemental or multi-disciplinary techniques spanning from ancient times to the modern era.</p>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-chip active" onclick="filterTable('all', this)">All</button>
+            <button class="filter-chip" onclick="filterTable('senjutsu', this)">Senjutsu & Tailed Beasts</button>
+            <button class="filter-chip" onclick="filterTable('spacetime', this)">Space-Time</button>
+            <button class="filter-chip" onclick="filterTable('kinjutsu', this)">Forbidden & Sealing</button>
+            <button class="filter-chip" onclick="filterTable('boruto', this)">Boruto Era / Shinjutsu</button>
+        </div>
+
+        <table id="jutsu-table">
+            <thead>
+                <tr>
+                    <th style="width: 22%;">Technique Name</th>
+                    <th style="width: 18%;">Classification / Type</th>
+                    <th style="width: 20%;">Users</th>
+                    <th style="width: 40%;">Mechanism & Power</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-cat="senjutsu">
+                    <td><strong>Sage Art (Senjutsu) & Baryon Mode</strong></td>
+                    <td>Nature Energy + Tailed Beast</td>
+                    <td>Hashirama, Jiraiya, Naruto, Minato, Kabuto, Mitsuki</td>
+                    <td>Balances Nature Energy at an exact 1:1:1 ratio with Physical & Spiritual energy. <strong>Baryon Mode</strong> (Naruto & Kurama) fuses both Chakra sources like nuclear fusion to create a new energy that drains an opponent's lifespan upon contact.</td>
+                </tr>
+                <tr data-cat="senjutsu">
+                    <td><strong>Tailed Beast Ball (Bijudama)</strong></td>
+                    <td>Pinnacle Shape Transformation (8:2)</td>
+                    <td>9 Tailed Beasts, Jinchuriki, Minato (Rasengan inspiration)</td>
+                    <td>Compresses Positive Black Chakra and Negative White Chakra at an exact <strong>8:2 ratio</strong> into a dense sphere, firing a beam capable of vaporizing mountain ranges.</td>
+                </tr>
+                <tr data-cat="spacetime">
+                    <td><strong>Flying Raijin Jutsu (Hiraishin)</strong></td>
+                    <td>Space-Time Ninjutsu</td>
+                    <td>Senju Tobirama (Creator), Namikaze Minato (Perfected)</td>
+                    <td>Places a formula seal on objects or targets, allowing the user to teleport instantaneously across any distance in zero seconds.</td>
+                </tr>
+                <tr data-cat="kinjutsu">
+                    <td><strong>Impure World Reincarnation (Edo Tensei)</strong></td>
+                    <td>Forbidden Jutsu (Kinjutsu)</td>
+                    <td>Tobirama, Orochimaru, Yakushi Kabuto</td>
+                    <td>Uses a living sacrifice and DNA of the deceased to summon souls back from the Pure Land into immortal bodies with infinitely refilling Chakra.</td>
+                </tr>
+                <tr data-cat="kinjutsu">
+                    <td><strong>Eight Inner Gates (Hachimon)</strong></td>
+                    <td>Forbidden Taijutsu</td>
+                    <td>Might Duy, Might Guy, Rock Lee, Metal Lee</td>
+                    <td>Unlocks 8 limiters regulating Chakra flow in the body. Opening the 8th Gate (<strong>Gate of Death — Night Guy</strong>) bends space through sheer physical pressure at the cost of the user's life.</td>
+                </tr>
+                <tr data-cat="kinjutsu">
+                    <td><strong>Reaper Death Seal (Shiki Fujin)</strong></td>
+                    <td>Uzumaki Sealing Jutsu</td>
+                    <td>Minato, Hiruzen, Orochimaru</td>
+                    <td>Summons the Shinigami to rip out the target's soul and seal it inside the user's stomach. In exchange, the user's own soul is devoured by the Shinigami.</td>
+                </tr>
+                <tr data-cat="boruto">
+                    <td><strong>Rasengan: Uzuhiko</strong></td>
+                    <td>Planetary Ninjutsu (Boruto)</td>
+                    <td>Uzumaki Boruto (Two Blue Vortex)</td>
+                    <td>Harnesses not only personal Chakra, but connects directly to the <strong>centrifugal force and rotational Chakra of the Earth</strong>. Inflicts perpetual disorienting damage until the planet stops spinning.</td>
+                </tr>
+                <tr data-cat="boruto">
+                    <td><strong>Karma Seal & Shinjutsu (Divine Arts)</strong></td>
+                    <td>Otsutsuki Data / Godly Power</td>
+                    <td>Otsutsuki Shibai, Isshiki, Momoshiki, Boruto, Kawaki, Eida, Daemon</td>
+                    <td><strong>Karma:</strong> Absorbs Ninjutsu, amplifies physical stats, and opens spatial portals.<br><strong>Shinjutsu:</strong> Supreme abilities requiring no hand seals (e.g., Eida's <em>Omnipotence</em> rewriting global memories; Daemon's <em>Reflection</em> rebounding any murderous intent).</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+</div>
+
+<script>
+    function switchView(viewId) {
+        document.querySelectorAll('.view-section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.getElementById('view-' + viewId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function filterTable(category, btnElement) {
+        document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+        btnElement.classList.add('active');
+
+        const rows = document.querySelectorAll('#jutsu-table tbody tr');
+        rows.forEach(row => {
+            if (category === 'all' || row.getAttribute('data-cat') === category) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
