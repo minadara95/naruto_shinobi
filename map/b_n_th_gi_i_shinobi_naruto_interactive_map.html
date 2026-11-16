@@ -145,10 +145,10 @@
 
         /* Nhãn chữ trên bản đồ */
         .map-label-bg {
-            fill: rgba(244, 230, 200, 0.9);
+            fill: rgba(244, 230, 200, 0.88);
             stroke: #4a3520;
-            stroke-width: 1;
-            rx: 4;
+            stroke-width: 0.75;
+            rx: 3;
             transition: stroke 0.2s ease, fill 0.2s ease;
         }
 
@@ -162,6 +162,12 @@
             font-family: 'Noto Serif', serif;
             font-weight: 400;
             fill: #593a1e;
+            transition: opacity 0.25s ease;
+        }
+
+        .zoom-adaptive-group {
+            transform-origin: 0px 0px;
+            transition: transform 0.15s ease-out;
         }
 
         /* Con dấu đỏ kiểu Nhật (Hanko) */
@@ -239,6 +245,14 @@
                 <button data-filter="great" class="filter-btn px-2.5 py-1 rounded font-semibold text-[#d6be96] hover:text-white transition">Ngũ Đại Quốc</button>
                 <button data-filter="minor" class="filter-btn px-2.5 py-1 rounded font-semibold text-[#d6be96] hover:text-white transition">Tiểu Quốc & Khác</button>
             </div>
+
+            <!-- Tùy chỉnh cỡ chữ nhanh -->
+            <div class="flex items-center bg-[#1c1109] p-1 rounded-lg border border-[#7a5634] text-xs" title="Điều chỉnh kích thước chữ & biểu tượng">
+                <span class="px-1.5 text-[11px] text-[#b59874] hidden sm:inline">Cỡ chữ:</span>
+                <button data-textsize="0.82" class="textsize-btn px-2 py-1 rounded font-semibold text-[#d6be96] hover:text-white transition">Nhỏ</button>
+                <button data-textsize="1" class="textsize-btn active px-2 py-1 rounded font-semibold bg-[#7a5634] text-[#f4e6c8] transition">Vừa</button>
+                <button data-textsize="1.22" class="textsize-btn px-2 py-1 rounded font-semibold text-[#d6be96] hover:text-white transition">Lớn</button>
+            </div>
         </div>
     </header>
 
@@ -304,11 +318,11 @@
                     </g>
 
                     <!-- Tên các vùng biển lớn -->
-                    <g class="font-calligraphy" fill="#5e462a" opacity="0.55" font-size="17" letter-spacing="4">
+                    <g class="font-calligraphy" fill="#5e462a" opacity="0.5" font-size="13" letter-spacing="3">
                         <text x="115" y="900" transform="rotate(-10 115,900)">WESTERN OCEAN (TÂY DƯƠNG)</text>
                         <text x="690" y="945">SOUTHERN SEA (NAM HẢI)</text>
                         <text x="1310" y="835" transform="rotate(12 1310,835)">EASTERN OCEAN (ĐÔNG DƯƠNG)</text>
-                        <text x="1085" y="455" font-size="13" letter-spacing="2">INNER SEA (NỘI HẢI)</text>
+                        <text x="1085" y="455" font-size="10.5" letter-spacing="2">INNER SEA (NỘI HẢI)</text>
                     </g>
 
                     <!-- LỚP 1: LỤC ĐỊA & LÃNH THỔ CÁC QUỐC GIA (Vẽ theo đúng địa lý Lore Naruto) -->
@@ -922,71 +936,62 @@
 
         let selectedId = null;
         let currentFilter = 'all';
+        let userTextScale = 1;
 
         /**
          * 1. VẼ ĐỊA HÌNH TỰ NHIÊN, QUẦN ĐẢO PHỤ, CẦU NARUTO & THUNG LŨNG TẬN CÙNG
          */
         function renderGeographyDecorations() {
-            const mountains = [
-                // Dãy núi Thổ Quốc & Thiết Quốc
-                {x: 260, y: 185}, {x: 300, y: 175}, {x: 420, y: 195},
-                {x: 845, y: 205}, {x: 925, y: 205}, {x: 1150, y: 165},
-                {x: 1295, y: 165}, {x: 1355, y: 205},
-                // Dãy núi biên giới Phong Quốc
-                {x: 215, y: 520}, {x: 255, y: 510}, {x: 375, y: 555},
-                // Núi Thủy Quốc
-                {x: 1265, y: 575}, {x: 1355, y: 590}
-            ];
-
-            const trees = [
-                // Rừng rậm Hỏa Quốc
-                {x: 725, y: 495}, {x: 755, y: 485}, {x: 865, y: 495},
-                {x: 895, y: 535}, {x: 725, y: 615}, {x: 855, y: 625},
-                // Rừng Thảo Quốc
-                {x: 545, y: 365}, {x: 590, y: 375}
-            ];
-
             let geoHtml = '';
 
-            // Các đảo nhỏ vệ tinh quanh Thủy Quốc (Quần đảo Sương Mù)
-            geoHtml += `
-                <path d="M 1145,675 L 1170,665 L 1175,695 L 1150,705 Z" fill="#9ec4cf" stroke="#3d2817" stroke-width="1.5"/>
-                <path d="M 1365,485 L 1395,475 L 1405,500 L 1375,510 Z" fill="#9ec4cf" stroke="#3d2817" stroke-width="1.5"/>
-                <path d="M 1345,795 L 1375,785 L 1385,810 L 1355,820 Z" fill="#9ec4cf" stroke="#3d2817" stroke-width="1.5"/>
-            `;
-
-            // Đại Cầu Naruto nối Hỏa Quốc với Ba Quốc
-            geoHtml += `
-                <line x1="870" y1="695" x2="895" y2="715" stroke="#5c381c" stroke-width="4.5" stroke-linecap="round"/>
-                <line x1="870" y1="695" x2="895" y2="715" stroke="#f4e6c8" stroke-width="1.5" stroke-dasharray="3,2"/>
-            `;
-
-            // Hệ thống sông lớn tại Xuyên Quốc (Land of Rivers)
-            geoHtml += `
-                <path d="M 555,585 Q 585,635 565,685 T 585,740" fill="none" stroke="#5c8a99" stroke-width="3.5" opacity="0.75" stroke-linecap="round"/>
-                <path d="M 615,505 Q 625,585 645,645 T 635,735" fill="none" stroke="#5c8a99" stroke-width="3" opacity="0.7" stroke-linecap="round"/>
-            `;
-
-            mountains.forEach(m => {
-                geoHtml += `<use href="#mountain-icon" x="${m.x}" y="${m.y}" />`;
+            // Các dãy núi lớn (Thổ Quốc, Lôi Quốc, Thiết Quốc, Thủy Quốc)
+            const mountains = [
+                [260, 210], [310, 195], [405, 225], [235, 315], [435, 295],
+                [845, 225], [935, 235], [1145, 200], [1295, 205], [1345, 265],
+                [1285, 585], [1355, 675], [585, 85], [695, 75]
+            ];
+            mountains.forEach(([x, y]) => {
+                geoHtml += `<use href="#mountain-icon" x="${x}" y="${y}" opacity="0.72"/>`;
             });
-            trees.forEach(t => {
-                geoHtml += `<use href="#tree-icon" x="${t.x}" y="${t.y}" />`;
+
+            // Rừng rậm Hỏa Quốc & Thảo Quốc
+            const forests = [
+                [735, 495], [865, 515], [745, 615], [855, 635], [695, 545],
+                [565, 445], [665, 385]
+            ];
+            forests.forEach(([x, y]) => {
+                geoHtml += `<use href="#tree-icon" x="${x}" y="${y}" opacity="0.68"/>`;
             });
+
+            // Đại Cầu Naruto (Nối Hỏa Quốc với Ba Quốc)
+            geoHtml += `
+                <line x1="870" y1="695" x2="905" y2="715" stroke="#5c381c" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="870" y1="695" x2="905" y2="715" stroke="#e6cfa3" stroke-width="1.4" stroke-dasharray="3,2"/>
+            `;
+
+            // Quần đảo phụ quanh Thủy Quốc
+            geoHtml += `
+                <path d="M 1155,755 L 1185,745 L 1195,770 L 1165,780 Z" fill="#9ec4cf" stroke="#3d2817" stroke-width="1.6"/>
+                <path d="M 1365,765 L 1395,760 L 1400,785 L 1370,790 Z" fill="#9ec4cf" stroke="#3d2817" stroke-width="1.6"/>
+            `;
 
             // Địa danh huyền thoại: Thung Lũng Tận Cùng (biên giới Hỏa Quốc - Âm Quốc)
             geoHtml += `
                 <g transform="translate(815, 422)">
-                    <circle cx="0" cy="0" r="4" fill="#9e2a2b" stroke="#f4e6c8" stroke-width="1"/>
-                    <text x="8" y="3" font-size="9" font-style="italic" font-weight="bold" fill="#5c191a">⚔ Valley of the End (Thung Lũng Tận Cùng)</text>
+                    <circle cx="0" cy="0" r="3" fill="#9e2a2b" stroke="#f4e6c8" stroke-width="0.8"/>
+                    <g class="zoom-adaptive-group" data-base-scale="0.85">
+                        <text x="6" y="2.5" font-size="7.5" font-style="italic" font-weight="bold" fill="#5c191a">⚔ Valley of the End (Thung Lũng Tận Cùng)</text>
+                    </g>
                 </g>
             `;
 
             // Địa danh huyền thoại: Cầu Kannabi (Thảo Quốc)
             geoHtml += `
                 <g transform="translate(530, 425)">
-                    <circle cx="0" cy="0" r="3.5" fill="#48662a" stroke="#f4e6c8" stroke-width="1"/>
-                    <text x="-8" y="13" text-anchor="end" font-size="8.5" font-style="italic" font-weight="bold" fill="#2d4218">Kannabi Bridge (Cầu Kannabi)</text>
+                    <circle cx="0" cy="0" r="2.8" fill="#48662a" stroke="#f4e6c8" stroke-width="0.8"/>
+                    <g class="zoom-adaptive-group" data-base-scale="0.85">
+                        <text x="-6" y="10" text-anchor="end" font-size="7" font-style="italic" font-weight="bold" fill="#2d4218">Kannabi Bridge (Cầu Kannabi)</text>
+                    </g>
                 </g>
             `;
 
@@ -994,176 +999,171 @@
         }
 
         /**
-         * 2. VẼ LÃNH THỔ CÁC QUỐC GIA, ĐƯỜNG BIÊN GIỚI & CÁC NÚT BIỂU TƯỢNG LÀNG ẨN
+         * 2. VẼ LÃNH THỔ CÁC QUỐC GIA, BIÊN GIỚI & BIỂU TƯỢNG LÀNG ẨN
          */
         function renderMapElements() {
             territoriesLayer.innerHTML = '';
             bordersLayer.innerHTML = '';
             markersLayer.innerHTML = '';
 
-            SHINOBI_DATA.forEach(item => {
-                const isDimmed = (currentFilter !== 'all' && item.type !== currentFilter);
-                const opacity = isDimmed ? 0.25 : 0.92;
+            const filteredData = SHINOBI_DATA.filter(item => {
+                if (currentFilter === 'all') return true;
+                return item.type === currentFilter;
+            });
 
-                // A. Vẽ hình dạng lãnh thổ quốc gia
+            // Vẽ tất cả lãnh thổ để giữ nguyên hình dáng lục địa
+            SHINOBI_DATA.forEach(item => {
+                const isFilteredOut = currentFilter !== 'all' && item.type !== currentFilter;
                 const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
                 pathEl.setAttribute('d', item.path);
                 pathEl.setAttribute('fill', item.fillColor);
-                pathEl.setAttribute('fill-opacity', opacity);
+                pathEl.setAttribute('fill-opacity', isFilteredOut ? '0.35' : '0.92');
                 pathEl.setAttribute('class', `country-path ${selectedId === item.id ? 'selected' : ''}`);
                 pathEl.setAttribute('data-id', item.id);
+
                 pathEl.addEventListener('click', (e) => {
                     e.stopPropagation();
                     selectEntity(item.id);
                 });
+
                 territoriesLayer.appendChild(pathEl);
 
-                // A2. Lớp viền nét đứt tăng cường độ rõ của biên giới quốc gia
-                const borderOverlay = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                borderOverlay.setAttribute('d', item.path);
-                borderOverlay.setAttribute('class', 'national-border-overlay');
-                bordersLayer.appendChild(borderOverlay);
+                // Đường viền biên giới nét đứt
+                const borderEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                borderEl.setAttribute('d', item.path);
+                borderEl.setAttribute('class', 'national-border-overlay');
+                bordersLayer.appendChild(borderEl);
+            });
 
-                // B. Vẽ Điểm Đánh Dấu (Tách biệt hoàn toàn tọa độ translate và scale để chống giật)
+            // Vẽ biểu tượng & nhãn tên cho các quốc gia đang hiển thị
+            filteredData.forEach(item => {
                 const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-                nodeGroup.setAttribute('class', 'map-node');
                 nodeGroup.setAttribute('transform', `translate(${item.markerX}, ${item.markerY})`);
-                nodeGroup.setAttribute('opacity', isDimmed ? 0.3 : 1);
+                nodeGroup.setAttribute('class', 'map-node');
+                nodeGroup.setAttribute('data-id', item.id);
+
                 nodeGroup.addEventListener('click', (e) => {
                     e.stopPropagation();
                     selectEntity(item.id);
                 });
 
-                const badgeRadius = item.type === 'great' ? 20 : 16;
-                const scaleFactor = item.type === 'great' ? 1.15 : 0.92;
+                const badgeRadius = item.type === 'great' ? 14 : 11;
+                const scaleFactor = item.type === 'great' ? 0.82 : 0.65;
 
                 // Vòng tròn nhịp đập nếu đang được chọn
                 const pulseMarkup = selectedId === item.id 
-                    ? `<circle cx="0" cy="0" r="${badgeRadius + 4}" fill="none" stroke="#9e2a2b" stroke-width="3" class="pulse-ring"/>` 
+                    ? `<circle cx="0" cy="0" r="${badgeRadius + 3.5}" fill="none" stroke="#9e2a2b" stroke-width="2.2" class="pulse-ring"/>` 
                     : '';
 
-                // Nhãn tên quốc gia & làng ẩn (Song ngữ Anh/Romaji + Tiếng Việt)
+                // Nhãn tên quốc gia & làng ẩn (Song ngữ Anh/Romaji + Tiếng Việt) gọn gàng, thanh thoát
                 const primaryLabel = `${item.countryEn} (${item.countryVi})`;
                 const subLabel = item.villageEn.split(' (')[0] + ` (${item.villageVi})`;
-                const labelWidth = Math.max(primaryLabel.length * 6.4, subLabel.length * 5.6) + 16;
+                const titleFontSize = item.type === 'great' ? 8.8 : 7.5;
+                const subFontSize = item.type === 'great' ? 7.2 : 6.3;
+                const labelWidth = Math.max(primaryLabel.length * (titleFontSize * 0.56), subLabel.length * (subFontSize * 0.54)) + 12;
+                const labelOffsetY = item.type === 'great' ? 24 : 20;
 
                 nodeGroup.innerHTML = `
                     <!-- Vùng nhận diện chuột tĩnh (Hit-area) đảm bảo không bao giờ flicker khi hover -->
-                    <circle cx="0" cy="0" r="${badgeRadius + 6}" fill="transparent" />
-                    ${pulseMarkup}
-                    <g class="node-badge-scaler">
-                        <!-- Viền kim loại kiểu Băng Trán Shinobi -->
-                        <circle cx="0" cy="0" r="${badgeRadius + 3}" fill="#231810"/>
-                        <circle cx="0" cy="0" r="${badgeRadius + 1.5}" fill="#d4af37"/>
-                        <circle cx="0" cy="0" r="${badgeRadius}" fill="${item.badgeColor}" stroke="#f4e6c8" stroke-width="1.2"/>
-                        <!-- Đinh tán hai bên băng trán -->
-                        <circle cx="${-badgeRadius + 3.5}" cy="0" r="1.3" fill="#e6cfa3"/>
-                        <circle cx="${badgeRadius - 3.5}" cy="0" r="1.3" fill="#e6cfa3"/>
-                        <!-- Biểu tượng nguyên tác -->
-                        <g transform="translate(${-16 * scaleFactor}, ${-16 * scaleFactor}) scale(${scaleFactor})">
-                            ${item.symbolSvg}
+                    <circle cx="0" cy="0" r="${badgeRadius + 5}" fill="transparent" />
+                    <g class="zoom-adaptive-group" data-type="${item.type}">
+                        ${pulseMarkup}
+                        <g class="node-badge-scaler">
+                            <!-- Viền kim loại kiểu Băng Trán Shinobi -->
+                            <circle cx="0" cy="0" r="${badgeRadius + 2.2}" fill="#231810"/>
+                            <circle cx="0" cy="0" r="${badgeRadius + 1.1}" fill="#d4af37"/>
+                            <circle cx="0" cy="0" r="${badgeRadius}" fill="${item.badgeColor}" stroke="#f4e6c8" stroke-width="1"/>
+                            <!-- Đinh tán hai bên băng trán -->
+                            <circle cx="${-badgeRadius + 2.6}" cy="0" r="1" fill="#e6cfa3"/>
+                            <circle cx="${badgeRadius - 2.6}" cy="0" r="1" fill="#e6cfa3"/>
+                            <!-- Biểu tượng nguyên tác -->
+                            <g transform="translate(${-16 * scaleFactor}, ${-16 * scaleFactor}) scale(${scaleFactor})">
+                                ${item.symbolSvg}
+                            </g>
                         </g>
-                    </g>
 
-                    <!-- Thẻ tên song ngữ cố định bên dưới biểu tượng -->
-                    <g transform="translate(0, ${item.labelOffsetY})">
-                        <rect x="${-labelWidth / 2}" y="-11" width="${labelWidth}" height="27" class="map-label-bg" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"/>
-                        <text x="0" y="0" text-anchor="middle" font-size="${item.type === 'great' ? '11' : '9.5'}" class="map-label-title">${primaryLabel}</text>
-                        <text x="0" y="11.5" text-anchor="middle" font-size="${item.type === 'great' ? '9.5' : '8.5'}" class="map-label-sub">${subLabel}</text>
+                        <!-- Thẻ tên song ngữ gọn nhẹ bên dưới biểu tượng -->
+                        <g transform="translate(0, ${labelOffsetY})">
+                            <rect x="${-labelWidth / 2}" y="-8.5" width="${labelWidth}" height="20.5" class="map-label-bg" filter="drop-shadow(0 1.5px 2px rgba(0,0,0,0.25))"/>
+                            <text x="0" y="0" text-anchor="middle" font-size="${titleFontSize}" class="map-label-title">${primaryLabel}</text>
+                            <text x="0" y="9" text-anchor="middle" font-size="${subFontSize}" class="map-label-sub">${subLabel}</text>
+                        </g>
                     </g>
                 `;
 
                 markersLayer.appendChild(nodeGroup);
             });
+
+            applySemanticZoomScale();
         }
 
         /**
-         * 3. HIỂN THỊ HỒ SƠ NINJA CHI TIẾT KHI NHẤP VÀO QUỐC GIA / LÀNG ẨN
+         * 3. CHỌN QUỐC GIA & HIỂN THỊ HỒ SƠ TÌNH BÁO SHINOBI
          */
         function selectEntity(id) {
             selectedId = id;
-            const data = SHINOBI_DATA.find(item => item.id === id);
-            if (!data) return;
-
             renderMapElements();
 
-            const typeBadge = data.type === 'great'
-                ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#9e2a2b] text-[#f4e6c8] border border-[#d4af37]">★ NGŨ ĐẠI QUỐC</span>`
-                : `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#3d5a45] text-[#f4e6c8] border border-[#8c5d32]">◆ TIỂU QUỐC / ĐẢO QUỐC</span>`;
+            const item = SHINOBI_DATA.find(x => x.id === id);
+            if (!item) return;
+
+            const typeBadge = item.type === 'great'
+                ? '<span class="px-2 py-0.5 text-[11px] font-bold bg-[#9e2a2b] text-[#f4e6c8] rounded">NGŨ ĐẠI CƯỜNG QUỐC</span>'
+                : '<span class="px-2 py-0.5 text-[11px] font-bold bg-[#3d5a45] text-[#f4e6c8] rounded">TIỂU QUỐC / VÙNG ĐỆM</span>';
 
             panelContent.innerHTML = `
-                <!-- Phần đầu hồ sơ với Huy hiệu lớn & Con dấu Hanko -->
-                <div class="relative bg-[#e6cfa3] border-2 border-[#4a3520] rounded-xl p-4 shadow-inner">
-                    <div class="flex items-start justify-between gap-3">
-                        <div class="flex items-center gap-3.5">
-                            <div class="w-16 h-16 rounded-full flex items-center justify-center shrink-0 border-2 border-[#d4af37] shadow-md" style="background-color: ${data.badgeColor}">
-                                <svg viewBox="0 0 32 32" class="w-11 h-11">
-                                    ${data.symbolSvg}
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="mb-1">${typeBadge}</div>
-                                <h2 class="font-title text-lg md:text-xl font-extrabold text-[#1f1309] leading-tight">
-                                    ${data.countryEn}
-                                </h2>
-                                <p class="text-sm font-bold text-[#9e2a2b]">(${data.countryVi})</p>
-                            </div>
-                        </div>
-                        <!-- Con dấu Hán tự -->
-                        <div class="hanko-seal px-2 py-1 text-base font-bold rounded shrink-0 select-none">
-                            ${data.kanji}
-                        </div>
+                <div class="flex items-start justify-between gap-3 border-b-2 border-[#8c5d32] pb-4">
+                    <div>
+                        <div class="mb-1.5">${typeBadge}</div>
+                        <h2 class="font-title text-xl font-extrabold text-[#231810] leading-tight">${item.countryEn}</h2>
+                        <p class="text-base font-bold text-[#9e2a2b]">${item.countryVi} <span class="font-calligraphy text-sm text-[#5c3e21]">(${item.kanji})</span></p>
                     </div>
-
-                    <!-- Tên Làng Ẩn -->
-                    <div class="mt-3 pt-3 border-t border-[#b89763] flex items-center justify-between">
-                        <div>
-                            <span class="text-[11px] uppercase tracking-wider text-[#5c3e21] font-bold block">Làng Ẩn / Trung Tâm Quân Sự:</span>
-                            <span class="text-sm md:text-base font-bold text-[#231810]">${data.villageEn}</span>
-                            <span class="text-xs font-semibold text-[#7a3b1e] block">→ ${data.villageVi} (${data.villageKanji})</span>
-                        </div>
+                    <div class="hanko-seal px-2.5 py-1.5 text-center shrink-0 bg-[#f9efe0]">
+                        <div class="text-base font-bold leading-none">${item.kanji}</div>
+                        <div class="text-[9px] tracking-widest mt-0.5">忍界録</div>
                     </div>
                 </div>
 
-                <!-- Thông tin Lãnh đạo & Vĩ Thú -->
-                <div class="grid grid-cols-1 gap-3">
-                    <div class="bg-[#fcf5e5] border border-[#8c5d32] rounded-lg p-3">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-[#9e2a2b] mb-1">👑 Nguyên Thủ / Lãnh Đạo Tối Cao</h3>
-                        <p class="text-sm font-bold text-[#231810]">${data.leaderTitle}</p>
-                        <p class="text-xs text-[#4a3520] mt-1 leading-relaxed"><strong>Nhân vật tiêu biểu:</strong> ${data.notableLeaders}</p>
+                <!-- Thẻ Băng Trán Làng Ẩn -->
+                <div class="bg-[#e6cfa3]/70 border border-[#8c5d32] rounded-lg p-3.5 flex items-center gap-3.5 shadow-inner">
+                    <div class="w-14 h-14 rounded-full flex items-center justify-center shrink-0 border-2 border-[#d4af37] shadow-md" style="background-color: ${item.badgeColor}">
+                        <svg viewBox="0 0 32 32" class="w-9 h-9">${item.symbolSvg}</svg>
                     </div>
-
-                    <div class="bg-[#fcf5e5] border border-[#8c5d32] rounded-lg p-3">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-[#9e2a2b] mb-1">🐉 Vĩ Thú & Gia Tộc Lừng Danh</h3>
-                        <p class="text-xs text-[#231810] mb-1"><strong>Vĩ Thú (Bijū):</strong> ${data.affiliatedTailedBeasts}</p>
-                        <p class="text-xs text-[#4a3520]"><strong>Gia tộc nổi bật:</strong> ${data.notableClans}</p>
+                    <div>
+                        <div class="text-[11px] uppercase tracking-wider text-[#6e4a26] font-bold">Làng Ẩn Trực Thuộc</div>
+                        <div class="text-sm font-bold text-[#231810]">${item.villageEn}</div>
+                        <div class="text-xs font-semibold text-[#8b2627]">${item.villageVi} (${item.villageKanji})</div>
                     </div>
                 </div>
 
-                <!-- Đặc điểm Địa Lý -->
-                <div class="bg-[#fcf5e5] border border-[#8c5d32] rounded-lg p-3.5">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-[#2d4a36] mb-1.5 flex items-center gap-1.5">
-                        <span>⛰️</span> ĐẶC ĐIỂM ĐỊA LÝ & KHÍ HẬU
-                    </h3>
-                    <p class="text-xs md:text-sm text-[#2b1d12] leading-relaxed text-justify">
-                        ${data.geography}
-                    </p>
-                </div>
+                <!-- Thông tin chi tiết Lore -->
+                <div class="space-y-3 text-xs md:text-sm text-[#2b1b10]">
+                    <div class="bg-[#faf0dc] p-3 rounded border border-[#c9ab78]">
+                        <div class="font-bold text-[#7a3b1e] mb-0.5">👑 Nguyên Thủ / Lãnh Đạo:</div>
+                        <div class="font-semibold">${item.leaderTitle}</div>
+                        <div class="text-xs text-[#4a3520] mt-1"><strong>Nhân vật tiêu biểu:</strong> ${item.notableLeaders}</div>
+                    </div>
 
-                <!-- Lịch sử & Lore Chính Thức -->
-                <div class="bg-[#fcf5e5] border border-[#8c5d32] rounded-lg p-3.5">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-[#9e2a2b] mb-1.5 flex items-center gap-1.5">
-                        <span>📜</span> LỊCH SỬ & LORE NHẪN GIỚI
-                    </h3>
-                    <p class="text-xs md:text-sm text-[#2b1d12] leading-relaxed text-justify">
-                        ${data.lore}
-                    </p>
-                </div>
+                    <div class="bg-[#faf0dc] p-3 rounded border border-[#c9ab78]">
+                        <div class="font-bold text-[#7a3b1e] mb-0.5">🦊 Vĩ Thú Liên Quan (Bijū):</div>
+                        <div>${item.affiliatedTailedBeasts}</div>
+                    </div>
 
-                <!-- Nút căn giữa bản đồ vào quốc gia này -->
-                <button onclick="focusOnLocation(${data.markerX}, ${data.markerY})" class="w-full py-2.5 bg-[#2b1b10] hover:bg-[#9e2a2b] text-[#f4e6c8] font-bold text-xs md:text-sm rounded-lg border border-[#d4af37] shadow transition flex items-center justify-center gap-2">
-                    <span>🎯</span> Đưa Tầm Nhìn Đến Vị Trí Này
-                </button>
+                    <div class="bg-[#faf0dc] p-3 rounded border border-[#c9ab78]">
+                        <div class="font-bold text-[#7a3b1e] mb-0.5">🏯 Gia Tộc & Huyết Kế Nổi Bật:</div>
+                        <div>${item.notableClans}</div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-[#231810] border-b border-[#c9ab78] pb-1 mb-1.5">🗺️ Vị Trí Địa Lý & Biên Giới</h3>
+                        <p class="leading-relaxed text-justify">${item.geography}</p>
+                    </div>
+
+                    <div>
+                        <h3 class="font-bold text-[#231810] border-b border-[#c9ab78] pb-1 mb-1.5">📜 Lịch Sử & Dữ Liệu Lore</h3>
+                        <p class="leading-relaxed text-justify">${item.lore}</p>
+                    </div>
+                </div>
             `;
 
             infoPanel.classList.remove('translate-x-full');
@@ -1176,48 +1176,68 @@
         });
 
         /**
-         * 4. HỆ THỐNG KÉO THẢ (PAN) VÀ THU PHÓNG (ZOOM) MƯỢT MÀ
+         * 4. HỆ THỐNG PAN & ZOOM MƯỢT MÀ + DYNAMIC SEMANTIC SCALING
          */
         const mapContainer = document.getElementById('map-container');
         const viewportGroup = document.getElementById('viewport-group');
-
         let transform = { x: 0, y: 0, scale: 1 };
         let isDragging = false;
         let startDrag = { x: 0, y: 0 };
 
+        /**
+         * Dynamic Inverse-Power Semantic Zoom Scaling:
+         * Điều tiết tỷ lệ của biểu tượng và chữ theo mức zoom hiện tại để:
+         * - Khi zoom-out toàn cảnh: chữ thu gọn tinh tế, không đè lên đường biên giới.
+         * - Khi zoom-in sâu: chữ phóng to vừa đủ đọc, không phình khổng lồ che bản đồ.
+         */
+        function applySemanticZoomScale() {
+            const z = transform.scale;
+            const adaptiveFactor = Math.pow(1 / z, 0.45) * userTextScale;
+
+            document.querySelectorAll('.zoom-adaptive-group').forEach(el => {
+                const base = parseFloat(el.getAttribute('data-base-scale') || '1');
+                const finalScale = (adaptiveFactor * base).toFixed(4);
+                el.setAttribute('transform', `scale(${finalScale})`);
+            });
+
+            document.querySelectorAll('.map-label-sub').forEach(sub => {
+                if (z < 0.85) {
+                    sub.style.opacity = '0.45';
+                } else {
+                    sub.style.opacity = '1';
+                }
+            });
+        }
+
         function updateTransform(smooth = false) {
             viewportGroup.style.transition = smooth ? 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1)' : 'none';
             viewportGroup.setAttribute('transform', `translate(${transform.x}, ${transform.y}) scale(${transform.scale})`);
+            applySemanticZoomScale();
         }
 
-        // Căn giữa bản đồ vào một tọa độ cụ thể trên SVG
-        window.focusOnLocation = function(targetX, targetY) {
-            const svg = document.getElementById('shinobi-svg');
-            const rect = svg.getBoundingClientRect();
-            const scaleX = rect.width / 1600;
-            const scaleY = rect.height / 1050;
-            const baseScale = Math.max(scaleX, scaleY);
-
-            const desiredZoom = 1.45;
-            transform.scale = desiredZoom;
-            // Tính toán bù trừ để điểm chọn nằm hơi lệch sang trái (tránh bị che bởi Info Panel trên desktop)
-            const offsetPanel = window.innerWidth >= 768 ? -160 : 0;
-            transform.x = (800 - targetX * desiredZoom) + (offsetPanel / baseScale);
-            transform.y = (525 - targetY * desiredZoom);
+        function focusOnLocation(x, y) {
+            const targetScale = 1.65;
+            transform.scale = targetScale;
+            transform.x = 720 - x * targetScale;
+            transform.y = 525 - y * targetScale;
             updateTransform(true);
-        };
+        }
 
-        // Sự kiện chuột kéo thả
+        // Kéo thả bằng chuột
         mapContainer.addEventListener('mousedown', (e) => {
-            if (e.target.closest('.map-node') || e.target.closest('button')) return;
+            if (e.button !== 0) return;
             isDragging = true;
             startDrag = { x: e.clientX - transform.x, y: e.clientY - transform.y };
         });
 
         window.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
-            transform.x = e.clientX - startDrag.x;
-            transform.y = e.clientY - startDrag.y;
+            const svg = document.getElementById('shinobi-svg');
+            const rect = svg.getBoundingClientRect();
+            const scaleRatioX = 1600 / rect.width;
+            const scaleRatioY = 1050 / rect.height;
+            transform.x += e.movementX * scaleRatioX;
+            transform.y += e.movementY * scaleRatioY;
             updateTransform(false);
         });
 
@@ -1225,59 +1245,52 @@
             isDragging = false;
         });
 
-        // Hỗ trợ cảm ứng (Touch Pan) trên thiết bị di động
-        let lastTouchDistance = null;
+        // Hỗ trợ cảm ứng (Touch Drag) trên di động
+        let lastTouch = null;
         mapContainer.addEventListener('touchstart', (e) => {
             if (e.touches.length === 1) {
-                isDragging = true;
-                startDrag = { x: e.touches[0].clientX - transform.x, y: e.touches[0].clientY - transform.y };
-            } else if (e.touches.length === 2) {
-                isDragging = false;
-                lastTouchDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
+                lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
             }
         }, { passive: true });
 
         mapContainer.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 1 && isDragging) {
-                transform.x = e.touches[0].clientX - startDrag.x;
-                transform.y = e.touches[0].clientY - startDrag.y;
-                updateTransform(false);
-            } else if (e.touches.length === 2 && lastTouchDistance) {
-                const dist = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                const zoomDelta = dist / lastTouchDistance;
-                transform.scale = Math.min(Math.max(0.65, transform.scale * zoomDelta), 3.2);
-                lastTouchDistance = dist;
+            if (e.touches.length === 1 && lastTouch) {
+                const svg = document.getElementById('shinobi-svg');
+                const rect = svg.getBoundingClientRect();
+                const dx = (e.touches[0].clientX - lastTouch.x) * (1600 / rect.width);
+                const dy = (e.touches[0].clientY - lastTouch.y) * (1050 / rect.height);
+                transform.x += dx;
+                transform.y += dy;
+                lastTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
                 updateTransform(false);
             }
         }, { passive: true });
 
         mapContainer.addEventListener('touchend', () => {
-            isDragging = false;
-            lastTouchDistance = null;
+            lastTouch = null;
         });
 
-        // Cuộn con lăn chuột để Zoom
+        // Cuộn con lăn chuột để Zoom tại tâm trỏ chuột
         mapContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
             const zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
-            const newScale = Math.min(Math.max(0.65, transform.scale * zoomFactor), 3.2);
-            
-            // Zoom hướng về tâm hiện tại
-            transform.x = 800 - (800 - transform.x) * (newScale / transform.scale);
-            transform.y = 525 - (525 - transform.y) * (newScale / transform.scale);
+            const newScale = Math.min(Math.max(0.65, transform.scale * zoomFactor), 4.2);
+
+            const svg = document.getElementById('shinobi-svg');
+            const pt = svg.createSVGPoint();
+            pt.x = e.clientX;
+            pt.y = e.clientY;
+            const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+            transform.x = svgPt.x - (svgPt.x - transform.x) * (newScale / transform.scale);
+            transform.y = svgPt.y - (svgPt.y - transform.y) * (newScale / transform.scale);
             transform.scale = newScale;
-            updateTransform(true);
+            updateTransform(false);
         }, { passive: false });
 
         // Các nút Zoom +, -, Reset
         document.getElementById('zoom-in').addEventListener('click', () => {
-            const newScale = Math.min(transform.scale * 1.25, 3.2);
+            const newScale = Math.min(transform.scale * 1.25, 4.2);
             transform.x = 800 - (800 - transform.x) * (newScale / transform.scale);
             transform.y = 525 - (525 - transform.y) * (newScale / transform.scale);
             transform.scale = newScale;
@@ -1297,20 +1310,33 @@
             updateTransform(true);
         });
 
-        /**
-         * 5. BỘ LỌC HIỂN THỊ & THANH TÌM KIẾM NHANH
-         */
+        // Bộ lọc nhóm quốc gia
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('bg-[#9e2a2b]', 'text-[#f4e6c8]');
+                    b.classList.remove('active', 'bg-[#9e2a2b]', 'text-[#f4e6c8]');
                     b.classList.add('text-[#d6be96]');
                 });
-                btn.classList.add('bg-[#9e2a2b]', 'text-[#f4e6c8]');
+                btn.classList.add('active', 'bg-[#9e2a2b]', 'text-[#f4e6c8]');
                 btn.classList.remove('text-[#d6be96]');
 
                 currentFilter = btn.getAttribute('data-filter');
                 renderMapElements();
+            });
+        });
+
+        // Điều chỉnh cỡ chữ thủ công (Nhỏ / Vừa / Lớn)
+        document.querySelectorAll('.textsize-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.textsize-btn').forEach(b => {
+                    b.classList.remove('bg-[#7a5634]', 'text-[#f4e6c8]');
+                    b.classList.add('text-[#d6be96]');
+                });
+                btn.classList.add('bg-[#7a5634]', 'text-[#f4e6c8]');
+                btn.classList.remove('text-[#d6be96]');
+
+                userTextScale = parseFloat(btn.getAttribute('data-textsize'));
+                applySemanticZoomScale();
             });
         });
 
